@@ -24,7 +24,10 @@ namespace Apollo.Tests.Runtime
         [Fact]
         public void CallingStartFrame_IncrementsCounter()
         {
-
+            var ctx = new RuntimeContext();
+            Assert.Equal(0, ctx.FrameNumber);
+            ctx.StartFrame();
+            Assert.Equal(1, ctx.FrameNumber);
         }
     }
 }
