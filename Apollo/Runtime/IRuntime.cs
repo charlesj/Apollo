@@ -6,12 +6,4 @@ namespace Apollo.Runtime
     {
         Task Run();
     }
-
-    public class SimpleLoopRuntime : IRuntime
-    {
-        public Task Run()
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 }

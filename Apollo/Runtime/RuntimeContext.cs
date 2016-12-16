@@ -1,6 +1,6 @@
 ﻿namespace Apollo.Runtime
 {
-    public class RuntimeContext
+    public class RuntimeContext : IRuntimeContext
     {
         public bool Ending { get; private set; }
         public long FrameNumber { get; private set; }

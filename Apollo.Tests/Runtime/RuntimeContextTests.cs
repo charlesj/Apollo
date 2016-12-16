@@ -8,17 +8,17 @@ namespace Apollo.Tests.Runtime
         [Fact]
         public void DefaultsToNotEnding()
         {
-            var semaphore = new RuntimeContext();
-            Assert.False(semaphore.Ending);
+            var context = new RuntimeContext();
+            Assert.False(context.Ending);
         }
 
         [Fact]
         public void CallingEnd_SetsEndingToTrue()
         {
-            var semaphore = new RuntimeContext();
-            semaphore.End();
+            var context = new RuntimeContext();
+            context.End();
 
-            Assert.True(semaphore.Ending);
+            Assert.True(context.Ending);
         }
 
         [Fact]
