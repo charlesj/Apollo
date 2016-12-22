@@ -1,0 +1,5 @@
+#!/bin/bash
+
+xbuild /p:Configuration=Release Apollo.sln > /dev/null
+
+echo "Build complete"

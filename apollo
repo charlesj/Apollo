@@ -1,3 +1,10 @@
 #!/bin/bash
 
-/usr/bin/mono ./Apollo/bin/Debug/Apollo.exe
+PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+APOLLO_EXE=$PROJECT_DIR/Apollo/bin/Release/Apollo.exe
+
+if [ ! -f $APOLLO_EXE ]; then
+    build
+fi
+
+mono "$APOLLO_EXE"
