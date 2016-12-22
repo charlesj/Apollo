@@ -6,7 +6,7 @@ namespace Apollo
 {
     public class Program
     {
-        public const string CurrentVersion = "0.1";
+        public const string CurrentVersion = Apollo.Version;
 
         public static void Main(string[] args)
         {
