@@ -4,6 +4,8 @@ set -e
 PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$PROJECT_DIR/tools
 NUGET_EXE=$TOOLS_DIR/nuget.exe
+XUNIT_VERSION=2.2.0-beta4-build3444
+XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools/xunit.console.exe
 
 # Make sure the tools folder exist.
 if [ ! -d "$TOOLS_DIR" ]; then
@@ -28,4 +30,4 @@ fi
 
 xbuild /p:Configuration=Release Apollo.sln
 
-echo "Build complete"
+mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll
