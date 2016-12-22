@@ -1,5 +1,31 @@
 #!/bin/bash
+set -e
 
-xbuild /p:Configuration=Release Apollo.sln > /dev/null
+PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+TOOLS_DIR=$PROJECT_DIR/tools
+NUGET_EXE=$TOOLS_DIR/nuget.exe
+
+# Make sure the tools folder exist.
+if [ ! -d "$TOOLS_DIR" ]; then
+  mkdir "$TOOLS_DIR"
+fi
+
+# Download NuGet if it does not exist.
+if [ ! -f "$NUGET_EXE" ]; then
+    echo "Downloading NuGet..."
+    curl -Lsfo "$NUGET_EXE" https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+    if [ $? -ne 0 ]; then
+        echo "An error occured while downloading nuget.exe."
+        exit 1
+    fi
+fi
+
+mono "$NUGET_EXE" restore Apollo.sln
+if [ $? -ne 0 ]; then
+    echo "Could not restore NuGet packages."
+    exit 1
+fi
+
+xbuild /p:Configuration=Release Apollo.sln
 
 echo "Build complete"
