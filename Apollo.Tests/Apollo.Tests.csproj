@@ -74,6 +74,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\RuntimeContextTests.cs" />
     <Compile Include="Runtime\SimpleLoopRuntimeTests.cs" />
+    <Compile Include="Server\JsonRPCProcessorTests.cs" />
+    <Compile Include="Server\JsonRPCResponseTests.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocatorTests.cs" />
   </ItemGroup>
   <ItemGroup>

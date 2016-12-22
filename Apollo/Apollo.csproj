@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootOptions.cs" />
+    <Compile Include="Commands\ICommandLocator.cs" />
+    <Compile Include="Server\HttpServer.cs" />
+    <Compile Include="Server\IHttpServer.cs" />
     <Compile Include="Kernel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,6 +55,9 @@
     <Compile Include="Runtime\IRuntimeContext.cs" />
     <Compile Include="Runtime\RuntimeContext.cs" />
     <Compile Include="Runtime\SimpleLoopRuntime.cs" />
+    <Compile Include="Server\JsonRPCProcessor.cs" />
+    <Compile Include="Server\JsonRPCRequest.cs" />
+    <Compile Include="Server\JsonRPCRequestParser.cs" />
     <Compile Include="ServiceLocator\IServiceLocator.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocator.cs" />
     <Compile Include="Utilities\Clock.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Apollo.Runtime;
+using Apollo.Server;
 
 namespace Apollo
 {
@@ -12,6 +13,9 @@ namespace Apollo
         {
             var kernel = new Kernel();
             var serviceLocator = kernel.Boot(BootOptions.Defaults);
+
+            var server = serviceLocator.Get<IHttpServer>();
+            server.Listen();
 
             var runTime = serviceLocator.Get<IRuntime>();
             var runTimeContext = serviceLocator.Get<IRuntimeContext>();
