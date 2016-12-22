@@ -26,6 +26,17 @@ namespace Apollo.Tests.Runtime
         }
 
         [Fact]
+        public async void CallsShutdownComplete_WhenDone()
+        {
+            var contextMock = Mocker.GetMock<IRuntimeContext>();
+            contextMock.Setup(rc => rc.Ending).ReturnsInOrder(false, true);
+
+            await ClassUnderTest.Run();
+
+            contextMock.Verify(ctx => ctx.CompleteShutdown(), Times.Exactly(1));
+        }
+
+        [Fact]
         public async void DelaysBetweenLoops()
         {
             var contextMock = Mocker.GetMock<IRuntimeContext>();

@@ -21,6 +21,8 @@ namespace Apollo.Runtime
                 this.context.StartFrame();
                 await this.clock.Delay(10);
             }
+
+            this.context.CompleteShutdown();
         }
     }
 }

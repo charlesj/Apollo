@@ -1,4 +1,5 @@
 ﻿using Apollo.Runtime;
+using Apollo.Utilities;
 using SimpleInjector;
 
 namespace Apollo.ServiceLocator
@@ -15,7 +16,10 @@ namespace Apollo.ServiceLocator
         public void RegisterServices()
         {
             container.Register<IServiceLocator>(() => this);
+
+            container.Register<IClock, Clock>(Lifestyle.Singleton);
             container.Register<IRuntime, SimpleLoopRuntime>();
+            container.Register<IRuntimeContext, RuntimeContext>(Lifestyle.Singleton);
         }
 
         public TService Get<TService>() where TService : class

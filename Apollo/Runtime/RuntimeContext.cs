@@ -4,6 +4,7 @@
     {
         public bool Ending { get; private set; }
         public long FrameNumber { get; private set; }
+        public bool Ended { get; private set; }
 
         public void End()
         {
@@ -13,6 +14,11 @@
         public void StartFrame()
         {
             this.FrameNumber++;
+        }
+
+        public void CompleteShutdown()
+        {
+            this.Ended = true;
         }
     }
 }

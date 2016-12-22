@@ -29,5 +29,15 @@ namespace Apollo.Tests.Runtime
             ctx.StartFrame();
             Assert.Equal(1, ctx.FrameNumber);
         }
+
+        [Fact]
+        public void CallingCompleteShutdown_SetsEndedToTrue()
+        {
+            var ctx = new RuntimeContext();
+            Assert.False(ctx.Ended);
+
+            ctx.CompleteShutdown();
+            Assert.True(ctx.Ended);
+        }
     }
 }
