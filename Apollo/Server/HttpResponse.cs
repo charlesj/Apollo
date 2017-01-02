@@ -14,5 +14,15 @@
         {
             return new HttpResponse {Body = message, HttpCode = 404};
         }
+
+        public static HttpResponse ServerError(string message)
+        {
+            return new HttpResponse {Body = message, HttpCode = 503};
+        }
+
+        public static HttpResponse Success(string message)
+        {
+            return new HttpResponse {Body = message, HttpCode = 200};
+        }
     }
 }

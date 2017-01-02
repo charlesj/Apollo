@@ -70,6 +70,7 @@
     <Compile Include="ServiceLocator\IServiceLocator.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocator.cs" />
     <Compile Include="Utilities\Clock.cs" />
+    <Compile Include="Utilities\JsonSerializer.cs" />
     <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>

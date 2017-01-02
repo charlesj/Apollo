@@ -30,5 +30,23 @@ namespace Apollo.Tests.Server
             Assert.Equal(message, response.Body);
             Assert.Equal(404, response.HttpCode);
         }
+
+        [Fact]
+        public void ServerError_WithMessage()
+        {
+            var message = "Hello";
+            var response = HttpResponse.ServerError(message);
+            Assert.Equal(message, response.Body);
+            Assert.Equal(503, response.HttpCode);
+        }
+
+        [Fact]
+        public void Success_WithMessage()
+        {
+            var message = "Hello";
+            var response = HttpResponse.Success(message);
+            Assert.Equal(message, response.Body);
+            Assert.Equal(200, response.HttpCode);
+        }
     }
 }

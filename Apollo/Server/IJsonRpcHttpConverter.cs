@@ -1,4 +1,6 @@
-﻿namespace Apollo.Server
+﻿using Apollo.Utilities;
+
+namespace Apollo.Server
 {
     public interface IJsonRpcHttpConverter
     {
@@ -7,9 +9,26 @@
 
     public class JsonRpcHttpConverter : IJsonRpcHttpConverter
     {
+        private readonly IJsonSerializer serializer;
+
+        public JsonRpcHttpConverter(IJsonSerializer serializer)
+        {
+            this.serializer = serializer;
+        }
+
         public HttpResponse Convert(JsonRpcResponse response)
         {
-            throw new System.NotImplementedException();
+            if (response == null)
+                return HttpResponse.ServerError("Null Command Result");
+
+            var body = serializer.Serialize(response);
+
+            if (!string.IsNullOrWhiteSpace(response.error))
+            {
+                return HttpResponse.ServerError(body);
+            }
+
+            return HttpResponse.Success(body);
         }
     }
 }
