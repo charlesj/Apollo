@@ -49,11 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootOptions.cs" />
-    <Compile Include="Commands\CommandResult.cs" />
-    <Compile Include="Commands\CommandResultType.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandLocator.cs" />
-    <Compile Include="Commands\ICommandProcessor.cs" />
+    <Compile Include="CommandSystem\CommandResult.cs" />
+    <Compile Include="CommandSystem\CommandResultType.cs" />
+    <Compile Include="CommandSystem\ICommand.cs" />
+    <Compile Include="CommandSystem\ICommandLocator.cs" />
+    <Compile Include="CommandSystem\ICommandProcessor.cs" />
+    <Compile Include="Commands\Meta\TestCommand.cs" />
     <Compile Include="Server\HttpResponse.cs" />
     <Compile Include="Server\HttpServer.cs" />
     <Compile Include="Server\IHttpServer.cs" />

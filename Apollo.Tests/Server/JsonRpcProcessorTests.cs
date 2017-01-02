@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Apollo.Commands;
+using Apollo.CommandSystem;
 using Apollo.Server;
 using Xunit;
 

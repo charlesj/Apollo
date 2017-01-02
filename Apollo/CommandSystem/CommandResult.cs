@@ -1,4 +1,4 @@
-﻿namespace Apollo.Commands
+﻿namespace Apollo.CommandSystem
 {
     public class CommandResult
     {

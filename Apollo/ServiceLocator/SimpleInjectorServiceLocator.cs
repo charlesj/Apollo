@@ -1,4 +1,5 @@
-﻿using Apollo.Runtime;
+﻿using System;
+using Apollo.Runtime;
 using Apollo.Server;
 using Apollo.Utilities;
 using SimpleInjector;
@@ -20,6 +21,7 @@ namespace Apollo.ServiceLocator
 
             // utility binding
             container.Register<IClock, Clock>(Lifestyle.Singleton);
+            container.Register<IJsonSerializer, ApolloJsonSerializer>(Lifestyle.Singleton);
 
             // runtime bindings
             container.Register<IRuntime, SimpleLoopRuntime>();
@@ -33,6 +35,11 @@ namespace Apollo.ServiceLocator
         public TService Get<TService>() where TService : class
         {
             return this.container.GetInstance<TService>();
+        }
+
+        public object Get(Type type)
+        {
+            return this.container.GetInstance(type);
         }
     }
 }

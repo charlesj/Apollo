@@ -1,4 +1,6 @@
-﻿using Apollo.ServiceLocator;
+﻿using Apollo.Commands.Meta;
+using Apollo.Server;
+using Apollo.ServiceLocator;
 using Xunit;
 
 namespace Apollo.Tests.ServiceLocator
@@ -21,5 +23,22 @@ namespace Apollo.Tests.ServiceLocator
             Assert.Same(locator, located);
         }
 
+        [Fact]
+        public void CanBuildFromTypeWithNoDependencies()
+        {
+            var locator = new SimpleInjectorServiceLocator();
+
+            var testCommand = locator.Get(typeof(TestCommand));
+            Assert.IsType<TestCommand>(testCommand);
+        }
+
+        [Fact]
+        public void CanBuildFromTypeWithDependencies()
+        {
+            var locator = new SimpleInjectorServiceLocator();
+            locator.RegisterServices();
+            var testCommand = locator.Get(typeof(JsonRpcRequestParser));
+            Assert.IsType<JsonRpcRequestParser>(testCommand);
+        }
     }
 }
