@@ -25,7 +25,7 @@ namespace Apollo.Tests.Server
         {
             var request = string.Empty;
             var serializer = Mocker.GetMock<IJsonSerializer>();
-            var expected = new JsonRpcRequest();
+            var expected = new JsonRpcRequest{Id = "1", Method = "oops"};
             serializer.Setup(s => s.Deserialize<JsonRpcRequest>(request))
                 .Returns(expected);
 
