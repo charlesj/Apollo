@@ -8,7 +8,7 @@ namespace Apollo.Utilities
         TObject Deserialize<TObject>(string json);
     }
 
-    public class JsonSerializer : IJsonSerializer
+    public class ApolloJsonSerializer : IJsonSerializer
     {
         public string Serialize(object obj, bool indent = false)
         {

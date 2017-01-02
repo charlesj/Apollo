@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Apollo.Tests.Utilities
 {
-    public class JsonSerializerTests : BaseUnitTest<JsonSerializer>
+    public class JsonSerializerTests : BaseUnitTest<ApolloJsonSerializer>
     {
         public class Serialize : JsonSerializerTests
         {

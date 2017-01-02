@@ -1,4 +1,6 @@
-﻿namespace Apollo.Server
+﻿using System;
+
+namespace Apollo.Server
 {
     public interface IJsonRpcRequestParser
     {
