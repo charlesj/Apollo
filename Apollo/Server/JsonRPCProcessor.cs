@@ -13,18 +13,23 @@ namespace Apollo.Server
     {
         private readonly ICommandLocator commandLocator;
         private readonly IJsonRPCRequestParser requestParser;
+        private readonly IJsonRPCCommandTranslator translator;
+        private readonly IJsonRPCHttpConverter converter;
 
         public JsonRPCProcessor(
             ICommandLocator commandLocator,
+            IJsonRPCCommandTranslator translator,
+            IJsonRPCHttpConverter converter,
             IJsonRPCRequestParser requestParser)
         {
             this.commandLocator = commandLocator;
             this.requestParser = requestParser;
+            this.translator = translator;
+            this.converter = converter;
         }
 
         public async Task<HttpResponse> Process(string request)
         {
-            await Task.FromResult(0);
             if (string.IsNullOrWhiteSpace(request))
                 return HttpResponse.BadRequest();
 
@@ -37,7 +42,9 @@ namespace Apollo.Server
             if (command == null)
                 return HttpResponse.NotFound("Could not locate requested method");
 
-            return new HttpResponse {Body = $"processed at {DateTime.Now}", HttpCode = 200};
+            var response = await translator.ExecuteCommand(command, parsedRequest.Request);
+
+            return converter.Convert(response);
         }
     }
 }

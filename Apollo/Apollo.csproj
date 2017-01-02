@@ -45,7 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootOptions.cs" />
+    <Compile Include="Commands\CommandResult.cs" />
+    <Compile Include="Commands\CommandResultType.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandLocator.cs" />
+    <Compile Include="Commands\ICommandProcessor.cs" />
+    <Compile Include="Server\HttpResponse.cs" />
     <Compile Include="Server\HttpServer.cs" />
     <Compile Include="Server\IHttpServer.cs" />
     <Compile Include="Kernel.cs" />
@@ -55,6 +60,8 @@
     <Compile Include="Runtime\IRuntimeContext.cs" />
     <Compile Include="Runtime\RuntimeContext.cs" />
     <Compile Include="Runtime\SimpleLoopRuntime.cs" />
+    <Compile Include="Server\IJsonRPCCommandTranslator.cs" />
+    <Compile Include="Server\IJsonRPCHttpConverter.cs" />
     <Compile Include="Server\JsonRPCProcessor.cs" />
     <Compile Include="Server\JsonRPCRequest.cs" />
     <Compile Include="Server\JsonRPCRequestParser.cs" />
