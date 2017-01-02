@@ -21,7 +21,7 @@ namespace Apollo.Tests.Server
             var jsonResult = new JsonRpcResponse{ error = "error"};
             var serializer = Mocker.GetMock<IJsonSerializer>();
             var serialized = "serialized";
-            serializer.Setup(s => s.Serialize(jsonResult))
+            serializer.Setup(s => s.Serialize(jsonResult, false))
                 .Returns(serialized);
             var result = ClassUnderTest.Convert(jsonResult);
 
@@ -35,7 +35,7 @@ namespace Apollo.Tests.Server
             var jsonResult = new JsonRpcResponse{ result = "yes i am result"};
             var serializer = Mocker.GetMock<IJsonSerializer>();
             var serialized = "serialized";
-            serializer.Setup(s => s.Serialize(jsonResult))
+            serializer.Setup(s => s.Serialize(jsonResult, false))
                 .Returns(serialized);
             var result = ClassUnderTest.Convert(jsonResult);
 

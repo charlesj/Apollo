@@ -1,13 +1,25 @@
-﻿namespace Apollo.Utilities
+﻿using Newtonsoft.Json;
+
+namespace Apollo.Utilities
 {
     public interface IJsonSerializer
     {
-        string Serialize(object obj);
+        string Serialize(object obj, bool indent = false);
         TObject Deserialize<TObject>(string json);
     }
 
-    public class JsonSerializer
+    public class JsonSerializer : IJsonSerializer
     {
+        public string Serialize(object obj, bool indent = false)
+        {
+            if (indent)
+                return JsonConvert.SerializeObject(obj, Formatting.Indented);
+            return JsonConvert.SerializeObject(obj);
+        }
 
+        public TObject Deserialize<TObject>(string json)
+        {
+            return JsonConvert.DeserializeObject<TObject>(json);
+        }
     }
 }
