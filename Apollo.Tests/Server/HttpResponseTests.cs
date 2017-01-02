@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Apollo.Tests.Server
 {
-    public class JsonRPCResponseTests
+    public class HttpResponseTests
     {
         [Fact]
         public void BadRequest()

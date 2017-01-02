@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Apollo.Tests.Server
 {
-    public class JsonRPCProcessorTests : BaseUnitTest<JsonRPCProcessor>
+    public class JsonRpcProcessorTests : BaseUnitTest<JsonRpcProcessor>
     {
         [Theory]
         [InlineData("")]
@@ -23,8 +23,8 @@ namespace Apollo.Tests.Server
         public async void UnparsableRequest_Returns400Result()
         {
             var request = "notempty";
-            var parser = this.Mocker.GetMock<IJsonRPCRequestParser>();
-            var parserResult = new JsonRPCParserResult();
+            var parser = this.Mocker.GetMock<IJsonRpcRequestParser>();
+            var parserResult = new JsonRpcParserResult();
 
             parser.Setup(p => p.Parse(request)).Returns(parserResult);
 
@@ -37,8 +37,8 @@ namespace Apollo.Tests.Server
         public async void UnmatchedMethod_Returns404()
         {
             var request = "notempty";
-            var parser = this.Mocker.GetMock<IJsonRPCRequestParser>();
-            var parserResult = new JsonRPCParserResult{Success = true, Request = new JsonRPCRequest{ Method = "method"}};
+            var parser = this.Mocker.GetMock<IJsonRpcRequestParser>();
+            var parserResult = new JsonRpcParserResult{Success = true, Request = new JsonRpcRequest{ Method = "method"}};
             parser.Setup(p => p.Parse(request)).Returns(parserResult);
 
             var commandLocator = this.Mocker.GetMock<ICommandLocator>();
@@ -54,17 +54,17 @@ namespace Apollo.Tests.Server
         public async void PassesExecutionToTranslator_WhenCommandIsLocated()
         {
             var request = "notempty";
-            var parser = this.Mocker.GetMock<IJsonRPCRequestParser>();
-            var parserResult = new JsonRPCParserResult{Success = true, Request = new JsonRPCRequest{ Method = "method"}};
+            var parser = this.Mocker.GetMock<IJsonRpcRequestParser>();
+            var parserResult = new JsonRpcParserResult{Success = true, Request = new JsonRpcRequest{ Method = "method"}};
             parser.Setup(p => p.Parse(request)).Returns(parserResult);
 
             var mockedCommand = this.Mocker.GetMock<ICommand>();
             var commandLocator = this.Mocker.GetMock<ICommandLocator>();
             commandLocator.Setup(l => l.Locate(parserResult.Request.Method))
                 .Returns(mockedCommand.Object);
-            var translator = this.Mocker.GetMock<IJsonRPCCommandTranslator>();
+            var translator = this.Mocker.GetMock<IJsonRpcCommandTranslator>();
             translator.Setup(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request))
-                .Returns(Task.FromResult(new JsonRPCResponse()));
+                .Returns(Task.FromResult(new JsonRpcResponse()));
             await ClassUnderTest.Process(request);
 
             translator.Verify(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request));
@@ -74,8 +74,8 @@ namespace Apollo.Tests.Server
         public async void ConvertsJsonRPCtoHttpResponse_usingconvert()
         {
             var request = "notempty";
-            var parser = this.Mocker.GetMock<IJsonRPCRequestParser>();
-            var parserResult = new JsonRPCParserResult{Success = true, Request = new JsonRPCRequest{ Method = "method"}};
+            var parser = this.Mocker.GetMock<IJsonRpcRequestParser>();
+            var parserResult = new JsonRpcParserResult{Success = true, Request = new JsonRpcRequest{ Method = "method"}};
             parser.Setup(p => p.Parse(request)).Returns(parserResult);
 
             var mockedCommand = this.Mocker.GetMock<ICommand>();
@@ -83,12 +83,12 @@ namespace Apollo.Tests.Server
             commandLocator.Setup(l => l.Locate(parserResult.Request.Method))
                 .Returns(mockedCommand.Object);
 
-            var translator = this.Mocker.GetMock<IJsonRPCCommandTranslator>();
-            var jsonResponse = new JsonRPCResponse();
+            var translator = this.Mocker.GetMock<IJsonRpcCommandTranslator>();
+            var jsonResponse = new JsonRpcResponse();
             translator.Setup(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request))
                 .Returns(Task.FromResult(jsonResponse));
 
-            var converter = this.Mocker.GetMock<IJsonRPCHttpConverter>();
+            var converter = this.Mocker.GetMock<IJsonRpcHttpConverter>();
             var httpResponse = new HttpResponse();
             converter.Setup(c => c.Convert(jsonResponse))
                 .Returns(httpResponse);

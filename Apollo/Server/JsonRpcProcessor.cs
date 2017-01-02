@@ -4,23 +4,23 @@ using Apollo.Commands;
 
 namespace Apollo.Server
 {
-    public interface IJsonRPCProcessor
+    public interface IJsonRpcProcessor
     {
         Task<HttpResponse> Process(string request);
     }
 
-    public class JsonRPCProcessor : IJsonRPCProcessor
+    public class JsonRpcProcessor : IJsonRpcProcessor
     {
         private readonly ICommandLocator commandLocator;
-        private readonly IJsonRPCRequestParser requestParser;
-        private readonly IJsonRPCCommandTranslator translator;
-        private readonly IJsonRPCHttpConverter converter;
+        private readonly IJsonRpcRequestParser requestParser;
+        private readonly IJsonRpcCommandTranslator translator;
+        private readonly IJsonRpcHttpConverter converter;
 
-        public JsonRPCProcessor(
+        public JsonRpcProcessor(
             ICommandLocator commandLocator,
-            IJsonRPCCommandTranslator translator,
-            IJsonRPCHttpConverter converter,
-            IJsonRPCRequestParser requestParser)
+            IJsonRpcCommandTranslator translator,
+            IJsonRpcHttpConverter converter,
+            IJsonRpcRequestParser requestParser)
         {
             this.commandLocator = commandLocator;
             this.requestParser = requestParser;

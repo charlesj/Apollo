@@ -27,7 +27,7 @@ namespace Apollo.ServiceLocator
 
             // server bindings
             container.Register<IHttpServer, HttpServer>();
-            container.Register<IJsonRPCProcessor, JsonRPCProcessor>();
+            container.Register<IJsonRpcProcessor, JsonRpcProcessor>();
         }
 
         public TService Get<TService>() where TService : class

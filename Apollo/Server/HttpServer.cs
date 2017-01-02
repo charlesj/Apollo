@@ -8,11 +8,11 @@ namespace Apollo.Server
 {
     public class HttpServer : IHttpServer
     {
-        private readonly IJsonRPCProcessor processor;
+        private readonly IJsonRpcProcessor processor;
         private string prefix = "http://localhost:8042/";
         private HttpListener listener;
 
-        public HttpServer(IJsonRPCProcessor processor)
+        public HttpServer(IJsonRpcProcessor processor)
         {
             this.processor = processor;
             if (!HttpListener.IsSupported)
