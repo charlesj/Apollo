@@ -9,7 +9,7 @@
 
     public class JsonRpcResponse
     {
-        public string result { get; set; }
+        public object result { get; set; }
         public string id { get; set; }
         public string error { get; set; }
     }

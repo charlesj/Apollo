@@ -5,5 +5,6 @@
         public CommandResultType ResultStatus { get; set; }
         public object Result { get; set; }
         public int Elapsed { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

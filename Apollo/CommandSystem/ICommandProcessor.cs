@@ -1,7 +1,9 @@
-﻿namespace Apollo.CommandSystem
+﻿using System.Threading.Tasks;
+
+namespace Apollo.CommandSystem
 {
     public interface ICommandProcessor
     {
-        CommandResult Process(ICommand command);
+        Task<CommandResult> Process(ICommand command, object parameters);
     }
 }
