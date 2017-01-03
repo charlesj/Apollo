@@ -8,7 +8,7 @@ namespace Apollo.Commands.Meta
         public Task<CommandResult> Execute()
         {
             return Task.FromResult(
-                new CommandResult { ResultStatus = CommandResultType.Success });
+                new CommandResult { ResultStatus = CommandResultType.Success, Result = new {test = "Successful Test"}});
         }
 
         public Task<bool> IsValid()

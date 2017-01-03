@@ -21,7 +21,7 @@ namespace Apollo.Server
             if (response == null)
                 return HttpResponse.ServerError("Null Command Result");
 
-            var body = serializer.Serialize(response);
+            var body = serializer.Serialize(response, true);
 
             if (!string.IsNullOrWhiteSpace(response.error))
             {
