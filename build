@@ -7,6 +7,8 @@ NUGET_EXE=$TOOLS_DIR/nuget.exe
 XUNIT_VERSION=2.2.0-beta4-build3444
 XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools/xunit.console.exe
 
+cp Apollo/Version_Template.cs Apollo/Version.cs
+
 # Make sure the tools folder exist.
 if [ ! -d "$TOOLS_DIR" ]; then
   mkdir "$TOOLS_DIR"
