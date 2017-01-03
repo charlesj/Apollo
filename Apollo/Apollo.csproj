@@ -49,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootOptions.cs" />
+    <Compile Include="CommandSystem\CommandHydrator.cs" />
+    <Compile Include="CommandSystem\CommandLocator.cs" />
+    <Compile Include="CommandSystem\CommandProcessor.cs" />
     <Compile Include="CommandSystem\CommandResult.cs" />
     <Compile Include="CommandSystem\CommandResultType.cs" />
     <Compile Include="CommandSystem\ICommand.cs" />

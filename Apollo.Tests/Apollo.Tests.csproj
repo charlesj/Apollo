@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseUnitTest.cs" />
+    <Compile Include="CommandSystem\CommandHydratorIntegrationTests.cs" />
     <Compile Include="CommandSystem\CommandLocatorIntegrationTests.cs" />
     <Compile Include="CommandSystem\CommandProcessorTests.cs" />
     <Compile Include="Commands\Meta\TestCommandTests.cs" />
