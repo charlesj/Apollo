@@ -10,7 +10,7 @@ XUNIT_VERSION=2.2.0-beta4-build3444
 XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools/xunit.console.exe
 
 # Verion file
-if [ ! -d Apollo/Version.cs ]; then
+if [ -f Apollo/Version.cs ]; then
   rm Apollo/Version.cs
 fi
 
