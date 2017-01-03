@@ -52,6 +52,7 @@
     <Compile Include="CommandSystem\CommandResult.cs" />
     <Compile Include="CommandSystem\CommandResultType.cs" />
     <Compile Include="CommandSystem\ICommand.cs" />
+    <Compile Include="CommandSystem\ICommandHydrator.cs" />
     <Compile Include="CommandSystem\ICommandLocator.cs" />
     <Compile Include="CommandSystem\ICommandProcessor.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />

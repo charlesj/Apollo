@@ -9,7 +9,7 @@ namespace Apollo.Tests.Commands.Meta
         [Fact]
         public async void ValidateIsAlwaysTrue()
         {
-            Assert.True(await ClassUnderTest.Validate());
+            Assert.True(await ClassUnderTest.IsValid());
         }
 
         [Fact]

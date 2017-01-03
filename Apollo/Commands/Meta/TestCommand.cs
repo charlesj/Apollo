@@ -11,7 +11,7 @@ namespace Apollo.Commands.Meta
                 new CommandResult { ResultStatus = CommandResultType.Success });
         }
 
-        public Task<bool> Validate()
+        public Task<bool> IsValid()
         {
             return Task.FromResult(true);
         }
