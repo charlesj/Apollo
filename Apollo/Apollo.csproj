@@ -58,6 +58,7 @@
     <Compile Include="CommandSystem\ICommandHydrator.cs" />
     <Compile Include="CommandSystem\ICommandLocator.cs" />
     <Compile Include="CommandSystem\ICommandProcessor.cs" />
+    <Compile Include="Commands\Meta\ApplicationInfo.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
     <Compile Include="Server\HttpResponse.cs" />
     <Compile Include="Server\HttpServer.cs" />

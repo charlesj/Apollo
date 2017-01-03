@@ -5,7 +5,6 @@
         public CommandResult()
         {
             Elapsed = -1;
-            ResultStatus = CommandResultType.Error;
         }
 
         public CommandResultType ResultStatus { get; set; }
