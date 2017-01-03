@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.2-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleInjector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99">
       <HintPath>..\packages\SimpleInjector.4.0.0-alpha1\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
@@ -45,6 +49,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootOptions.cs" />
+    <Compile Include="CommandSystem\CommandHydrator.cs" />
+    <Compile Include="CommandSystem\CommandLocator.cs" />
+    <Compile Include="CommandSystem\CommandProcessor.cs" />
+    <Compile Include="CommandSystem\CommandResult.cs" />
+    <Compile Include="CommandSystem\CommandResultType.cs" />
+    <Compile Include="CommandSystem\ICommand.cs" />
+    <Compile Include="CommandSystem\ICommandHydrator.cs" />
+    <Compile Include="CommandSystem\ICommandLocator.cs" />
+    <Compile Include="CommandSystem\ICommandProcessor.cs" />
+    <Compile Include="Commands\Meta\ApplicationInfo.cs" />
+    <Compile Include="Commands\Meta\TestCommand.cs" />
+    <Compile Include="Server\HttpResponse.cs" />
+    <Compile Include="Server\HttpServer.cs" />
+    <Compile Include="Server\IHttpServer.cs" />
     <Compile Include="Kernel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,9 +70,17 @@
     <Compile Include="Runtime\IRuntimeContext.cs" />
     <Compile Include="Runtime\RuntimeContext.cs" />
     <Compile Include="Runtime\SimpleLoopRuntime.cs" />
+    <Compile Include="Server\IJsonRpcCommandTranslator.cs" />
+    <Compile Include="Server\IJsonRpcHttpConverter.cs" />
+    <Compile Include="Server\IJsonRpcRequestParser.cs" />
+    <Compile Include="Server\JsonRpcParserResult.cs" />
+    <Compile Include="Server\JsonRpcProcessor.cs" />
+    <Compile Include="Server\JsonRpcRequest.cs" />
+    <Compile Include="Server\JsonRpcRequestParser.cs" />
     <Compile Include="ServiceLocator\IServiceLocator.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocator.cs" />
     <Compile Include="Utilities\Clock.cs" />
+    <Compile Include="Utilities\ApolloJsonSerializer.cs" />
     <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -36,6 +36,7 @@
     <Reference Include="AutoMoq, Version=1.8.1.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\AutoMoq.2.0.0\lib\net45\AutoMoq.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -50,6 +51,9 @@
     </Reference>
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.2-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,11 +74,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseUnitTest.cs" />
+    <Compile Include="CommandSystem\CommandHydratorIntegrationTests.cs" />
+    <Compile Include="CommandSystem\CommandLocatorIntegrationTests.cs" />
+    <Compile Include="CommandSystem\CommandProcessorTests.cs" />
+    <Compile Include="Commands\Meta\TestCommandTests.cs" />
     <Compile Include="KernelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\RuntimeContextTests.cs" />
     <Compile Include="Runtime\SimpleLoopRuntimeTests.cs" />
+    <Compile Include="Server\JsonRpcCommandTranslatorTests.cs" />
+    <Compile Include="Server\JsonRpcHttpConverterTests.cs" />
+    <Compile Include="Server\JsonRpcProcessorTests.cs" />
+    <Compile Include="Server\HttpResponseTests.cs" />
+    <Compile Include="Server\JsonRpcRequestParserTests.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocatorTests.cs" />
+    <Compile Include="Utilities\JsonSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
