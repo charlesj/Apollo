@@ -33,6 +33,7 @@ namespace Apollo.ServiceLocator
             container.Register<IHttpServer, HttpServer>();
             container.Register<IJsonRpcCommandTranslator, JsonRpcCommandTranslator>();
             container.Register<IJsonRpcHttpConverter, JsonRpcHttpConverter>();
+            container.Register<IJsonRpcRequestLogger, JsonRpcRequestLogger>();
             container.Register<IJsonRpcRequestParser, JsonRpcRequestParser>();
             container.Register<IJsonRpcProcessor, JsonRpcProcessor>();
 
