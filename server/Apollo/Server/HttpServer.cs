@@ -35,8 +35,17 @@ namespace Apollo.Server
                     ThreadPool.QueueUserWorkItem((ctx) =>
                     {
                         var context = (HttpListenerContext) ctx;
+                        context.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                        context.Response.AddHeader("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
+                        context.Response.AddHeader("Access-Control-Allow-Methods", "POST");
                         try
                         {
+                            if (context.Request.HttpMethod == "OPTIONS")
+                            {
+                                context.Response.Close();
+                                return;
+                            }
+
                             var body = new StreamReader(context.Request.InputStream).ReadToEnd();
                             var response = processor.Process(body).GetAwaiter().GetResult();
                             var bodyBytes = Encoding.UTF8.GetBytes(response.Body);

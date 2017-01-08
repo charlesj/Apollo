@@ -73,6 +73,7 @@
     <Compile Include="Server\IJsonRpcCommandTranslator.cs" />
     <Compile Include="Server\IJsonRpcHttpConverter.cs" />
     <Compile Include="Server\IJsonRpcRequestParser.cs" />
+    <Compile Include="Server\IRequestLogger.cs" />
     <Compile Include="Server\JsonRpcParserResult.cs" />
     <Compile Include="Server\JsonRpcProcessor.cs" />
     <Compile Include="Server\JsonRpcRequest.cs" />
