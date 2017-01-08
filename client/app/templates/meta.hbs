@@ -1,15 +1,21 @@
-<h1>Application Info</h1>
-<table class="table">
-  <tr>
-    <td>version</td>
-    <td>{{ model.version }}</td>
-  </tr>
-  <tr>
-    <td>commit</td>
-    <td>{{ model.commitHash }}</td>
-  </tr>
-  <tr>
-    <td>built</td>
-    <td>{{ model.compiledOn }}</td>
-  </tr>
-</table>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Application Info</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <tr>
+        <td>version</td>
+        <td>{{ model.version }}</td>
+      </tr>
+      <tr>
+        <td>commit</td>
+        <td>{{ model.commitHash }}</td>
+      </tr>
+      <tr>
+        <td>built</td>
+        <td>{{ model.compiledOn }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
