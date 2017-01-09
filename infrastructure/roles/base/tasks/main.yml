@@ -9,3 +9,8 @@
     - vim
     - python-pip
     - jq
+    - build-essential
+    - autotools-dev
+    - automake
+- include: dotnet.yml
+- include: ember.yml
