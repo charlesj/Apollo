@@ -13,3 +13,10 @@
     state: present
   notify:
     - restart haproxy
+- name: Copy haproxy config
+  template:
+    src: ../templates/etc.haproxy.haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+  become: true
+  notify:
+    - restart haproxy
