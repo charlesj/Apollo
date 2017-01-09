@@ -40,7 +40,7 @@ namespace Apollo.Server
                         context.Response.AddHeader("Access-Control-Allow-Methods", "POST");
                         try
                         {
-                            if (context.Request.HttpMethod == "OPTIONS")
+                            if (context.Request.HttpMethod == "OPTIONS" || context.Request.HttpMethod == "HEAD")
                             {
                                 context.Response.Close();
                                 return;
