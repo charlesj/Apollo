@@ -13,5 +13,4 @@
     - autotools-dev
     - automake
 - include: dotnet.yml
-- include: ember.yml
 - include: haproxy.yml

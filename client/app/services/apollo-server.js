@@ -6,7 +6,7 @@ export default Ember.Service.extend({
   request(commandName, payload) {
     console.log(`COMMAND ${commandName}`);
     console.log(payload);
-    return this.get('ajax').request('http://localhost:8042', {
+    return this.get('ajax').request('http://192.168.142.10', {
       method: 'POST',
       contentType: "application/json",
       data:JSON.stringify({
