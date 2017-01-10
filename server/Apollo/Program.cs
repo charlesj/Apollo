@@ -23,16 +23,18 @@ namespace Apollo
 
             Console.WriteLine($"Apollo {CurrentVersion} has started. Ctrl+C will exit.");
 
-            Console.CancelKeyPress += async delegate {
+            Console.CancelKeyPress += delegate {
                 Console.Write($"Shutting down now");
                 runTimeContext.End();
 
                 while (!runTimeContext.Ended)
                 {
                     Console.Write(".");
-                    await Task.Delay(1000);
+                    Task.Delay(100).GetAwaiter().GetResult();
                 }
 
+                Console.WriteLine(string.Empty);
+                Console.WriteLine("Shutdown complete.");
                 Environment.Exit(0);
             };
 

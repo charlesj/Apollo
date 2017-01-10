@@ -1,0 +1,22 @@
+---
+- name: Install haproxy
+  become: true
+  apt:
+    name: haproxy
+    state: present
+- name: Enable haproxy
+  become: true
+  lineinfile:
+    dest: /etc/default/haproxy
+    regexp: '^ENABLED='
+    line: 'ENABLED=1'
+    state: present
+  notify:
+    - restart haproxy
+- name: Copy haproxy config
+  template:
+    src: ../templates/etc.haproxy.haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+  become: true
+  notify:
+    - restart haproxy

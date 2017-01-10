@@ -1,0 +1,16 @@
+---
+- name: Install apt-get packages
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - httpie
+    - vim
+    - python-pip
+    - jq
+    - build-essential
+    - autotools-dev
+    - automake
+- include: dotnet.yml
+- include: haproxy.yml
