@@ -11,4 +11,4 @@ locally and is run more often, so this is my preference.
 - Server: .NET/C# on Mono
 - Client: Emberjs with EmberCLI
 - Database: Postgres with migrations by Alembic / Sql Alchemy
-- Infrastructure: Ansible - `i <3 plabooks`
+- Infrastructure: Ansible - `i <3 playbooks`
