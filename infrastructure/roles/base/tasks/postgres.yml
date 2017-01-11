@@ -1,0 +1,36 @@
+---
+- name: Install Postgres
+  become: yes
+  apt: name={{item}}
+  with_items:
+      - postgresql
+      - libpq-dev
+      - python-psycopg2
+- name: Create Database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{dbname}}"
+- name: Create Apollo db user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    db: "{{dbname}}"
+    name: "{{dbuser}}"
+    password: "{{dbpassword}}"
+    priv: ALL
+- name: Restrict user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{dbuser}}"
+    role_attr_flags: NOSUPERUSER,NOCREATEDB
+- name: Prevent other users from access db
+  become: yes
+  become_user: postgres
+  postgresql_privs:
+    db: "{{dbname}}"
+    role: PUBLIC
+    type: database
+    priv: ALL
+    state: absent
