@@ -4,3 +4,6 @@
 
 # ansible
 *.retry
+
+# python compiled
+*.pyc

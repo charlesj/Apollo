@@ -1,4 +1,8 @@
 ---
 - hosts: all
+  vars:
+    dbname: apollo_db
+    dbuser: apollo_pg
+    dbpassword: apollo_db_password
   roles:
     - base
