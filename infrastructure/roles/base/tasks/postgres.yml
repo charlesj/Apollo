@@ -34,3 +34,7 @@
     type: database
     priv: ALL
     state: absent
+- name: Install alembic for migrations
+  pip:
+    name: alembic
+    state: present
