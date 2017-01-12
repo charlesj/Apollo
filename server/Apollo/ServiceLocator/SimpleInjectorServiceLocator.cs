@@ -1,5 +1,6 @@
 ﻿using System;
 using Apollo.CommandSystem;
+using Apollo.Data;
 using Apollo.Runtime;
 using Apollo.Server;
 using Apollo.Utilities;
@@ -24,6 +25,9 @@ namespace Apollo.ServiceLocator
             container.Register<ICommandHydrator, CommandHydrator>(Lifestyle.Singleton);
             container.Register<ICommandLocator, CommandLocator>(Lifestyle.Singleton);
             container.Register<ICommandProcessor, CommandProcessor>(Lifestyle.Singleton);
+
+            // data bindings
+            container.Register<IDbConnectionFactory, ConnectionFactory>();
 
             // runtime bindings
             container.Register<IRuntime, SimpleLoopRuntime>();
