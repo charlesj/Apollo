@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+APOLLO_CONSOLE_EXE=$PROJECT_DIR/Apollo.Console/bin/Release/Apollo.Console.exe
+
+if [ ! -f "$APOLLO_CONSOLE_EXE" ]; then
+    ./build
+fi
+
+mono "$APOLLO_CONSOLE_EXE" "$@"
