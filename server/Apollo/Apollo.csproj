@@ -33,9 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.12.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Dapper-Async.1.03\lib\net45\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.9.0.2-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=3.1.9.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7">
+      <HintPath>..\packages\Npgsql.3.1.9\lib\net45\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="SimpleInjector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99">
       <HintPath>..\packages\SimpleInjector.4.0.0-alpha1\lib\net45\SimpleInjector.dll</HintPath>
@@ -58,8 +64,11 @@
     <Compile Include="CommandSystem\ICommandHydrator.cs" />
     <Compile Include="CommandSystem\ICommandLocator.cs" />
     <Compile Include="CommandSystem\ICommandProcessor.cs" />
+    <Compile Include="Commands\Journal\GetAllJournalEntries.cs" />
     <Compile Include="Commands\Meta\ApplicationInfo.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
+    <Compile Include="Data\IDbConnectionFactory.cs" />
+    <Compile Include="Data\ResultModels\JournalEntry.cs" />
     <Compile Include="Server\HttpResponse.cs" />
     <Compile Include="Server\HttpServer.cs" />
     <Compile Include="Server\IHttpServer.cs" />
