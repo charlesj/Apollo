@@ -38,3 +38,20 @@
   pip:
     name: alembic
     state: present
+- name: Configure external ip connections
+  become: true
+  lineinfile:
+    dest: /etc/postgresql/9.5/main/postgresql.conf
+    regexp: 'listen_addresses'
+    line: "listen_addresses = '{{ hostvars[inventory_hostname]['ansible_all_ipv4_addresses'][1] }}, localhost'"
+    state: present
+  notify:
+    - restart postgres
+- name: Enable external md5 logins
+  become: true
+  lineinfile:
+    dest: /etc/postgresql/9.5/main/pg_hba.conf
+    line: host all all 192.168.0.0/16 md5
+    state: present
+  notify:
+    - restart postgres
