@@ -82,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\RuntimeContextTests.cs" />
     <Compile Include="Runtime\SimpleLoopRuntimeTests.cs" />
+    <Compile Include="Server\HttpServerTests.cs" />
     <Compile Include="Server\JsonRpcCommandTranslatorTests.cs" />
     <Compile Include="Server\JsonRpcHttpConverterTests.cs" />
     <Compile Include="Server\JsonRpcProcessorTests.cs" />

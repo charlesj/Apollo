@@ -32,42 +32,109 @@ namespace Apollo.Server
             {
                 while (listener.IsListening)
                 {
-                    ThreadPool.QueueUserWorkItem((ctx) =>
-                    {
-                        var context = (HttpListenerContext) ctx;
-                        context.Response.AddHeader("Access-Control-Allow-Origin", "*");
-                        context.Response.AddHeader("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
-                        context.Response.AddHeader("Access-Control-Allow-Methods", "POST");
-                        try
-                        {
-                            if (context.Request.HttpMethod == "OPTIONS" || context.Request.HttpMethod == "HEAD")
-                            {
-                                context.Response.Close();
-                                return;
-                            }
-
-                            var body = new StreamReader(context.Request.InputStream).ReadToEnd();
-                            var response = processor.Process(body).GetAwaiter().GetResult();
-                            var bodyBytes = Encoding.UTF8.GetBytes(response.Body);
-                            context.Response.StatusCode = response.HttpCode;
-
-                            context.Response.KeepAlive = false;
-                            context.Response.ContentLength64 = bodyBytes.Length;
-                            var output = context.Response.OutputStream;
-                            output.Write(bodyBytes, 0, bodyBytes.Length);
-                            context.Response.Close();
-                        }
-                        catch (Exception exception)
-                        {
-                            context.Response.StatusCode = 503;
-                            var output = context.Response.OutputStream;
-                            var bodyBytes = Encoding.UTF8.GetBytes($"Eh?  I can't understand you: {exception.Message}");
-                            output.Write(bodyBytes, 0, bodyBytes.Length);
-                            context.Response.Close();
-                        }
-                    }, listener.GetContext());
+                    ThreadPool.QueueUserWorkItem(c => ProcessRequest(new TestableHttpListenerContext(c)), listener.GetContext());
                 }
             });
+        }
+
+        public void ProcessRequest(ITestableHttpListenerContext context)
+        {
+            try
+            {
+                context.AddHeader("Access-Control-Allow-Origin", "*");
+                context.AddHeader("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
+                context.AddHeader("Access-Control-Allow-Methods", "POST");
+
+                if (context.HttpMethod == "OPTIONS" || context.HttpMethod == "HEAD")
+                {
+                    context.CloseResponse();
+                    return;
+                }
+
+                var body = context.GetRequestBody();
+                var response = processor.Process(body).GetAwaiter().GetResult();
+
+                context.StatusCode = response.HttpCode;
+
+                context.WriteResponseBody(response.Body);
+
+                context.CloseResponse();
+            }
+            catch (Exception exception)
+            {
+                context.StatusCode = 503;
+                context.WriteResponseBody($"SERVER ERROR: {exception.Message}");
+                context.CloseResponse();
+            }
+        }
+
+        public interface ITestableHttpListenerContext
+        {
+            string HttpMethod { get; }
+            int StatusCode { get; set; }
+            string GetRequestBody();
+            void WriteResponseBody(string body);
+            void AddHeader(string headerName, string value);
+            void CloseResponse();
+        }
+
+        public class TestableHttpListenerContext : ITestableHttpListenerContext
+        {
+            private Lazy<HttpListenerContext> lazyContext;
+
+            private HttpListenerContext context
+            {
+                get { return lazyContext.Value; }
+                set {}
+            }
+
+            [Obsolete("Testing only")]
+            public TestableHttpListenerContext(){}
+
+            public TestableHttpListenerContext(object passedContext)
+            {
+                this.lazyContext = new Lazy<HttpListenerContext>(() =>
+                {
+                    if(passedContext == null)
+                        throw new ArgumentNullException(
+                            nameof(passedContext),
+                            "Null HttpListenerContext Encountered at Lazy Evaluation");
+                    var castContext = (HttpListenerContext) passedContext;
+                    castContext.Response.KeepAlive = false;
+                    return castContext;
+                });
+            }
+
+            public virtual string HttpMethod => context.Request.HttpMethod;
+
+            public virtual int StatusCode
+            {
+                get { return context.Response.StatusCode; }
+                set { context.Response.StatusCode = value; }
+            }
+
+            public virtual string GetRequestBody()
+            {
+                return new StreamReader(context.Request.InputStream).ReadToEnd();
+            }
+
+            public void WriteResponseBody(string body)
+            {
+                var bodyBytes = Encoding.UTF8.GetBytes(body);
+                context.Response.ContentLength64 = bodyBytes.Length;
+                var output = context.Response.OutputStream;
+                output.Write(bodyBytes, 0, bodyBytes.Length);
+            }
+
+            public virtual void AddHeader(string headerName, string value)
+            {
+                context.Response.AddHeader(headerName, value);
+            }
+
+            public virtual void CloseResponse()
+            {
+                context.Response.Close();
+            }
         }
     }
 }
