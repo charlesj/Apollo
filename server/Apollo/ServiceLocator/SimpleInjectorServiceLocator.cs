@@ -28,6 +28,7 @@ namespace Apollo.ServiceLocator
 
             // data bindings
             container.Register<IDbConnectionFactory, ConnectionFactory>();
+            container.Register<IJournalDataService, JournalDataService>();
 
             // runtime bindings
             container.Register<IRuntime, SimpleLoopRuntime>();

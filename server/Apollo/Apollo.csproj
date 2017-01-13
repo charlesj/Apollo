@@ -68,6 +68,7 @@
     <Compile Include="Commands\Meta\ApplicationInfo.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
     <Compile Include="Data\IDbConnectionFactory.cs" />
+    <Compile Include="Data\IJournalDataService.cs" />
     <Compile Include="Data\ResultModels\JournalEntry.cs" />
     <Compile Include="Server\HttpResponse.cs" />
     <Compile Include="Server\HttpServer.cs" />

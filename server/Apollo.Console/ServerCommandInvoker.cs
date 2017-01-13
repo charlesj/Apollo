@@ -27,7 +27,18 @@ namespace Apollo.Console
                 streamWriter.Close();
             }
 
-            var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+            HttpWebResponse httpResponse;
+            try
+            {
+                httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+            }
+            catch (WebException we)
+            {
+                httpResponse = we.Response as HttpWebResponse;
+                if (httpResponse == null)
+                    throw;
+            }
+
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();

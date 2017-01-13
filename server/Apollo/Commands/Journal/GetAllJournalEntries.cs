@@ -1,27 +1,22 @@
 ﻿using System.Threading.Tasks;
 using Apollo.CommandSystem;
 using Apollo.Data;
-using Apollo.Data.ResultModels;
-using Dapper;
 
 namespace Apollo.Commands.Journal
 {
     public class GetAllJournalEntries : ICommand
     {
-        private readonly IDbConnectionFactory connectionFactory;
+        private readonly IJournalDataService journalDataService;
 
-        public GetAllJournalEntries(IDbConnectionFactory connectionFactory)
+        public GetAllJournalEntries(IJournalDataService journalDataService)
         {
-            this.connectionFactory = connectionFactory;
+            this.journalDataService = journalDataService;
         }
 
         public async Task<CommandResult> Execute()
         {
-            using (var connection = await connectionFactory.GetConnection())
-            {
-                var results = await connection.QueryAsync<JournalEntry>("select * from journal");
-                return new CommandResult{ ResultStatus = CommandResultType.Success, Result = results };
-            }
+            var entries = await journalDataService.GetAllJournalEntries();
+            return new CommandResult {ResultStatus = CommandResultType.Success, Result = entries};
         }
 
         public Task<bool> IsValid()

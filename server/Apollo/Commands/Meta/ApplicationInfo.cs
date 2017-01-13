@@ -9,7 +9,7 @@ namespace Apollo.Commands.Meta
         {
             var result = new CommandResult
             {
-                Result = new
+                Result = new ApplicationInfoResult
                 {
                     version = Apollo.Version,
                     commitHash = Apollo.CommitHash,
@@ -29,5 +29,12 @@ namespace Apollo.Commands.Meta
         {
             return Task.FromResult(true);
         }
+    }
+
+    public class ApplicationInfoResult
+    {
+        public string version { get; set; }
+        public string commitHash { get; set; }
+        public string compiledOn { get; set; }
     }
 }
