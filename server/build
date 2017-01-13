@@ -43,4 +43,11 @@ fi
 
 xbuild /p:Configuration=Release Apollo.sln
 
-mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll
+for var in "$@"
+do
+    if [ $var = "integrate" ]; then
+      mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll Apollo.IntegrationTests/bin/Release/Apollo.IntegrationTests.dll
+    else
+      mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll
+    fi
+done

@@ -40,5 +40,17 @@ namespace Apollo.Tests.ServiceLocator
             var testCommand = locator.Get(typeof(JsonRpcRequestParser));
             Assert.IsType<JsonRpcRequestParser>(testCommand);
         }
+
+        public class IntegrationTests
+        {
+            [Fact]
+            public void PassesSanityCheck()
+            {
+                var locator = new SimpleInjectorServiceLocator();
+                locator.RegisterServices();
+
+                locator.Test();
+            }
+        }
     }
 }
