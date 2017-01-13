@@ -56,5 +56,10 @@ namespace Apollo.ServiceLocator
         {
             return this.container.GetInstance(type);
         }
+
+        public void Test()
+        {
+            this.container.Verify(VerificationOption.VerifyAndDiagnose);
+        }
     }
 }
