@@ -9,9 +9,18 @@ NUGET_EXE=$TOOLS_DIR/nuget.exe
 XUNIT_VERSION=2.2.0-beta4-build3444
 XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools/xunit.console.exe
 
+RUN_INTEGRATION_SUITE=false
+for var in "$@"
+do
+    if [ $var = "integrate" ]; then
+      RUN_INTEGRATION_SUITE=true
+    fi
+done
+
+
 # Verion file
 if [ -f Apollo/Version.cs ]; then
-  rm Apollo/Version.cs
+    rm Apollo/Version.cs
 fi
 
 cp Apollo/Version_Template.cs Apollo/Version.cs
@@ -22,7 +31,7 @@ sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Apollo/Version.cs
 
 # Make sure the tools folder exist.
 if [ ! -d "$TOOLS_DIR" ]; then
-  mkdir "$TOOLS_DIR"
+    mkdir "$TOOLS_DIR"
 fi
 
 # Download NuGet if it does not exist.
@@ -43,11 +52,8 @@ fi
 
 xbuild /p:Configuration=Release Apollo.sln
 
-for var in "$@"
-do
-    if [ $var = "integrate" ]; then
-      mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll Apollo.IntegrationTests/bin/Release/Apollo.IntegrationTests.dll
-    else
-      mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll
-    fi
-done
+if [ "$RUN_INTEGRATION_SUITE" = true ]; then
+    mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll Apollo.IntegrationTests/bin/Release/Apollo.IntegrationTests.dll
+else
+    mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll
+fi
