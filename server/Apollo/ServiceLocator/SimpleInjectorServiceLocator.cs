@@ -20,6 +20,7 @@ namespace Apollo.ServiceLocator
         public void RegisterServices()
         {
             container.Register<IServiceLocator>(() => this, Lifestyle.Singleton);
+            container.Register<IConfiguration, Configuration>(Lifestyle.Singleton);
 
             // command system bindings
             container.Register<ICommandHydrator, CommandHydrator>(Lifestyle.Singleton);
@@ -44,6 +45,7 @@ namespace Apollo.ServiceLocator
 
             // utility binding
             container.Register<IClock, Clock>(Lifestyle.Singleton);
+            container.Register<IEnvironmentReader, EnvironmentReader>(Lifestyle.Singleton);
             container.Register<IJsonSerializer, ApolloJsonSerializer>(Lifestyle.Singleton);
         }
 

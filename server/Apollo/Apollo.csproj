@@ -67,6 +67,8 @@
     <Compile Include="Commands\Journal\GetAllJournalEntries.cs" />
     <Compile Include="Commands\Meta\ApplicationInfo.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Data\IDbConnectionFactory.cs" />
     <Compile Include="Data\IJournalDataService.cs" />
     <Compile Include="Data\ResultModels\JournalEntry.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocator.cs" />
     <Compile Include="Utilities\Clock.cs" />
     <Compile Include="Utilities\ApolloJsonSerializer.cs" />
+    <Compile Include="Utilities\EnvironmentReader.cs" />
     <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>
