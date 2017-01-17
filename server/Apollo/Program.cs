@@ -14,6 +14,13 @@ namespace Apollo
             var kernel = new Kernel();
             var serviceLocator = kernel.Boot(BootOptions.Defaults);
 
+            var configuration = serviceLocator.Get<IConfiguration>();
+            if (!configuration.IsValid())
+            {
+                Console.WriteLine("Invalid Configuration");
+                Environment.Exit(1);
+            }
+
             var server = serviceLocator.Get<IHttpServer>();
             server.Listen();
 
