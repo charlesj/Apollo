@@ -97,6 +97,7 @@
     <Compile Include="Server\JsonRpcProcessorTests.cs" />
     <Compile Include="Server\HttpResponseTests.cs" />
     <Compile Include="Server\JsonRpcRequestParserTests.cs" />
+    <Compile Include="Server\TestableHttpListenerContextTests.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocatorTests.cs" />
     <Compile Include="Utilities\JsonSerializerTests.cs" />
   </ItemGroup>

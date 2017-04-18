@@ -86,10 +86,12 @@
     <Compile Include="Server\IJsonRpcHttpConverter.cs" />
     <Compile Include="Server\IJsonRpcRequestParser.cs" />
     <Compile Include="Server\IRequestLogger.cs" />
+    <Compile Include="Server\ITestableHttpListenerContext.cs" />
     <Compile Include="Server\JsonRpcParserResult.cs" />
     <Compile Include="Server\JsonRpcProcessor.cs" />
     <Compile Include="Server\JsonRpcRequest.cs" />
     <Compile Include="Server\JsonRpcRequestParser.cs" />
+    <Compile Include="Server\TestableHttpListenerContext.cs" />
     <Compile Include="ServiceLocator\IServiceLocator.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocator.cs" />
     <Compile Include="Utilities\Clock.cs" />

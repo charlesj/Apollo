@@ -11,7 +11,7 @@ namespace Apollo.Tests.Server
         [Fact]
         public void AlwaysAddsAccessControlAllowOriginHeader()
         {
-            var context = Mocker.GetMock<HttpServer.ITestableHttpListenerContext>();
+            var context = Mocker.GetMock<ITestableHttpListenerContext>();
 
             ClassUnderTest.ProcessRequest(context.Object);
 
@@ -21,7 +21,7 @@ namespace Apollo.Tests.Server
         [Fact]
         public void AlwaysAddsAllowHeadersHeader()
         {
-            var context = Mocker.GetMock<HttpServer.ITestableHttpListenerContext>();
+            var context = Mocker.GetMock<ITestableHttpListenerContext>();
 
             ClassUnderTest.ProcessRequest(context.Object);
 
@@ -34,7 +34,7 @@ namespace Apollo.Tests.Server
         [Fact]
         public void AlwaysAddsAllowHeadersMethods()
         {
-            var context = Mocker.GetMock<HttpServer.ITestableHttpListenerContext>();
+            var context = Mocker.GetMock<ITestableHttpListenerContext>();
 
             ClassUnderTest.ProcessRequest(context.Object);
 
@@ -44,7 +44,7 @@ namespace Apollo.Tests.Server
         [Fact]
         public void ImmediatelyClosesResponseOnHEADorOPTIONS()
         {
-            var context = Mocker.GetMock<HttpServer.ITestableHttpListenerContext>();
+            var context = Mocker.GetMock<ITestableHttpListenerContext>();
             context.SetupGet(s => s.HttpMethod).Returns("HEAD");
             ClassUnderTest.ProcessRequest(context.Object);
 
@@ -56,7 +56,7 @@ namespace Apollo.Tests.Server
         [Fact]
         public void PassesBodyToJsonRPCProcessorAndSetsResponse()
         {
-            var context = Mocker.GetMock<HttpServer.ITestableHttpListenerContext>();
+            var context = Mocker.GetMock<ITestableHttpListenerContext>();
             var body = "body";
             context.SetupGet(s => s.HttpMethod).Returns("POST");
             context.Setup(c => c.GetRequestBody()).Returns(body);
@@ -79,7 +79,7 @@ namespace Apollo.Tests.Server
         public void Returns503_WhenAddingHeaderThrows()
         {
             var thrownException = new Exception("Yep I Am Exception");
-            var context = Mocker.GetMock<HttpServer.ITestableHttpListenerContext>();
+            var context = Mocker.GetMock<ITestableHttpListenerContext>();
             context.Setup(c => c.AddHeader(It.IsAny<string>(), It.IsAny<string>()))
                    .Throws(thrownException);
 
@@ -92,23 +92,14 @@ namespace Apollo.Tests.Server
             context.Verify(c => c.CloseResponse(), Times.Once());
         }
 
-        public class TestableHttpListenerContextTests
+        [Fact]
+        public void TellsWorldWhatPowersIt()
         {
-            [Fact]
-            public void CanHandlePassedNulls()
-            {
-                var context = new HttpServer.TestableHttpListenerContext(null);
-                Assert.NotNull(context);
-            }
+            var context = Mocker.GetMock<ITestableHttpListenerContext>();
 
-            [Fact]
-            public void ThrowsProperNullRef_WhenAccessFirstTime()
-            {
-                var context = new HttpServer.TestableHttpListenerContext(null);
-                var exception = Assert.Throws<ArgumentNullException>(() => context.GetRequestBody());
-                Assert.Equal("passedContext", exception.ParamName);
-                Assert.True(exception.Message.StartsWith("Null HttpListenerContext Encountered at Lazy Evaluation"));
-            }
+            ClassUnderTest.ProcessRequest(context.Object);
+
+            context.Verify(c => c.AddHeader("X-Powered-By", $"Apollo v{Apollo.Version}"), Times.Once());
         }
     }
 }
