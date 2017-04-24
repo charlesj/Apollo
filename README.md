@@ -8,7 +8,7 @@ locally and is run more often, so this is my preference.
 
 ## Tech
 - Server: .NET/C# on Mono
-- Client: Emberjs with EmberCLI
+- Client: React, possibly moving to React-Native
 - Database: Postgres with migrations by Alembic / Sql Alchemy
 - Infrastructure: Ansible - `i <3 playbooks`
 
