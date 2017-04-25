@@ -1,0 +1,10 @@
+#root {
+    font-family: 'Droid Serif', serif;
+}
+.header{
+    margin-bottom: 10px;
+    padding: 3px;
+}
+h1 {
+    margin: 0;
+}

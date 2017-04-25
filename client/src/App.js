@@ -5,7 +5,12 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <ServerInfo />
+        <div>
+            <div className='header'>
+                <h1>Apollo</h1>
+            </div>
+            <ServerInfo />
+        </div>
     );
   }
 }
