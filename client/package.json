@@ -18,5 +18,25 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "format": "esformatter -i 'src/**/*.js'"
+  },
+  "plugins": [
+    "esformatter-jsx"
+  ],
+  "jsx": {
+    "formatJSXExpressions": true,
+    "JSXExpressionsSingleLine": true,
+    "formatJSX": true,
+    "attrsOnSameLineAsTag": true,
+    "maxAttrsOnTag": 1,
+    "firstAttributeOnSameLine": true,
+    "spaceInJSXExpressionContainers": " ",
+    "alignWithFirstAttribute": false,
+    "htmlOptions": {
+      "brace_style": "collapse",
+      "indent_char": " ",
+      "indent_size": 2,
+      "max_preserve_newlines": 2,
+      "preserve_newlines": true
+    }
   }
 }
