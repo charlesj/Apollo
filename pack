@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+PUBLISH_DIR=package_tmp
+TARBALL=apollo.tar.gz
+
+# clean things from previous if needed.
+if [ -d "$PUBLISH_DIR" ]; then
+    rm -rf "$PUBLISH_DIR"
+fi
+
+if [ -f "$TARBALL" ]; then
+    rm -f "$TARBALL"
+fi
+
+mkdir "$PUBLISH_DIR"
+
+# build server
+
+pushd server
+./build
+popd
+
+mv ./server/Apollo/bin/Release "$PUBLISH_DIR"/server
+
+# build client
+
+pushd client
+yarn build
+popd
+
+mv ./client/build "$PUBLISH_DIR"/client
+
+# tarball
+tar -zcvf "$TARBALL" "$PUBLISH_DIR"

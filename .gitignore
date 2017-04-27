@@ -7,3 +7,7 @@
 
 # python compiled
 *.pyc
+
+# publish artifacts
+package_tmp
+apollo.tar.gz
