@@ -9,5 +9,5 @@
 *.pyc
 
 # publish artifacts
-package_tmp
+apollo
 apollo.tar.gz

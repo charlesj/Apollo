@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-PUBLISH_DIR=package_tmp
+PUBLISH_DIR=apollo
 TARBALL=apollo.tar.gz
 
 # clean things from previous if needed.
