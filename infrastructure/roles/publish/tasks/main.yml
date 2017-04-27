@@ -1,0 +1,2 @@
+---
+- include: build_and_copy.yml

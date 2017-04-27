@@ -1,0 +1,28 @@
+- name: Build and pack locally
+  local_action: command ./pack
+  args:
+    chdir: ../
+- name: Copy tarball to server
+  copy:
+    src: ../apollo.tar.gz
+    dest: /tmp/apollo.tar.gz
+- name: Ensure target directory is removed
+  become: True
+  file:
+    path: /var/apollo
+    state: absent
+- name: Ensure target directory is exists
+  become: True
+  file:
+    path: /var/apollo
+    state: directory
+- name: Decompress build
+  become: true
+  unarchive:
+    src: /tmp/apollo.tar.gz
+    dest: /var/apollo
+    remote_src: True
+- name: Clean up tarball
+  file:
+    path: /tmp/apollo.tar.gz
+    state: absent
