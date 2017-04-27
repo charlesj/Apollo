@@ -5,7 +5,6 @@
     dest: "/var/apollo/{{ item }}"
     mode: 0744
   with_items:
-    - client.sh
     - server.sh
 - name: Copy unit files over
   become: true
