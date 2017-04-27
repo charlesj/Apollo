@@ -17,6 +17,3 @@
     - build-essential
     - autotools-dev
     - automake
-- include: dotnet.yml
-- include: haproxy.yml
-- include: postgres.yml
