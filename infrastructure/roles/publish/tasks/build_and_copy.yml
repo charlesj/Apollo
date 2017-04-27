@@ -11,16 +11,11 @@
   file:
     path: /var/apollo
     state: absent
-- name: Ensure target directory is exists
-  become: True
-  file:
-    path: /var/apollo
-    state: directory
 - name: Decompress build
   become: true
   unarchive:
     src: /tmp/apollo.tar.gz
-    dest: /var/apollo
+    dest: /var/
     remote_src: True
 - name: Clean up tarball
   file:

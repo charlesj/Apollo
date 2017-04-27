@@ -1,2 +1,3 @@
 ---
 - include: build_and_copy.yml
+- include: db_migrations.yml
