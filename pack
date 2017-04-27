@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 PUBLISH_DIR=package_tmp
 TARBALL=apollo.tar.gz
@@ -29,6 +30,12 @@ yarn build
 popd
 
 mv ./client/build "$PUBLISH_DIR"/client
+
+# include database
+pushd database
+git clean -xdf
+popd
+cp -r ./database "$PUBLISH_DIR"/database
 
 # tarball
 tar -zcvf "$TARBALL" "$PUBLISH_DIR"
