@@ -1,6 +1,8 @@
 ---
 - hosts: apollo-host
   vars:
+    apollo_api_url: http://api.apollo/
+    apollo_client_url: http://apollo/
     dbname: apollo_db
     dbuser: apollo_pg
     dbpassword: apollo_db_password
