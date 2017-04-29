@@ -55,6 +55,7 @@
     <Compile Include="CommandBaseOptions.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\Journal\AddJournalEntryCommand.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesCommand.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoCommand.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />

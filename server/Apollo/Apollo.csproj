@@ -64,6 +64,7 @@
     <Compile Include="CommandSystem\ICommandHydrator.cs" />
     <Compile Include="CommandSystem\ICommandLocator.cs" />
     <Compile Include="CommandSystem\ICommandProcessor.cs" />
+    <Compile Include="Commands\Journal\AddJournalEntry.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntries.cs" />
     <Compile Include="Commands\Meta\ApplicationInfo.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />

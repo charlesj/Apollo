@@ -15,11 +15,9 @@ namespace Apollo.Console
             }
 
             ICommandOptions options = null;
-            //string verb = null;
             if (Parser.Default.ParseArguments(args, new TOptions(), (v, so) =>
             {
                 options = (ICommandOptions)so;
-                //verb = v;
             }))
             {
                 var container = new Container();

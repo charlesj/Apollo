@@ -50,7 +50,7 @@ namespace Apollo.Console
                     {
                         System.Console.WriteLine(result);
                     }
-                    else
+                    else if (parsed.result.Result != null)
                     {
                         System.Console.WriteLine(JsonConvert.SerializeObject(parsed.result.Result, Formatting.Indented));
                     }

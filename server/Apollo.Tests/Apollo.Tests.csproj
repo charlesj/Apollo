@@ -83,6 +83,7 @@
     <Compile Include="CommandSystem\CommandHydratorIntegrationTests.cs" />
     <Compile Include="CommandSystem\CommandLocatorIntegrationTests.cs" />
     <Compile Include="CommandSystem\CommandProcessorTests.cs" />
+    <Compile Include="Commands\Journal\AddJournalEntryTests.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesTests.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoTests.cs" />
     <Compile Include="Commands\Meta\TestCommandTests.cs" />
@@ -109,6 +110,9 @@
       <Project>{D50DA21A-2547-44E2-8362-42BBB33F9AD5}</Project>
       <Name>Apollo</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

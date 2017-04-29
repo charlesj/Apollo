@@ -9,6 +9,7 @@ namespace Apollo.Data
     public interface IJournalDataService
     {
         Task<IReadOnlyList<JournalEntry>> GetAllJournalEntries();
+        Task CreateJournalEntry(JournalEntry entry);
     }
 
     public class JournalDataService : IJournalDataService
@@ -26,6 +27,17 @@ namespace Apollo.Data
             {
                 var results = await connection.QueryAsync<JournalEntry>("select * from journal");
                 return results.ToList();
+            }
+        }
+
+        public async Task CreateJournalEntry(JournalEntry entry)
+        {
+            using (var connection = await connectionFactory.GetConnection())
+            {
+                connection.Execute(@"
+                    insert into journal(note, created_at)
+                    values (@note, current_timestamp)",
+                    new {note = entry.note});
             }
         }
     }
