@@ -1,10 +1,11 @@
 var axios = require('axios');
+var config = require('../config');
 
 module.exports = {
   invoke: function(commandName, payload) {
     console.log(`COMMAND ${commandName}`);
     console.log(payload);
-    return axios.post('http://192.168.142.10', {
+    return axios.post(config.apiUrl + 'api', {
       id: 'whatever',
       method: commandName,
       params: payload

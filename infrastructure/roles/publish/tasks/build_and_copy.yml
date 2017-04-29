@@ -21,3 +21,8 @@
   file:
     path: /tmp/apollo.tar.gz
     state: absent
+- name: Set correct api url in env.js
+  lineinfile:
+    path: /var/apollo/client/env.js
+    regexp: '^  API_URL:'
+    line: "  API_URL: '{{ apollo_url }}'"
