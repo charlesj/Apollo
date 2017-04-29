@@ -43,7 +43,7 @@
   lineinfile:
     dest: /etc/postgresql/9.5/main/postgresql.conf
     regexp: 'listen_addresses'
-    line: "listen_addresses = {{ dblisten_addresses | join(', ')}}"
+    line: "listen_addresses = '{{ dblisten_addresses | join(', ')}}'"
     state: present
   notify:
     - restart postgres
