@@ -6,7 +6,7 @@ namespace Apollo.Console
     {
         public SharedCommandOptions()
         {
-            this.Endpoint = "http://192.168.142.10";
+            this.Endpoint = "http://192.168.142.10/api";
         }
 
         [Option("fullResults", Required = false, HelpText = "Whether to display the full results, or just the result object")]
