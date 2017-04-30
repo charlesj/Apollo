@@ -45,11 +45,6 @@ namespace Apollo.Services
         {
             var currentSessions = await this.loginSessionDataService.GetAllSessions();
 
-            foreach (var session in currentSessions)
-            {
-                Console.WriteLine($"Found session {session.token}");
-            }
-
             var valid = currentSessions.Any(s => s.token == token);
 
             if (valid)
