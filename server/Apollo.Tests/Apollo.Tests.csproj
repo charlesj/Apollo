@@ -85,6 +85,7 @@
     <Compile Include="CommandSystem\CommandProcessorTests.cs" />
     <Compile Include="Commands\Journal\AddJournalEntryTests.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesTests.cs" />
+    <Compile Include="Commands\LoginTests.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoTests.cs" />
     <Compile Include="Commands\Meta\TestCommandTests.cs" />
     <Compile Include="ConfigurationTests.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Server\JsonRpcRequestParserTests.cs" />
     <Compile Include="Server\TestableHttpListenerContextTests.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocatorTests.cs" />
+    <Compile Include="Services\LoginServiceTests.cs" />
     <Compile Include="Utilities\JsonSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>

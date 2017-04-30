@@ -3,6 +3,7 @@ using Apollo.CommandSystem;
 using Apollo.Data;
 using Apollo.Runtime;
 using Apollo.Server;
+using Apollo.Services;
 using Apollo.Utilities;
 using SimpleInjector;
 
@@ -42,6 +43,9 @@ namespace Apollo.ServiceLocator
             container.Register<IJsonRpcRequestLogger, JsonRpcRequestLogger>();
             container.Register<IJsonRpcRequestParser, JsonRpcRequestParser>();
             container.Register<IJsonRpcProcessor, JsonRpcProcessor>();
+
+            // service bindings
+            container.Register<ILoginService, LoginService>(Lifestyle.Singleton);
 
             // utility binding
             container.Register<IClock, Clock>(Lifestyle.Singleton);

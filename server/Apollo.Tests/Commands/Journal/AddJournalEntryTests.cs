@@ -53,11 +53,5 @@ namespace Apollo.Tests.Commands.Journal
 
             Assert.Null(result.Result);
         }
-
-        [Fact]
-        public async void NoSpecialAuthorization()
-        {
-            Assert.True(await this.ClassUnderTest.Authorize());
-        }
     }
 }

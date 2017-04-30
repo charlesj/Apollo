@@ -2,21 +2,22 @@
 using Apollo.CommandSystem;
 using Apollo.Data;
 using Apollo.Data.ResultModels;
+using Apollo.Services;
 
 namespace Apollo.Commands.Journal
 {
-    public class AddJournalEntry : ICommand
+    public class AddJournalEntry : AuthenticatedCommand
     {
         private readonly IJournalDataService journalDataService;
 
         public string Note { get; set; }
 
-        public AddJournalEntry(IJournalDataService journalDataService)
+        public AddJournalEntry(IJournalDataService journalDataService, ILoginService loginService) : base(loginService)
         {
             this.journalDataService = journalDataService;
         }
 
-        public async Task<CommandResult> Execute()
+        public override async Task<CommandResult> Execute()
         {
             await this.journalDataService.CreateJournalEntry(new JournalEntry
             {
@@ -29,14 +30,9 @@ namespace Apollo.Commands.Journal
             };
         }
 
-        public Task<bool> IsValid()
+        public override Task<bool> IsValid()
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(this.Note));
-        }
-
-        public Task<bool> Authorize()
-        {
-            return Task.FromResult(true);
         }
     }
 }

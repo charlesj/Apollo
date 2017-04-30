@@ -11,6 +11,7 @@ namespace Apollo
         string DatabaseServer();
         string DatabaseUsername();
         string DatabasePassword();
+        string LoginPassword();
 
         bool IsValid();
     }
@@ -44,11 +45,24 @@ namespace Apollo
             return reader.Read(Constants.EnvironmentalVars.DatabasePassword);
         }
 
+        public string LoginPassword()
+        {
+            return reader.Read(Constants.EnvironmentalVars.LoginPassword);
+        }
+
         public bool IsValid()
         {
             try
             {
-                var checkVals = new List<Func<string>>() {DatabaseName, DatabaseServer, DatabaseUsername, DatabaseUsername};
+                var checkVals = new List<Func<string>>()
+                {
+                    DatabaseName,
+                    DatabaseServer,
+                    DatabaseUsername,
+                    DatabaseUsername,
+                    LoginPassword
+                };
+
                 return checkVals.All(v => !string.IsNullOrWhiteSpace(v()));
             }
             catch (Exception)

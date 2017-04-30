@@ -67,6 +67,19 @@ namespace Apollo.Tests
         }
 
         [Fact]
+        public void LoginPassword_ResturnsEnvVarValue()
+        {
+            var reader = Mocker.GetMock<IEnvironmentReader>();
+            var expected = "Password";
+            reader.Setup(r => r.Read(Constants.EnvironmentalVars.LoginPassword)).Returns(expected);
+
+            var actual = ClassUnderTest.LoginPassword();
+
+            Assert.Equal(expected, actual);
+        }
+
+
+        [Fact]
         public void IsValid_ReturnsFalse_WhenGivenANull()
         {
             var reader = Mocker.GetMock<IEnvironmentReader>();
@@ -83,7 +96,7 @@ namespace Apollo.Tests
         }
 
         [Fact]
-        public void ReturnsTrue_WHenAllIsWell()
+        public void ReturnsTrue_WhenAllIsWell()
         {
             var reader = Mocker.GetMock<IEnvironmentReader>();
             reader.Setup(r => r.Read(It.IsAny<string>())).Returns("notnull");
