@@ -23,6 +23,9 @@ namespace Apollo.Console
         [VerbOption("hash", HelpText = "Generate the server password hash")]
         public GetPasswordHashCommandOptions GetPasswordHashCommandOptions { get; set; }
 
+        [VerbOption("endpoint", HelpText = "Change the endpoint the console is pointing to")]
+        public ChangeEndpointCommandOptions ChangeEndpointCommandOptions { get; set; }
+
         // journal
         [VerbOption("getAllJournalEntries", HelpText = "Gets all the journal entries")]
         public GetAllJournalEntriesCommandOptions GetAllJournalEntriesCommandOptions { get; set; }

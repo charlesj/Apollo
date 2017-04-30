@@ -57,6 +57,7 @@
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\Journal\AddJournalEntryCommand.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesCommand.cs" />
+    <Compile Include="Commands\Local\ChangeEndpointCommand.cs" />
     <Compile Include="Commands\Local\GetPasswordHashCommand.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoCommand.cs" />
     <Compile Include="Commands\Meta\LoginCommand.cs" />
