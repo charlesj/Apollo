@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Apollo.Utilities;
 
 namespace Apollo.Console
@@ -32,7 +33,6 @@ namespace Apollo.Console
         public Configuration GetConfiguration()
         {
             var configFilePath = GetConfigFilePath();
-
             if (!File.Exists(configFilePath))
             {
                 var defaults = Configuration.GetDefaults();
@@ -56,10 +56,10 @@ namespace Apollo.Console
 
         private string GetConfigFilePath()
         {
-            var configFilePath = this.environmentReader.Read("APOLLO_CONFIGFILE");
-            if (configFilePath == null)
-                configFilePath = "config.json";
-            return configFilePath;
+            var mode = this.environmentReader.Read("APOLLO_CONSOLE_MODE");
+            return mode != "prod"
+                ? "config.json"
+                : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".apollo.config");
         }
     }
 }
