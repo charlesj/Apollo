@@ -71,9 +71,9 @@ namespace Apollo.Tests
         {
             var reader = Mocker.GetMock<IEnvironmentReader>();
             var expected = "Password";
-            reader.Setup(r => r.Read(Constants.EnvironmentalVars.LoginPassword)).Returns(expected);
+            reader.Setup(r => r.Read(Constants.EnvironmentalVars.LoginHash)).Returns(expected);
 
-            var actual = ClassUnderTest.LoginPassword();
+            var actual = ClassUnderTest.LoginPasswordHash();
 
             Assert.Equal(expected, actual);
         }

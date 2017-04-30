@@ -8,7 +8,7 @@
             public const string DatabaseServer = "APOLLO_DATABASESERVER";
             public const string DatabaseUsername = "APOLLO_DATABASEUSERNAME";
             public const string DatabasePassword = "APOLLO_DATABASEPASSWORD";
-            public const string LoginPassword = "APOLLO_LOGINPASSWORD";
+            public const string LoginHash = "APOLLO_LOGINHASH";
         }
     }
 }

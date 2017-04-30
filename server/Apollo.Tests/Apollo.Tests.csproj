@@ -104,6 +104,7 @@
     <Compile Include="Services\LoginServiceTests.cs" />
     <Compile Include="Utilities\Base64ConverterTests.cs" />
     <Compile Include="Utilities\JsonSerializerTests.cs" />
+    <Compile Include="Utilities\PasswordHasherTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

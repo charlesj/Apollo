@@ -102,6 +102,7 @@
     <Compile Include="Utilities\Clock.cs" />
     <Compile Include="Utilities\ApolloJsonSerializer.cs" />
     <Compile Include="Utilities\EnvironmentReader.cs" />
+    <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>

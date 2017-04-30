@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Apollo.Utilities;
 
 namespace Apollo.Services
 {
@@ -13,17 +14,19 @@ namespace Apollo.Services
     public class LoginService : ILoginService
     {
         private readonly IConfiguration configuration;
+        private readonly IPasswordHasher passwordHasher;
         private string activeToken;
 
-        public LoginService(IConfiguration configuration)
+        public LoginService(IConfiguration configuration, IPasswordHasher passwordHasher)
         {
             this.configuration = configuration;
+            this.passwordHasher = passwordHasher;
         }
 
         public Task<string> Authenticate(string password)
         {
-            var expectedPassword = this.configuration.LoginPassword();
-            if (password != expectedPassword)
+            var passwordHash = this.configuration.LoginPasswordHash();
+            if (!this.passwordHasher.CheckHash(passwordHash, password))
             {
                 return Task.FromResult((string) null);
             }

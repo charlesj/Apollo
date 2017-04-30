@@ -48,9 +48,12 @@ namespace Apollo.ServiceLocator
             container.Register<ILoginService, LoginService>(Lifestyle.Singleton);
 
             // utility binding
+            container.Register<IBase64Converter, Base64Converter>(Lifestyle.Singleton);
             container.Register<IClock, Clock>(Lifestyle.Singleton);
             container.Register<IEnvironmentReader, EnvironmentReader>(Lifestyle.Singleton);
             container.Register<IJsonSerializer, ApolloJsonSerializer>(Lifestyle.Singleton);
+            container.Register<IPasswordHasher, PasswordHasher>(Lifestyle.Singleton);
+
         }
 
         public TService Get<TService>() where TService : class

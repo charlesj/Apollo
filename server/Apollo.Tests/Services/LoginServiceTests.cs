@@ -1,4 +1,5 @@
 ﻿using Apollo.Services;
+using Apollo.Utilities;
 using Xunit;
 
 namespace Apollo.Tests.Services
@@ -6,20 +7,25 @@ namespace Apollo.Tests.Services
     public class LoginServiceTests : BaseUnitTest<LoginService>
     {
         private const string password = "password";
+        private const string hash = "hash";
 
         public LoginServiceTests()
         {
             this.Mocker.GetMock<IConfiguration>()
-                .Setup(l => l.LoginPassword())
-                .Returns(password);
+                .Setup(l => l.LoginPasswordHash())
+                .Returns(hash);
+
+            this.Mocker.GetMock<IPasswordHasher>()
+                .Setup(p => p.CheckHash(hash, password))
+                .Returns(true);
         }
 
         [Fact]
         public async void ReturnsNullWhenPasswordDoesntMatch()
         {
-            this.Mocker.GetMock<IConfiguration>()
-                .Setup(l => l.LoginPassword())
-                .Returns("something");
+            this.Mocker.GetMock<IPasswordHasher>()
+                .Setup(p => p.CheckHash(hash, password))
+                .Returns(false);
 
             var result = await this.ClassUnderTest.Authenticate(null);
 

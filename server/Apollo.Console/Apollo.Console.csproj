@@ -58,6 +58,7 @@
     <Compile Include="Commands\Journal\AddJournalEntryCommand.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesCommand.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoCommand.cs" />
+    <Compile Include="Commands\Meta\GetPasswordHashCommand.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandOptions.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerCommandInvoker.cs" />
     <Compile Include="SharedCommandOptions.cs" />
+    <Compile Include="Utilities\Base64Converter.cs" />
+    <Compile Include="Utilities\PasswordHasher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

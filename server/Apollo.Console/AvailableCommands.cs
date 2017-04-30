@@ -15,6 +15,9 @@ namespace Apollo.Console
         [VerbOption("test", HelpText = "Test command to make sure things are working")]
         public TestCommandOptions TestCommandOptions { get; set; }
 
+        [VerbOption("hash", HelpText = "Generate the server password hash")]
+        public GetPasswordHashCommandOptions GetPasswordHashCommandOptions { get; set; }
+
         // journal
         [VerbOption("getAllJournalEntries", HelpText = "Gets all the journal entries")]
         public GetAllJournalEntriesCommandOptions GetAllJournalEntriesCommandOptions { get; set; }
