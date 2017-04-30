@@ -7,6 +7,7 @@
     dbpassword: apollo_db_password
     dblisten_addresses:
       - localhost
+    login_hash: 0FSmWcgVcbNrXWNp+JtvczeIAbATsnKIvrzGiKKQ55XFXtEQc4+C5oODxkWYAkBqCt3xKdQRQlCIPN/HJvfW86la+5vHOycN5cbK98+lJ7HbMj+suh+rq9My9QGmyA5s4TtJl0VlDzr+3FsA+OPiuR5NlCOK+KXyX+ikk2hPAufcW+ztg+OAXppdCPcifBNMUwshGEWd6GpI4t+b+XIz5bK+c130xODhPBV4FXEgwFGeJ6wF6oGM7SFMZK1tnjFH
   roles:
     - base
     - dotnet
