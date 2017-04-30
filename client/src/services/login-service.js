@@ -7,6 +7,10 @@ class LoginService {
     return (store.get(tokenKey) != null);
   }
 
+  getToken(){
+    return store.get(tokenKey);
+  }
+
   storeToken(token) {
     store.set(tokenKey, token);
   }
