@@ -25,7 +25,9 @@ namespace Apollo.Data
         {
             using (var connection = await connectionFactory.GetConnection())
             {
-                var results = await connection.QueryAsync<JournalEntry>("select * from journal");
+                var query = "select * from journal order by id desc";
+                var results = await connection
+                    .QueryAsync<JournalEntry>(query);
                 return results.ToList();
             }
         }
