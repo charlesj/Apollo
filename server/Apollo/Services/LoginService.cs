@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Apollo.Data;
 using Apollo.Utilities;
 
 namespace Apollo.Services
@@ -14,12 +16,15 @@ namespace Apollo.Services
     public class LoginService : ILoginService
     {
         private readonly IConfiguration configuration;
+        private readonly ILoginSessionDataService loginSessionDataService;
         private readonly IPasswordHasher passwordHasher;
-        private string activeToken;
 
-        public LoginService(IConfiguration configuration, IPasswordHasher passwordHasher)
+        public LoginService(IConfiguration configuration,
+                            ILoginSessionDataService loginSessionDataService,
+                            IPasswordHasher passwordHasher)
         {
             this.configuration = configuration;
+            this.loginSessionDataService = loginSessionDataService;
             this.passwordHasher = passwordHasher;
         }
 
@@ -31,13 +36,28 @@ namespace Apollo.Services
                 return Task.FromResult((string) null);
             }
 
-            this.activeToken = Guid.NewGuid().ToString("N");
-            return Task.FromResult(this.activeToken);
+            var activeToken = Guid.NewGuid().ToString("N");
+            this.loginSessionDataService.CreateSession(activeToken);
+            return Task.FromResult(activeToken);
         }
 
-        public Task<bool> ValidateToken(string token)
+        public async Task<bool> ValidateToken(string token)
         {
-            return Task.FromResult(this.activeToken == token);
+            var currentSessions = await this.loginSessionDataService.GetAllSessions();
+
+            foreach (var session in currentSessions)
+            {
+                Console.WriteLine($"Found session {session.token}");
+            }
+
+            var valid = currentSessions.Any(s => s.token == token);
+
+            if (valid)
+            {
+                await this.loginSessionDataService.UpdateLastSeen(token);
+            }
+
+            return valid;
         }
     }
 }

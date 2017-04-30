@@ -1,5 +1,9 @@
-﻿using Apollo.Services;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Apollo.Data;
+using Apollo.Services;
 using Apollo.Utilities;
+using Moq;
 using Xunit;
 
 namespace Apollo.Tests.Services
@@ -8,6 +12,7 @@ namespace Apollo.Tests.Services
     {
         private const string password = "password";
         private const string hash = "hash";
+        private const string token = "token";
 
         public LoginServiceTests()
         {
@@ -18,6 +23,10 @@ namespace Apollo.Tests.Services
             this.Mocker.GetMock<IPasswordHasher>()
                 .Setup(p => p.CheckHash(hash, password))
                 .Returns(true);
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Setup(r => r.UpdateLastSeen(It.IsAny<string>()))
+                .Returns(Task.FromResult(0));
         }
 
         [Fact]
@@ -41,6 +50,15 @@ namespace Apollo.Tests.Services
         }
 
         [Fact]
+        public async void StoresTokenInDb()
+        {
+            var result = await this.ClassUnderTest.Authenticate(password);
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Verify(l => l.CreateSession(result), Times.Once());
+        }
+
+        [Fact]
         public async void CallingAuthenticateAgainReturnsDifferentToken()
         {
             var result = await this.ClassUnderTest.Authenticate(password);
@@ -52,10 +70,62 @@ namespace Apollo.Tests.Services
         [Fact]
         public async void CanValidateTokenAfterAuthorization()
         {
-            var token = await this.ClassUnderTest.Authenticate(password);
+            IReadOnlyList<LoginSession> sessions = new List<LoginSession>
+            {
+                new LoginSession
+                {
+                    token = token
+                }
+            };
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Setup(l => l.GetAllSessions())
+                .Returns(Task.FromResult(sessions));
+
             var result = await this.ClassUnderTest.ValidateToken(token);
 
             Assert.True(result);
+        }
+
+        [Fact]
+        public async void ReturnsFalseIfTokenNotAvailable()
+        {
+            IReadOnlyList<LoginSession> sessions = new List<LoginSession>
+            {
+                new LoginSession
+                {
+                    token = "Something else"
+                }
+            };
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Setup(l => l.GetAllSessions())
+                .Returns(Task.FromResult(sessions));
+
+            var result = await this.ClassUnderTest.ValidateToken(token);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async void UpdatesLastSeenIfValidToken()
+        {
+            IReadOnlyList<LoginSession> sessions = new List<LoginSession>
+            {
+                new LoginSession
+                {
+                    token = token
+                }
+            };
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Setup(l => l.GetAllSessions())
+                .Returns(Task.FromResult(sessions));
+
+            await this.ClassUnderTest.ValidateToken(token);
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Verify(l => l.UpdateLastSeen(token), Times.Once());
         }
     }
 }
