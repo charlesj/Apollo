@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-APOLLO_VERSION=0.1.1
+APOLLO_VERSION=0.1.2
 
 PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$PROJECT_DIR/tools
