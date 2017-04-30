@@ -7,11 +7,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div className='header'>
-          <h1>Apollo</h1>
-        </div>
+        <nav className="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+          <a className="navbar-brand" href="#">Apollo</a>
+        </nav>
+        <div className="container-fluid">
         <Journal />
-        <ServerInfo />
+
+      </div>
+        <footer className="footer">
+           <ServerInfo />
+        </footer>
       </div>
       );
   }

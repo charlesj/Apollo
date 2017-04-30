@@ -33,13 +33,16 @@ class EntryInput extends React.Component {
 
   render() {
     return (<form onSubmit={this.handleSubmit}>
-      <lable htmlFor='note'>Add Note</lable>
-      <textarea
-      id='note'
-      value={this.state.note}
-      onChange={this.handleChange}>
-      </textarea>
-      <button className='button' type='submit'>Add</button>
+      <div className="form-group">
+        <lable htmlFor='note'>Add Note</lable>
+        <textarea
+          id='note'
+          className='form-control'
+          value={this.state.note}
+          onChange={this.handleChange}>
+        </textarea>
+      </div>
+      <button className='btn btn-primary btn-sm' type='submit'>Add</button>
     </form>);
   }
 }
