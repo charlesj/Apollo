@@ -1,7 +1,7 @@
 ﻿using Apollo.Utilities;
 using CommandLine;
 
-namespace Apollo.Console.Commands.Meta
+namespace Apollo.Console.Commands.Local
 {
     public class GetPasswordHashCommandOptions : CommandOptionsBase<GetPasswordHashCommand>
     {

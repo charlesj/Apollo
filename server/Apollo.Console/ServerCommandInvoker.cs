@@ -7,7 +7,7 @@ namespace Apollo.Console
 {
     public class ServerCommandInvoker
     {
-        public void Execute(
+        public dynamic Execute(
             string command,
             object parameters,
             SharedCommandOptions options)
@@ -53,6 +53,7 @@ namespace Apollo.Console
                     else if (parsed.result.Result != null)
                     {
                         System.Console.WriteLine(JsonConvert.SerializeObject(parsed.result.Result, Formatting.Indented));
+                        return parsed.result.Result;
                     }
                 }
                 catch (Exception exception)
@@ -65,6 +66,8 @@ namespace Apollo.Console
                     System.Console.WriteLine("=======================================================================");
                     System.Console.WriteLine(result);
                 }
+
+                return null;
             }
         }
 

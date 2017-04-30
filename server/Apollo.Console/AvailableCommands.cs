@@ -1,5 +1,6 @@
 ﻿using Apollo.Console.Commands;
 using Apollo.Console.Commands.Journal;
+using Apollo.Console.Commands.Local;
 using Apollo.Console.Commands.Meta;
 using CommandLine;
 using CommandLine.Text;
@@ -15,6 +16,10 @@ namespace Apollo.Console
         [VerbOption("test", HelpText = "Test command to make sure things are working")]
         public TestCommandOptions TestCommandOptions { get; set; }
 
+        [VerbOption("login", HelpText = "Login and get a new token")]
+        public LoginCommandOptions LoginCommandOptions{ get; set; }
+
+        // local
         [VerbOption("hash", HelpText = "Generate the server password hash")]
         public GetPasswordHashCommandOptions GetPasswordHashCommandOptions { get; set; }
 

@@ -16,7 +16,11 @@ namespace Apollo.Console.Commands.Journal
 
         public override void Execute()
         {
-            Execute("AddJournalEntry", new { note = Options.Note });
+            Execute("AddJournalEntry", new
+            {
+                token = Options.LoginToken,
+                note = Options.Note
+            });
         }
     }
 }

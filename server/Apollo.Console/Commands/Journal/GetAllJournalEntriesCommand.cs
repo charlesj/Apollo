@@ -12,7 +12,7 @@
 
         public override void Execute()
         {
-            Execute("GetAllJournalEntries", new object());
+            Execute("GetAllJournalEntries", new { token = Options.LoginToken });
         }
     }
 }

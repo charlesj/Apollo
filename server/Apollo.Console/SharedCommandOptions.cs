@@ -6,7 +6,10 @@ namespace Apollo.Console
     {
         public SharedCommandOptions()
         {
-            this.Endpoint = "http://192.168.142.10/api";
+            var configurationReader = new ConfigurationReader();
+            var config = configurationReader.GetConfiguration();
+            this.Endpoint = config.Endpoint;
+            this.LoginToken = config.LoginToken;
         }
 
         [Option("fullResults", Required = false, HelpText = "Whether to display the full results, or just the result object")]
@@ -17,5 +20,7 @@ namespace Apollo.Console
 
         [Option("endpoint", Required = false, HelpText = "Override the default endpoint")]
         public string Endpoint { get; set; }
+
+        public string LoginToken { get; set; }
     }
 }

@@ -57,9 +57,11 @@
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\Journal\AddJournalEntryCommand.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesCommand.cs" />
+    <Compile Include="Commands\Local\GetPasswordHashCommand.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoCommand.cs" />
-    <Compile Include="Commands\Meta\GetPasswordHashCommand.cs" />
+    <Compile Include="Commands\Meta\LoginCommand.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandOptions.cs" />
     <Compile Include="ParsedCommand.cs" />

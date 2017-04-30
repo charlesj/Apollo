@@ -13,9 +13,9 @@
 
         public abstract void Execute();
 
-        protected void Execute(string commandName, object parameters)
+        protected dynamic Execute(string commandName, object parameters)
         {
-            CommandInvoker.Execute(commandName, parameters, Options);
+            return CommandInvoker.Execute(commandName, parameters, Options);
         }
     }
 }
