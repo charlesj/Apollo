@@ -102,6 +102,7 @@
     <Compile Include="Server\TestableHttpListenerContextTests.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocatorTests.cs" />
     <Compile Include="Services\LoginServiceTests.cs" />
+    <Compile Include="Utilities\Base64ConverterTests.cs" />
     <Compile Include="Utilities\JsonSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
