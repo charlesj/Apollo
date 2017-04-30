@@ -39,7 +39,7 @@ class ServerInfo extends React.Component {
       return <div>loading...</div>
     }
     var version = this.state.serverInfo.version;
-    var shortHash = this.state.serverInfo.commitHash.slice(0,6);
+    var shortHash = this.state.serverInfo.commitHash.slice(0, 6);
     var compiledOn = moment(this.state.serverInfo.compiledOn);
     return (
       <div>{ compiledOn.format('YYYY-MM-DD HH:mm')}  v{version} ({shortHash})

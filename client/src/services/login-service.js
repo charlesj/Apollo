@@ -3,11 +3,11 @@ var store = require('store');
 const tokenKey = "token";
 
 class LoginService {
-  isLoggedIn(){
+  isLoggedIn() {
     return (store.get(tokenKey) != null);
   }
 
-  getToken(){
+  getToken() {
     return store.get(tokenKey);
   }
 
@@ -15,7 +15,7 @@ class LoginService {
     store.set(tokenKey, token);
   }
 
-  logout(){
+  logout() {
     store.remove(tokenKey);
   }
 }

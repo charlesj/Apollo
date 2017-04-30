@@ -7,7 +7,7 @@ var requestCounter = 0;
 module.exports = {
   invoke: function(commandName, payload) {
     var loginService = new LoginService();
-    if(loginService.isLoggedIn()){
+    if (loginService.isLoggedIn()) {
       payload.token = loginService.getToken();
     }
 

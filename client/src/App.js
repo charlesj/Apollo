@@ -11,7 +11,7 @@ import './App.css';
 class App extends Component {
   loginService = new LoginService();
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -22,36 +22,41 @@ class App extends Component {
     this.logout = this.logout.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({
       loggedIn: this.loginService.isLoggedIn()
     });
   }
 
-  login(token){
+  login(token) {
     this.loginService.storeToken(token);
     this.setState({
       loggedIn: this.loginService.isLoggedIn()
     });
   }
 
-  logout(){
+  logout() {
     this.loginService.logout();
-    this.setState({loggedIn: false})
+    this.setState({
+      loggedIn: false
+    })
   }
 
   render() {
-    if(!this.state.loggedIn){
+    if (!this.state.loggedIn) {
       return (<div><Login onLogin={this.login} /></div>)
     }
 
     return (
       <div>
         <nav className="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-          <a className="navbar-brand" href="#">Apollo</a>
-
+          <div className="col-xs-12 col-md-11">
+            <a className="navbar-brand" href="#">Apollo</a>
+          </div>
+          <div className=".col-xs-6 .col-md-1">
+            <button className="btn btn-sm btn-danger logoutButton" onClick={this.logout}>Logout</button>
+          </div>
         </nav>
-        <span onClick={this.logout}>Logout</span>
         <div className="container-fluid">
         <Journal />
 

@@ -36,10 +36,10 @@ class EntryInput extends React.Component {
       <div className="form-group">
         <lable htmlFor='note'>Add Note</lable>
         <textarea
-          id='note'
-          className='form-control'
-          value={this.state.note}
-          onChange={this.handleChange}>
+      id='note'
+      className='form-control'
+      value={this.state.note}
+      onChange={this.handleChange}>
         </textarea>
       </div>
       <button className='btn btn-primary btn-sm' type='submit'>Add</button>
