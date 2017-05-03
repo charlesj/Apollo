@@ -89,6 +89,7 @@
     <Compile Include="Commands\Meta\ApplicationInfoTests.cs" />
     <Compile Include="Commands\Meta\TestCommandTests.cs" />
     <Compile Include="ConfigurationTests.cs" />
+    <Compile Include="Data\UserSettingsDataServiceTests.cs" />
     <Compile Include="KernelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\RuntimeContextTests.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Server\TestableHttpListenerContextTests.cs" />
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocatorTests.cs" />
     <Compile Include="Services\LoginServiceTests.cs" />
+    <Compile Include="Services\UserSettingsServiceTests.cs" />
     <Compile Include="Utilities\Base64ConverterTests.cs" />
     <Compile Include="Utilities\JsonSerializerTests.cs" />
     <Compile Include="Utilities\PasswordHasherTests.cs" />
@@ -118,9 +120,6 @@
       <Project>{D50DA21A-2547-44E2-8362-42BBB33F9AD5}</Project>
       <Name>Apollo</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

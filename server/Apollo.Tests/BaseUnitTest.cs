@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMoq;
+using Moq;
 using Moq.Language.Flow;
 
 namespace Apollo.Tests
@@ -14,6 +16,18 @@ namespace Apollo.Tests
         {
             this.Mocker = new AutoMoqer();
             this.ClassUnderTest = Mocker.Create<TClassUnderTest>();
+        }
+
+        public Mock<TMockType> Mock<TMockType>() where TMockType : class
+        {
+            return this.Mocker.GetMock<TMockType>();
+        }
+
+        public string GetAnonymousString(object obj, string propName)
+        {
+            var property = obj.GetType().GetProperties().Single(p => p.Name == propName);
+            return property.GetValue(obj) as string;
+
         }
     }
 

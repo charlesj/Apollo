@@ -10,5 +10,10 @@
             public const string DatabasePassword = "APOLLO_DATABASEPASSWORD";
             public const string LoginHash = "APOLLO_LOGINHASH";
         }
+
+        public static class UserSettings
+        {
+            public const string PasswordHash = "password_hash";
+        }
     }
 }

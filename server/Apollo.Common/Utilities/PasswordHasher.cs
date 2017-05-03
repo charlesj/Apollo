@@ -15,7 +15,7 @@ namespace Apollo.Utilities
         private readonly IBase64Converter base64Converter;
         private const int SaltByteSize = 64;
         private const int HashByteSize = 128;
-        private const int HasingIterationsCount = 42420;
+        private const int HasingIterationsCount = 4242;
 
         public PasswordHasher()
         {

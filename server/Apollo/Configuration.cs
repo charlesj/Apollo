@@ -11,7 +11,6 @@ namespace Apollo
         string DatabaseServer();
         string DatabaseUsername();
         string DatabasePassword();
-        string LoginPasswordHash();
 
         bool IsValid();
     }
@@ -45,11 +44,6 @@ namespace Apollo
             return reader.Read(Constants.EnvironmentalVars.DatabasePassword);
         }
 
-        public string LoginPasswordHash()
-        {
-            return reader.Read(Constants.EnvironmentalVars.LoginHash);
-        }
-
         public bool IsValid()
         {
             try
@@ -59,8 +53,7 @@ namespace Apollo
                     DatabaseName,
                     DatabaseServer,
                     DatabaseUsername,
-                    DatabaseUsername,
-                    LoginPasswordHash
+                    DatabaseUsername
                 };
 
                 return checkVals.All(v => !string.IsNullOrWhiteSpace(v()));

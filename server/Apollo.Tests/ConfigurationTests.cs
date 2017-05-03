@@ -66,18 +66,6 @@ namespace Apollo.Tests
             Assert.Equal(expected, actual);
         }
 
-        [Fact]
-        public void LoginPassword_ResturnsEnvVarValue()
-        {
-            var reader = Mocker.GetMock<IEnvironmentReader>();
-            var expected = "Password";
-            reader.Setup(r => r.Read(Constants.EnvironmentalVars.LoginHash)).Returns(expected);
-
-            var actual = ClassUnderTest.LoginPasswordHash();
-
-            Assert.Equal(expected, actual);
-        }
-
 
         [Fact]
         public void IsValid_ReturnsFalse_WhenGivenANull()

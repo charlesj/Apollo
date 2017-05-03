@@ -32,6 +32,7 @@ namespace Apollo.ServiceLocator
             container.Register<IDbConnectionFactory, ConnectionFactory>();
             container.Register<IJournalDataService, JournalDataService>();
             container.Register<ILoginSessionDataService, LoginSessionDataService>();
+            container.Register<IUserSettignsDataService, UserSettingsDataService>();
 
             // runtime bindings
             container.Register<IRuntime, SimpleLoopRuntime>();
@@ -47,6 +48,7 @@ namespace Apollo.ServiceLocator
 
             // service bindings
             container.Register<ILoginService, LoginService>();
+            container.Register<IUserSettingsService, UserSettingsService>();
 
             // utility binding
             container.Register<IBase64Converter, Base64Converter>(Lifestyle.Singleton);

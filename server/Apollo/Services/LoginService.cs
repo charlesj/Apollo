@@ -15,30 +15,31 @@ namespace Apollo.Services
 
     public class LoginService : ILoginService
     {
-        private readonly IConfiguration configuration;
         private readonly ILoginSessionDataService loginSessionDataService;
         private readonly IPasswordHasher passwordHasher;
+        private readonly IUserSettingsService userSettingsService;
 
-        public LoginService(IConfiguration configuration,
-                            ILoginSessionDataService loginSessionDataService,
-                            IPasswordHasher passwordHasher)
+        public LoginService(ILoginSessionDataService loginSessionDataService,
+                            IPasswordHasher passwordHasher,
+                            IUserSettingsService userSettingsService)
         {
-            this.configuration = configuration;
             this.loginSessionDataService = loginSessionDataService;
             this.passwordHasher = passwordHasher;
+            this.userSettingsService = userSettingsService;
         }
 
-        public Task<string> Authenticate(string password)
+        public async Task<string> Authenticate(string password)
         {
-            var passwordHash = this.configuration.LoginPasswordHash();
+            var passwordHash = await this.userSettingsService
+                    .GetSetting<string>(Constants.UserSettings.PasswordHash);
             if (!this.passwordHasher.CheckHash(passwordHash, password))
             {
-                return Task.FromResult((string) null);
+                return null;
             }
 
             var activeToken = Guid.NewGuid().ToString("N");
-            this.loginSessionDataService.CreateSession(activeToken);
-            return Task.FromResult(activeToken);
+            await this.loginSessionDataService.CreateSession(activeToken);
+            return activeToken;
         }
 
         public async Task<bool> ValidateToken(string token)

@@ -16,9 +16,9 @@ namespace Apollo.Tests.Services
 
         public LoginServiceTests()
         {
-            this.Mocker.GetMock<IConfiguration>()
-                .Setup(l => l.LoginPasswordHash())
-                .Returns(hash);
+            this.Mocker.GetMock<IUserSettingsService>()
+                .Setup(l => l.GetSetting<string>(Constants.UserSettings.PasswordHash))
+                .Returns(Task.FromResult(hash));
 
             this.Mocker.GetMock<IPasswordHasher>()
                 .Setup(p => p.CheckHash(hash, password))
@@ -27,6 +27,19 @@ namespace Apollo.Tests.Services
             this.Mocker.GetMock<ILoginSessionDataService>()
                 .Setup(r => r.UpdateLastSeen(It.IsAny<string>()))
                 .Returns(Task.FromResult(0));
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Setup(r => r.CreateSession(It.IsAny<string>()))
+                .Returns(Task.FromResult(0));
+        }
+
+        [Fact]
+        public async void ReadsHashFromUserSettings()
+        {
+            await this.ClassUnderTest.Authenticate(password);
+
+            this.Mocker.GetMock<IUserSettingsService>()
+                .Verify(u => u.GetSetting<string>(Constants.UserSettings.PasswordHash), Times.Once());
         }
 
         [Fact]

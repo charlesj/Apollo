@@ -6,7 +6,7 @@ namespace Apollo.Data
 {
     public interface IDbConnectionFactory
     {
-        Task<IDbConnection>  GetConnection();
+        Task<ITestableDbConnection>  GetConnection();
     }
 
     public class ConnectionFactory : IDbConnectionFactory
@@ -19,7 +19,7 @@ namespace Apollo.Data
             this.config = config;
         }
 
-        public async Task<IDbConnection> GetConnection()
+        public async Task<ITestableDbConnection> GetConnection()
         {
             var connectionString = string.Format(
                 ConnectionStringTemplate,
@@ -29,7 +29,7 @@ namespace Apollo.Data
                 config.DatabaseName());
             var connection = new NpgsqlConnection(connectionString);
             await connection.OpenAsync();
-            return connection;
+            return new TestableDbConnection(connection);
         }
     }
 }
