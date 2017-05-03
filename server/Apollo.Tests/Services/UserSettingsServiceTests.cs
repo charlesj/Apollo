@@ -21,7 +21,7 @@ namespace Apollo.Tests.Services
                     .Returns(serializedValue);
 
                 Mock<IUserSettignsDataService>()
-                    .Setup(u => u.UpsertSetting(It.IsAny<UserSetting>()))
+                    .Setup(u => u.UpdateSetting(It.IsAny<UserSetting>()))
                     .Returns(Task.FromResult(0));
             }
 
@@ -43,10 +43,10 @@ namespace Apollo.Tests.Services
                 await this.ClassUnderTest.SetSetting(propName, "whatever");
 
                 Mock<IUserSettignsDataService>()
-                    .Verify(u => u.UpsertSetting(
+                    .Verify(u => u.UpdateSetting(
                         It.Is<UserSetting>(us =>
-                            us.Name == propName
-                            && us.Value == serializedValue)), Times.Once());
+                            us.name == propName
+                            && us.value == serializedValue)), Times.Once());
             }
         }
 
@@ -59,8 +59,8 @@ namespace Apollo.Tests.Services
                     .Setup(u => u.GetUserSetting(propName))
                     .Returns(Task.FromResult(new UserSetting
                     {
-                        Name = propName,
-                        Value = serializedValue
+                        name = propName,
+                        value = serializedValue
                     }));
 
                 var realValue = "real value";

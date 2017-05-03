@@ -7,7 +7,7 @@ namespace Apollo.Data
     public interface IUserSettignsDataService
     {
         Task<UserSetting> GetUserSetting(string name);
-        Task UpsertSetting(UserSetting setting);
+        Task UpdateSetting(UserSetting setting);
     }
 
     public class UserSettingsDataService : IUserSettignsDataService
@@ -34,15 +34,20 @@ namespace Apollo.Data
             }
         }
 
-        public Task UpsertSetting(UserSetting setting)
+        public async Task UpdateSetting(UserSetting setting)
         {
-            throw new System.NotImplementedException();
+            using (var connection = await connectionFactory.GetConnection())
+            {
+                connection.Execute(
+                    "update user_settings set value=@newValue, updated_at=current_timestamp where name=@name",
+                    new {name = setting.name, newValue = setting.value});
+            }
         }
     }
 
     public class UserSetting
     {
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string name { get; set; }
+        public string value { get; set; }
     }
 }

@@ -15,7 +15,6 @@ down_revision = 'e5c73fd17a7f'
 branch_labels = None
 depends_on = None
 
-
 def upgrade():
     op.create_table(
         'user_settings',
@@ -25,6 +24,8 @@ def upgrade():
         sa.Column('created_at', sa.DateTime(), nullable=False),
         sa.Column('updated_at', sa.DateTime(), nullable=False)
     )
+
+    op.create_unique_constraint("uq_setting_name", "user_settings", ["name"])
 
     op.execute(
         "insert into user_settings(name, value, created_at, updated_at) " +
@@ -36,4 +37,5 @@ def upgrade():
 
 
 def downgrade():
+    op.drop_constraint("uq_setting_name", "user_settings", "unique")
     op.drop_table('user_settings')

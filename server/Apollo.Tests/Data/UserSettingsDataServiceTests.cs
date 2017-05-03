@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Apollo.Data;
 using Moq;
@@ -20,73 +19,107 @@ namespace Apollo.Tests.Data
             Mock<IDbConnectionFactory>()
                 .Setup(s => s.GetConnection())
                 .Returns(Task.FromResult(connection.Object));
+        }
 
-            IEnumerable<UserSetting> queryResults = new List<UserSetting>
+
+        public class GetUserSetting : UserSettingsDataServiceTests
+        {
+
+            public GetUserSetting()
             {
-                new UserSetting()
-            };
+                IEnumerable<UserSetting> queryResults = new List<UserSetting>
+                {
+                    new UserSetting()
+                };
 
-            connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.FromResult(queryResults));
-        }
+                connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
+                    .Returns(Task.FromResult(queryResults));
+            }
 
-        [Fact]
-        public async void UsesExpectedQuery()
-        {
-            await this.ClassUnderTest.GetUserSetting(settingName);
-
-            connection
-                .Verify(c =>
-                    c.QueryAsync<UserSetting>(
-                        It.Is<string>(s => s == "select * from user_settings where name=@name"),
-                        It.Is<object>(o => GetAnonymousString(o, "name") == settingName)
-                    )
-                );
-        }
-
-        [Fact]
-        public async void ThrowsExceptionIfNoResults()
-        {
-            connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.FromResult((IEnumerable<UserSetting>)new List<UserSetting>()));
-
-            var exception = await Assert.ThrowsAsync<InvalidOperationException>(async () => await this.ClassUnderTest.GetUserSetting(settingName));
-
-            Assert.Equal("Could not find user setting 'setting'", exception.Message);
-        }
-
-        [Fact]
-        public async void ThrowsExceptionIfMultipleResults()
-        {
-            IEnumerable<UserSetting> queryResults = new List<UserSetting>
+            [Fact]
+            public async void UsesExpectedQuery()
             {
-                new UserSetting(),
-                new UserSetting()
-            };
+                await this.ClassUnderTest.GetUserSetting(settingName);
 
-            connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.FromResult(queryResults));
+                connection
+                    .Verify(c =>
+                        c.QueryAsync<UserSetting>(
+                            It.Is<string>(s => s == "select * from user_settings where name=@name"),
+                            It.Is<object>(o => GetAnonymousString(o, "name") == settingName)
+                        )
+                    );
+            }
 
-            var exception = await Assert.ThrowsAsync<InvalidOperationException>(async () => await this.ClassUnderTest.GetUserSetting(settingName));
+            [Fact]
+            public async void ThrowsExceptionIfNoResults()
+            {
+                connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
+                    .Returns(Task.FromResult((IEnumerable<UserSetting>) new List<UserSetting>()));
 
-            Assert.Equal("Multiple values for 'setting' - fix the database", exception.Message);
+                var exception =
+                    await Assert.ThrowsAsync<InvalidOperationException>(
+                        async () => await this.ClassUnderTest.GetUserSetting(settingName));
+
+                Assert.Equal("Could not find user setting 'setting'", exception.Message);
+            }
+
+            [Fact]
+            public async void ThrowsExceptionIfMultipleResults()
+            {
+                IEnumerable<UserSetting> queryResults = new List<UserSetting>
+                {
+                    new UserSetting(),
+                    new UserSetting()
+                };
+
+                connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
+                    .Returns(Task.FromResult(queryResults));
+
+                var exception =
+                    await Assert.ThrowsAsync<InvalidOperationException>(
+                        async () => await this.ClassUnderTest.GetUserSetting(settingName));
+
+                Assert.Equal("Multiple values for 'setting' - fix the database", exception.Message);
+            }
+
+            [Fact]
+            public async void ReturnsTheOnlyResult()
+            {
+                var expected = new UserSetting();
+                IEnumerable<UserSetting> queryResults = new List<UserSetting>
+                {
+                    expected
+                };
+
+                connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
+                    .Returns(Task.FromResult(queryResults));
+
+                var actual = await ClassUnderTest.GetUserSetting(settingName);
+
+                Assert.Same(expected, actual);
+            }
+
         }
 
-        [Fact]
-        public async void ReturnsTheOnlyResult()
+        public class UpsertSetting : UserSettingsDataServiceTests
         {
-            var expected = new UserSetting();
-            IEnumerable<UserSetting> queryResults = new List<UserSetting>
+            private const string newValue = "new value";
+
+            [Fact]
+            public async void MakesExpectedQuery()
             {
-                expected
-            };
+                await this.ClassUnderTest.UpdateSetting(new UserSetting
+                {
+                    name = settingName,
+                    value = newValue
+                });
 
-            connection.Setup(c => c.QueryAsync<UserSetting>(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.FromResult(queryResults));
-
-            var actual = await ClassUnderTest.GetUserSetting(settingName);
-
-            Assert.Same(expected, actual);
+                connection.Verify(c =>
+                    c.Execute(It.Is<string>(
+                            q => q == "update user_settings set value=@newValue, updated_at=current_timestamp where name=@name"),
+                        It.Is<object>(o => GetAnonymousString(o, "name") == settingName && GetAnonymousString(o, "newValue") == newValue)
+                ), Times.Once());
+            }
         }
     }
 }

@@ -23,13 +23,13 @@ namespace Apollo.Services
         public async Task SetSetting<TSettingType>(string name, TSettingType value)
         {
             var serialized = this.serializer.Serialize(value);
-            await this.userSettignsDataService.UpsertSetting(new UserSetting {Name = name, Value = serialized});
+            await this.userSettignsDataService.UpdateSetting(new UserSetting {name = name, value = serialized});
         }
 
         public async Task<TSettingValue> GetSetting<TSettingValue>(string name)
         {
             var setting = await this.userSettignsDataService.GetUserSetting(name);
-            return this.serializer.Deserialize<TSettingValue>(setting.Value);
+            return this.serializer.Deserialize<TSettingValue>(setting.value);
         }
     }
 }
