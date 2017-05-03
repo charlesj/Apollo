@@ -12,12 +12,13 @@ namespace Apollo.Tests.Services
     {
         private const string propName = "prop";
         private const string serializedValue = "serialized";
+
         public class SetSetting : UserSettingsServiceTests
         {
             public SetSetting()
             {
                 Mock<IJsonSerializer>()
-                    .Setup(v => v.Serialize(It.IsAny<string>(), It.IsAny<bool>()))
+                    .Setup(v => v.Serialize(It.IsAny<UserSettingsService.Wrapper<string>>(), It.IsAny<bool>()))
                     .Returns(serializedValue);
 
                 Mock<IUserSettignsDataService>()
@@ -30,7 +31,7 @@ namespace Apollo.Tests.Services
             {
                 var settingValue = "yep";
                 Mock<IJsonSerializer>()
-                    .Setup(v => v.Serialize(settingValue, It.IsAny<bool>()))
+                    .Setup(v => v.Serialize(It.IsAny<UserSettingsService.Wrapper<string>>(), It.IsAny<bool>()))
                     .Throws<Exception>();
 
                 await Assert.ThrowsAsync<Exception>(async () =>
@@ -64,9 +65,10 @@ namespace Apollo.Tests.Services
                     }));
 
                 var realValue = "real value";
+                var returnWrapped = new UserSettingsService.Wrapper<string>(realValue);
                 Mock<IJsonSerializer>()
-                    .Setup(j => j.Deserialize<string>(serializedValue))
-                    .Returns(realValue);
+                    .Setup(j => j.Deserialize<UserSettingsService.Wrapper<string>>(serializedValue))
+                    .Returns(returnWrapped);
 
                 var result = await this.ClassUnderTest.GetSetting<string>(propName);
 

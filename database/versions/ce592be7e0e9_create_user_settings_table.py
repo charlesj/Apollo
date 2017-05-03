@@ -29,11 +29,12 @@ def upgrade():
 
     op.execute(
         "insert into user_settings(name, value, created_at, updated_at) " +
-        "values ('password_hash','XsOa/YTsT8nwXpAE5+wQIx7WPkDjiY3DNeZS+k" +
-        "NcWKMYsitrXKS3sgs9IpCjAKVUyqQtv0969ZsAMuQaTSDrpffHfhW1ag/eX3Wao" +
-        "ykSdADgtvnwrwLx7EvmGdpuOFnSEph5AmsrYzip426BqDHOBKCI+VnzmSRZDv20" +
-        "2bfgSna4RNuc9bCC1DiNOCKPPTlIshM6bB1UrFdV31y0VAbidD/WRS3a6+T0ibZ" +
-        "zwOu7OZDatCMGArIvHDgNvwqcyIkz',current_timestamp,current_timestamp)")
+        "values ('password_hash','{\"wrapper\":\"S1duK/y+6eW40UCHEfl1enG" +
+        "qRL6LL2CDTZCf648e9IuYkCxvPEV4YP9LG0gM6enl5j1/GGmnE+EYG/ZEMkzk9x" +
+        "U4Bg3GFirLnaYeFZmVBmf5xz727klwG14G+biWyXtTu7DFL7q1FGECzUuOeWdS4" +
+        "gBQgHIhR5RMZMd6M5+j8Ud1aD4zHkgUTCcab4lOr+dk3fYteftrc+pArVDa6Koc" +
+        "YyVubms8LeJ9OiyRtFmUs83OsqNMiryCDEJDa0ligU/2\"}'" +
+        ",current_timestamp,current_timestamp)")
 
 
 def downgrade():
