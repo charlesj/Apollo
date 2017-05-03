@@ -32,6 +32,16 @@ that directory to communicate with the server, and the React client ought to wor
 
 I'll be working to make this more automated in the future.
 
+The default password is `wokka`.
+
+## Deploying
+
+Well, it's not raelly ready to be deployed except in safe environments.  If you really
+want to deploy it out, update the deploy.yml file with the appropriate variable values
+and the update the inventory to reflect the ip address of the box you're deploying to.
+
+I'm assuming that you have ssh access setup to the target box at the moment.
+
 ## Tech
 ### Server: .NET/C# on Mono
 
