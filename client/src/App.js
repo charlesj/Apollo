@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+var ReactRouter = require('react-router-dom');
+var Router = ReactRouter.BrowserRouter;
+var Route = ReactRouter.Route;
+var Switch = ReactRouter.Switch;
 
 var LoginService = require('./services/login-service');
 
 var Login = require('./components/Login');
 var ServerInfo = require('./components/ServerInfo');
 var Journal = require('./components/journal/Journal');
-
+var Nav = require('./components/Nav');
+var Home = require('./components/Home');
 import './App.css';
 
 class App extends Component {
@@ -49,20 +54,21 @@ class App extends Component {
 
     return (
       <div>
-        <nav className="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-          <div className="col-xs-12 col-md-11">
-            <a className="navbar-brand" href="#">Apollo</a>
+        <Router>
+          <div className='container-fluid'>
+            <Nav />
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/journal' component={Journal} />
+              <Route render={function(){
+                     return (<p>Not Found</p>)
+              }} />
+            </Switch>
           </div>
-          <div className=".col-xs-6 .col-md-1">
-            <button className="btn btn-sm btn-danger logoutButton" onClick={this.logout}>Logout</button>
-          </div>
-        </nav>
-        <div className="container-fluid">
-        <Journal />
-
-      </div>
+        </Router>
         <footer className="footer">
-           <ServerInfo />
+           <ServerInfo />&nbsp;
+           <a className="danger" onClick={this.logout}>Logout</a>
         </footer>
       </div>
       );
