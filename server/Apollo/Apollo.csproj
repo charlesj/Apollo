@@ -70,6 +70,7 @@
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\Meta\ApplicationInfo.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
+    <Compile Include="Commands\UserSettings\ChangePassword.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\IDbConnectionFactory.cs" />

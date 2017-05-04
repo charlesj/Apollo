@@ -11,6 +11,8 @@ namespace Apollo.Services
         Task<string> Authenticate(string password);
 
         Task<bool> ValidateToken(string token);
+
+        Task<bool> CheckPassword(string password);
     }
 
     public class LoginService : ILoginService
@@ -30,12 +32,8 @@ namespace Apollo.Services
 
         public async Task<string> Authenticate(string password)
         {
-            var passwordHash = await this.userSettingsService
-                    .GetSetting<string>(Constants.UserSettings.PasswordHash);
-            if (!this.passwordHasher.CheckHash(passwordHash, password))
-            {
+            if (!await this.CheckPassword(password))
                 return null;
-            }
 
             var activeToken = Guid.NewGuid().ToString("N");
             await this.loginSessionDataService.CreateSession(activeToken);
@@ -54,6 +52,14 @@ namespace Apollo.Services
             }
 
             return valid;
+        }
+
+        public async Task<bool> CheckPassword(string password)
+        {
+            var passwordHash = await this.userSettingsService
+                .GetSetting<string>(Constants.UserSettings.PasswordHash);
+
+            return this.passwordHasher.CheckHash(passwordHash, password);
         }
     }
 }

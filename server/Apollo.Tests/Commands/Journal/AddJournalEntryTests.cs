@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Apollo.Commands.Journal;
+using Apollo.CommandSystem;
 using Apollo.Data;
 using Apollo.Data.ResultModels;
 using Moq;
@@ -45,13 +46,13 @@ namespace Apollo.Tests.Commands.Journal
         }
 
         [Fact]
-        public async void ReturnsNoData()
+        public async void ReturnsSuccessResult()
         {
             this.ClassUnderTest.Note = "note";
 
             var result = await this.ClassUnderTest.Execute();
 
-            Assert.Null(result.Result);
+            Assert.Same(CommandResult.SuccessfulResult, result);
         }
     }
 }

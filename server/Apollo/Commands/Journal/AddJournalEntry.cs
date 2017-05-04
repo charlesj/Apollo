@@ -24,10 +24,7 @@ namespace Apollo.Commands.Journal
                 note = this.Note
             });
 
-            return new CommandResult
-            {
-                ResultStatus = CommandResultType.Success
-            };
+            return CommandResult.SuccessfulResult;
         }
 
         public override Task<bool> IsValid()

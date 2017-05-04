@@ -140,5 +140,23 @@ namespace Apollo.Tests.Services
             this.Mocker.GetMock<ILoginSessionDataService>()
                 .Verify(l => l.UpdateLastSeen(token), Times.Once());
         }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async void CheckPasswordReturnsTrueIfMatch(bool expected)
+        {
+            Mock<IUserSettingsService>()
+                .Setup(u => u.GetSetting<string>(Constants.UserSettings.PasswordHash))
+                .Returns(Task.FromResult(hash));
+
+            Mock<IPasswordHasher>()
+                .Setup(p => p.CheckHash(hash, password))
+                .Returns(expected);
+
+            var result = await this.ClassUnderTest.CheckPassword(password);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

@@ -88,6 +88,7 @@
     <Compile Include="Commands\LoginTests.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoTests.cs" />
     <Compile Include="Commands\Meta\TestCommandTests.cs" />
+    <Compile Include="Commands\UserSettings\ChangePasswordTests.cs" />
     <Compile Include="ConfigurationTests.cs" />
     <Compile Include="Data\UserSettingsDataServiceTests.cs" />
     <Compile Include="KernelTests.cs" />

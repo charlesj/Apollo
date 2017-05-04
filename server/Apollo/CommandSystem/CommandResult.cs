@@ -11,5 +11,7 @@
         public object Result { get; set; }
         public long Elapsed { get; set; }
         public string ErrorMessage { get; set; }
+
+        public static CommandResult SuccessfulResult = new CommandResult() {ResultStatus = CommandResultType.Success};
     }
 }

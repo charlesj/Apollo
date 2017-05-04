@@ -6,7 +6,7 @@ namespace Apollo.Commands
 {
     public abstract class AuthenticatedCommand : ICommand
     {
-        private readonly ILoginService loginService;
+        protected readonly ILoginService loginService;
 
         protected AuthenticatedCommand(ILoginService loginService)
         {
