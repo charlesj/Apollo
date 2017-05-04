@@ -1,4 +1,6 @@
-﻿namespace Apollo.Console.Commands
+﻿using Apollo.Utilities;
+
+namespace Apollo.Console.Commands
 {
     public abstract class BaseCommand<TCommandOptions> : ICommand where TCommandOptions : SharedCommandOptions
     {
@@ -6,9 +8,11 @@
         {
             Options = options;
             CommandInvoker = new ServerCommandInvoker();
+            Console = new ConsoleNotShitty();
         }
 
         protected ServerCommandInvoker CommandInvoker { get; private set; }
+        protected ConsoleNotShitty Console { get; private set; }
         public TCommandOptions Options { get; }
 
         public abstract void Execute();

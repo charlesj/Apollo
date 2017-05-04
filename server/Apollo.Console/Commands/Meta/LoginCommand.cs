@@ -4,8 +4,6 @@ namespace Apollo.Console.Commands.Meta
 {
     public class LoginCommandOptions : CommandOptionsBase<LoginCommand>
     {
-        [Option('p', "password", HelpText = "The Password to use to login", Required = true)]
-        public string Password { get; set; }
     }
 
     public class LoginCommand : BaseCommand<LoginCommandOptions>
@@ -20,16 +18,19 @@ namespace Apollo.Console.Commands.Meta
 
         public override void Execute()
         {
-            var result = Execute("Login", new {password = this.Options.Password});
-            if (result == null && result.token != null)
+            Console.Write("Enter password > ", false);
+            var password = Console.ReadLineSupressOutput();
+            var result = Execute("Login", new { password });
+            var loginToken = result?.Result?.token;
+            if (result == null && loginToken != null)
             {
-                System.Console.WriteLine("Could not login");
+                Console.Red("Could not login");
                 return;
             }
 
             var configuration = configurationReader.GetConfiguration();
-            System.Console.WriteLine($"Setting new token {result.token}");
-            configuration.LoginToken = result.token;
+            Console.Green($"Setting new token {loginToken}");
+            configuration.LoginToken = loginToken;
 
             configurationReader.UpdateConfiguration(configuration);
         }

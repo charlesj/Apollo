@@ -60,6 +60,7 @@
     <Compile Include="Commands\Local\ChangeEndpointCommand.cs" />
     <Compile Include="Commands\Local\GetPasswordHashCommand.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoCommand.cs" />
+    <Compile Include="Commands\Meta\ChangePasswordCommand.cs" />
     <Compile Include="Commands\Meta\LoginCommand.cs" />
     <Compile Include="Commands\Meta\TestCommand.cs" />
     <Compile Include="Configuration.cs" />

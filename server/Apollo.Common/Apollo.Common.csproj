@@ -46,6 +46,7 @@
     <Compile Include="Utilities\ApolloJsonSerializer.cs" />
     <Compile Include="Utilities\Base64Converter.cs" />
     <Compile Include="Utilities\Clock.cs" />
+    <Compile Include="Utilities\ConsoleNotShitty.cs" />
     <Compile Include="Utilities\EnvironmentReader.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
   </ItemGroup>

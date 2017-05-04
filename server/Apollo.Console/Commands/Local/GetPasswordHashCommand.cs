@@ -5,23 +5,31 @@ namespace Apollo.Console.Commands.Local
 {
     public class GetPasswordHashCommandOptions : CommandOptionsBase<GetPasswordHashCommand>
     {
-        [Option('p', "password", HelpText = "the password to hash", Required = true)]
-        public string Password { get; set; }
     }
 
-    public class GetPasswordHashCommand : ICommand
+    public class GetPasswordHashCommand : BaseCommand<GetPasswordHashCommandOptions>
     {
-        private readonly GetPasswordHashCommandOptions options;
 
-        public GetPasswordHashCommand(GetPasswordHashCommandOptions options)
+        public GetPasswordHashCommand(GetPasswordHashCommandOptions options) : base(options)
         {
-            this.options = options;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             var hasher = new PasswordHasher();
-            System.Console.WriteLine(hasher.GenerateHash(options.Password));
+            Console.Write("Enter password > ", false);
+            var password = Console.ReadLineSupressOutput();
+            Console.Write("Enter password (verify) > ", false);
+            var passwordVerify = Console.ReadLineSupressOutput();
+
+            if (password == passwordVerify)
+            {
+                Console.Write("==================================================\n");
+                Console.Green(hasher.GenerateHash(password));
+                Console.Write("\n==================================================");
+            }
+            else
+                Console.Red("Passwords did not match");
         }
     }
 }

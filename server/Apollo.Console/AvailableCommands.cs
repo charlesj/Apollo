@@ -19,8 +19,11 @@ namespace Apollo.Console
         [VerbOption("login", HelpText = "Login and get a new token")]
         public LoginCommandOptions LoginCommandOptions{ get; set; }
 
+        [VerbOption("changePassword", HelpText = "Change your password")]
+        public ChangePasswordCommandOptions ChangePasswordCommandOptions { get; set; }
+
         // local
-        [VerbOption("hash", HelpText = "Generate the server password hash")]
+        [VerbOption("passwordHash", HelpText = "Generate the server password hash")]
         public GetPasswordHashCommandOptions GetPasswordHashCommandOptions { get; set; }
 
         [VerbOption("endpoint", HelpText = "Change the endpoint the console is pointing to")]

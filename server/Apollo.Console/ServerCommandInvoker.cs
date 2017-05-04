@@ -53,8 +53,9 @@ namespace Apollo.Console
                     else if (parsed.result.Result != null)
                     {
                         System.Console.WriteLine(JsonConvert.SerializeObject(parsed.result.Result, Formatting.Indented));
-                        return parsed.result.Result;
                     }
+                    
+                    return parsed.result;
                 }
                 catch (Exception exception)
                 {
