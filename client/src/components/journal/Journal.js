@@ -112,7 +112,7 @@ class Journal extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='container-fluid'>
         <h2>Journal</h2>
 
         <EntryInput onSubmit={this.addNewNote} />

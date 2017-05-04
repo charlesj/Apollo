@@ -11,6 +11,8 @@ var ServerInfo = require('./components/ServerInfo');
 var Journal = require('./components/journal/Journal');
 var Nav = require('./components/Nav');
 var Home = require('./components/Home');
+var Settings = require('./components/settings/Settings');
+
 import './App.css';
 
 class App extends Component {
@@ -60,6 +62,7 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/journal' component={Journal} />
+              <Route exact path='/settings' component={Settings} />
               <Route render={function(){
                      return (<p>Not Found</p>)
               }} />

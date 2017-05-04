@@ -6,6 +6,7 @@ function Nav(){
         <ul className='nav'>
             <li><NavLink exact activeClassName='active' to='/'>Apollo</NavLink></li>
             <li><NavLink activeClassName='active' to='/journal'>Journal</NavLink></li>
+            <li><NavLink activeClassName='active' to='/settings'>Settings</NavLink></li>
         </ul>
     )
 }
