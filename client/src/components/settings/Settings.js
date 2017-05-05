@@ -46,6 +46,7 @@ class Settings extends React.Component {
     }).then(data =>{
       this.setState({
         showSuccess: true,
+        showError: false,
         currentPassword: '',
         newPassword: '',
         newPasswordVerification: ''
@@ -53,6 +54,7 @@ class Settings extends React.Component {
     }).catch(err => {
       console.log('Error changing password', err);
       this.setState({
+        showSuccess: false,
         showError: true,
         currentPassword: '',
         newPassword: '',
