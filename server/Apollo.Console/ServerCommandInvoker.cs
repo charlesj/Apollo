@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Apollo.Console
 {
@@ -18,8 +19,15 @@ namespace Apollo.Console
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                var payload = new JsonRpcRequest {id = "1", method = command, @params = parameters};
-                var json = JsonConvert.SerializeObject(payload, Formatting.Indented);
+                var paramsJobject = JObject.FromObject(parameters);
+                paramsJobject["token"] = options.LoginToken;
+
+                var payload = new JObject();
+                payload["id"] = "1";
+                payload["method"] = command;
+                payload["params"] = paramsJobject;
+
+                var json = payload.ToString();
                 if (options.ShowRequest)
                     System.Console.WriteLine(json);
                 streamWriter.Write(json);
@@ -54,7 +62,7 @@ namespace Apollo.Console
                     {
                         System.Console.WriteLine(JsonConvert.SerializeObject(parsed.result.Result, Formatting.Indented));
                     }
-                    
+
                     return parsed.result;
                 }
                 catch (Exception exception)

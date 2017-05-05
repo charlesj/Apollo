@@ -18,7 +18,6 @@ namespace Apollo.Console.Commands.Journal
         {
             Execute("AddJournalEntry", new
             {
-                token = Options.LoginToken,
                 note = Options.Note
             });
         }

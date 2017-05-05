@@ -21,7 +21,7 @@
             var newPasswordVerification = Console.ReadLineSupressOutput();
 
             var result = this.Execute("ChangePassword",
-                new {currentPassword, newPassword, newPasswordVerification, token = Options.LoginToken});
+                new {currentPassword, newPassword, newPasswordVerification});
 
             if(result.ResultStatus == 0)
                 Console.Green("Successfully changed password");
