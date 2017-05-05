@@ -21,6 +21,7 @@ module.exports = {
       return response.data.result.Result;
     }).catch(err => {
       console.log("ERROR", err);
+      throw err;
     });
   }
 };
