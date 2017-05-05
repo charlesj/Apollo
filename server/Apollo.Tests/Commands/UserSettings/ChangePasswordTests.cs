@@ -83,5 +83,27 @@ namespace Apollo.Tests.Commands.UserSettings
 
             Assert.Same(CommandResult.SuccessfulResult, result);
         }
+
+        [Fact]
+        public async void InvalidTokenIsUnauthorized()
+        {
+            Mock<ILoginService>().Setup(l => l.ValidateToken(It.IsAny<string>()))
+                .Returns(Task.FromResult(false));
+
+            var result = await this.ClassUnderTest.Authorize();
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async void ValidTokenIsAuthorized()
+        {
+            Mock<ILoginService>().Setup(l => l.ValidateToken(It.IsAny<string>()))
+                .Returns(Task.FromResult(true));
+
+            var result = await this.ClassUnderTest.Authorize();
+
+            Assert.True(result);
+        }
     }
 }
