@@ -13,8 +13,11 @@
 - name: Install nodejs
   become: true
   apt:
-    name: nodejs
+    name: "{{ item }}"
     state: present
+  with_items:
+    - nodejs
+    - npm
 - name: Install Serve
   become: true
   npm:

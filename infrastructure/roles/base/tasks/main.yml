@@ -17,3 +17,5 @@
     - build-essential
     - autotools-dev
     - automake
+    - apt-transport-https
+    - acl

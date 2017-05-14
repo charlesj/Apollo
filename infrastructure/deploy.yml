@@ -1,7 +1,7 @@
 ---
 - hosts: apollo-host
   vars:
-    apollo_url: http://apollo/
+    apollo_url: https://apollo.sudolife.org/
     dbname: apollo_db
     dbuser: apollo_pg
     dbpassword: apollo_db_password
