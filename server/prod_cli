@@ -1,0 +1,3 @@
+APOLLO_CONSOLE_MODE="prod"
+export APOLLO_CONSOLE_MODE
+mono "/opt/apollocli/Apollo.Console.exe" "$@"
