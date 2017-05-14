@@ -5,6 +5,6 @@
     src: ../templates/alembic.ini
     dest: /var/apollo/alembic.ini
 - name: Run migrations
-  command: /home/josh/.local/bin/alembic upgrade head
+  command: "/home/{{ ansible_ssh_user }}/.local/bin/alembic upgrade head"
   args:
     chdir: /var/apollo

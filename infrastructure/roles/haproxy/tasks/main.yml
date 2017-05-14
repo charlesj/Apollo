@@ -13,9 +13,17 @@
     state: present
   notify:
     - restart haproxy
+- name: Copy site certificate over
+  template:
+    src: ../templates/site.pem
+    dest: "/etc/ssl/private/{{ apollo_domain }}.pem"
+  become: true
+  notify:
+    - restart haproxy
+  when: use_ssl
 - name: Copy haproxy config
   template:
-    src: ../templates/etc.haproxy.haproxy.cfg
+    src: ../templates/haproxy.cfg
     dest: /etc/haproxy/haproxy.cfg
   become: true
   notify:
