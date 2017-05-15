@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var React = require('react');
 var PropTypes = require('prop-types');
 var moment = require('moment');
@@ -9,11 +10,16 @@ class EntryInput extends React.Component {
     super(props);
 
     this.state = {
-      note: ''
+      note: '',
+      newTag: '',
+      tags: []
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
+    this.addTag = this.addTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeTag = this.removeTag.bind(this);
   }
 
   handleChange(event) {
@@ -22,13 +28,37 @@ class EntryInput extends React.Component {
     });
   }
 
+  handleTagChange(event){
+      this.setState({
+          newTag: event.target.value
+      });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
-    this.props.onSubmit(this.state.note);
+    this.props.onSubmit(this.state.note, this.state.tags);
     this.setState({
       note: ''
     });
+  }
+
+  addTag(){
+      var currentTags = this.state.tags;
+      currentTags.push(this.state.newTag);
+      this.setState({
+          newTag:'',
+          tags: currentTags
+      });
+  }
+
+  removeTag(tag){
+      var currentTags = this.state.tags;
+       _.remove(currentTags, t =>{ return t === tag });
+      this.setState({
+          newTag:'',
+          tags: currentTags
+      });
   }
 
   render() {
@@ -41,6 +71,22 @@ class EntryInput extends React.Component {
       value={this.state.note}
       onChange={this.handleChange}>
         </textarea>
+        </div>
+      <div className="form-group">
+        <lable htmlFor='tag'>Add Note</lable>
+        <input
+            id='tag'
+            className='form-control'
+            value={this.state.newTag}
+            onChange={this.handleTagChange} />
+        <button className='btn btn-sm' onClick={this.addTag} type='button'>Add Tag</button>
+      </div>
+      <div>
+          Tags: <ul>
+              {this.state.tags.map((tag) =>{
+                  return(<li key={tag}>{tag} <button type='button' className='btn btn-sm' onClick={this.removeTag.bind(null, tag)}>X</button></li>)
+              })}
+          </ul>
       </div>
       <button className='btn btn-primary btn-sm' type='submit'>Add</button>
     </form>);
@@ -102,9 +148,10 @@ class Journal extends React.Component {
       });
   }
 
-  addNewNote(note) {
+  addNewNote(note, tags) {
     apollo.invoke('AddJournalEntry', {
-      note: note
+      note: note,
+      tags: tags
     }).then(() => {
       this.loadEntries();
     });
