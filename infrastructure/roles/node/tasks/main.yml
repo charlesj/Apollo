@@ -17,7 +17,6 @@
     state: present
   with_items:
     - nodejs
-    - npm
 - name: Install Serve
   become: true
   npm:
