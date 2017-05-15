@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Apollo.CommandSystem;
 using Apollo.Data;
 using Apollo.Data.ResultModels;
@@ -11,6 +12,7 @@ namespace Apollo.Commands.Journal
         private readonly IJournalDataService journalDataService;
 
         public string Note { get; set; }
+        public List<string> Tags { get; set; }
 
         public AddJournalEntry(IJournalDataService journalDataService, ILoginService loginService) : base(loginService)
         {
@@ -21,7 +23,8 @@ namespace Apollo.Commands.Journal
         {
             await this.journalDataService.CreateJournalEntry(new JournalEntry
             {
-                note = this.Note
+                note = this.Note,
+                tags = this.Tags?.ToArray()
             });
 
             return CommandResult.SuccessfulResult;

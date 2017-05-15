@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Apollo.Data.ResultModels;
-using Dapper;
 
 namespace Apollo.Data
 {
@@ -36,10 +35,10 @@ namespace Apollo.Data
         {
             using (var connection = await connectionFactory.GetConnection())
             {
-                connection.Execute(@"
-                    insert into journal(note, created_at)
-                    values (@note, current_timestamp)",
-                    new {note = entry.note});
+                connection.Execute($@"
+                    insert into journal(note, tags, created_at)
+                    values (@note,@tags,current_timestamp)",
+                    new {entry.note, entry.tags});
             }
         }
     }
