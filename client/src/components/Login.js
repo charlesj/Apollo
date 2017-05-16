@@ -49,21 +49,18 @@ class Login extends React.Component {
   }
 
   render() {
-    return (<div className="container-fluid" id="login">
-        <form onSubmit={this.handleSubmit} className="form-inline">
-          <div className="form-group">
-            <div className="input-group">
-              <div className="input-group-addon input-sm">Login</div>
+    return (<div id="login">
+        <form onSubmit={this.handleSubmit}>
+          <div>
               <input
       type='password'
       id='password'
       className='form-control input-sm'
       value={this.state.password}
       onChange={this.handleChange}/>
-            </div>
           </div>
         </form>
-        {this.state.showWrong && <div className='bg-danger loginBad'>Wrong password ({this.state.attempts} attempts)</div>}
+        {this.state.showWrong && <div>Wrong password ({this.state.attempts} attempts)</div>}
     </div>)
   }
 }

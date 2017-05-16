@@ -57,7 +57,7 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <div className='container-fluid'>
+          <div>
             <Nav />
             <Switch>
               <Route exact path='/' component={Home} />
@@ -71,7 +71,7 @@ class App extends Component {
         </Router>
         <footer className="footer">
            <ServerInfo />&nbsp;
-           <a className="danger" onClick={this.logout}>Logout</a>
+           <a onClick={this.logout}>Logout</a>
         </footer>
       </div>
       );

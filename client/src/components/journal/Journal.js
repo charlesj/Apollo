@@ -63,32 +63,30 @@ class EntryInput extends React.Component {
 
   render() {
     return (<form onSubmit={this.handleSubmit}>
-      <div className="form-group">
+      <div>
         <lable htmlFor='note'>Add Note</lable>
         <textarea
       id='note'
-      className='form-control'
       value={this.state.note}
       onChange={this.handleChange}>
         </textarea>
         </div>
-      <div className="form-group">
-        <lable htmlFor='tag'>Add Note</lable>
+      <div>
+        <lable htmlFor='tag'>Add Tag</lable>
         <input
             id='tag'
-            className='form-control'
             value={this.state.newTag}
             onChange={this.handleTagChange} />
-        <button className='btn btn-sm' onClick={this.addTag} type='button'>Add Tag</button>
+        <button onClick={this.addTag} type='button'>Add Tag</button>
       </div>
       <div>
           Tags: <ul>
               {this.state.tags.map((tag) =>{
-                  return(<li key={tag}>{tag} <button type='button' className='btn btn-sm' onClick={this.removeTag.bind(null, tag)}>X</button></li>)
+                  return(<li key={tag}>{tag} <button type='button' onClick={this.removeTag.bind(null, tag)}>X</button></li>)
               })}
           </ul>
       </div>
-      <button className='btn btn-primary btn-sm' type='submit'>Add</button>
+      <button type='submit'>Add</button>
     </form>);
   }
 }
@@ -159,7 +157,7 @@ class Journal extends React.Component {
 
   render() {
     return (
-      <div className='container-fluid'>
+      <div>
         <h2>Journal</h2>
 
         <EntryInput onSubmit={this.addNewNote} />

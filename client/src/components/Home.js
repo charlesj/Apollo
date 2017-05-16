@@ -3,7 +3,7 @@ var React = require('react');
 class Home extends React.Component {
     render(){
         return (
-            <div className='container-fluid'>
+            <div>
                 <h2>Home</h2>
 
             </div>
