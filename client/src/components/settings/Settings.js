@@ -5,7 +5,7 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentPassword:'',
+      currentPassword: '',
       newPassword: '',
       newPasswordVerification: '',
       showError: false,
@@ -18,19 +18,19 @@ class Settings extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  updateCurrentPassword(event){
+  updateCurrentPassword(event) {
     this.setState({
       currentPassword: event.target.value
     });
   }
 
-  updateNewPassword(event){
+  updateNewPassword(event) {
     this.setState({
       newPassword: event.target.value
     });
   }
 
-  updateNewPasswordVerification(event){
+  updateNewPasswordVerification(event) {
     this.setState({
       newPasswordVerification: event.target.value
     });
@@ -43,7 +43,7 @@ class Settings extends React.Component {
       currentPassword: this.state.currentPassword,
       newPassword: this.state.newPassword,
       newPasswordVerification: this.state.newPasswordVerification
-    }).then(data =>{
+    }).then(data => {
       this.setState({
         showSuccess: true,
         showError: false,
@@ -70,37 +70,37 @@ class Settings extends React.Component {
         <div className="col-xs-6 col-md-4">
         {this.state.showSuccess && <p className="bg-success">Successfully changed password</p>}
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="currentPassword">Current Password</label>
+          <div className="pt-form-group">
+            <label htmlFor="currentPassword" className="pt-label">Current Password</label>
             <input
-              type="password"
-              className="form-control"
-              id="currentPassword"
-              placeholder="Current Password"
-              value={this.state.currentPassword}
-              onChange={this.updateCurrentPassword} />
+      type="password"
+      className="pt-input"
+      id="currentPassword"
+      placeholder="Current Password"
+      value={this.state.currentPassword}
+      onChange={this.updateCurrentPassword} />
           </div>
-          <div className="form-group">
-            <label htmlFor="newPassword">New Password</label>
+          <div className="pt-form-group">
+            <label htmlFor="newPassword" className="pt-label">New Password</label>
             <input
-              type="password"
-              className="form-control"
-              id="newPassword"
-              placeholder="New Password"
-              value={this.state.newPassword}
-              onChange={this.updateNewPassword} />
+      type="password"
+      className="pt-input"
+      id="newPassword"
+      placeholder="New Password"
+      value={this.state.newPassword}
+      onChange={this.updateNewPassword} />
           </div>
-          <div className="form-group">
-            <label htmlFor="newPasswordVerification">Verify New Password</label>
+          <div className="pt-form-group">
+            <label htmlFor="newPasswordVerification" className="pt-label">Verify New Password</label>
             <input
-              type="password"
-              className="form-control"
-              id="newPasswordVerification"
-              placeholder="Verify New Password"
-              value={this.state.newPasswordVerification}
-              onChange={this.updateNewPasswordVerification} />
+      type="password"
+      className="pt-input"
+      id="newPasswordVerification"
+      placeholder="Verify New Password"
+      value={this.state.newPasswordVerification}
+      onChange={this.updateNewPasswordVerification} />
           </div>
-          <button type="submit" className="btn btn-primary">Change Password</button>
+          <button type="submit" className="pt-button pt-intent-primary pt-icon-confirm">Change Password</button>
           {this.state.showError && <p className="bg-danger">Could not change password</p>}
         </form>
         </div>

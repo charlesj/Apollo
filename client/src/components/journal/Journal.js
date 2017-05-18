@@ -3,6 +3,8 @@ var React = require('react');
 var PropTypes = require('prop-types');
 var moment = require('moment');
 
+import { InputGroup, EditableText } from "@blueprintjs/core";
+
 var apollo = require('../../services/apollo-server');
 
 class EntryInput extends React.Component {
@@ -17,21 +19,28 @@ class EntryInput extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
+    this.handleTagKeyPress = this.handleTagKeyPress.bind(this);
     this.addTag = this.addTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeTag = this.removeTag.bind(this);
   }
 
-  handleChange(event) {
+  handleChange(change) {
     this.setState({
-      note: event.target.value
+      note: change
     });
   }
 
-  handleTagChange(event){
-      this.setState({
-          newTag: event.target.value
-      });
+  handleTagChange(event) {
+    this.setState({
+      newTag: event.target.value
+    });
+  }
+
+  handleTagKeyPress(target) {
+    if (target.charCode === 13) {
+      this.addTag();
+    }
   }
 
   handleSubmit(event) {
@@ -39,55 +48,67 @@ class EntryInput extends React.Component {
 
     this.props.onSubmit(this.state.note, this.state.tags);
     this.setState({
-      note: ''
+      note: '',
+      tags: []
     });
   }
 
-  addTag(){
-      var currentTags = this.state.tags;
-      currentTags.push(this.state.newTag);
-      this.setState({
-          newTag:'',
-          tags: currentTags
-      });
+  addTag() {
+    var currentTags = this.state.tags;
+    currentTags.push(this.state.newTag);
+    this.setState({
+      newTag: '',
+      tags: currentTags
+    });
   }
 
-  removeTag(tag){
-      var currentTags = this.state.tags;
-       _.remove(currentTags, t =>{ return t === tag });
-      this.setState({
-          newTag:'',
-          tags: currentTags
-      });
+  removeTag(tag) {
+    var currentTags = this.state.tags;
+    _.remove(currentTags, t => {
+      return t === tag
+    });
+    this.setState({
+      newTag: '',
+      tags: currentTags
+    });
   }
 
   render() {
-    return (<form onSubmit={this.handleSubmit}>
-      <div>
-        <lable htmlFor='note'>Add Note</lable>
-        <textarea
-      id='note'
+    return (<div>
+      <div className="pt-form-group">
+        <EditableText
+
+      maxLines={12}
+      minLines={7}
+      multiline
+      placeholder="Add note"
+      selectAllOnFocus={false}
+      confirmOnEnterKey={false}
       value={this.state.note}
-      onChange={this.handleChange}>
-        </textarea>
-        </div>
-      <div>
-        <lable htmlFor='tag'>Add Tag</lable>
-        <input
-            id='tag'
-            value={this.state.newTag}
-            onChange={this.handleTagChange} />
-        <button onClick={this.addTag} type='button'>Add Tag</button>
+      onChange={this.handleChange}
+      />
+      </div>
+      <div className="pt-form-group">
+        <InputGroup
+      leftIconName="tag"
+      onChange={this.handleTagChange}
+      placeholder="Add tags"
+      value={this.state.newTag}
+      onKeyPress={this.handleTagKeyPress}
+      />
       </div>
       <div>
-          Tags: <ul>
-              {this.state.tags.map((tag) =>{
-                  return(<li key={tag}>{tag} <button type='button' onClick={this.removeTag.bind(null, tag)}>X</button></li>)
-              })}
-          </ul>
+              {this.state.tags.map((tag) => {
+        return (<span className='pt-tag pt-tag-removable' key={tag}>
+                        {tag}
+                        <button className='pt-tag-remove' type='button' onClick={this.removeTag.bind(null, tag)}></button></span>)
+      })}
+
       </div>
-      <button type='submit'>Add</button>
-    </form>);
+      <div>
+        <button type='submit' className='pt-button pt-intent-primary pt-icon-add' onClick={this.handleSubmit}>Save Note</button>
+      </div>
+  </div>);
   }
 }
 

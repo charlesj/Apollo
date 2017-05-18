@@ -49,15 +49,18 @@ class Login extends React.Component {
   }
 
   render() {
-    return (<div id="login">
+    return (<div id="login" className="pt-non-ideal-state">
         <form onSubmit={this.handleSubmit}>
-          <div>
+          <div className="pt-non-ideal-state-description"><div className="pt-input-group .modifier">
+              <span className="pt-icon pt-icon-log-in"></span>
+
               <input
       type='password'
       id='password'
-      className='form-control input-sm'
+      className='pt-input pt-intent-success'
       value={this.state.password}
       onChange={this.handleChange}/>
+      </div>
           </div>
         </form>
         {this.state.showWrong && <div>Wrong password ({this.state.attempts} attempts)</div>}

@@ -59,18 +59,20 @@ class App extends Component {
         <Router>
           <div>
             <Nav />
+            <div  className='mainContainer'>
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/journal' component={Journal} />
               <Route exact path='/settings' component={Settings} />
-              <Route render={function(){
-                     return (<p>Not Found</p>)
-              }} />
+              <Route render={function() {
+        return (<p>Not Found</p>)
+      }} />
             </Switch>
+            </div>
           </div>
         </Router>
         <footer className="footer">
-           <ServerInfo />&nbsp;
+           <ServerInfo /> 
            <a onClick={this.logout}>Logout</a>
         </footer>
       </div>
