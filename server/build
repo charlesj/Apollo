@@ -50,7 +50,14 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-msbuild /p:Configuration=Release Apollo.sln
+# Apparently mono 5.0.1.1 doesn't like the .sln format
+# msbuild /p:Configuration=Release Apollo.sln
+msbuild /p:Configuration=Release ./Apollo.Common/Apollo.Common.csproj
+msbuild /p:Configuration=Release ./Apollo/Apollo.csproj
+msbuild /p:Configuration=Release ./Apollo.Console/Apollo.Console.csproj
+msbuild /p:Configuration=Release ./Apollo.Tests/Apollo.Tests.csproj
+msbuild /p:Configuration=Release ./Apollo.IntegrationTests/Apollo.IntegrationTests.csproj
+
 
 if [ "$RUN_INTEGRATION_SUITE" = true ]; then
     mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll Apollo.IntegrationTests/bin/Release/Apollo.IntegrationTests.dll
