@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Apollo.CommandSystem;
 using Apollo.Server;
-using Apollo.Utilities;
 using Moq;
 using Xunit;
 
@@ -12,10 +11,11 @@ namespace Apollo.Tests.Server
         private ICommand command;
         private JsonRpcRequest request;
         private CommandResult goodResult;
+        private HttpClientInfo clientInfo = new HttpClientInfo();
 
         public JsonRpcCommandTranslatorTests()
         {
-            command = Mocker.GetMock<ICommand>().Object;
+            command = new SimpleCommand();
             request = new JsonRpcRequest
             {
                 Id = "42",
@@ -37,7 +37,7 @@ namespace Apollo.Tests.Server
             var processor = Mocker.GetMock<ICommandProcessor>();
             processor.Setup(r => r.Process(command, request.Params))
                 .Returns(Task.FromResult(goodResult));
-            await ClassUnderTest.ExecuteCommand(command, request);
+            await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
 
             processor.Verify(p => p.Process(command, request.Params), Times.Once());
         }
@@ -49,7 +49,7 @@ namespace Apollo.Tests.Server
             var processor = Mocker.GetMock<ICommandProcessor>();
             processor.Setup(r => r.Process(command, request.Params))
                 .Returns(Task.FromResult(goodResult));
-            var result = await ClassUnderTest.ExecuteCommand(command, request);
+            var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
 
             Assert.Equal(request.Id, result.id);
         }
@@ -62,7 +62,7 @@ namespace Apollo.Tests.Server
             processor.Setup(r => r.Process(command, request.Params))
                 .Returns(Task.FromResult(goodResult));
 
-            var result = await ClassUnderTest.ExecuteCommand(command, request);
+            var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
 
             Assert.Same(goodResult, result.result);
         }
@@ -75,7 +75,7 @@ namespace Apollo.Tests.Server
             processor.Setup(r => r.Process(command, request.Params))
                 .Returns(Task.FromResult(goodResult));
 
-            var result = await ClassUnderTest.ExecuteCommand(command, request);
+            var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
 
             Assert.Null(result.error);
         }
@@ -98,9 +98,46 @@ namespace Apollo.Tests.Server
             processor.Setup(r => r.Process(command, request.Params))
                 .Returns(Task.FromResult(badResult));
 
-            var result = await ClassUnderTest.ExecuteCommand(command, request);
-
+            var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
             Assert.Equal(expected, result.error);
+        }
+
+        [Fact]
+        public async void HydratesCommandClientInformationFromHttpClientInfo()
+        {
+            request.Params = new object();
+            var processor = Mocker.GetMock<ICommandProcessor>();
+            processor.Setup(r => r.Process(command, request.Params))
+                .Returns(Task.FromResult(goodResult));
+
+            clientInfo.Agent = "YES I AM AGENT";
+            clientInfo.IpAddress = "11.11.11.11";
+
+            await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
+
+            processor.Verify(p =>
+                p.Process(
+                    It.Is<SimpleCommand>(c => c.ClientIpAddress == clientInfo.IpAddress
+                                         && c.ClientUserAgent == clientInfo.Agent),
+                request.Params), Times.Once());
+        }
+
+        private class SimpleCommand : CommandBase
+        {
+            public override Task<CommandResult> Execute()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override Task<bool> IsValid()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override Task<bool> Authorize()
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }

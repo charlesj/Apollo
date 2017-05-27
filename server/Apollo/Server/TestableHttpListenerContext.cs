@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 
 namespace Apollo.Server
@@ -59,6 +60,15 @@ namespace Apollo.Server
         public virtual void CloseResponse()
         {
             context.Response.Close();
+        }
+
+        public virtual HttpClientInfo GetClientInfo()
+        {
+            return new HttpClientInfo
+            {
+                Agent = context.Request.UserAgent,
+                IpAddress = context.Request.UserHostAddress
+            };
         }
     }
 }

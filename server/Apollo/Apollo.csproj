@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootOptions.cs" />
+    <Compile Include="CommandSystem\CommandBase.cs" />
     <Compile Include="CommandSystem\CommandHydrator.cs" />
     <Compile Include="CommandSystem\CommandLocator.cs" />
     <Compile Include="CommandSystem\CommandProcessor.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Data\LoginSessionDataService.cs" />
     <Compile Include="Data\ResultModels\JournalEntry.cs" />
     <Compile Include="Data\UserSettingsDataService.cs" />
+    <Compile Include="Server\HttpClientInfo.cs" />
     <Compile Include="Server\HttpResponse.cs" />
     <Compile Include="Server\HttpServer.cs" />
     <Compile Include="Server\IHttpServer.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Server\IJsonRpcRequestParser.cs" />
     <Compile Include="Server\IRequestLogger.cs" />
     <Compile Include="Server\ITestableHttpListenerContext.cs" />
+    <Compile Include="Server\JsonRpcCommandTranslator.cs" />
     <Compile Include="Server\JsonRpcParserResult.cs" />
     <Compile Include="Server\JsonRpcProcessor.cs" />
     <Compile Include="Server\JsonRpcRequest.cs" />

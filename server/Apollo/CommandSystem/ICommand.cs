@@ -7,5 +7,8 @@ namespace Apollo.CommandSystem
         Task<CommandResult> Execute();
         Task<bool> IsValid();
         Task<bool> Authorize();
+
+        string ClientIpAddress { get; set; }
+        string ClientUserAgent { get; set; }
     }
 }

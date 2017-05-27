@@ -7,6 +7,8 @@ namespace Apollo.Tests.Server
 {
     public class JsonRpcProcessorTests : BaseUnitTest<JsonRpcProcessor>
     {
+        private HttpClientInfo clientInfo = new HttpClientInfo();
+
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
@@ -14,7 +16,7 @@ namespace Apollo.Tests.Server
         [InlineData(null)]
         public async void EmptyBody_Returns400Result(string requestBody)
         {
-            var result = await ClassUnderTest.Process(requestBody);
+            var result = await ClassUnderTest.Process(requestBody, clientInfo);
             Assert.Equal(400, result.HttpCode);
             Assert.Null(result.Body);
         }
@@ -28,7 +30,7 @@ namespace Apollo.Tests.Server
 
             parser.Setup(p => p.Parse(request)).Returns(parserResult);
 
-            var result = await ClassUnderTest.Process(request);
+            var result = await ClassUnderTest.Process(request, clientInfo);
             Assert.Equal(400, result.HttpCode);
             Assert.Equal("Could not parse RPC Request", result.Body);
         }
@@ -45,7 +47,7 @@ namespace Apollo.Tests.Server
             commandLocator.Setup(l => l.Locate(parserResult.Request.Method))
                 .Returns((ICommand)null);
 
-            var result = await ClassUnderTest.Process(request);
+            var result = await ClassUnderTest.Process(request, clientInfo);
             Assert.Equal(404, result.HttpCode);
             Assert.Equal("Could not locate requested method", result.Body);
         }
@@ -63,11 +65,11 @@ namespace Apollo.Tests.Server
             commandLocator.Setup(l => l.Locate(parserResult.Request.Method))
                 .Returns(mockedCommand.Object);
             var translator = this.Mocker.GetMock<IJsonRpcCommandTranslator>();
-            translator.Setup(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request))
+            translator.Setup(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request, clientInfo))
                 .Returns(Task.FromResult(new JsonRpcResponse()));
-            await ClassUnderTest.Process(request);
+            await ClassUnderTest.Process(request, clientInfo);
 
-            translator.Verify(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request));
+            translator.Verify(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request, clientInfo));
         }
 
         [Fact]
@@ -85,7 +87,7 @@ namespace Apollo.Tests.Server
 
             var translator = this.Mocker.GetMock<IJsonRpcCommandTranslator>();
             var jsonResponse = new JsonRpcResponse();
-            translator.Setup(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request))
+            translator.Setup(t => t.ExecuteCommand(mockedCommand.Object, parserResult.Request, clientInfo))
                 .Returns(Task.FromResult(jsonResponse));
 
             var converter = this.Mocker.GetMock<IJsonRpcHttpConverter>();
@@ -93,7 +95,7 @@ namespace Apollo.Tests.Server
             converter.Setup(c => c.Convert(jsonResponse))
                 .Returns(httpResponse);
 
-            var result = await ClassUnderTest.Process(request);
+            var result = await ClassUnderTest.Process(request, clientInfo);
             Assert.Same(httpResponse, result);
         }
     }

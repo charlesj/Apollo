@@ -1,0 +1,2 @@
+#!/bin/bash
+watchman-make --make='./build' -p '**/*.cs' -t nothing

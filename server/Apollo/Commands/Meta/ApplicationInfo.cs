@@ -3,9 +3,9 @@ using Apollo.CommandSystem;
 
 namespace Apollo.Commands.Meta
 {
-    public class ApplicationInfo : ICommand
+    public class ApplicationInfo : CommandBase
     {
-        public Task<CommandResult> Execute()
+        public override Task<CommandResult> Execute()
         {
             var result = new CommandResult
             {
@@ -20,12 +20,12 @@ namespace Apollo.Commands.Meta
             return Task.FromResult(result);
         }
 
-        public Task<bool> IsValid()
+        public override Task<bool> IsValid()
         {
             return Task.FromResult(true);
         }
 
-        public Task<bool> Authorize()
+        public override Task<bool> Authorize()
         {
             return Task.FromResult(true);
         }

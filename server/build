@@ -9,6 +9,8 @@ NUGET_EXE=$TOOLS_DIR/nuget.exe
 XUNIT_VERSION=2.2.0-beta4-build3444
 XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools/xunit.console.exe
 
+BUILD_OPTS='/nologo /verbosity:m /p:Configuration=Release'
+
 RUN_INTEGRATION_SUITE=false
 for var in "$@"
 do
@@ -18,15 +20,23 @@ do
 done
 
 
-# Verion file
-if [ -f Apollo/Version.cs ]; then
-    rm Apollo/Version.cs
-fi
+# Do Deploy things
+for var in "$@"
+do
+    if [ $var = "deploy" ]; then
+        if [ -f Apollo/Version.cs ]; then
+            rm Apollo/Version.cs
+        fi
 
-cp Apollo/Version_Template.cs Apollo/Version.cs
-sed -i "s/%%version%%/$APOLLO_VERSION/g" Apollo/Version.cs
-sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" Apollo/Version.cs
-sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Apollo/Version.cs
+        cp Apollo/Version_Template.cs Apollo/Version.cs
+        sed -i "s/%%version%%/$APOLLO_VERSION/g" Apollo/Version.cs
+        sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" Apollo/Version.cs
+        sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Apollo/Version.cs
+
+        BUILD_OPTS='/p:Configuration=Release'
+    fi
+done
+
 
 
 # Make sure the tools folder exist.
@@ -51,13 +61,18 @@ if [ $? -ne 0 ]; then
 fi
 
 # Apparently mono 5.0.1.1 doesn't like the .sln format
-# msbuild /p:Configuration=Release Apollo.sln
-msbuild /p:Configuration=Release ./Apollo.Common/Apollo.Common.csproj
-msbuild /p:Configuration=Release ./Apollo/Apollo.csproj
-msbuild /p:Configuration=Release ./Apollo.Console/Apollo.Console.csproj
-msbuild /p:Configuration=Release ./Apollo.Tests/Apollo.Tests.csproj
-msbuild /p:Configuration=Release ./Apollo.IntegrationTests/Apollo.IntegrationTests.csproj
-
+for var in "$@"
+do
+    if [ $var = "projects" ]; then
+        msbuild $BUILD_OPTS ./Apollo.Common/Apollo.Common.csproj
+        msbuild $BUILD_OPTS ./Apollo/Apollo.csproj
+        msbuild $BUILD_OPTS ./Apollo.Console/Apollo.Console.csproj
+        msbuild $BUILD_OPTS ./Apollo.Tests/Apollo.Tests.csproj
+        msbuild $BUILD_OPTS ./Apollo.IntegrationTests/Apollo.IntegrationTests.csproj
+    else
+        msbuild $BUILD_OPTS Apollo.sln
+    fi
+done
 
 if [ "$RUN_INTEGRATION_SUITE" = true ]; then
     mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll Apollo.IntegrationTests/bin/Release/Apollo.IntegrationTests.dll

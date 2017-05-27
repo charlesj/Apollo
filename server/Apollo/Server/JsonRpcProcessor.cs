@@ -6,7 +6,7 @@ namespace Apollo.Server
 {
     public interface IJsonRpcProcessor
     {
-        Task<HttpResponse> Process(string request);
+        Task<HttpResponse> Process(string request, HttpClientInfo clientInfo);
     }
 
     public class JsonRpcProcessor : IJsonRpcProcessor
@@ -31,12 +31,12 @@ namespace Apollo.Server
             this.logger = logger;
         }
 
-        public async Task<HttpResponse> Process(string request)
+        public async Task<HttpResponse> Process(string request, HttpClientInfo clientInfo)
         {
             logger.Info($"REQ {request}");
             if (string.IsNullOrWhiteSpace(request))
             {
-                logger.Error("BAD REQ");
+                logger.Error("BAD REQ - Empty Command");
                 return HttpResponse.BadRequest();
             }
 
@@ -55,7 +55,7 @@ namespace Apollo.Server
                 return HttpResponse.NotFound("Could not locate requested method");
             }
 
-            var response = await translator.ExecuteCommand(command, parsedRequest.Request);
+            var response = await translator.ExecuteCommand(command, parsedRequest.Request, clientInfo);
 
             logger.Info("REQ COMPLETE", response);
             return converter.Convert(response);

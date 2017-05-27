@@ -4,7 +4,7 @@ using Apollo.Services;
 
 namespace Apollo.Commands
 {
-    public abstract class AuthenticatedCommand : ICommand
+    public abstract class AuthenticatedCommand : CommandBase
     {
         protected readonly ILoginService loginService;
 
@@ -15,11 +15,11 @@ namespace Apollo.Commands
 
         public string Token { get; set; }
 
-        public abstract Task<CommandResult> Execute();
+        public abstract override Task<CommandResult> Execute();
 
-        public abstract Task<bool> IsValid();
+        public abstract override Task<bool> IsValid();
 
-        public Task<bool> Authorize()
+        public override Task<bool> Authorize()
         {
             return loginService.ValidateToken(this.Token);
         }

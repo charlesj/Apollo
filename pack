@@ -18,7 +18,7 @@ mkdir "$PUBLISH_DIR"
 # build server
 
 pushd server
-./build
+./build deploy
 popd
 
 mv ./server/Apollo/bin/Release "$PUBLISH_DIR"/server

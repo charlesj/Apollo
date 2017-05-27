@@ -51,7 +51,8 @@ namespace Apollo.Server
                 }
 
                 var body = context.GetRequestBody();
-                var response = processor.Process(body).GetAwaiter().GetResult();
+                var clientInfo = context.GetClientInfo();
+                var response = processor.Process(body, clientInfo).GetAwaiter().GetResult();
 
                 context.StatusCode = response.HttpCode;
 

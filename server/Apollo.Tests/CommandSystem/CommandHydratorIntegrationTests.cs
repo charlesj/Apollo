@@ -51,40 +51,40 @@ namespace Apollo.Tests.CommandSystem
             Assert.Equal(13, sc.StartTime.Day);
         }
 
-        private class SimpleCommand : ICommand
+        private class SimpleCommand : CommandBase
         {
             public int Count { get; set; }
             public string Name { get; set; }
             public DateTimeOffset StartTime { get; set; }
-            public Task<CommandResult> Execute()
+            public override Task<CommandResult> Execute()
             {
                 throw new System.NotImplementedException();
             }
 
-            public Task<bool> IsValid()
+            public override Task<bool> IsValid()
             {
                 throw new System.NotImplementedException();
             }
 
-            public Task<bool> Authorize()
+            public override Task<bool> Authorize()
             {
                 throw new System.NotImplementedException();
             }
         }
 
-        private class EmptyCommand : ICommand
+        private class EmptyCommand : CommandBase
         {
-            public Task<CommandResult> Execute()
+            public override Task<CommandResult> Execute()
             {
                 throw new System.NotImplementedException();
             }
 
-            public Task<bool> IsValid()
+            public override Task<bool> IsValid()
             {
                 throw new System.NotImplementedException();
             }
 
-            public Task<bool> Authorize()
+            public override Task<bool> Authorize()
             {
                 throw new System.NotImplementedException();
             }

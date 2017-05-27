@@ -24,7 +24,6 @@ namespace Apollo.Tests.Server
             var context = Mocker.GetMock<ITestableHttpListenerContext>();
 
             ClassUnderTest.ProcessRequest(context.Object);
-
             context.Verify(c =>
                 c.AddHeader("Access-Control-Allow-Headers",
                     "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"),
@@ -58,21 +57,25 @@ namespace Apollo.Tests.Server
         {
             var context = Mocker.GetMock<ITestableHttpListenerContext>();
             var body = "body";
+            var clientInfo = new HttpClientInfo();
+
             context.SetupGet(s => s.HttpMethod).Returns("POST");
             context.Setup(c => c.GetRequestBody()).Returns(body);
+            context.Setup(c => c.GetClientInfo()).Returns(clientInfo);
 
             var response = new HttpResponse();
             response.HttpCode = 200;
             context.SetupSet(c => c.StatusCode = response.HttpCode);
 
             var processor = Mocker.GetMock<IJsonRpcProcessor>();
-            processor.Setup(s => s.Process(body)).Returns(Task.FromResult(response));
+            processor.Setup(s => s.Process(body, clientInfo)).Returns(Task.FromResult(response));
 
             ClassUnderTest.ProcessRequest(context.Object);
 
             context.VerifySet(c => c.StatusCode = response.HttpCode, Times.Once());
             context.Verify(c => c.WriteResponseBody(response.Body), Times.Once());
             context.Verify(c => c.CloseResponse(), Times.Once());
+            processor.Verify(p => p.Process(body, clientInfo), Times.Once());
         }
 
         [Fact]

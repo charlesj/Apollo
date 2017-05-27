@@ -8,5 +8,6 @@
         void WriteResponseBody(string body);
         void AddHeader(string headerName, string value);
         void CloseResponse();
+        HttpClientInfo GetClientInfo();
     }
 }
