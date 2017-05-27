@@ -84,12 +84,15 @@
     <Compile Include="CommandSystem\CommandHydratorIntegrationTests.cs" />
     <Compile Include="CommandSystem\CommandLocatorIntegrationTests.cs" />
     <Compile Include="CommandSystem\CommandProcessorTests.cs" />
+    <Compile Include="Commands\AuthenticatedCommandTests.cs" />
     <Compile Include="Commands\Journal\AddJournalEntryTests.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesTests.cs" />
     <Compile Include="Commands\LoginTests.cs" />
     <Compile Include="Commands\Meta\ApplicationInfoTests.cs" />
     <Compile Include="Commands\Meta\TestCommandTests.cs" />
     <Compile Include="Commands\UserSettings\ChangePasswordTests.cs" />
+    <Compile Include="Commands\UserSettings\GetAllActiveLoginSessions.cs" />
+    <Compile Include="Commands\UserSettings\RevokeLoginSessionTests.cs" />
     <Compile Include="ConfigurationTests.cs" />
     <Compile Include="Data\UserSettingsDataServiceTests.cs" />
     <Compile Include="KernelTests.cs" />

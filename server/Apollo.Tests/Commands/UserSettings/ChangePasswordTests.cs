@@ -87,7 +87,7 @@ namespace Apollo.Tests.Commands.UserSettings
         [Fact]
         public async void InvalidTokenIsUnauthorized()
         {
-            Mock<ILoginService>().Setup(l => l.ValidateToken(It.IsAny<string>()))
+            Mock<ILoginService>().Setup(l => l.ValidateToken(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(false));
 
             var result = await this.ClassUnderTest.Authorize();
@@ -98,7 +98,7 @@ namespace Apollo.Tests.Commands.UserSettings
         [Fact]
         public async void ValidTokenIsAuthorized()
         {
-            Mock<ILoginService>().Setup(l => l.ValidateToken(It.IsAny<string>()))
+            Mock<ILoginService>().Setup(l => l.ValidateToken(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(true));
 
             var result = await this.ClassUnderTest.Authorize();

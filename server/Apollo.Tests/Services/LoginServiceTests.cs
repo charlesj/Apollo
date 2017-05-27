@@ -13,6 +13,8 @@ namespace Apollo.Tests.Services
         private const string password = "password";
         private const string hash = "hash";
         private const string token = "token";
+        private const string ipAddress = "ipAddress";
+        private const string userAgent = "userAgent";
 
         public LoginServiceTests()
         {
@@ -25,7 +27,7 @@ namespace Apollo.Tests.Services
                 .Returns(true);
 
             this.Mocker.GetMock<ILoginSessionDataService>()
-                .Setup(r => r.UpdateLastSeen(It.IsAny<string>()))
+                .Setup(r => r.UpdateLastSeen(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(0));
 
             this.Mocker.GetMock<ILoginSessionDataService>()
@@ -92,10 +94,10 @@ namespace Apollo.Tests.Services
             };
 
             this.Mocker.GetMock<ILoginSessionDataService>()
-                .Setup(l => l.GetAllSessions())
+                .Setup(l => l.GetAllActiveSessions())
                 .Returns(Task.FromResult(sessions));
 
-            var result = await this.ClassUnderTest.ValidateToken(token);
+            var result = await this.ClassUnderTest.ValidateToken(token, ipAddress, userAgent);
 
             Assert.True(result);
         }
@@ -112,10 +114,10 @@ namespace Apollo.Tests.Services
             };
 
             this.Mocker.GetMock<ILoginSessionDataService>()
-                .Setup(l => l.GetAllSessions())
+                .Setup(l => l.GetAllActiveSessions())
                 .Returns(Task.FromResult(sessions));
 
-            var result = await this.ClassUnderTest.ValidateToken(token);
+            var result = await this.ClassUnderTest.ValidateToken(token, ipAddress, userAgent);
 
             Assert.False(result);
         }
@@ -132,13 +134,13 @@ namespace Apollo.Tests.Services
             };
 
             this.Mocker.GetMock<ILoginSessionDataService>()
-                .Setup(l => l.GetAllSessions())
+                .Setup(l => l.GetAllActiveSessions())
                 .Returns(Task.FromResult(sessions));
 
-            await this.ClassUnderTest.ValidateToken(token);
+            await this.ClassUnderTest.ValidateToken(token, ipAddress, userAgent);
 
             this.Mocker.GetMock<ILoginSessionDataService>()
-                .Verify(l => l.UpdateLastSeen(token), Times.Once());
+                .Verify(l => l.UpdateLastSeen(token, ipAddress, userAgent), Times.Once());
         }
 
         [Theory]
@@ -157,6 +159,19 @@ namespace Apollo.Tests.Services
             var result = await this.ClassUnderTest.CheckPassword(password);
 
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public async void RevokeTokenCallsLoginDataService()
+        {
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Setup(l => l.RevokeSession(It.IsAny<string>()))
+                .Returns(Task.FromResult(string.Empty));
+
+            await this.ClassUnderTest.RevokeToken(token);
+
+            this.Mocker.GetMock<ILoginSessionDataService>()
+                .Verify(l => l.RevokeSession(token), Times.Once());
         }
     }
 }

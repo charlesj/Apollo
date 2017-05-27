@@ -13,5 +13,10 @@
         public string ErrorMessage { get; set; }
 
         public static CommandResult SuccessfulResult = new CommandResult() {ResultStatus = CommandResultType.Success};
+
+        public static CommandResult CreateSuccessResult(object result)
+        {
+            return new CommandResult {ResultStatus = CommandResultType.Success, Result = result};
+        }
     }
 }

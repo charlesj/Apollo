@@ -10,9 +10,11 @@ namespace Apollo.Services
     {
         Task<string> Authenticate(string password);
 
-        Task<bool> ValidateToken(string token);
+        Task<bool> ValidateToken(string token, string ipAddress, string userAgent);
 
         Task<bool> CheckPassword(string password);
+
+        Task RevokeToken(string token);
     }
 
     public class LoginService : ILoginService
@@ -40,15 +42,15 @@ namespace Apollo.Services
             return activeToken;
         }
 
-        public async Task<bool> ValidateToken(string token)
+        public async Task<bool> ValidateToken(string token, string ipAddress, string userAgent)
         {
-            var currentSessions = await this.loginSessionDataService.GetAllSessions();
+            var currentSessions = await this.loginSessionDataService.GetAllActiveSessions();
 
             var valid = currentSessions.Any(s => s.token == token);
 
             if (valid)
             {
-                await this.loginSessionDataService.UpdateLastSeen(token);
+                await this.loginSessionDataService.UpdateLastSeen(token, ipAddress, userAgent);
             }
 
             return valid;
@@ -60,6 +62,11 @@ namespace Apollo.Services
                 .GetSetting<string>(Constants.UserSettings.PasswordHash);
 
             return this.passwordHasher.CheckHash(passwordHash, password);
+        }
+
+        public async Task RevokeToken(string token)
+        {
+            await this.loginSessionDataService.RevokeSession(token);
         }
     }
 }

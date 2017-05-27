@@ -19,9 +19,9 @@ namespace Apollo.Commands
 
         public abstract override Task<bool> IsValid();
 
-        public override Task<bool> Authorize()
+        public override async Task<bool> Authorize()
         {
-            return loginService.ValidateToken(this.Token);
+            return await this.loginService.ValidateToken(this.Token, this.ClientIpAddress, this.ClientUserAgent);
         }
     }
 }
