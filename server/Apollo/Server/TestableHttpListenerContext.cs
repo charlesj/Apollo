@@ -64,10 +64,11 @@ namespace Apollo.Server
 
         public virtual HttpClientInfo GetClientInfo()
         {
+            var originAddress = context.Request.Headers["X-Forwarded-For"];
             return new HttpClientInfo
             {
                 Agent = context.Request.UserAgent,
-                IpAddress = context.Request.UserHostAddress
+                IpAddress = originAddress ?? context.Request.UserHostAddress
             };
         }
     }
