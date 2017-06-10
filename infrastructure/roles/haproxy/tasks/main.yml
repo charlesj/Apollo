@@ -14,8 +14,8 @@
   notify:
     - restart haproxy
 - name: Copy site certificate over
-  template:
-    src: ../templates/site.pem
+  copy:
+    src: ../files/site.pem
     dest: "/etc/ssl/private/{{ apollo_domain }}.pem"
   become: true
   notify:
