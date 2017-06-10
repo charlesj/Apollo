@@ -3,8 +3,8 @@ var React = require('react');
 var PropTypes = require('prop-types');
 var moment = require('moment');
 import { Tab2, Tabs2 } from "@blueprintjs/core";
-
 import { InputGroup, EditableText } from "@blueprintjs/core";
+import MarkdownRenderer from 'react-markdown-renderer';
 
 var apollo = require('../../services/apollo-server');
 
@@ -126,7 +126,7 @@ function EntryDisplay(props) {
               { createTime.calendar() }
             </div>
             <div className="content">
-              { props.note }
+              <MarkdownRenderer markdown={ props.note } />
             </div>
         </div>)
 }
