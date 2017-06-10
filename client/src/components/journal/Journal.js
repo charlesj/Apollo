@@ -2,6 +2,7 @@ var _ = require('lodash');
 var React = require('react');
 var PropTypes = require('prop-types');
 var moment = require('moment');
+import { Tab2, Tabs2 } from "@blueprintjs/core";
 
 import { InputGroup, EditableText } from "@blueprintjs/core";
 
@@ -119,8 +120,10 @@ EntryInput.propTypes = {
 function EntryDisplay(props) {
   var createTime = moment(props.createdAt);
   return (<div className="note">
+      <span className="pt-icon-standard pt-icon-document"></span>
             <div className="createdTime">
-              { createTime.format('Y-MM-DD HH:mm:SS') }
+
+              { createTime.calendar() }
             </div>
             <div className="content">
               { props.note }
@@ -132,6 +135,18 @@ EntryDisplay.propTypes = {
   createdAt: PropTypes.string.isRequired,
   note: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired
+}
+
+function EntryListDisplay(props){
+    return ( <div>       { props.entries.map(function(entry, index) {
+            return (<EntryDisplay
+              id={entry.id}
+              key={entry.id}
+              note={entry.note}
+              createdAt={entry.created_at}
+              />)
+          })}
+      </div>)
 }
 
 class Journal extends React.Component {
@@ -179,18 +194,11 @@ class Journal extends React.Component {
   render() {
     return (
       <div>
-        <h2>Journal</h2>
-
-        <EntryInput onSubmit={this.addNewNote} />
-
-        { this.state.entries.map(function(entry, index) {
-        return (<EntryDisplay
-          id={entry.id}
-          key={entry.id}
-          note={entry.note}
-          createdAt={entry.created_at}
-          />)
-      }, this)}
+        <Tabs2 id="JournalTabs" onChange={this.handleTabChange}>
+            <Tab2 id="new_entry" title="Entries" panel={<EntryListDisplay entries={this.state.entries} />} />
+            <Tab2 id="entries" title="Add Entry" panel={<EntryInput onSubmit={this.addNewNote} />} />
+            <Tabs2.Expander />
+        </Tabs2>
       </div>);
   }
 }

@@ -16,3 +16,17 @@
 .userAgentColumn{
     width: 90px;
 }
+
+.note {
+    margin: 10px;
+}
+
+.note .createdTime {
+    color: gray;
+    display: inline;
+    margin-left: 5px;
+}
+
+.note .content {
+    margin: 10px;
+}
