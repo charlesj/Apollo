@@ -16,6 +16,7 @@ namespace Apollo.Console
             var httpWebRequest = (HttpWebRequest) WebRequest.Create(options.Endpoint);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
+            httpWebRequest.UserAgent = "ApolloCLI/1.0";
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
