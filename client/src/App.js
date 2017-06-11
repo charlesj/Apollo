@@ -6,13 +6,15 @@ var Switch = ReactRouter.Switch;
 
 var LoginService = require('./services/login-service');
 
-var Login = require('./components/Login');
-var ServerInfo = require('./components/ServerInfo');
-var Journal = require('./components/journal/Journal');
-var Nav = require('./components/Nav');
-var Home = require('./components/Home');
-var Settings = require('./components/settings/Settings');
+const Login = require('./components/Login');
+const ServerInfo = require('./components/ServerInfo');
+const Journal = require('./components/journal/Journal');
+const Nav = require('./components/Nav');
+const Home = require('./components/Home');
+const Settings = require('./components/settings/Settings');
+const Health = require('./components/health/Health');
 
+import '../node_modules/gridforms/gridforms/gridforms.css';
 import './App.css';
 
 class App extends Component {
@@ -63,6 +65,7 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/journal' component={Journal} />
+              <Route exact path='/health' component={Health} />
               <Route exact path='/settings' component={Settings} />
               <Route render={function() {
         return (<p>Not Found</p>)

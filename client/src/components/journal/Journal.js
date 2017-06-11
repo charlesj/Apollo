@@ -137,15 +137,15 @@ EntryDisplay.propTypes = {
   id: PropTypes.number.isRequired
 }
 
-function EntryListDisplay(props){
-    return ( <div>       { props.entries.map(function(entry, index) {
-            return (<EntryDisplay
-              id={entry.id}
-              key={entry.id}
-              note={entry.note}
-              createdAt={entry.created_at}
-              />)
-          })}
+function EntryListDisplay(props) {
+  return ( <div>       { props.entries.map(function(entry, index) {
+      return (<EntryDisplay
+        id={entry.id}
+        key={entry.id}
+        note={entry.note}
+        createdAt={entry.created_at}
+        />)
+    })}
       </div>)
 }
 
