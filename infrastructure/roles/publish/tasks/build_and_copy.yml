@@ -1,11 +1,8 @@
-- name: Build and pack locally
-  local_action: command ./pack
-  args:
-    chdir: ../
 - name: Copy tarball to server
   copy:
-    src: ../apollo.tar.gz
+    src: ../../../../releases/apollo.latest.tar.gz
     dest: /tmp/apollo.tar.gz
+    follow: yes
 - name: Ensure target directory is removed
   become: True
   file:

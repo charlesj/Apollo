@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-APOLLO_VERSION=0.2.0
+if [ -z "$APOLLO_VERSION" ]; then
+    APOLLO_VERSION=0.2.0
+fi
 
 PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$PROJECT_DIR/tools
@@ -11,33 +13,11 @@ XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools
 
 BUILD_OPTS='/nologo /verbosity:m /p:Configuration=Release'
 
-RUN_INTEGRATION_SUITE=false
-for var in "$@"
-do
-    if [ $var = "integrate" ]; then
-      RUN_INTEGRATION_SUITE=true
-    fi
-done
-
-
-# Do Deploy things
-for var in "$@"
-do
-    if [ $var = "deploy" ]; then
-        if [ -f Apollo/Version.cs ]; then
-            rm Apollo/Version.cs
-        fi
-
-        cp Apollo/Version_Template.cs Apollo/Version.cs
-        sed -i "s/%%version%%/$APOLLO_VERSION/g" Apollo/Version.cs
-        sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" Apollo/Version.cs
-        sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Apollo/Version.cs
-
-        BUILD_OPTS='/p:Configuration=Release'
-    fi
-done
-
-
+# Set Version Information
+cp Apollo/Version_Template.cs Apollo/Version.cs
+sed -i "s/%%version%%/$APOLLO_VERSION/g" Apollo/Version.cs
+sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" Apollo/Version.cs
+sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Apollo/Version.cs
 
 # Make sure the tools folder exist.
 if [ ! -d "$TOOLS_DIR" ]; then
@@ -68,14 +48,9 @@ do
         msbuild $BUILD_OPTS ./Apollo/Apollo.csproj
         msbuild $BUILD_OPTS ./Apollo.Console/Apollo.Console.csproj
         msbuild $BUILD_OPTS ./Apollo.Tests/Apollo.Tests.csproj
-        msbuild $BUILD_OPTS ./Apollo.IntegrationTests/Apollo.IntegrationTests.csproj
     else
         msbuild $BUILD_OPTS Apollo.sln
     fi
 done
 
-if [ "$RUN_INTEGRATION_SUITE" = true ]; then
-    mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll Apollo.IntegrationTests/bin/Release/Apollo.IntegrationTests.dll
-else
-    mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll
-fi
+mono $XUNIT_RUNNER_EXE Apollo.Tests/bin/Release/Apollo.Tests.dll

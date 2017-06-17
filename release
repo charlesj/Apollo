@@ -2,7 +2,13 @@
 set -e
 
 PUBLISH_DIR=apollo
-TARBALL=apollo.tar.gz
+RELEASE_DIR=releases
+ANSIBLE_FILE_LINK=./infrastructure/roles/publish/files/apollo.tar.gz
+APOLLO_VERSION=$(./increment_release)
+export APOLLO_VERSION
+TARBALL=apollo.$APOLLO_VERSION.tar.gz
+
+LATEST_VERSION_POINTER=apollo.latest.tar.gz
 
 # clean things from previous if needed.
 if [ -d "$PUBLISH_DIR" ]; then
@@ -15,7 +21,13 @@ fi
 
 mkdir "$PUBLISH_DIR"
 
+if [ ! -d "$RELEASE_DIR" ]; then
+    mkdir "$RELEASE_DIR"
+fi
+
 # build server
+# clean first
+rm -rf ./server/Apollo/bin/Release
 
 pushd server
 ./build deploy
@@ -24,7 +36,6 @@ popd
 mv ./server/Apollo/bin/Release "$PUBLISH_DIR"/server
 
 # build client
-
 pushd client
 yarn build
 popd
@@ -39,3 +50,13 @@ cp -r ./database "$PUBLISH_DIR"/database
 
 # tarball
 tar -zcvf "$TARBALL" "$PUBLISH_DIR"
+mv "$TARBALL" "$RELEASE_DIR/"
+
+
+pushd releases
+if [ -L "$LATEST_VERSION_POINTER" ]; then
+    rm "$LATEST_VERSION_POINTER"
+fi
+
+ln -s "$TARBALL" "$LATEST_VERSION_POINTER"
+popd
