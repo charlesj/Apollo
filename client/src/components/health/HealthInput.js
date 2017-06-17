@@ -1,6 +1,8 @@
 var React = require('react');
 import { Button } from "@blueprintjs/core";
 
+var metricsService = require('../../services/metrics-service');
+
 class Health extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,7 @@ class Health extends React.Component {
     this.updateBloodOxygen = this.updateBloodOxygen.bind(this);
     this.getInitialState = this.getInitialState.bind(this);
     this.updateSleepTime = this.updateSleepTime.bind(this);
+    this.save = this.save.bind(this);
   }
 
   getInitialState(){
@@ -24,7 +27,9 @@ class Health extends React.Component {
           temperature: '',
           heartrate: '',
           bloodOxygen: '',
-          sleepTime: ''
+          sleepTime: '',
+          showSuccess: false,
+          showError: false
       };
   }
 
@@ -70,8 +75,44 @@ class Health extends React.Component {
     });
   }
 
+  save(){
+      var requests = [
+          metricsService.addMetric('health', 'weight', this.state.weight),
+          metricsService.addMetric('health', 'systolic', this.state.systolic),
+          metricsService.addMetric('health', 'diastolic', this.state.diastolic),
+          metricsService.addMetric('health', 'temperature', this.state.temperature),
+          metricsService.addMetric('health', 'heartrate', this.state.heartrate),
+          metricsService.addMetric('health', 'bloodOxygen', this.state.bloodOxygen),
+          metricsService.addMetric('health', 'sleepTime', this.state.sleepTime),
+      ];
+
+      Promise.all(requests).then(values => {
+          this.setState({
+              weight: '',
+              systolic: '',
+              diastolic: '',
+              temperature: '',
+              heartrate: '',
+              bloodOxygen: '',
+              sleepTime: '',
+              showSuccess: true,
+              showError: false
+          })
+
+      }).catch(reason => {
+          console.log('at least one metric failes');
+          console.log(reason);
+          this.setState({
+              showSuccess: false,
+              showError: true
+          });
+      });
+  }
+
   render() {
     return (<div>
+                {this.state.showSuccess && <p className="pt-callout pt-intent-success">Successfully submitted healthsheet</p>}
+                {this.state.showError && <p className="pt-callout pt-intent-danger">Something went wrong</p>}
                 <div className="grid-form">
                     <fieldset>
                         <legend>Daily Health Sheet</legend>
@@ -114,6 +155,7 @@ class Health extends React.Component {
       className='pt-button pt-intent-success'
       iconName="add"
       text="Add Health Metrics"
+      onClick={this.save}
       /></div>
                 </div>)
   }

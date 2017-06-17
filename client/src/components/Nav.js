@@ -5,7 +5,6 @@ function Nav() {
   return (
     <nav>
         <div>
-            <div className='navHeader'>Apollo</div>
             <div>
             <NavLink exact activeClassName='active' to='/'>Home</NavLink>
             <NavLink activeClassName='active' to='/journal'>Journal</NavLink>
