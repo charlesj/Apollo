@@ -2,7 +2,6 @@
 using Apollo.Commands.Journal;
 using Apollo.CommandSystem;
 using Apollo.Data;
-using Apollo.Data.ResultModels;
 using Moq;
 using Xunit;
 

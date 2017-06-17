@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Apollo.CommandSystem;
 using Apollo.Data;
-using Apollo.Data.ResultModels;
 using Apollo.Services;
 
 namespace Apollo.Commands.Journal

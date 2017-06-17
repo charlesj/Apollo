@@ -27,7 +27,12 @@ namespace Apollo.Tests
         {
             var property = obj.GetType().GetProperties().Single(p => p.Name == propName);
             return property.GetValue(obj) as string;
+        }
 
+        public TVal GetAnon<TVal>(object obj, string propName)
+        {
+            var property = obj.GetType().GetProperties().Single(p => p.Name == propName);
+            return (TVal)property.GetValue(obj);
         }
     }
 

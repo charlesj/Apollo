@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Apollo.Data.ResultModels;
 
 namespace Apollo.Data
 {
@@ -41,5 +41,13 @@ namespace Apollo.Data
                     new {entry.note, entry.tags});
             }
         }
+    }
+    
+    public class JournalEntry
+    {
+        public int id { get; set; }
+        public string note { get; set; }
+        public DateTimeOffset created_at { get; set; }
+        public string[] tags { get; set; }
     }
 }

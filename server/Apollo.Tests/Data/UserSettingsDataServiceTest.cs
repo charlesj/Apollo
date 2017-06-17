@@ -7,22 +7,11 @@ using Xunit;
 
 namespace Apollo.Tests.Data
 {
-    public class UserSettingsDataServiceTests : BaseUnitTest<UserSettingsDataService>
+    public class UserSettingsDataServiceTest : BaseDataUnitTest<UserSettingsDataService>
     {
         private const string settingName = "setting";
-        private Mock<ITestableDbConnection> connection;
 
-        public UserSettingsDataServiceTests()
-        {
-            connection = Mock<ITestableDbConnection>();
-
-            Mock<IDbConnectionFactory>()
-                .Setup(s => s.GetConnection())
-                .Returns(Task.FromResult(connection.Object));
-        }
-
-
-        public class GetUserSetting : UserSettingsDataServiceTests
+        public class GetUserSetting : UserSettingsDataServiceTest
         {
 
             public GetUserSetting()
@@ -101,7 +90,7 @@ namespace Apollo.Tests.Data
 
         }
 
-        public class UpsertSetting : UserSettingsDataServiceTests
+        public class UpsertSetting : UserSettingsDataServiceTest
         {
             private const string newValue = "new value";
 

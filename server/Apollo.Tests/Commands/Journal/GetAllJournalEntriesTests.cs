@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Apollo.Commands.Journal;
 using Apollo.Data;
-using Apollo.Data.ResultModels;
 using Xunit;
 
 namespace Apollo.Tests.Commands.Journal
