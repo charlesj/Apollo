@@ -66,10 +66,10 @@ class ChangePassword extends React.Component {
   render() {
     return (
       <div className='container-fluid'>
-        <h3>ChangePassword</h3>
         <div className="col-xs-6 col-md-4">
-        {this.state.showSuccess && <p className="bg-success">Successfully changed password</p>}
+        {this.state.showSuccess && <p className="pt-callout pt-intent-success">Successfully changed password</p>}
         <form onSubmit={this.handleSubmit}>
+            <div className="pt-card">
           <div className="pt-form-group">
             <label htmlFor="currentPassword" className="pt-label">Current Password</label>
             <input
@@ -99,9 +99,9 @@ class ChangePassword extends React.Component {
       placeholder="Verify New Password"
       value={this.state.newPasswordVerification}
       onChange={this.updateNewPasswordVerification} />
-          </div>
-          <button type="submit" className="pt-button pt-intent-primary pt-icon-confirm">Change Password</button>
-          {this.state.showError && <p className="bg-danger">Could not change password</p>}
+          </div></div>
+          <button type="submit" className="pt-button pt-intent-primary pt-icon-confirm buttonSpace">Change Password</button>
+          {this.state.showError && <p className="pt-callout pt-intent-danger">Could not change password</p>}
         </form>
         </div>
       </div>

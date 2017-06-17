@@ -76,6 +76,7 @@ class EntryInput extends React.Component {
 
   render() {
     return (<div>
+        <div className="pt-card">
       <div className="pt-form-group">
         <EditableText
 
@@ -106,9 +107,9 @@ class EntryInput extends React.Component {
       })}
 
       </div>
-      <div>
-        <button type='submit' className='pt-button pt-intent-primary pt-icon-add' onClick={this.handleSubmit}>Save Note</button>
-      </div>
+</div>
+        <button type='submit' className='pt-button pt-intent-primary pt-icon-add buttonSpace' onClick={this.handleSubmit}>Save Note</button>
+
   </div>);
   }
 }
@@ -125,7 +126,7 @@ function EntryDisplay(props) {
 
               { createTime.calendar() }
             </div>
-            <div className="content">
+            <div className="content pt-card">
               <MarkdownRenderer markdown={ props.note } />
             </div>
         </div>)

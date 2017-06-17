@@ -7,7 +7,7 @@ function Nav() {
         <div>
             <div>
             <NavLink exact activeClassName='active' to='/'>Home</NavLink>
-            <NavLink activeClassName='active' to='/journal'>Journal</NavLink>
+            <NavLink activeClassName='active' to='/journal'>Log</NavLink>
             <NavLink activeClassName='active' to='/health'>Health</NavLink>
             <NavLink activeClassName='active' to='/settings'>Settings</NavLink>
             </div>

@@ -5,6 +5,7 @@ var Route = ReactRouter.Route;
 var Switch = ReactRouter.Switch;
 
 var LoginService = require('./services/login-service');
+const apolloServer = require('./services/apollo-server');
 
 const Login = require('./components/Login');
 const ServerInfo = require('./components/ServerInfo');
@@ -45,10 +46,16 @@ class App extends Component {
   }
 
   logout() {
-    this.loginService.logout();
-    this.setState({
-      loggedIn: false
+    var token = this.loginService.getToken();
+    apolloServer.invoke('revokeLoginSession', {
+      tokenToRevoke: token
     })
+      .then(data => {
+        this.loginService.logout();
+        this.setState({
+          loggedIn: false
+        });
+      });
   }
 
   render() {
@@ -77,7 +84,7 @@ class App extends Component {
 
         <footer className="footer">
            <ServerInfo /> 
-           <a onClick={this.logout}>Logout</a>
+           <a onClick={this.logout} className='pt-button pt-small'>Logout</a>
         </footer>
       </div>
       );

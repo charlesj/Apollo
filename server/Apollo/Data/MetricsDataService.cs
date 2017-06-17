@@ -16,13 +16,13 @@ namespace Apollo.Data
         public const string InsertSql = "insert into metrics (category, name, value, created_at)" +
                                         " values (@category, @name, @value, current_timestamp)";
 
-        public const string NameSelectSql = "select * from metrics where name=@name";
+        public const string NameSelectSql = "select * from metrics where name=@name order by id asc";
         
-        public const string CategorySelectSql = "select * from metrics where category=@category";
+        public const string CategorySelectSql = "select * from metrics where category=@category order by id asc";
         
-        public const string AllSelectSql = "select * from metrics";
+        public const string AllSelectSql = "select * from metrics order by id asc";
 
-        public const string BothSelectSql = "select * from metrics where name=@name and category=@category";
+        public const string BothSelectSql = "select * from metrics where name=@name and category=@category order by id asc";
 
         public MetricsDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {

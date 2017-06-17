@@ -52,7 +52,6 @@ class LoginSessions extends React.Component {
 
   render() {
     return (<div>
-            <h3>Login Sessions</h3>
             <table className="pt-table pt-bordered">
               <thead>
                  <tr>
@@ -77,7 +76,7 @@ class LoginSessions extends React.Component {
                     <td><Button
           className='pt-button pt-intent-warning pt-small'
           iconName="delete"
-          text="revoke token"
+          text="revoke"
           onClick={this.revokeLoginSession.bind(null, session.token)}
           /></td>
                       </tr>)
