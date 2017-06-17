@@ -10,13 +10,10 @@ namespace Apollo.Data
         Task UpdateSetting(UserSetting setting);
     }
 
-    public class UserSettingsDataService : IUserSettignsDataService
+    public class UserSettingsDataService : BaseDataService, IUserSettignsDataService
     {
-        private readonly IDbConnectionFactory connectionFactory;
-
-        public UserSettingsDataService(IDbConnectionFactory connectionFactory)
+        public UserSettingsDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
-            this.connectionFactory = connectionFactory;
         }
 
         public async Task<UserSetting> GetUserSetting(string name)

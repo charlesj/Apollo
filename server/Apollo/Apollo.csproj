@@ -79,6 +79,7 @@
     <Compile Include="Commands\UserSettings\RevokeLoginSession.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Data\BaseDataService.cs" />
     <Compile Include="Data\IDbConnectionFactory.cs" />
     <Compile Include="Data\ITestableDbConnection.cs" />
     <Compile Include="Data\JournalDataService.cs" />

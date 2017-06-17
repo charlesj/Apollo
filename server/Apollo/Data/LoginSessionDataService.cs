@@ -13,13 +13,10 @@ namespace Apollo.Data
         Task RevokeSession(string token);
     }
 
-    public class LoginSessionDataService: ILoginSessionDataService
+    public class LoginSessionDataService: BaseDataService, ILoginSessionDataService
     {
-        private readonly IDbConnectionFactory connectionFactory;
-
-        public LoginSessionDataService(IDbConnectionFactory connectionFactory)
+        public LoginSessionDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
-            this.connectionFactory = connectionFactory;
         }
 
         public async Task<IReadOnlyList<LoginSession>> GetAllActiveSessions()

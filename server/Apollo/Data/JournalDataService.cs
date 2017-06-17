@@ -11,15 +11,12 @@ namespace Apollo.Data
         Task CreateJournalEntry(JournalEntry entry);
     }
 
-    public class JournalDataService : IJournalDataService
+    public class JournalDataService : BaseDataService, IJournalDataService
     {
-        private readonly IDbConnectionFactory connectionFactory;
-
-        public JournalDataService(IDbConnectionFactory connectionFactory)
+        public JournalDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
-            this.connectionFactory = connectionFactory;
         }
-
+        
         public async Task<IReadOnlyList<JournalEntry>> GetAllJournalEntries()
         {
             using (var connection = await connectionFactory.GetConnection())

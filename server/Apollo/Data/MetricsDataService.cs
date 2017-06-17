@@ -11,7 +11,7 @@ namespace Apollo.Data
         Task<IReadOnlyList<Metric>> GetMetrics(string category, string name);
     }
     
-    public class MetricsDataService : IMetricsDataService
+    public class MetricsDataService : BaseDataService, IMetricsDataService
     {
         public const string InsertSql = "insert into metrics (category, name, value, created_at)" +
                                         " values (@category, @name, @value, current_timestamp)";
@@ -23,17 +23,14 @@ namespace Apollo.Data
         public const string AllSelectSql = "select * from metrics";
 
         public const string BothSelectSql = "select * from metrics where name=@name and category=@category";
-        
-        private readonly IDbConnectionFactory dbConnectionFactory;
 
-        public MetricsDataService(IDbConnectionFactory dbConnectionFactory)
+        public MetricsDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
-            this.dbConnectionFactory = dbConnectionFactory;
         }
         
         public async Task InsertMetric(string category, string name, float value)
         {
-            using (var connection = await this.dbConnectionFactory.GetConnection())
+            using (var connection = await this.connectionFactory.GetConnection())
             {
                 connection.Execute(InsertSql, new {category, name, value});
             }
@@ -49,7 +46,7 @@ namespace Apollo.Data
             else if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(category))
                 sql = BothSelectSql;
 
-            using (var connection = await this.dbConnectionFactory.GetConnection())
+            using (var connection = await this.connectionFactory.GetConnection())
             {
                 return (await connection.QueryAsync<Metric>(sql, new {category, name})).ToList();
             }
