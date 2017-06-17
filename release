@@ -4,9 +4,19 @@ set -e
 PUBLISH_DIR=apollo
 RELEASE_DIR=releases
 ANSIBLE_FILE_LINK=./infrastructure/roles/publish/files/apollo.tar.gz
+TARBALL=apollo.$APOLLO_VERSION.tar.gz
+
+# cannot release with uncommitted changes
+CHANGED=$(git diff-index --name-only HEAD --)
+if [ ! -z $CHANGED ]; then
+    echo "Cannot create release with uncommitted changes.  A new commit will be made as part of the release."
+    exit 1
+fi
+
 APOLLO_VERSION=$(./increment_release)
 export APOLLO_VERSION
-TARBALL=apollo.$APOLLO_VERSION.tar.gz
+
+git commit -am "Creating release $APOLLO_VERSION"
 
 LATEST_VERSION_POINTER=apollo.latest.tar.gz
 
