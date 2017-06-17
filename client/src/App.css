@@ -84,3 +84,6 @@ footer{
     color: white;
 
 }
+.chartContainer{
+    float: left;
+}
