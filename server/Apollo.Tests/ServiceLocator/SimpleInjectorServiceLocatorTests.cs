@@ -1,4 +1,6 @@
-﻿using Apollo.Commands.Meta;
+﻿using System.Linq;
+using Apollo.Commands.Meta;
+using Apollo.CommandSystem;
 using Apollo.Server;
 using Apollo.ServiceLocator;
 using Xunit;
@@ -50,6 +52,22 @@ namespace Apollo.Tests.ServiceLocator
                 locator.RegisterServices();
 
                 locator.Test();
+            }
+
+            [Fact]
+            public void CanBuildAllCommands()
+            {
+                var locator = new SimpleInjectorServiceLocator();
+                locator.RegisterServices();
+                
+                var type = typeof(ICommand);
+                var commandTypes = type.Assembly.GetTypes()
+                    .Where(p => type.IsAssignableFrom(p) && !p.IsAbstract);
+                foreach (var commandType in commandTypes)
+                {
+                    var instance = locator.Get(commandType);
+                    Assert.NotNull(instance);
+                }
             }
         }
     }

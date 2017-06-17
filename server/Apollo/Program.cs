@@ -11,6 +11,7 @@ namespace Apollo
 
         public static void Main(string[] args)
         {
+            // TraceLogger.Enabled = true;
             var kernel = new Kernel();
             var serviceLocator = kernel.Boot(BootOptions.Defaults);
 

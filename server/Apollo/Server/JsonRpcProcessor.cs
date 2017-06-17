@@ -41,7 +41,7 @@ namespace Apollo.Server
             }
 
             var parsedRequest = requestParser.Parse(request);
-
+            TraceLogger.Trace("parsed request", parsedRequest);
             if (!parsedRequest.Success)
             {
                 logger.Error("Could not parse request", parsedRequest);
@@ -54,6 +54,8 @@ namespace Apollo.Server
                 logger.Error("Could not locate method", parsedRequest);
                 return HttpResponse.NotFound("Could not locate requested method");
             }
+            
+            TraceLogger.Trace("command located", command);
 
             var response = await translator.ExecuteCommand(command, parsedRequest.Request, clientInfo);
 

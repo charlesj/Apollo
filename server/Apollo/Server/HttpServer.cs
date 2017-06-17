@@ -50,6 +50,8 @@ namespace Apollo.Server
                     return;
                 }
 
+                TraceLogger.Trace("Processing Request");
+                
                 var body = context.GetRequestBody();
                 var clientInfo = context.GetClientInfo();
                 var response = processor.Process(body, clientInfo).GetAwaiter().GetResult();

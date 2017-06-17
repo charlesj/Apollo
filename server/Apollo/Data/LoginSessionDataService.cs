@@ -68,8 +68,8 @@ namespace Apollo.Data
     {
         public int id { get; set; }
         public string token { get; set; }
-        public DateTimeOffset created_at { get; set; }
-        public DateTimeOffset last_seen { get; set; }
+        public DateTime created_at { get; set; }
+        public DateTime last_seen { get; set; }
         public string ip_address { get; set; }
         public string user_agent { get; set; }
     }

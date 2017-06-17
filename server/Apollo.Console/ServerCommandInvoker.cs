@@ -80,12 +80,5 @@ namespace Apollo.Console
                 return null;
             }
         }
-
-        private class JsonRpcRequest
-        {
-            public string id { get; set; }
-            public string method { get; set; }
-            public object @params { get; set; }
-        }
     }
 }

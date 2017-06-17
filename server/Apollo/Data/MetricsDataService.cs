@@ -62,6 +62,6 @@ namespace Apollo.Data
         public string category { get; set; }
         public string name { get; set; }
         public float value { get; set; }
-        public DateTimeOffset created_at { get; set; }
+        public DateTime created_at { get; set; }
     }
 }

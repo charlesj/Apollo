@@ -47,7 +47,7 @@ namespace Apollo.Data
     {
         public int id { get; set; }
         public string note { get; set; }
-        public DateTimeOffset created_at { get; set; }
+        public DateTime created_at { get; set; }
         public string[] tags { get; set; }
     }
 }

@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+APOLLO_VERSION=0.1.3
+
+PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+TOOLS_DIR=$PROJECT_DIR/tools
+NUGET_EXE=$TOOLS_DIR/nuget.exe
+XUNIT_VERSION=2.2.0-beta4-build3444
+XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools/xunit.console.exe
+
+BUILD_OPTS='/nologo /verbosity:m /p:Configuration=Release'
+
+
+# Do Deploy things
+for var in "$@"
+do
+    if [ $var = "deploy" ]; then
+        if [ -f Apollo/Version.cs ]; then
+            rm Apollo/Version.cs
+        fi
+
+        cp Apollo/Version_Template.cs Apollo/Version.cs
+        sed -i "s/%%version%%/$APOLLO_VERSION/g" Apollo/Version.cs
+        sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" Apollo/Version.cs
+        sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Apollo/Version.cs
+
+        BUILD_OPTS='/p:Configuration=Release'
+    fi
+done
+
+PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+APOLLO_EXE=$PROJECT_DIR/Apollo/bin/Release/
+
+rm -rf APOLLO_EXE
+msbuild $BUILD_OPTS ./Apollo/Apollo.csproj
