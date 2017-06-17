@@ -59,7 +59,7 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <div>
+          <div className='mid'>
             <Nav />
             <div  className='mainContainer'>
             <Switch>
@@ -74,6 +74,7 @@ class App extends Component {
             </div>
           </div>
         </Router>
+
         <footer className="footer">
            <ServerInfo /> 
            <a onClick={this.logout}>Logout</a>
