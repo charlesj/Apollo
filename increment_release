@@ -5,7 +5,11 @@ file = open(version_file_path, "r")
 major = 0
 minor = 2
 current_version = file.read()
-revision = int(current_version.split(".")[2])+1
+current = current_version.split(".")
+revision = 0
+
+if(int(current[0]) == major and int(current[1]) == minor):
+    revision = int(current[2])+1
 
 file = open(version_file_path,"w")
 
