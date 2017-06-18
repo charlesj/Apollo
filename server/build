@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-if [ -z "$APOLLO_VERSION" ]; then
-    APOLLO_VERSION=0.2.0
-fi
-
 PROJECT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$PROJECT_DIR/tools
 NUGET_EXE=$TOOLS_DIR/nuget.exe
@@ -12,12 +8,6 @@ XUNIT_VERSION=2.2.0-beta4-build3444
 XUNIT_RUNNER_EXE=$PROJECT_DIR/packages/xunit.runner.console.$XUNIT_VERSION/tools/xunit.console.exe
 
 BUILD_OPTS='/nologo /verbosity:m /p:Configuration=Release'
-
-# Set Version Information
-cp Apollo/Version_Template.cs Apollo/Version.cs
-sed -i "s/%%version%%/$APOLLO_VERSION/g" Apollo/Version.cs
-sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" Apollo/Version.cs
-sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" Apollo/Version.cs
 
 # Make sure the tools folder exist.
 if [ ! -d "$TOOLS_DIR" ]; then

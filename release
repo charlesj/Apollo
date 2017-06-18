@@ -35,6 +35,13 @@ if [ ! -d "$RELEASE_DIR" ]; then
     mkdir "$RELEASE_DIR"
 fi
 
+# Set Server Version Information
+# Set Version Information
+cp server/Apollo/Version_Template.cs server/Apollo/Version.cs
+sed -i "s/%%version%%/$APOLLO_VERSION/g" server/Apollo/Version.cs
+sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" server/Apollo/Version.cs
+sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" server/Apollo/Version.cs
+
 # build server
 # clean first
 rm -rf ./server/Apollo/bin/Release
