@@ -7,6 +7,7 @@ var Switch = ReactRouter.Switch;
 var LoginService = require('./services/login-service');
 const apolloServer = require('./services/apollo-server');
 
+const FontAwesome = require('react-fontawesome');
 const Login = require('./components/Login');
 const ServerInfo = require('./components/ServerInfo');
 const Journal = require('./components/journal/Journal');
@@ -16,6 +17,7 @@ const Settings = require('./components/settings/Settings');
 const Health = require('./components/health/Health');
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
+import '../node_modules/font-awesome/css/font-awesome.css';
 import './App.css';
 
 class App extends Component {
@@ -84,7 +86,7 @@ class App extends Component {
 
         <footer className="footer">
            <ServerInfo /> 
-           <a onClick={this.logout} className='pt-button pt-small'>Logout</a>
+           <a onClick={this.logout} className='pt-button pt-small'><FontAwesome name='sign-out' /> logout</a>
         </footer>
       </div>
       );

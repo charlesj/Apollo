@@ -14,16 +14,22 @@ body {
 nav {
     color: white;
     background-color: #424242;
-    width: 100px;
+    width: 50px;
     float: left;
     height: 100%;
 }
 
 nav a {
     padding: 5px;
+    padding-left: 0px;
     display: block;
     border-bottom: 1px solid #525252;
     color: white;
+    text-align: center;
+}
+
+nav a.active {
+    background-color: #555;
 }
 
 nav a:hover {
@@ -33,7 +39,7 @@ nav a:hover {
 .mainContainer{
     padding: 15px;
     background-color: #eeeeee;
-    margin-left: 100px;
+    margin-left: 50px;
     min-height: 500px;
     border-bottom-left-radius:5px;
 }
