@@ -85,6 +85,7 @@
     <Compile Include="CommandSystem\CommandLocatorIntegrationTests.cs" />
     <Compile Include="CommandSystem\CommandProcessorTests.cs" />
     <Compile Include="Commands\AuthenticatedCommandTests.cs" />
+    <Compile Include="Commands\Bookmarks\AddBookmarkTests.cs" />
     <Compile Include="Commands\Journal\AddJournalEntryTests.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesTests.cs" />
     <Compile Include="Commands\LoginTests.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Commands\UserSettings\RevokeLoginSessionTests.cs" />
     <Compile Include="ConfigurationTests.cs" />
     <Compile Include="Data\BaseDataUnitTest.cs" />
+    <Compile Include="Data\BookmarksDataServiceTests.cs" />
     <Compile Include="Data\MetricsDataServiceTests.cs" />
     <Compile Include="Data\UserSettingsDataServiceTest.cs" />
     <Compile Include="KernelTests.cs" />
