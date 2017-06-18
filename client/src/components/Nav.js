@@ -8,8 +8,8 @@ function Nav() {
         <div>
             <div>
             <NavLink exact activeClassName='active' to='/'><FontAwesome name='home' size='2x' /></NavLink>
-            <NavLink activeClassName='active' to='/journal'><FontAwesome name='file-text-o' size='2x' /></NavLink>
-            <NavLink activeClassName='active' to='/health'><FontAwesome name='thermometer-empty' size='2x' /></NavLink>
+            <NavLink activeClassName='active' to='/journal'><FontAwesome name='list' size='2x' /></NavLink>
+            <NavLink activeClassName='active' to='/health'><FontAwesome name='medkit' size='2x' /></NavLink>
             <NavLink activeClassName='active' to='/settings'><FontAwesome name='gear' size='2x' /></NavLink>
             </div>
         </div>
