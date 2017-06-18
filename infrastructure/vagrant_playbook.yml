@@ -8,6 +8,7 @@
       - "{{ hostvars[inventory_hostname]['ansible_all_ipv4_addresses'][1] }}"
       - localhost
     use_ssl: False
+    db_backup_dir: ~/apollo_db_backups/
   roles:
     - base
     - dotnet

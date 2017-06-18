@@ -55,3 +55,9 @@
     state: present
   notify:
     - restart postgres
+- name: Setup password file
+  template:
+    src: ../templates/pgpass
+    dest: ~/.pgpass
+    mode: 0600
+- include: backups.yml

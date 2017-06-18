@@ -9,6 +9,7 @@
     dblisten_addresses:
       - localhost
     use_ssl: True
+    db_backup_dir: ~/apollo_db_backups/
   roles:
     - base
     - dotnet
