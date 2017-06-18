@@ -129,6 +129,11 @@ function EntryDisplay(props) {
             <div className="content pt-card">
               <MarkdownRenderer markdown={ props.note } />
             </div>
+            <div className="tags">
+                { props.tags && props.tags.map((t, i) => {
+                    return (<span key={i} className="pt-tag">{t}</span>)
+                })}
+            </div>
         </div>)
 }
 
@@ -145,6 +150,7 @@ function EntryListDisplay(props) {
         key={entry.id}
         note={entry.note}
         createdAt={entry.created_at}
+        tags={entry.tags}
         />)
     })}
       </div>)

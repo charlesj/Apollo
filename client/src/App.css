@@ -14,29 +14,26 @@ body {
 nav {
     color: white;
     background-color: #424242;
-    width: 200px;
+    width: 100px;
     float: left;
     height: 100%;
-}
-
-.navHeader{
-    font-size: 26px;
-    font-weight: bold;
-    padding: 5px;
-    margin: auto;
 }
 
 nav a {
     padding: 5px;
     display: block;
-    border-top: 1px solid #525252;
+    border-bottom: 1px solid #525252;
     color: white;
+}
+
+nav a:hover {
+    background-color: #ddd;
 }
 
 .mainContainer{
     padding: 15px;
     background-color: #eeeeee;
-    margin-left: 200px;
+    margin-left: 100px;
     min-height: 500px;
     border-bottom-left-radius:5px;
 }
@@ -93,5 +90,5 @@ footer{
 }
 
 .pt-tag{
-    margin-left: 5px;
+    margin-right: 5px;
 }
