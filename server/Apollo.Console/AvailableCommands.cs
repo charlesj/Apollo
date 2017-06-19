@@ -1,4 +1,5 @@
 ﻿using Apollo.Console.Commands;
+using Apollo.Console.Commands.Bookmarks;
 using Apollo.Console.Commands.Journal;
 using Apollo.Console.Commands.Local;
 using Apollo.Console.Commands.Meta;
@@ -29,6 +30,10 @@ namespace Apollo.Console
         [VerbOption("endpoint", HelpText = "Change the endpoint the console is pointing to")]
         public ChangeEndpointCommandOptions ChangeEndpointCommandOptions { get; set; }
 
+        // bookmarks
+        [VerbOption("importBookmarks", HelpText = "Import some bookmarks")]
+        public ImportBookmarksCommandOptions ImportBookmarksCommandOptions { get; set; }
+        
         // journal
         [VerbOption("getAllJournalEntries", HelpText = "Gets all the journal entries")]
         public GetAllJournalEntriesCommandOptions GetAllJournalEntriesCommandOptions { get; set; }
