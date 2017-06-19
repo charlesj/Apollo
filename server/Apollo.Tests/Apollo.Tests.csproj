@@ -86,6 +86,7 @@
     <Compile Include="CommandSystem\CommandProcessorTests.cs" />
     <Compile Include="Commands\AuthenticatedCommandTests.cs" />
     <Compile Include="Commands\Bookmarks\AddBookmarkTests.cs" />
+    <Compile Include="Commands\Bookmarks\GetBookmarksTests.cs" />
     <Compile Include="Commands\Journal\AddJournalEntryTests.cs" />
     <Compile Include="Commands\Journal\GetAllJournalEntriesTests.cs" />
     <Compile Include="Commands\LoginTests.cs" />

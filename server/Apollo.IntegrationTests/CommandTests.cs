@@ -17,11 +17,11 @@ namespace Apollo.IntegrationTests
         {
             Assert.NotEmpty(loginToken);
         }
-        
+
         [Theory]
         [MemberData(nameof(Commands))]
         public void TestCommand(string commandName, object parameters, bool expectSuccess)
-        {           
+        {
             var httpWebRequest = (HttpWebRequest) WebRequest.Create(ApolloEndPoint);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -58,7 +58,7 @@ namespace Apollo.IntegrationTests
                 Assert.False(expectSuccess);
             }
         }
-        
+
         public static TheoryData<string, object, bool> Commands()
         {
             var data = new TheoryData<string, object, bool>();
@@ -75,13 +75,14 @@ namespace Apollo.IntegrationTests
             data.Add("addBookmark", new {title="title", link="link", description="description", tags=new[]{"tag1", "tag2"}}, true);
             data.Add("addBookmark", new
             {
-                title="title", 
-                link="link", 
-                description="description", 
+                title="title",
+                link="link",
+                description="description",
                 tags=new[]{"tag1", "tag2"},
                 createdAt= DateTime.Now.AddDays(-10),
                 modifiedAt = DateTime.Now.AddDays(-5)
             }, true);
+            data.Add("getBookmarks", new {start=1}, true);
             return data;
         }
     }

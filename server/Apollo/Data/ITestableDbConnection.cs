@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
 
@@ -11,6 +12,7 @@ namespace Apollo.Data
         Task<IEnumerable<TResultType>> QueryAsync<TResultType>(string query);
         Task<IEnumerable<TResultType>> QueryAsync<TResultType>(string query, object parameters);
         int Execute(string query, object obj);
+        IDbCommand CreateCommand();
     }
 
     public class TestableDbConnection : ITestableDbConnection
@@ -37,9 +39,19 @@ namespace Apollo.Data
             return this.connection.Execute(query, obj);
         }
 
+        public IDbCommand CreateCommand()
+        {
+            return this.connection.CreateCommand();
+        }
+
         public void Dispose()
         {
             connection?.Dispose();
         }
+    }
+
+    public class CountResult
+    {
+        public int count { get; set; }
     }
 }
