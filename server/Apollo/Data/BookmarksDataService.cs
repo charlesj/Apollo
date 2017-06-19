@@ -21,7 +21,7 @@ namespace Apollo.Data
 
         public const string CountSql = "select count(*) from bookmarks;";
 
-        public const string PageSql = "select * from bookmarks limit 100 offset @start";
+        public const string PageSql = "select * from bookmarks order by id desc limit 100 offset @start";
 
         public BookmarksDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {

@@ -13,7 +13,7 @@ namespace Apollo.Console.Commands.Bookmarks
         [Option('f', "file", HelpText = "path to the bookmark.json", Required = true)]
         public string FilePath { get; set; }
     }
-    
+
     public class ImportBookmarksCommand : BaseCommand<ImportBookmarksCommandOptions>
     {
         public ImportBookmarksCommand(ImportBookmarksCommandOptions options) : base(options)
@@ -23,7 +23,7 @@ namespace Apollo.Console.Commands.Bookmarks
         public override void Execute()
         {
             var json = string.Join(Environment.NewLine, File.ReadAllLines(Options.FilePath));
-            var bookmarks = JsonConvert.DeserializeObject<List<Bookmark>>(json);
+            var bookmarks = JsonConvert.DeserializeObject<List<Bookmark>>(json).OrderBy(b => b.add_date);
             foreach (var bookmark in bookmarks)
             {
                 Console.Yellow($"Importing bookmark {bookmark.url}...", false);
@@ -43,8 +43,8 @@ namespace Apollo.Console.Commands.Bookmarks
                     Console.Red((string)result.ErrorMessage);
                     continue;
                 }
-                
-                
+
+
                 Console.Green("success");
             }
         }
@@ -53,7 +53,7 @@ namespace Apollo.Console.Commands.Bookmarks
         {
             public string[] tags { get; set; }
             public string url { get; set; }
-            public string add_date { get; set; }
+            public DateTime add_date { get; set; }
             public string title { get; set; }
             public string comment { get; set; }
         }
