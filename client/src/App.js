@@ -15,6 +15,7 @@ const Nav = require('./components/Nav');
 const Home = require('./components/Home');
 const Settings = require('./components/settings/Settings');
 const Health = require('./components/health/Health');
+const Bookmarks = require('./components/bookmarks/Bookmarks');
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
@@ -75,6 +76,7 @@ class App extends Component {
               <Route exact path='/' component={Home} />
               <Route exact path='/journal' component={Journal} />
               <Route exact path='/health' component={Health} />
+              <Route exact path='/bookmarks' component={Bookmarks} />
               <Route exact path='/settings' component={Settings} />
               <Route render={function() {
         return (<p>Not Found</p>)

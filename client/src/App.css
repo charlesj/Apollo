@@ -98,3 +98,14 @@ footer{
 .pt-tag{
     margin-right: 5px;
 }
+
+.bookmark{
+    padding-bottom: 5px;
+}
+
+.bookmark .description{
+    margin-left: 15px;
+}
+.bookmark .tags{
+    margin-left: 5px;
+}

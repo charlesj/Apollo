@@ -131,8 +131,8 @@ function EntryDisplay(props) {
             </div>
             <div className="tags">
                 { props.tags && props.tags.map((t, i) => {
-                    return (<span key={i} className="pt-tag">{t}</span>)
-                })}
+      return (<span key={i} className="pt-tag">{t}</span>)
+    })}
             </div>
         </div>)
 }
