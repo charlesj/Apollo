@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -9,7 +10,7 @@ namespace Apollo.IntegrationTests
     {
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
-        private string loginToken = "391c195c3d4748208e5195e2da1b9dfc";
+        private string loginToken = "01857904912d480eaecd55ac43549f78";
 
         [Fact]
         public void EnsureLoginTokenSet()
@@ -71,6 +72,16 @@ namespace Apollo.IntegrationTests
             data.Add("getMetrics", new object(), true);
             data.Add("getMetrics", new {category="testCategory"}, true);
             data.Add("getMetrics", new {category="testCategory", name="testname"}, true);
+            data.Add("addBookmark", new {title="title", link="link", description="description", tags=new[]{"tag1", "tag2"}}, true);
+            data.Add("addBookmark", new
+            {
+                title="title", 
+                link="link", 
+                description="description", 
+                tags=new[]{"tag1", "tag2"},
+                createdAt= DateTime.Now.AddDays(-10),
+                modifiedAt = DateTime.Now.AddDays(-5)
+            }, true);
             return data;
         }
     }

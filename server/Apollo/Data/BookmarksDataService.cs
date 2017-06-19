@@ -13,7 +13,7 @@ namespace Apollo.Data
         public const string InsertSql = "insert into bookmarks" +
                                         "(title, link, description, tags, created_at, modified_at)" +
                                         "values (@title, @link, @description, @tags, " +
-                                        "current_timestamp, current_timestamp)";
+                                        "@created_at, @modified_at)";
         
         public BookmarksDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
@@ -21,6 +21,11 @@ namespace Apollo.Data
 
         public async Task Insert(Bookmark bookmark)
         {
+            if(bookmark.created_at == default(DateTime))
+                bookmark.created_at = DateTime.UtcNow;
+            if(bookmark.modified_at == default(DateTime))
+                bookmark.modified_at = DateTime.UtcNow;
+            
             using (var conn = await connectionFactory.GetConnection())
             {
                 conn.Execute(InsertSql, bookmark);

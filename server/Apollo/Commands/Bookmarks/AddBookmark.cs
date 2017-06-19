@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Apollo.CommandSystem;
 using Apollo.Data;
@@ -13,6 +14,8 @@ namespace Apollo.Commands.Bookmarks
         public string Link { get; set; }
         public string Description { get; set; }
         public List<string> Tags { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         
         public AddBookmark(ILoginService loginService, IBookmarksDataService bookmarksDataService) : base(loginService)
         {
@@ -26,7 +29,9 @@ namespace Apollo.Commands.Bookmarks
                 title = Title,
                 link = Link,
                 description = Description,
-                tags = Tags.ToArray()
+                tags = Tags.ToArray(),
+                created_at = CreatedAt,
+                modified_at = ModifiedAt
             };
 
             await this.bookmarksDataService.Insert(bookmark);

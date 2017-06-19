@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Apollo.Commands.Bookmarks;
@@ -17,6 +18,8 @@ namespace Apollo.Tests.Commands.Bookmarks
             this.ClassUnderTest.Tags = new List<string>{"tag1", "tag2"};
             this.ClassUnderTest.Link = "http://example.com";
             this.ClassUnderTest.Title = "title";
+            this.ClassUnderTest.CreatedAt = DateTime.Now;
+            this.ClassUnderTest.ModifiedAt = DateTime.Today;
         }
 
         public class Execute : AddBookmarkTests
@@ -39,7 +42,9 @@ namespace Apollo.Tests.Commands.Bookmarks
                             b => b.title == this.ClassUnderTest.Title &&
                                  b.link == this.ClassUnderTest.Link &&
                                  b.description == this.ClassUnderTest.Description &&
-                                 b.tags.All(t => this.ClassUnderTest.Tags.Contains(t)))),
+                                 b.tags.All(t => this.ClassUnderTest.Tags.Contains(t)) &&
+                                 b.created_at == this.ClassUnderTest.CreatedAt &&
+                                 b.modified_at == this.ClassUnderTest.ModifiedAt)),
                         Times.Once());
             }
 
