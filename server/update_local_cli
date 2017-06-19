@@ -13,5 +13,6 @@ if [ ! -f "$APOLLO_CONSOLE_EXE" ]; then
     ./build
 fi
 
+rm -rf "$TARGET_DIR"
 cp -r "$APOLLO_CONSOLE_DIR" "$TARGET_DIR"
 cp prod_cli "$TARGET_SCRIPT"
