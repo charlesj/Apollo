@@ -13,21 +13,54 @@
       input{
           width: 100%
       }
+      #logout{
+          float: right;
+      }
+      #loading{
+          display: none;
+      }
     </style>
+    <link href="spinner.css" rel="stylesheet" />
     <script src="popup.js"></script>
   <body>
-    <div id="status"></div>
-    <div>
-        <input type="text" id="pageTitle" placeholder="title" />
+    <div id="loginForm">
+        <div>
+            <input type="password" id="password" placeholder="password" />
+            <button id='login'>Login</button>
+        </div>
     </div>
-    <div>
-        <input type="text" id="pageUrl" placeholder="url" />
+    <div id="addBookmarkForm">
+        <div>
+            <input type="text" id="pageTitle" placeholder="title" />
+        </div>
+        <div>
+            <input type="text" id="pageUrl" placeholder="url" />
+        </div>
+        <div>
+            <input type="text" id="description" placeholder="description" />
+        </div>
+        <div>
+            <input type="text" id="tags" placeholder="tags" />
+        </div>
+        <div>
+            <button id='submitBookmark'>add</button>
+            <span id='success'>Added bookmark</span>
+            <button id='logout'>logout</button>
+        </div>
     </div>
-    <div>
-        <input type="text" id="description" placeholder="description" />
-    </div>
-    <div>
-        <input type="text" id="tags" placeholder="tags" />
-    </div>
+<div id="loading" class="sk-fading-circle">
+  <div class="sk-circle1 sk-circle"></div>
+  <div class="sk-circle2 sk-circle"></div>
+  <div class="sk-circle3 sk-circle"></div>
+  <div class="sk-circle4 sk-circle"></div>
+  <div class="sk-circle5 sk-circle"></div>
+  <div class="sk-circle6 sk-circle"></div>
+  <div class="sk-circle7 sk-circle"></div>
+  <div class="sk-circle8 sk-circle"></div>
+  <div class="sk-circle9 sk-circle"></div>
+  <div class="sk-circle10 sk-circle"></div>
+  <div class="sk-circle11 sk-circle"></div>
+  <div class="sk-circle12 sk-circle"></div>
+</div>
   </body>
 </html>
