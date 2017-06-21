@@ -110,6 +110,7 @@ function login(){
 }
 
 function apolloRPC(command, payload, callback){
+    showLoading();
     getToken(function(token){
         payload.token = token;
         console.log(payload);
@@ -118,6 +119,7 @@ function apolloRPC(command, payload, callback){
         ajaxRequest.setRequestHeader("Content-Type", "application/json");
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4) {
+                hideLoading();
                 console.log('Received Respnose', ajaxRequest);
                 var resp = JSON.parse(ajaxRequest.responseText);
                 callback(resp.result.Result);

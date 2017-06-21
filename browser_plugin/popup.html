@@ -3,32 +3,57 @@
     <head>
         <meta charset="utf-8">
         <title>Apollog</title>
+        <link href="https://fonts.googleapis.com/css?family=Monda" rel="stylesheet">
+        <style>
+          body {
+            font-family: 'Monda', sans-serif;
+            font-size: 100%;
+            width: 400px;
+          }
+          input{
+              width: 100%
+          }
+          #logout{
+              float: right;
+              background-color: #FF7373;
+          }
+          #loading{
+              display: none;
+              float: left;
+          }
+          #success{
+              padding: 3px;
+              margin-top: 5px;
+              border: 2px solid #0A6640;
+              background-color: #15B371;
+          }
+          input{
+              font-family: 'Monda', sans-serif;
+              padding: 3px;
+              width: 98%;
+          }
+          button{
+               font-family: 'Monda', sans-serif;
+               background-color: white;
+               border: 1px solid black;
+               margin-top: 10px;
+          }
+          #submitBookmark{
+              background-color: #48AFF0;
+          }
+        </style>
     </head>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-        width: 400px;
-      }
-      input{
-          width: 100%
-      }
-      #logout{
-          float: right;
-      }
-      #loading{
-          display: none;
-      }
-    </style>
     <link href="spinner.css" rel="stylesheet" />
     <script src="popup.js"></script>
   <body>
+
     <div id="loginForm">
         <div>
             <input type="password" id="password" placeholder="password" />
             <button id='login'>Login</button>
         </div>
     </div>
+
     <div id="addBookmarkForm">
         <div>
             <input type="text" id="pageTitle" placeholder="title" />
@@ -44,23 +69,23 @@
         </div>
         <div>
             <button id='submitBookmark'>add</button>
-            <span id='success'>Added bookmark</span>
             <button id='logout'>logout</button>
         </div>
     </div>
-<div id="loading" class="sk-fading-circle">
-  <div class="sk-circle1 sk-circle"></div>
-  <div class="sk-circle2 sk-circle"></div>
-  <div class="sk-circle3 sk-circle"></div>
-  <div class="sk-circle4 sk-circle"></div>
-  <div class="sk-circle5 sk-circle"></div>
-  <div class="sk-circle6 sk-circle"></div>
-  <div class="sk-circle7 sk-circle"></div>
-  <div class="sk-circle8 sk-circle"></div>
-  <div class="sk-circle9 sk-circle"></div>
-  <div class="sk-circle10 sk-circle"></div>
-  <div class="sk-circle11 sk-circle"></div>
-  <div class="sk-circle12 sk-circle"></div>
-</div>
+    <div id="loading" class="sk-fading-circle">
+        <div class="sk-circle1 sk-circle"></div>
+        <div class="sk-circle2 sk-circle"></div>
+        <div class="sk-circle3 sk-circle"></div>
+        <div class="sk-circle4 sk-circle"></div>
+        <div class="sk-circle5 sk-circle"></div>
+        <div class="sk-circle6 sk-circle"></div>
+        <div class="sk-circle7 sk-circle"></div>
+        <div class="sk-circle8 sk-circle"></div>
+        <div class="sk-circle9 sk-circle"></div>
+        <div class="sk-circle10 sk-circle"></div>
+        <div class="sk-circle11 sk-circle"></div>
+        <div class="sk-circle12 sk-circle"></div>
+    </div>
+    <div id='success'>Successfully added bookmark</div>
   </body>
 </html>
