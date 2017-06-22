@@ -9,7 +9,7 @@ namespace Apollo.Data
     {
         Task Insert(Bookmark bookmark);
         Task<int> GetTotal();
-        Task<IReadOnlyList<Bookmark>> GetPage(int start);
+        Task<IReadOnlyList<Bookmark>> Get(int start, string link);
     }
 
     public class BookmarksDataService : BaseDataService, IBookmarksDataService
@@ -21,7 +21,9 @@ namespace Apollo.Data
 
         public const string CountSql = "select count(*) from bookmarks;";
 
-        public const string PageSql = "select * from bookmarks order by id desc limit 100 offset @start";
+        public const string BasicGetSql = "select * from bookmarks order by id desc limit 100 offset @start";
+
+        public const string UrlGetSql = "select * from bookmarks where link=@link order by id desc";
 
         public BookmarksDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
@@ -48,11 +50,13 @@ namespace Apollo.Data
             }
         }
 
-        public async Task<IReadOnlyList<Bookmark>> GetPage(int start)
+        public async Task<IReadOnlyList<Bookmark>> Get(int start, string link)
         {
             using (var conn = await connectionFactory.GetConnection())
             {
-                return (await conn.QueryAsync<Bookmark>(PageSql, new {start})).ToList();
+                if(!string.IsNullOrWhiteSpace(link))
+                    return (await conn.QueryAsync<Bookmark>(UrlGetSql, new {link})).ToList();
+                return (await conn.QueryAsync<Bookmark>(BasicGetSql, new {start})).ToList();
             }
         }
     }

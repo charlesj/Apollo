@@ -9,6 +9,13 @@ namespace Apollo.Tests.Commands.Bookmarks
 {
     public class GetBookmarksTests : BaseUnitTest<GetBookmarks>
     {
+        private int start = 42;
+        private string url = "url";
+        public GetBookmarksTests()
+        {
+            this.ClassUnderTest.Start = start;
+            this.ClassUnderTest.Link = url;
+        }
         public class Execute : GetBookmarksTests
         {
             IReadOnlyList<Bookmark> results = new List<Bookmark>();
@@ -19,7 +26,7 @@ namespace Apollo.Tests.Commands.Bookmarks
                     .Returns(Task.FromResult(42));
 
                 this.Mock<IBookmarksDataService>()
-                    .Setup(bds => bds.GetPage(It.IsAny<int>()))
+                    .Setup(bds => bds.Get(start, url))
                     .Returns(Task.FromResult(results));
             }
 
@@ -30,7 +37,7 @@ namespace Apollo.Tests.Commands.Bookmarks
                 var dres = (GetBookmarks.GetBookmarksResult) result.Result;
                 Assert.Equal(42, dres.total);
             }
-            
+
             [Fact]
             public async void SetsResultsFromBookmarkService()
             {
@@ -39,7 +46,7 @@ namespace Apollo.Tests.Commands.Bookmarks
                 Assert.Same(results, dres.bookmarks);
             }
         }
-        
+
         public class IsValid : GetBookmarksTests
         {
             [Fact]

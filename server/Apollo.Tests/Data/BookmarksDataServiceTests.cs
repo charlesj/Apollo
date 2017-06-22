@@ -55,12 +55,21 @@ namespace Apollo.Tests.Data
             }
 
             [Fact]
-            public async void ExpectedSql()
+            public async void ExpectedSqlWhenNoUrl()
             {
-                await ClassUnderTest.GetPage(42);
+                await ClassUnderTest.Get(42, null);
 
-                this.connection.Verify(c => c.QueryAsync<Bookmark>(BookmarksDataService.PageSql,
+                this.connection.Verify(c => c.QueryAsync<Bookmark>(BookmarksDataService.BasicGetSql,
                     It.Is<object>(o => GetAnon<int>(o, "start") == 42)));
+            }
+
+            [Fact]
+            public async void ExpectedSqlWithUrl()
+            {
+                await ClassUnderTest.Get(42, "url");
+
+                this.connection.Verify(c => c.QueryAsync<Bookmark>(BookmarksDataService.UrlGetSql,
+                    It.Is<object>(o => GetAnon<string>(o, "link") == "url")));
             }
         }
     }

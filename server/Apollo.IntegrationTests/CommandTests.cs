@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -57,6 +58,8 @@ namespace Apollo.IntegrationTests
 
                 Assert.False(expectSuccess);
             }
+
+            Thread.Sleep(500);
         }
 
         public static TheoryData<string, object, bool> Commands()
@@ -83,6 +86,7 @@ namespace Apollo.IntegrationTests
                 modifiedAt = DateTime.Now.AddDays(-5)
             }, true);
             data.Add("getBookmarks", new {start=1}, true);
+            data.Add("getBookmarks", new {link="link"}, true);
             return data;
         }
     }

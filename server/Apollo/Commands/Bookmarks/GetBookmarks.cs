@@ -8,8 +8,11 @@ namespace Apollo.Commands.Bookmarks
 {
     public class GetBookmarks : AuthenticatedCommand
     {
-        private readonly IBookmarksDataService bookmarksDataService;
         public int Start { get; set; }
+        public string Link { get; set; }
+
+        private readonly IBookmarksDataService bookmarksDataService;
+
 
         public GetBookmarks(ILoginService loginService, IBookmarksDataService bookmarksDataService) : base(loginService)
         {
@@ -20,7 +23,7 @@ namespace Apollo.Commands.Bookmarks
         {
             var result = new GetBookmarksResult();
             result.total = await bookmarksDataService.GetTotal();
-            result.bookmarks = await bookmarksDataService.GetPage(Start);
+            result.bookmarks = await bookmarksDataService.Get(Start, Link);
             return CommandResult.CreateSuccessResult(result);
         }
 
