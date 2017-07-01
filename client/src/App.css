@@ -109,3 +109,9 @@ footer{
 .bookmark .tags{
     margin-left: 5px;
 }
+.bookmarksDisplayHeader{
+    margin-bottom: 10px;
+}
+.bookmarksDisplayHeader button{
+    margin-left: 10px;
+}

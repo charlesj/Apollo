@@ -1,8 +1,7 @@
 var React = require('react');
 var PropTypes = require('prop-types');
+var FontAwesome = require('react-fontawesome');
 var moment = require('moment');
-
-var apolloServer = require('../../services/apollo-server');
 
 function SingleBookmark(props) {
   var createTime = moment(props.createdAt);
@@ -25,39 +24,13 @@ SingleBookmark.propTypes = {
 }
 
 class BookmarksDisplay extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      bookmarks: [],
-      total: 0
-    }
-
-    this.loadBookmarks = this.loadBookmarks.bind(this);
-  }
-
-  componentDidMount() {
-    this.loadBookmarks();
-  }
-
-  loadBookmarks() {
-    var start = this.state.bookmarks.length;
-    var currentBookmarks = this.state.bookmarks;
-    apolloServer.invoke('getBookmarks', {
-      start: start
-    })
-      .then(data => {
-        this.setState({
-          bookmarks: currentBookmarks.concat(data.bookmarks),
-          total: data.total
-        });
-      });
-  }
-
   render() {
     return (<div>
-        Total Bookmarks: {this.state.total}
-        {this.state.bookmarks.map(b => {
+        <div className='bookmarksDisplayHeader'>
+            Total Bookmarks: {this.props.totalBookmarks}
+            <button className="pt-button pt-intent-success"  onClick={this.props.refreshBookmarks}><FontAwesome name='refresh' /></button>
+        </div>
+        {this.props.bookmarks.map(b => {
         return (<SingleBookmark
           createdAt={b.created_at}
           title={b.title}
@@ -69,7 +42,7 @@ class BookmarksDisplay extends React.Component {
           />)
       })}
 
-        <button className="pt-button pt-intent-success buttonSpace" onClick={this.loadBookmarks}>Load More</button>
+        <button className="pt-button pt-intent-success buttonSpace" onClick={this.props.loadBookmarks}>Load More</button>
     </div>);
   }
 }

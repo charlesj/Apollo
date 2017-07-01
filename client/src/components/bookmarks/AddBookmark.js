@@ -1,8 +1,6 @@
 var React = require('react');
 var _ = require('lodash');
 
-var apolloServer = require('../../services/apollo-server');
-
 import { InputGroup } from "@blueprintjs/core";
 
 class AddBookmark extends React.Component {
@@ -14,7 +12,8 @@ class AddBookmark extends React.Component {
       title: '',
       link: '',
       description: '',
-      tags: []
+      tags: [],
+      newTag: ''
     }
 
     this.handleTagChange = this.handleTagChange.bind(this);
@@ -24,7 +23,7 @@ class AddBookmark extends React.Component {
     this.updateTitle = this.updateTitle.bind(this);
     this.updateLink = this.updateLink.bind(this);
     this.updateDescription = this.updateDescription.bind(this);
-    this.AddBookmark = this.addBookmark.bind(this);
+    this.addBookmark = this.addBookmark.bind(this);
   }
 
   handleTagChange(event) {
@@ -78,21 +77,21 @@ class AddBookmark extends React.Component {
   }
 
   addBookmark() {
-    apolloServer.invoke('addBookmark', {
-      title: this.state.title,
-      link: this.state.link,
-      description: this.state.description,
-      tags: this.state.tags
-    }).then(data => {
-      this.setState({
-        showError: false,
-        showSuccess: true,
-        title: '',
-        link: '',
-        description: '',
-        tags: []
-      });
-    }).catch(err => {
+    this.props.addBookmark(
+      this.state.title,
+      this.state.link,
+      this.state.description,
+      this.state.tags)
+      .then(data => {
+        this.setState({
+          showError: false,
+          showSuccess: true,
+          title: '',
+          link: '',
+          description: '',
+          tags: []
+        });
+      }).catch(err => {
       this.setState({
         showError: true,
         showSuccess: false
@@ -151,7 +150,7 @@ class AddBookmark extends React.Component {
       })}
         </div>
         </div>
-        <button type="submit" className="pt-button pt-intent-primary pt-icon-add buttonSpace" onClick={this.AddBookmark}>Add Bookmark</button>
+        <button type="submit" className="pt-button pt-intent-primary pt-icon-add buttonSpace" onClick={this.addBookmark}>Add Bookmark</button>
 
       </div>
     </div>);
