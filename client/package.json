@@ -36,13 +36,13 @@
   ],
   "jsx": {
     "formatJSXExpressions": true,
-    "JSXExpressionsSingleLine": true,
+    "JSXExpressionsSingleLine": false,
     "formatJSX": true,
     "attrsOnSameLineAsTag": true,
     "maxAttrsOnTag": 1,
-    "firstAttributeOnSameLine": true,
+    "firstAttributeOnSameLine": false,
     "spaceInJSXExpressionContainers": " ",
-    "alignWithFirstAttribute": false,
+    "alignWithFirstAttribute": true,
     "htmlOptions": {
       "brace_style": "collapse",
       "indent_char": " ",

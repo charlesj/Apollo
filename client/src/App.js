@@ -10,6 +10,7 @@ const apolloServer = require('./services/apollo-server');
 const FontAwesome = require('react-fontawesome');
 const Login = require('./components/Login');
 const ServerInfo = require('./components/ServerInfo');
+const Todo = require('./components/todo/Todo');
 const Journal = require('./components/journal/Journal');
 const Nav = require('./components/Nav');
 const Home = require('./components/Home');
@@ -74,13 +75,14 @@ class App extends Component {
             <div  className='mainContainer'>
             <Switch>
               <Route exact path='/' component={Home} />
+              <Route exact path='/todo' component={Todo} />
               <Route exact path='/journal' component={Journal} />
               <Route exact path='/health' component={Health} />
               <Route exact path='/bookmarks' component={Bookmarks} />
               <Route exact path='/settings' component={Settings} />
               <Route render={function() {
-        return (<p>Not Found</p>)
-      }} />
+                return (<p>Not Found</p>)
+              }} />
             </Switch>
             </div>
           </div>

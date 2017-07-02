@@ -12,106 +12,133 @@ body {
 }
 
 nav {
-    color: white;
-    background-color: #424242;
-    width: 50px;
-    float: left;
-    height: 100%;
+  color: white;
+  background-color: #424242;
+  width: 50px;
+  float: left;
+  height: 100%;
 }
 
 nav a {
-    padding: 5px;
-    padding-left: 0px;
-    display: block;
-    border-bottom: 1px solid #525252;
-    color: white;
-    text-align: center;
+  padding: 5px;
+  padding-left: 0px;
+  display: block;
+  border-bottom: 1px solid #525252;
+  color: white;
+  text-align: center;
 }
 
 nav a.active {
-    background-color: #555;
+  background-color: #555;
 }
 
 nav a:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
+.green {
+  color: #0A6640;
+}
+.blue {
+  color: #0E5A8A;
+}
+.orange {
+  color: #A66321;
+}
+.red {
+  color: #A82A2A;
+}
 .mainContainer{
-    padding: 15px;
-    background-color: #eeeeee;
-    margin-left: 50px;
-    min-height: 500px;
-    border-bottom-left-radius:5px;
+  padding: 15px;
+  background-color: #eeeeee;
+  margin-left: 50px;
+  min-height: 500px;
+  border-bottom-left-radius:5px;
 }
 
 .mid{
-    width: 100%;
-    height: 100%;
-    box-sizing:border-box;
+  width: 100%;
+  height: 100%;
+  box-sizing:border-box;
 }
 
 .active {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #login{
-    width: 300px;
-    margin: auto;
+  width: 300px;
+  margin: auto;
 }
 
 .userAgentColumn{
-    width: 90px;
+  width: 90px;
 }
 
 .note {
-    margin: 10px;
+  margin: 10px;
 }
 
 .note .createdTime {
-    color: #424242;
-    display: inline;
-    margin-left: 5px;
+  color: #424242;
+  display: inline;
+  margin-left: 5px;
 }
 
 .note .content {
-    margin: 10px;
-    padding: 7px;
-    padding-bottom: 1px;
+  margin: 10px;
+  padding: 7px;
+  padding-bottom: 1px;
 }
 
 .buttonSpace {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+.textButton {
+  background-color:inherit;
+  border: 0px;
+  margin-top: inherit;
+  margin-bottom: inherit;
+  font-family: inherit;
+  text-decoration: underline;
+  cursor: pointer;
 }
 footer{
-    width:100%;
-    box-sizing:border-box;
-    padding: 5px;
-    font-size: 12px;
-    color: white;
-    text-align: right;
+  width:100%;
+  box-sizing:border-box;
+  padding: 5px;
+  font-size: 12px;
+  color: white;
+  text-align: right;
 }
 .chartContainer{
-    display:inline-table;
-    margin: 5px;
+  display:inline-table;
+  margin: 5px;
 }
 
 .pt-tag{
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .bookmark{
-    padding-bottom: 5px;
+  padding-bottom: 5px;
 }
 
 .bookmark .description{
-    margin-left: 15px;
+  margin-left: 15px;
 }
 .bookmark .tags{
-    margin-left: 5px;
+  margin-left: 5px;
 }
 .bookmarksDisplayHeader{
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .bookmarksDisplayHeader button{
-    margin-left: 10px;
+  margin-left: 10px;
+}
+.todoPanel{
+  width: 300px;
+}
+.todoItemCompleted{
+  text-decoration: line-through;
 }

@@ -26,13 +26,12 @@ class Bookmarks extends React.Component {
     var currentBookmarks = this.state.bookmarks;
     apolloServer.invoke('getBookmarks', {
       start: start
-    })
-      .then(data => {
-        this.setState({
-          bookmarks: currentBookmarks.concat(data.bookmarks),
-          totalBookmarks: data.total
-        });
+    }).then(data => {
+      this.setState({
+        bookmarks: currentBookmarks.concat(data.bookmarks),
+        totalBookmarks: data.total
       });
+    });
   }
 
   componentDidMount() {
@@ -50,7 +49,7 @@ class Bookmarks extends React.Component {
     });
   }
 
-  refreshBookmarks(){
+  refreshBookmarks() {
     this.setState({
       bookmarks: []
     });
@@ -60,18 +59,19 @@ class Bookmarks extends React.Component {
   render() {
     return (<div>
         <Tabs2 id="BookmarkTabs" >
-                <Tab2 id="bookmarks" title="Bookmarks" panel={
-      <BookmarksDisplay
-      bookmarks={this.state.bookmarks}
-      totalBookmarks={this.state.totalBookmarks}
-      loadBookmarks={this.loadBookmarks}
-      refreshBookmarks={this.refreshBookmarks}
-      />} />
-                <Tab2 id="add_bookmark" title="Add bookmark" panel={
-      <AddBookmark addBookmark={this.addBookmark} />
-      } />
-                <Tabs2.Expander />
-            </Tabs2></div>);
+          <Tab2 id="bookmarks" title="Bookmarks" panel={
+            <BookmarksDisplay
+              bookmarks={this.state.bookmarks}
+              totalBookmarks={this.state.totalBookmarks}
+              loadBookmarks={this.loadBookmarks}
+              refreshBookmarks={this.refreshBookmarks}
+            />}
+          />
+          <Tab2 id="add_bookmark" title="Add bookmark" panel={
+            <AddBookmark addBookmark={this.addBookmark} />
+          } />
+          <Tabs2.Expander />
+        </Tabs2></div>);
   }
 }
 
