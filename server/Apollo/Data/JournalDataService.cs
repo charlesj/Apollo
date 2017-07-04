@@ -16,7 +16,7 @@ namespace Apollo.Data
         public JournalDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
         }
-        
+
         public async Task<IReadOnlyList<JournalEntry>> GetAllJournalEntries()
         {
             using (var connection = await connectionFactory.GetConnection())
@@ -39,12 +39,12 @@ namespace Apollo.Data
             }
         }
     }
-    
+
     public class JournalEntry
     {
         public int id { get; set; }
         public string note { get; set; }
-        public DateTime     created_at { get; set; }
+        public DateTime created_at { get; set; }
         public string[] tags { get; set; }
     }
 }

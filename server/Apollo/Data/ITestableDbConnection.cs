@@ -12,7 +12,6 @@ namespace Apollo.Data
         Task<IEnumerable<TResultType>> QueryAsync<TResultType>(string query);
         Task<IEnumerable<TResultType>> QueryAsync<TResultType>(string query, object parameters);
         int Execute(string query, object obj);
-        IDbCommand CreateCommand();
     }
 
     public class TestableDbConnection : ITestableDbConnection
@@ -37,11 +36,6 @@ namespace Apollo.Data
         public int Execute(string query, object obj)
         {
             return this.connection.Execute(query, obj);
-        }
-
-        public IDbCommand CreateCommand()
-        {
-            return this.connection.CreateCommand();
         }
 
         public void Dispose()

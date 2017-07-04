@@ -11,7 +11,7 @@ namespace Apollo.IntegrationTests
     {
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
-        private string loginToken = "01857904912d480eaecd55ac43549f78";
+        private string loginToken = "cb84ccc9ac5d49798c9621fe4e0876fe";
 
         [Fact]
         public void EnsureLoginTokenSet()
@@ -87,6 +87,10 @@ namespace Apollo.IntegrationTests
             }, true);
             data.Add("getBookmarks", new {start=1}, true);
             data.Add("getBookmarks", new {link="link"}, true);
+            data.Add("addTodoItem", new { title="Test item"}, true);
+            data.Add("getTodoItems", new object(), true);
+            data.Add("updateTodoItem", new { item = new {id = 1, title = "Test Item 2"}}, true);
+            data.Add("updateTodoItem", new { item = new {id = 1, title = "Test Item 2", completed_at=DateTime.Now}}, true);
             return data;
         }
     }

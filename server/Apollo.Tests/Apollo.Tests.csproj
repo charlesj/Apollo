@@ -94,6 +94,9 @@
     <Compile Include="Commands\Meta\TestCommandTests.cs" />
     <Compile Include="Commands\Metrics\AddMetricTests.cs" />
     <Compile Include="Commands\Metrics\GetMetricsTests.cs" />
+    <Compile Include="Commands\Todo\AddTodoItemTests.cs" />
+    <Compile Include="Commands\Todo\GetTodoItemsTests.cs" />
+    <Compile Include="Commands\Todo\UpdateTodoItemTests.cs" />
     <Compile Include="Commands\UserSettings\ChangePasswordTests.cs" />
     <Compile Include="Commands\UserSettings\GetAllActiveLoginSessions.cs" />
     <Compile Include="Commands\UserSettings\RevokeLoginSessionTests.cs" />
@@ -116,6 +119,7 @@
     <Compile Include="ServiceLocator\SimpleInjectorServiceLocatorTests.cs" />
     <Compile Include="Services\LoginServiceTests.cs" />
     <Compile Include="Services\UserSettingsServiceTests.cs" />
+    <Compile Include="TestData.cs" />
     <Compile Include="Utilities\Base64ConverterTests.cs" />
     <Compile Include="Utilities\JsonSerializerTests.cs" />
     <Compile Include="Utilities\PasswordHasherTests.cs" />

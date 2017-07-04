@@ -76,6 +76,9 @@
     <Compile Include="Commands\Meta\TestCommand.cs" />
     <Compile Include="Commands\Metrics\AddMetric.cs" />
     <Compile Include="Commands\Metrics\GetMetrics.cs" />
+    <Compile Include="Commands\Todo\AddTodoItem.cs" />
+    <Compile Include="Commands\Todo\GetTodoItems.cs" />
+    <Compile Include="Commands\Todo\UpdateTodoItem.cs" />
     <Compile Include="Commands\UserSettings\ChangePassword.cs" />
     <Compile Include="Commands\UserSettings\GetAllActiveLoginSessions.cs" />
     <Compile Include="Commands\UserSettings\RevokeLoginSession.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Data\JournalDataService.cs" />
     <Compile Include="Data\LoginSessionDataService.cs" />
     <Compile Include="Data\MetricsDataService.cs" />
+    <Compile Include="Data\TodoItemDataService.cs" />
     <Compile Include="Data\UserSettingsDataService.cs" />
     <Compile Include="Server\HttpClientInfo.cs" />
     <Compile Include="Server\HttpResponse.cs" />
