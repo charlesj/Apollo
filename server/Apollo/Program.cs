@@ -13,14 +13,17 @@ namespace Apollo
 
         public static void Main(string[] args)
         {
-            // TraceLogger.Enabled = true;
+            Logger.Enabled = true;
+            Logger.TraceEnabled = false;
+            Logger.Info($"Apollo {CurrentVersion} is booting...");
+
             var kernel = new Kernel();
             var serviceLocator = kernel.Boot(BootOptions.Defaults);
 
             var configuration = serviceLocator.Get<IConfiguration>();
             if (!configuration.IsValid())
             {
-                Console.WriteLine("Invalid Configuration");
+                Logger.Error("Invalid Configuration");
                 Environment.Exit(1);
             }
 
@@ -31,10 +34,10 @@ namespace Apollo
             var runTimeContext = serviceLocator.Get<IRuntimeContext>();
             runTime.Run();
 
-            Console.WriteLine($"Apollo {CurrentVersion} has started. Ctrl+C will exit.");
+            Logger.Info($"Apollo {CurrentVersion} has started. Ctrl+C will exit.");
 
             Console.CancelKeyPress += delegate {
-                Console.Write($"Shutting down now");
+                Logger.Info($"Shutting down now");
                 runTimeContext.End();
 
                 while (!runTimeContext.Ended)
@@ -43,8 +46,7 @@ namespace Apollo
                     Task.Delay(100).GetAwaiter().GetResult();
                 }
 
-                Console.WriteLine(string.Empty);
-                Console.WriteLine("Shutdown complete.");
+                Logger.Info("Shutdown complete.");
                 Environment.Exit(0);
             };
 
@@ -52,5 +54,5 @@ namespace Apollo
             {
             }
         }
-    }  
+    }
 }

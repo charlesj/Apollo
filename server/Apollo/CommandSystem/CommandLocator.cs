@@ -16,18 +16,18 @@ namespace Apollo.CommandSystem
         public ICommand Locate(string commandName)
         {
             commandName = commandName.ToLowerInvariant();
-            TraceLogger.Trace($"Looking for command {commandName}");
+            Logger.Trace($"Looking for command {commandName}");
             var type = typeof(ICommand);
             var commandType = type.Assembly.GetTypes()
                 .Where(p => type.IsAssignableFrom(p))
                 .SingleOrDefault(t => commandName == t.Name.ToLowerInvariant());
             
-            TraceLogger.Trace("finished searching for command", commandType);
+            Logger.Trace("finished searching for command", commandType);
             if (commandType == null)
                 return null;
             
             var commandInstance = (ICommand)serviceLocator.Get(commandType);
-            TraceLogger.Trace("Built instance of command");
+            Logger.Trace("Built instance of command");
             return commandInstance;
         }
     }

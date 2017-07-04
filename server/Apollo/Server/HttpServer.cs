@@ -25,7 +25,7 @@ namespace Apollo.Server
         public void Listen()
         {
             listener.Start();
-            Console.WriteLine($"Server listening on {prefix}");
+            Logger.Info($"Server listening on {prefix}");
             ThreadPool.QueueUserWorkItem((o) =>
             {
                 while (listener.IsListening)
@@ -50,8 +50,8 @@ namespace Apollo.Server
                     return;
                 }
 
-                TraceLogger.Trace("Processing Request");
-                
+                Logger.Trace("Processing Request");
+
                 var body = context.GetRequestBody();
                 var clientInfo = context.GetClientInfo();
                 var response = processor.Process(body, clientInfo).GetAwaiter().GetResult();

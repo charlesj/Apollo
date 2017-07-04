@@ -19,16 +19,16 @@ namespace Apollo.Commands.Metrics
             IMetricsDataService metricsDataService
         ) : base(loginService)
         {
-            TraceLogger.Trace("Created AddMetric Instance");
+            Logger.Trace("Created AddMetric Instance");
             this.metricsDataService = metricsDataService;
             this.Value = default(float);
         }
 
         public override async Task<CommandResult> Execute()
         {
-            TraceLogger.Trace("Began Executing AddMetric");
+            Logger.Trace("Began Executing AddMetric");
             await this.metricsDataService.InsertMetric(Category, Name, Value);
-            TraceLogger.Trace("Left Data Service");
+            Logger.Trace("Left Data Service");
             return CommandResult.SuccessfulResult;
         }
 
