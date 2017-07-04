@@ -15,49 +15,41 @@ namespace Apollo.Data
 
     public class LoginSessionDataService: BaseDataService, ILoginSessionDataService
     {
+        public const string AllActiveSessionsQuery =
+            "select * from login_sessions where revoked is false order by id desc";
+
+        public const string CreateSessionQuery = @"
+                    insert into login_sessions(token, created_at, last_seen, ip_address, user_agent, revoked)
+                    values (@token, current_timestamp, current_timestamp, 'waiting', 'waiting', false)";
+
+        public const string UpdateLastSeenQuery = @"
+                    update login_sessions set last_seen=current_timestamp, ip_address=@ipAddress, user_agent=@userAgent
+                    where token=@token";
+
+        public const string RevokeSessionQuery = @"update login_sessions set revoked=true where token=@token";
+
         public LoginSessionDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
         }
 
         public async Task<IReadOnlyList<LoginSession>> GetAllActiveSessions()
         {
-            using (var connection = await connectionFactory.GetConnection())
-            {
-                var query = "select * from login_sessions where revoked is false order by id desc";
-                var results = await connection.QueryAsync<LoginSession>(query);
-                return results.ToList();
-            }
+             return await QueryAsync<LoginSession>(AllActiveSessionsQuery);
         }
 
         public async Task CreateSession(string token)
         {
-            using (var connection = await connectionFactory.GetConnection())
-            {
-                connection.Execute(@"
-                    insert into login_sessions(token, created_at, last_seen, ip_address, user_agent, revoked)
-                    values (@token, current_timestamp, current_timestamp, 'waiting', 'waiting', false)",
-                    new {token});
-            }
+            await Execute(CreateSessionQuery, new {token});
         }
 
         public async Task UpdateLastSeen(string token, string ipAddress, string userAgent)
         {
-            using (var connection = await connectionFactory.GetConnection())
-            {
-                connection.Execute(@"
-                    update login_sessions set last_seen=current_timestamp, ip_address=@ipAddress, user_agent=@userAgent
-                    where token=@token",
-                    new {token, ipAddress, userAgent});
-            }
+             await Execute(UpdateLastSeenQuery, new {token, ipAddress, userAgent});
         }
 
         public async Task RevokeSession(string token)
         {
-            using (var connection = await connectionFactory.GetConnection())
-            {
-                connection.Execute(@"update login_sessions set revoked=true
-                                     where token=@token", new {token});
-            }
+            await Execute(RevokeSessionQuery, new {token});
         }
     }
 

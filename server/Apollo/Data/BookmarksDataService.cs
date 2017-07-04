@@ -36,28 +36,19 @@ namespace Apollo.Data
             if(bookmark.modified_at == default(DateTime))
                 bookmark.modified_at = DateTime.UtcNow;
 
-            using (var conn = await connectionFactory.GetConnection())
-            {
-                conn.Execute(InsertSql, bookmark);
-            }
+            await Execute(InsertSql, bookmark);
         }
 
         public async Task<int> GetTotal()
         {
-            using (var conn = await connectionFactory.GetConnection())
-            {
-                return (await conn.QueryAsync<CountResult>(CountSql, null)).Single().count;
-            }
+            return (await QueryAsync<CountResult>(CountSql, null)).Single().count;
         }
 
         public async Task<IReadOnlyList<Bookmark>> Get(int start, string link)
         {
-            using (var conn = await connectionFactory.GetConnection())
-            {
-                if(!string.IsNullOrWhiteSpace(link))
-                    return (await conn.QueryAsync<Bookmark>(UrlGetSql, new {link})).ToList();
-                return (await conn.QueryAsync<Bookmark>(BasicGetSql, new {start})).ToList();
-            }
+            if(!string.IsNullOrWhiteSpace(link))
+                return await QueryAsync<Bookmark>(UrlGetSql, new {link});
+            return await QueryAsync<Bookmark>(BasicGetSql, new {start});
         }
     }
 

@@ -10,16 +10,16 @@ namespace Apollo.Data
         Task InsertMetric(string category, string name, float value);
         Task<IReadOnlyList<Metric>> GetMetrics(string category, string name);
     }
-    
+
     public class MetricsDataService : BaseDataService, IMetricsDataService
     {
         public const string InsertSql = "insert into metrics (category, name, value, created_at)" +
                                         " values (@category, @name, @value, current_timestamp)";
 
         public const string NameSelectSql = "select * from metrics where name=@name order by id asc";
-        
+
         public const string CategorySelectSql = "select * from metrics where category=@category order by id asc";
-        
+
         public const string AllSelectSql = "select * from metrics order by id asc";
 
         public const string BothSelectSql = "select * from metrics where name=@name and category=@category order by id asc";
@@ -27,13 +27,10 @@ namespace Apollo.Data
         public MetricsDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
         }
-        
+
         public async Task InsertMetric(string category, string name, float value)
         {
-            using (var connection = await this.connectionFactory.GetConnection())
-            {
-                connection.Execute(InsertSql, new {category, name, value});
-            }
+            await Execute(InsertSql, new {category, name, value});
         }
 
         public async Task<IReadOnlyList<Metric>> GetMetrics(string category, string name)
@@ -46,13 +43,10 @@ namespace Apollo.Data
             else if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(category))
                 sql = BothSelectSql;
 
-            using (var connection = await this.connectionFactory.GetConnection())
-            {
-                return (await connection.QueryAsync<Metric>(sql, new {category, name})).ToList();
-            }
+            return await QueryAsync<Metric>(sql, new {category, name});
         }
     }
-    
+
     public class Metric
     {
         public int id { get; set; }

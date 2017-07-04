@@ -13,19 +13,15 @@ namespace Apollo.Data
 
     public class JournalDataService : BaseDataService, IJournalDataService
     {
+        public const string AllJournalEntriesQuery = "select * from journal order by id desc";
         public JournalDataService(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {
         }
 
         public async Task<IReadOnlyList<JournalEntry>> GetAllJournalEntries()
         {
-            using (var connection = await connectionFactory.GetConnection())
-            {
-                var query = "select * from journal order by id desc";
-                var results = await connection
-                    .QueryAsync<JournalEntry>(query);
-                return results.ToList();
-            }
+            return await QueryAsync<JournalEntry>(AllJournalEntriesQuery);
+
         }
 
         public async Task CreateJournalEntry(JournalEntry entry)
