@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+var ReactRouter = require('react-router-dom');
+var Router = ReactRouter.BrowserRouter;
+var Route = ReactRouter.Route;
+var Switch = ReactRouter.Switch;
+
 import LoginService from './services/login-service';
 import apolloServer from './services/apollo-server';
 import FontAwesome from 'react-fontawesome';
