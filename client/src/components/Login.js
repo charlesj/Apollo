@@ -1,6 +1,5 @@
-var React = require('react');
-
-var apollo = require('../services/apollo-server');
+import React from 'react';
+import apollo from '../services/apollo-server';
 
 class Login extends React.Component {
   constructor(props) {

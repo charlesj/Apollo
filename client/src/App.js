@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
-var ReactRouter = require('react-router-dom');
-var Router = ReactRouter.BrowserRouter;
-var Route = ReactRouter.Route;
-var Switch = ReactRouter.Switch;
-
-var LoginService = require('./services/login-service');
-const apolloServer = require('./services/apollo-server');
-
-const FontAwesome = require('react-fontawesome');
-const Login = require('./components/Login');
-const ServerInfo = require('./components/ServerInfo');
-const Todo = require('./components/todo/Todo');
-const Journal = require('./components/journal/Journal');
-const Nav = require('./components/Nav');
-const Home = require('./components/Home');
-const Settings = require('./components/settings/Settings');
-const Health = require('./components/health/Health');
-const Bookmarks = require('./components/bookmarks/Bookmarks');
+import { Router, Route, Switch } from 'react-router-dom';
+import LoginService from './services/login-service';
+import apolloServer from './services/apollo-server';
+import FontAwesome from 'react-fontawesome';
+import Login from './components/Login';
+import ServerInfo from './components/ServerInfo';
+import Todo from './components/todo/Todo';
+import Journal from './components/journal/Journal';
+import Nav from './components/Nav';
+import Home from './components/Home';
+import Settings from './components/settings/Settings';
+import Health from './components/health/Health';
+import Bookmarks from './components/bookmarks/Bookmarks';
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';

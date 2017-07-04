@@ -1,6 +1,6 @@
-var React = require('react');
-var apollo = require('../services/apollo-server');
-var moment = require('moment');
+import React from 'react';
+import apollo from '../services/apollo-server';
+import moment from 'moment';
 
 class ServerInfo extends React.Component {
   constructor(props) {

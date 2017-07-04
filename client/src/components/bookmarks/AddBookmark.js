@@ -1,6 +1,5 @@
-var React = require('react');
-var _ = require('lodash');
-
+import React from 'react';
+import _ from 'lodash';
 import { InputGroup } from "@blueprintjs/core";
 
 class AddBookmark extends React.Component {

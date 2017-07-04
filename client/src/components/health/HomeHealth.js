@@ -1,9 +1,8 @@
-var React = require('react');
-var _ = require('lodash');
-var moment = require('moment');
+import React from 'react';
+import _ from 'lodash';
+import moment from 'moment';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-
-var metricsService = require('../../services/metrics-service');
+import metricsService from '../../services/metrics-service';
 
 class HomeHealth extends React.Component {
 

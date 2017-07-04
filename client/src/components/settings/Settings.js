@@ -1,9 +1,7 @@
-var React = require('react');
-
 import { Tab2, Tabs2 } from "@blueprintjs/core";
-
-var LoginSessions = require('./LoginSessions');
-var ChangePassword = require('./ChangePassword');
+import React from 'react';
+import LoginSessions from './LoginSessions';
+import ChangePassword from './ChangePassword';
 
 class Settings extends React.Component {
   render() {

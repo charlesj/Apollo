@@ -1,24 +1,23 @@
-var store = require('store');
+import localStorage from 'store';
 
 const tokenKey = "token";
 
 class LoginService {
   isLoggedIn() {
-    return (store.get(tokenKey) != null);
+    return (localStorage.get(tokenKey) != null);
   }
 
   getToken() {
-    return store.get(tokenKey);
+    return localStorage.get(tokenKey);
   }
 
   storeToken(token) {
-    store.set(tokenKey, token);
+    localStorage.set(tokenKey, token);
   }
 
   logout() {
-    store.remove(tokenKey);
+    localStorage.remove(tokenKey);
   }
 }
-
 
 module.exports = LoginService;

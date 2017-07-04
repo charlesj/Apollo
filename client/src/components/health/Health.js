@@ -1,6 +1,5 @@
-var React = require('react');
-
-const HealthInput = require('./HealthInput');
+import React from 'react';
+import HealthInput from './HealthInput';
 
 class Health extends React.Component {
   render() {

@@ -1,6 +1,6 @@
-var React = require('react');
-var NavLink = require('react-router-dom').NavLink;
-var FontAwesome = require('react-fontawesome');
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import FontAwesome from 'react-fontawesome';
 
 function Nav() {
   return (

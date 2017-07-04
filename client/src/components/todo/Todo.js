@@ -1,6 +1,5 @@
-const React = require('react');
-
-const todoService = require('../../services/todo-service');
+import React from 'react';
+import todoService from '../../services/todo-service';
 
 class Todo extends React.Component {
   constructor(props) {

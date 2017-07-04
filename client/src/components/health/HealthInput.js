@@ -1,7 +1,6 @@
-var React = require('react');
+import React from 'react';
 import { Button } from "@blueprintjs/core";
-
-var metricsService = require('../../services/metrics-service');
+import metricsService from '../../services/metrics-service';
 
 class Health extends React.Component {
   constructor(props) {

@@ -1,4 +1,4 @@
-var apolloServer = require('./apollo-server');
+import apolloServer from './apollo-server';
 
 var addMetric = function(category, name, value) {
   return apolloServer.invoke('addMetric', {

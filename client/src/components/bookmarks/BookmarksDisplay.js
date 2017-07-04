@@ -1,7 +1,7 @@
-var React = require('react');
-var PropTypes = require('prop-types');
-var FontAwesome = require('react-fontawesome');
-var moment = require('moment');
+import React from 'react';
+import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
+import moment from 'moment';
 
 function SingleBookmark(props) {
   var createTime = moment(props.createdAt);

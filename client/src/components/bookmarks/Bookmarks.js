@@ -1,11 +1,8 @@
-var React = require('react');
+import React from 'react';
 import { Tab2, Tabs2 } from "@blueprintjs/core";
-
-
-var apolloServer = require('../../services/apollo-server');
-
-const BookmarksDisplay = require('./BookmarksDisplay');
-const AddBookmark = require('./AddBookmark');
+import apolloServer from '../../services/apollo-server';
+import BookmarksDisplay from './BookmarksDisplay';
+import AddBookmark from './AddBookmark';
 
 class Bookmarks extends React.Component {
   constructor(props) {

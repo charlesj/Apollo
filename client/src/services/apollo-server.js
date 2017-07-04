@@ -1,6 +1,6 @@
-var axios = require('axios');
-var config = require('../config');
-var LoginService = require('./login-service');
+import axios from 'axios';
+import config from '../config';
+import LoginService from './login-service';
 
 var requestCounter = 0;
 

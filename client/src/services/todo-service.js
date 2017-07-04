@@ -1,4 +1,4 @@
-var apolloServer = require('./apollo-server');
+import apolloServer from './apollo-server';
 
 function getTodos() {
   return apolloServer.invoke("getTodoItems", {});

@@ -1,6 +1,5 @@
-var React = require('react');
-
-var HomeHealth = require('./health/HomeHealth');
+import React from 'react';
+import HomeHealth from './health/HomeHealth';
 
 class Home extends React.Component {
   render() {

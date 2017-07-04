@@ -1,7 +1,6 @@
-var React = require('react');
-var moment = require('moment');
-
-var apollo = require('../../services/apollo-server');
+import React from 'react';
+import moment from 'moment';
+import apollo from '../../services/apollo-server';
 import { Button, Text } from "@blueprintjs/core";
 
 class LoginSessions extends React.Component {
