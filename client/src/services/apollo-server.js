@@ -1,12 +1,12 @@
 import axios from 'axios';
 import config from '../config';
-import LoginService from './login-service';
+import loginService from './login-service';
 
 var requestCounter = 0;
 
 module.exports = {
   invoke: function(commandName, payload) {
-    var loginService = new LoginService();
+
     if (loginService.isLoggedIn()) {
       payload.token = loginService.getToken();
     }

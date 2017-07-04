@@ -3,8 +3,7 @@ var ReactRouter = require('react-router-dom');
 var Router = ReactRouter.BrowserRouter;
 var Route = ReactRouter.Route;
 var Switch = ReactRouter.Switch;
-
-import LoginService from './services/login-service';
+import loginService from './services/login-service';
 import apolloServer from './services/apollo-server';
 import FontAwesome from 'react-fontawesome';
 import Login from './components/Login';
@@ -22,8 +21,6 @@ import '../node_modules/font-awesome/css/font-awesome.css';
 import './App.css';
 
 class App extends Component {
-  loginService = new LoginService();
-
   constructor(props) {
     super(props);
 
@@ -37,24 +34,23 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({
-      loggedIn: this.loginService.isLoggedIn()
+      loggedIn: loginService.isLoggedIn()
     });
   }
 
   login(token) {
-    this.loginService.storeToken(token);
+    loginService.storeToken(token);
     this.setState({
-      loggedIn: this.loginService.isLoggedIn()
+      loggedIn: loginService.isLoggedIn()
     });
   }
 
   logout() {
-    var token = this.loginService.getToken();
+    var token = loginService.getToken();
     apolloServer.invoke('revokeLoginSession', {
       tokenToRevoke: token
-    })
-      .then(data => {
-        this.loginService.logout();
+    }).then(data => {
+        loginService.logout();
         this.setState({
           loggedIn: false
         });
