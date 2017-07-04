@@ -10,7 +10,9 @@ body {
   position: relative;
   height: 100%;
 }
-
+input, button, span{
+  font-family: 'Monda', sans-serif;
+}
 nav {
   color: white;
   background-color: #424242;
