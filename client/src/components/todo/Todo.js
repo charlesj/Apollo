@@ -42,7 +42,6 @@ class Todo extends React.Component {
   }
 
   toggleShowCompleted() {
-    console.log(this.state.showCompleted);
     this.setState({
       showCompleted: !this.state.showCompleted
     });
