@@ -2,10 +2,11 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Tab2, Tabs2 } from "@blueprintjs/core";
+import { Tab2, Tabs2, Intent } from "@blueprintjs/core";
 import MarkdownRenderer from 'react-markdown-renderer';
 import apollo from '../../services/apollo-server';
 import EntryInput from './EntryInput';
+import { Notifier } from '../../services/notifier';
 
 function EntryDisplay(props) {
   var createTime = moment(props.createdAt);
@@ -82,6 +83,10 @@ class Journal extends React.Component {
       note: note,
       tags: tags
     }).then(() => {
+      Notifier.show({
+        intent: Intent.SUCCESS,
+        message: "Successfully added a new note.",
+      });
       this.loadEntries();
     });
   }
