@@ -35,7 +35,7 @@ namespace Apollo.Tests
                 var genericMock = typeof(Mock<>).MakeGenericType(type);
                 var genericConstructor = genericMock.GetConstructors()[0];
                 var instance = genericConstructor.Invoke(new object[0]);
-                this.registry.Add(type, (dynamic)instance);
+                this.registry.Add(type, instance);
             }
         }
     }

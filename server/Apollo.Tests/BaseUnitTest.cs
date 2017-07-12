@@ -8,12 +8,12 @@ using Moq.Language.Flow;
 
 namespace Apollo.Tests
 {
-    public abstract class BaseUnitTest<TClassUnderTest>
+    public class BaseUnitTest<TClassUnderTest>
     {
         protected MockRegistry mockRegistry { get; set; }
-        protected TClassUnderTest ClassUnderTest { get; private set; }
+        public TClassUnderTest ClassUnderTest { get; private set; }
 
-        protected BaseUnitTest()
+        public BaseUnitTest()
         {
             this.mockRegistry = new MockRegistry();
             this.ClassUnderTest = this.Build();
@@ -21,7 +21,7 @@ namespace Apollo.Tests
 
         public Mock<TMockType> Mock<TMockType>() where TMockType : class
         {
-            return (Mock<TMockType>)this.mockRegistry.Get(typeof(TMockType));
+            return mockRegistry.Get<TMockType>();
         }
 
         public TClassUnderTest Build()
