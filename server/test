@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd Apollo.Tests
+dotnet test
+popd
