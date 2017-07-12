@@ -10,18 +10,18 @@ namespace Apollo.Tests
 {
     public class BaseUnitTest<TClassUnderTest>
     {
-        protected MockRegistry mockRegistry { get; set; }
+        protected MockRegistry MockRegistry { get; set; }
         public TClassUnderTest ClassUnderTest { get; private set; }
 
         public BaseUnitTest()
         {
-            this.mockRegistry = new MockRegistry();
+            this.MockRegistry = new MockRegistry();
             this.ClassUnderTest = this.Build();
         }
 
         public Mock<TMockType> Mock<TMockType>() where TMockType : class
         {
-            return mockRegistry.Get<TMockType>();
+            return MockRegistry.Get<TMockType>();
         }
 
         public TClassUnderTest Build()
@@ -39,7 +39,7 @@ namespace Apollo.Tests
                 if (!parametType.GetTypeInfo().IsAbstract && !parametType.GetTypeInfo().IsInterface)
                     throw new InvalidOperationException("Use more appropriate types (interface or abstract) for your dependencies");
 
-                constructorParams.Add(mockRegistry.Get(parameter.ParameterType));
+                constructorParams.Add(MockRegistry.Get(parameter.ParameterType));
             }
 
             var instance = constructor.Invoke(constructorParams.ToArray());
