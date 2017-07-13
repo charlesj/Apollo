@@ -1,4 +1,4 @@
-/*﻿using System;
+using System;
 using System.Threading.Tasks;
 using Apollo.Server;
 using Moq;
@@ -6,24 +6,24 @@ using Xunit;
 
 namespace Apollo.Tests.Server
 {
-    public class HttpServerTests : BaseUnitTest<HttpServer>
+    public class HttpRequestProcessorTests : BaseUnitTest<HttpRequestProcessor>
     {
         [Fact]
-        public void AlwaysAddsAccessControlAllowOriginHeader()
+        public async void AlwaysAddsAccessControlAllowOriginHeader()
         {
-            var context = Mocker.GetMock<ITestableHttpListenerContext>();
+            var context = Mock<ITestableHttpContext>();
 
-            ClassUnderTest.ProcessRequest(context.Object);
+            await ClassUnderTest.Process(context.Object);
 
             context.Verify(c => c.AddHeader("Access-Control-Allow-Origin", "*"), Times.Once());
         }
 
         [Fact]
-        public void AlwaysAddsAllowHeadersHeader()
+        public async void AlwaysAddsAllowHeadersHeader()
         {
-            var context = Mocker.GetMock<ITestableHttpListenerContext>();
+            var context = Mock<ITestableHttpContext>();
 
-            ClassUnderTest.ProcessRequest(context.Object);
+            await ClassUnderTest.Process(context.Object);
             context.Verify(c =>
                 c.AddHeader("Access-Control-Allow-Headers",
                     "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"),
@@ -31,21 +31,21 @@ namespace Apollo.Tests.Server
         }
 
         [Fact]
-        public void AlwaysAddsAllowHeadersMethods()
+        public async void AlwaysAddsAllowHeadersMethods()
         {
-            var context = Mocker.GetMock<ITestableHttpListenerContext>();
+            var context = Mock<ITestableHttpContext>();
 
-            ClassUnderTest.ProcessRequest(context.Object);
+            await ClassUnderTest.Process(context.Object);
 
             context.Verify(c => c.AddHeader("Access-Control-Allow-Methods", "POST"), Times.Once());
         }
 
         [Fact]
-        public void ImmediatelyClosesResponseOnHEADorOPTIONS()
+        public async void ImmediatelyClosesResponseOnHEADorOPTIONS()
         {
-            var context = Mocker.GetMock<ITestableHttpListenerContext>();
+            var context = Mock<ITestableHttpContext>();
             context.SetupGet(s => s.HttpMethod).Returns("HEAD");
-            ClassUnderTest.ProcessRequest(context.Object);
+            await ClassUnderTest.Process(context.Object);
 
             context.Verify(c => c.CloseResponse(), Times.Once());
             context.Verify(c => c.GetRequestBody(), Times.Never());
@@ -53,9 +53,9 @@ namespace Apollo.Tests.Server
         }
 
         [Fact]
-        public void PassesBodyToJsonRPCProcessorAndSetsResponse()
+        public async void PassesBodyToJsonRPCProcessorAndSetsResponse()
         {
-            var context = Mocker.GetMock<ITestableHttpListenerContext>();
+            var context = Mock<ITestableHttpContext>();
             var body = "body";
             var clientInfo = new HttpClientInfo();
 
@@ -67,10 +67,10 @@ namespace Apollo.Tests.Server
             response.HttpCode = 200;
             context.SetupSet(c => c.StatusCode = response.HttpCode);
 
-            var processor = Mocker.GetMock<IJsonRpcProcessor>();
+            var processor = Mock<IJsonRpcProcessor>();
             processor.Setup(s => s.Process(body, clientInfo)).Returns(Task.FromResult(response));
 
-            ClassUnderTest.ProcessRequest(context.Object);
+            await ClassUnderTest.Process(context.Object);
 
             context.VerifySet(c => c.StatusCode = response.HttpCode, Times.Once());
             context.Verify(c => c.WriteResponseBody(response.Body), Times.Once());
@@ -79,14 +79,14 @@ namespace Apollo.Tests.Server
         }
 
         [Fact]
-        public void Returns503_WhenAddingHeaderThrows()
+        public async void Returns503_WhenAddingHeaderThrows()
         {
             var thrownException = new Exception("Yep I Am Exception");
-            var context = Mocker.GetMock<ITestableHttpListenerContext>();
+            var context = Mock<ITestableHttpContext>();
             context.Setup(c => c.AddHeader(It.IsAny<string>(), It.IsAny<string>()))
                    .Throws(thrownException);
 
-            ClassUnderTest.ProcessRequest(context.Object);
+            await ClassUnderTest.Process(context.Object);
 
             var expectedMessage = $"SERVER ERROR: {thrownException.Message}";
             context.VerifySet(c => c.StatusCode = 503, Times.Once());
@@ -96,14 +96,13 @@ namespace Apollo.Tests.Server
         }
 
         [Fact]
-        public void TellsWorldWhatPowersIt()
+        public async void TellsWorldWhatPowersIt()
         {
-            var context = Mocker.GetMock<ITestableHttpListenerContext>();
+            var context = Mock<ITestableHttpContext>();
 
-            ClassUnderTest.ProcessRequest(context.Object);
+            await ClassUnderTest.Process(context.Object);
 
             context.Verify(c => c.AddHeader("X-Powered-By", $"Apollo v{Apollo.Version}"), Times.Once());
         }
     }
 }
-*/

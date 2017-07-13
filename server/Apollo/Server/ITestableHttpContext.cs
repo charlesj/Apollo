@@ -1,6 +1,6 @@
 ﻿namespace Apollo.Server
 {
-    public interface ITestableHttpListenerContext
+    public interface ITestableHttpContext
     {
         string HttpMethod { get; }
         int StatusCode { get; set; }

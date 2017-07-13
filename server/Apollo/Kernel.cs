@@ -4,7 +4,7 @@ namespace Apollo
 {
     public class Kernel
     {
-        public IServiceLocator Boot(BootOptions defaults)
+        public IServiceLocator Boot(BootOptions options)
         {
             var serviceLocator = new SimpleInjectorServiceLocator();
             serviceLocator.RegisterServices();

@@ -1,9 +1,9 @@
 ﻿using System;
-//using Apollo.CommandSystem;
-//using Apollo.Data;
-//using Apollo.Runtime;
-//using Apollo.Server;
-//using Apollo.Services;
+using Apollo.CommandSystem;
+using Apollo.Data;
+using Apollo.Runtime;
+using Apollo.Server;
+using Apollo.Services;
 using Apollo.Utilities;
 using SimpleInjector;
 
@@ -15,14 +15,14 @@ namespace Apollo.ServiceLocator
 
         public SimpleInjectorServiceLocator()
         {
-            this.container = new Container();
+            container = new Container();
         }
 
         public void RegisterServices()
         {
             container.Register<IServiceLocator>(() => this, Lifestyle.Singleton);
             container.Register<IConfiguration, Configuration>(Lifestyle.Singleton);
-/*
+
             // command system bindings
             container.Register<ICommandHydrator, CommandHydrator>(Lifestyle.Singleton);
             container.Register<ICommandLocator, CommandLocator>(Lifestyle.Singleton);
@@ -30,7 +30,7 @@ namespace Apollo.ServiceLocator
 
             // data bindings
             container.Register<IBookmarksDataService, BookmarksDataService>();
-            container.Register<IDbConnectionFactory, ConnectionFactory>();
+            container.Register<IConnectionFactory, ConnectionFactory>();
             container.Register<IJournalDataService, JournalDataService>();
             container.Register<ILoginSessionDataService, LoginSessionDataService>();
             container.Register<IMetricsDataService, MetricsDataService>();
@@ -42,7 +42,7 @@ namespace Apollo.ServiceLocator
             container.Register<IRuntimeContext, RuntimeContext>(Lifestyle.Singleton);
 
             // server bindings
-            container.Register<IHttpServer, HttpServer>();
+            container.Register<IHttpRequestProcessor, HttpRequestProcessor>();
             container.Register<IJsonRpcCommandTranslator, JsonRpcCommandTranslator>();
             container.Register<IJsonRpcHttpConverter, JsonRpcHttpConverter>();
             container.Register<IJsonRpcRequestParser, JsonRpcRequestParser>();
@@ -58,22 +58,21 @@ namespace Apollo.ServiceLocator
             container.Register<IEnvironmentReader, EnvironmentReader>(Lifestyle.Singleton);
             container.Register<IJsonSerializer, ApolloJsonSerializer>(Lifestyle.Singleton);
             container.Register<IPasswordHasher, PasswordHasher>(Lifestyle.Singleton);
-*/
         }
 
         public TService Get<TService>() where TService : class
         {
-            return this.container.GetInstance<TService>();
+            return container.GetInstance<TService>();
         }
 
         public object Get(Type type)
         {
-            return this.container.GetInstance(type);
+            return container.GetInstance(type);
         }
 
         public void Test()
         {
-            this.container.Verify(VerificationOption.VerifyAndDiagnose);
+            container.Verify(VerificationOption.VerifyAndDiagnose);
         }
     }
 }
