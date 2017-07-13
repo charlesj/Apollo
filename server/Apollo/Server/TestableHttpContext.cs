@@ -44,7 +44,8 @@ namespace Apollo.Server
 
         public virtual void AddHeader(string headerName, string value)
         {
-            context.Response.Headers.Add(headerName, value);
+            Logger.Trace($"Adding header {headerName} with value {value}");
+            context.Response.Headers.Add(headerName, new[] { value });
         }
 
         public virtual void CloseResponse()

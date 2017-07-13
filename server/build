@@ -2,5 +2,5 @@
 
 pushd Apollo
 dotnet restore
-dotnet run
+dotnet build
 popd

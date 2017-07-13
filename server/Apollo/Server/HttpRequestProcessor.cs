@@ -16,6 +16,7 @@ namespace Apollo.Server
         {
             try
             {
+                Logger.Trace("Receiving Request");
                 context.AddHeader("Access-Control-Allow-Origin", "*");
                 context.AddHeader("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
                 context.AddHeader("Access-Control-Allow-Methods", "POST");

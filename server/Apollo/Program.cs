@@ -9,6 +9,7 @@ namespace Apollo
         static void Main(string[] args)
         {
             Logger.Enabled = true;
+            Logger.TraceEnabled = true;
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
@@ -31,8 +32,10 @@ namespace Apollo
 
             app.Run(async ctx =>
             {
+                Logger.Trace("Beginning Request Process");
                 var context = new TestableHttpContext(ctx);
                 await httpRequestProcessor.Process(context);
+                Logger.Trace("Request Complete");
             });
 
             Logger.Info("Boot Complete!");
