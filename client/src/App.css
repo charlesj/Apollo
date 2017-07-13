@@ -105,8 +105,12 @@ nav a:hover {
   margin-top: inherit;
   margin-bottom: inherit;
   font-family: inherit;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
+}
+.textButton:hover {
+  background-color:#ddd;;
+
 }
 footer{
   width:100%;
@@ -115,6 +119,9 @@ footer{
   font-size: 12px;
   color: white;
   text-align: right;
+}
+textarea {
+  width: 100%;
 }
 .chartContainer{
   display:inline-table;
@@ -143,7 +150,38 @@ footer{
 }
 .todoPanel{
   width: 300px;
+  float: left;
+  margin: 5px;
 }
 .todoItemCompleted{
   text-decoration: line-through;
+}
+
+.queuePanel{
+  width: 600px;
+  float: left;
+  margin: 5px;
+}
+.queueItem{
+  margin-top: 10px;
+  padding: 3px;
+}
+.queueHeader {
+  margin: 0px;
+  padding: 5px;
+}
+
+.queueHeader .queueAdded{
+  margin-right: 10px;
+  margin-left: 5px;
+  float: right;
+}
+.queueDescription {
+  margin: 5px;
+  padding: 5px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.queueAddItem input {
+  margin-bottom: 10px;
 }

@@ -77,7 +77,7 @@ class Todo extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (
       <div className="pt-card todoPanel">
         <h2>To Do</h2>
           {this.state.items.map((item, index) => {
@@ -96,7 +96,7 @@ class Todo extends React.Component {
           <input type="text" value={this.state.newItem} onKeyPress={this.handleNewItemKeyPress} onChange={this.handleNewItemChange} />
           <button className="textButton green" onClick={this.toggleShowCompleted}>Toggle Completed</button>
         </div>
-    </div>);
+    );
   }
 }
 
