@@ -1,6 +1,8 @@
-﻿using Apollo.Server;
+﻿using System;
+using Apollo.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Apollo
 {
@@ -11,7 +13,7 @@ namespace Apollo
             Logger.Enabled = true;
             Logger.TraceEnabled = true;
             var host = new WebHostBuilder()
-                .UseKestrel()
+                .UseKestrel(opt => opt.AddServerHeader = false)
                 .UseStartup<Startup>()
                 .UseUrls("http://localhost:8042/")
                 .Build();
@@ -30,6 +32,19 @@ namespace Apollo
             var locator = kernel.Boot(BootOptions.Defaults);
             var httpRequestProcessor = locator.Get<IHttpRequestProcessor>();
 
+            var configuration = locator.Get<Configuration>();
+            if (!configuration.IsValid())
+            {
+                Logger.Error("Invalid Configuration");
+                Environment.Exit(1);
+            }
+
+            app.UseCors(builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                );
+
             app.Run(async ctx =>
             {
                 Logger.Trace("Beginning Request Process");
@@ -39,6 +54,11 @@ namespace Apollo
             });
 
             Logger.Info("Boot Complete!");
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCors();
         }
     }
 }

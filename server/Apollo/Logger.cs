@@ -40,8 +40,11 @@ namespace Apollo
 
         public static void WriteObject(object obj)
         {
-            if(obj != null)
-                console.Write(JsonConvert.SerializeObject(obj, Formatting.Indented));
+            if (obj != null)
+            {
+                var serializer = new ApolloJsonSerializer();
+                console.Write(serializer.Serialize(obj, true));
+            }
         }
 
     }

@@ -12,9 +12,15 @@ namespace Apollo.Utilities
     {
         public string Serialize(object obj, bool indent = false)
         {
+            var serializerSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            };
+
             if (indent)
-                return JsonConvert.SerializeObject(obj, Formatting.Indented);
-            return JsonConvert.SerializeObject(obj);
+                return JsonConvert.SerializeObject(obj, Formatting.Indented, serializerSettings);
+            return JsonConvert.SerializeObject(obj,serializerSettings);
         }
 
         public TObject Deserialize<TObject>(string json)

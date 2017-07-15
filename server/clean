@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -rf Apollo/bin
+rm -rf Apollo/obj
+rm -rf Apollo.Tests/bin
+rm -rf Apollo.Tests/obj

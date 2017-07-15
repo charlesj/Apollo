@@ -9,38 +9,6 @@ namespace Apollo.Tests.Server
     public class HttpRequestProcessorTests : BaseUnitTest<HttpRequestProcessor>
     {
         [Fact]
-        public async void AlwaysAddsAccessControlAllowOriginHeader()
-        {
-            var context = Mock<ITestableHttpContext>();
-
-            await ClassUnderTest.Process(context.Object);
-
-            context.Verify(c => c.AddHeader("Access-Control-Allow-Origin", "*"), Times.Once());
-        }
-
-        [Fact]
-        public async void AlwaysAddsAllowHeadersHeader()
-        {
-            var context = Mock<ITestableHttpContext>();
-
-            await ClassUnderTest.Process(context.Object);
-            context.Verify(c =>
-                c.AddHeader("Access-Control-Allow-Headers",
-                    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"),
-                Times.Once());
-        }
-
-        [Fact]
-        public async void AlwaysAddsAllowHeadersMethods()
-        {
-            var context = Mock<ITestableHttpContext>();
-
-            await ClassUnderTest.Process(context.Object);
-
-            context.Verify(c => c.AddHeader("Access-Control-Allow-Methods", "POST"), Times.Once());
-        }
-
-        [Fact]
         public async void ImmediatelyClosesResponseOnHEADorOPTIONS()
         {
             var context = Mock<ITestableHttpContext>();

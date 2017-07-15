@@ -17,15 +17,27 @@ namespace Apollo.CommandSystem
         {
             var stopWatch = Stopwatch.StartNew();
 
+            Logger.Trace("Hydrating command");
             hydrator.Hydrate(ref command, parameters);
-
+            Logger.Trace("Hydrated command", command);
+            Logger.Trace("Validating command");
             var result = await ValidateCommand(command);
+            Logger.Trace("Validated command", result);
 
-            if(result == null)
+            if (result == null)
+            {
+                Logger.Trace("Authorizing command");
                 result = await AuthorizeCommand(command);
+                Logger.Trace("Authorized command", result);
+            }
+            Logger.Trace("Result", result);
 
-            if(result == null)
+            if (result == null)
+            {
+                Logger.Trace("Executing Command");
                 result = await ExecuteCommand(command);
+                Logger.Trace("Executed Command", result);
+            }
 
             result.Elapsed = stopWatch.ElapsedMilliseconds;
             return result;
@@ -56,19 +68,21 @@ namespace Apollo.CommandSystem
             {
                 if (!await command.Authorize())
                 {
+                    Logger.Trace("Unauthorized Command");
                     result.ErrorMessage = "Unauthorized Command";
                     result.ResultStatus = CommandResultType.Unauthorized;
                     result.Result = command;
                     return result;
                 }
-
+                Logger.Trace("Command Authorized");
                 return null;
             }
             catch (Exception exception)
             {
+                Logger.Error($"Command Authorization Exception {exception.Message}");
                 result.ErrorMessage = exception.Message;
                 result.ResultStatus = CommandResultType.Unauthorized;
-                result.Result = new {command, exception};
+                result.Result = new {};
             }
 
             return result;
