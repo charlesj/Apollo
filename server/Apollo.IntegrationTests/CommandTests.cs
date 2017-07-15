@@ -11,7 +11,7 @@ namespace Apollo.IntegrationTests
     {
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
-        private string loginToken = "cb84ccc9ac5d49798c9621fe4e0876fe";
+        private string loginToken = "189f15a4231e47a3b027b4a09b4fe6ca";
 
         [Fact]
         public void EnsureLoginTokenSet()
@@ -21,13 +21,13 @@ namespace Apollo.IntegrationTests
 
         [Theory]
         [MemberData(nameof(Commands))]
-        public void TestCommand(string commandName, object parameters, bool expectSuccess)
+        public async void TestCommand(string commandName, object parameters, bool expectSuccess)
         {
             var httpWebRequest = (HttpWebRequest) WebRequest.Create(ApolloEndPoint);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
             {
                 var paramsJobject = JObject.FromObject(parameters);
                 paramsJobject["token"] = loginToken;
@@ -40,13 +40,12 @@ namespace Apollo.IntegrationTests
                 var json = payload.ToString();
                 streamWriter.Write(json);
                 streamWriter.Flush();
-                streamWriter.Close();
             }
 
             HttpWebResponse httpResponse;
             try
             {
-                httpResponse = httpWebRequest.GetResponse() as HttpWebResponse;
+                httpResponse = await httpWebRequest.GetResponseAsync() as HttpWebResponse;
                 Assert.NotNull(httpResponse);
                 Assert.True(expectSuccess);
             }
