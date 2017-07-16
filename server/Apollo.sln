@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.Tests", "Apollo.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.IntegrationTests", "Apollo.IntegrationTests\Apollo.IntegrationTests.csproj", "{90529D38-7429-4FB2-90D7-B66073948C08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.CLI", "Apollo.CLI\Apollo.CLI.csproj", "{EF9FF2D6-17DD-43E5-94AC-834705956299}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{90529D38-7429-4FB2-90D7-B66073948C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90529D38-7429-4FB2-90D7-B66073948C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90529D38-7429-4FB2-90D7-B66073948C08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF9FF2D6-17DD-43E5-94AC-834705956299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9FF2D6-17DD-43E5-94AC-834705956299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9FF2D6-17DD-43E5-94AC-834705956299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9FF2D6-17DD-43E5-94AC-834705956299}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
