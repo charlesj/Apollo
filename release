@@ -45,7 +45,7 @@ sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" server/Apollo/Versi
 # clean first
 
 pushd server
-sh cleanpsd
+sh clean
 pushd Apollo
 dotnet restore
 dotnet publish -c Release -o ../../"$PUBLISH_DIR"/server
