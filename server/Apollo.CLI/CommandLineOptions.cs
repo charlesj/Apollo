@@ -19,7 +19,7 @@ namespace Apollo.CLI
             var configurationReader = new ConfigurationReader();
             var config = configurationReader.GetConfiguration();
             options.Endpoint = config.Endpoint;
-            options.LoginToken = config.Endpoint;
+            options.LoginToken = config.LoginToken;
 
             var app = new CommandLineApplication
             {

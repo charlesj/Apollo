@@ -25,6 +25,8 @@ namespace Apollo.CLI.Commands
         {
             app.Command("test", c => TestCommand.Configure(c, options));
             app.Command("serverInfo", c => ApplicationInfoCommand.Configure(c, options));
+            app.Command("login", c => LoginCommand.Configure(c, options));
+            app.Command("changePassword", c => ChangePasswordCommand.Configure(c, options));
             app.Command("displayConfig", c => DisplayConfigurationCommand.Configure(c, options));
             app.Command("changeEndpoint", c => ChangeEndpointCommand.Configure(c, options));
 
