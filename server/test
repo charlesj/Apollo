@@ -1,5 +1,6 @@
 #!/bin/bash
 
 pushd Apollo.Tests
+dotnet restore
 dotnet test
 popd

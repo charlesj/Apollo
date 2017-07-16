@@ -36,20 +36,21 @@ fi
 
 # Set Server Version Information
 # Set Version Information
-cp server/Apollo/Version_Template.cs server/Apollo/Version.cs
+cp server/Apollo/Version.tmpl server/Apollo/Version.cs
 sed -i "s/%%version%%/$APOLLO_VERSION/g" server/Apollo/Version.cs
 sed -i "s/%%commitHash%%/$(git rev-parse HEAD)/g" server/Apollo/Version.cs
 sed -i "s/%%compiledOn%%/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/g" server/Apollo/Version.cs
 
 # build server
 # clean first
-rm -rf ./server/Apollo/bin/Release
 
 pushd server
-./build deploy
+sh cleanpsd
+pushd Apollo
+dotnet restore
+dotnet publish -c Release -o ../../"$PUBLISH_DIR"/server
 popd
-
-mv ./server/Apollo/bin/Release "$PUBLISH_DIR"/server
+popd
 
 # build client
 pushd client
