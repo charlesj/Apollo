@@ -1,0 +1,5 @@
+#!/bin/bash
+
+APOLLO_CONSOLE_MODE="prod"
+export APOLLO_CONSOLE_MODE
+dotnet "/opt/apollocli/Apollo.CLI.dll" "$@"
