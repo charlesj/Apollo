@@ -5,7 +5,7 @@ import Queue from './Queue';
 
 class Organize extends React.Component {
   render(){
-    return (<div><Todo /><Queue /></div>)
+    return (<div className='organizeContainer'><Todo /><Queue /></div>)
   }
 }
 

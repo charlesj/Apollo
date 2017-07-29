@@ -148,10 +148,13 @@ textarea {
 .bookmarksDisplayHeader button{
   margin-left: 10px;
 }
+.organizeContainer{
+    display: table;
+}
 .todoPanel{
   width: 300px;
-  float: left;
   margin: 5px;
+  display: table-cell;
 }
 .todoItemCompleted{
   text-decoration: line-through;
@@ -159,7 +162,6 @@ textarea {
 
 .queuePanel{
   width: 600px;
-  float: left;
   margin: 5px;
 }
 .queueItem{
