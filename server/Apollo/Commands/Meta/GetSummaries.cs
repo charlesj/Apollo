@@ -42,7 +42,7 @@ namespace Apollo.Commands.Meta
 
             values.Add("total bookmarks", async () => (await bookmarksDataService.GetTotal()).ToString());
             values.Add("new bookmarks", async () => (await bookmarksDataService.GetRecentCount()).ToString());
-            values.Add("weight lost", async () => (await personalHealthService.CalculateRecentlyLostWeight()).ToString(CultureInfo.InvariantCulture));
+            values.Add("weight change", async () => (await personalHealthService.CalculateRecentlyLostWeight()).ToString(CultureInfo.InvariantCulture));
             values.Add("total log entries", async () => (await journalDataService.GetAllJournalEntries()).Count.ToString() );
             values.Add("new log entries", async () => (await journalDataService.GetRecentEntryCount()).ToString() );
             values.Add("to do items", async () => (await todoItemDataService.GetIncompleteItems()).Count.ToString());
