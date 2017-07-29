@@ -13,6 +13,7 @@ export APOLLO_DATABASEUSERNAME
 export APOLLO_DATABASEPASSWORD
 
 pushd Apollo
+dotnet clean
 dotnet restore
 dotnet run
 popd

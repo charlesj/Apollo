@@ -9,6 +9,7 @@ namespace Apollo.IntegrationTests
 {
     public class CommandTests
     {
+        private static int RequestCounter = 0;
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
         private string loginToken = "189f15a4231e47a3b027b4a09b4fe6ca";
@@ -33,7 +34,7 @@ namespace Apollo.IntegrationTests
                 paramsJobject["token"] = loginToken;
 
                 var payload = new JObject();
-                payload["id"] = "1";
+                payload["id"] = (++RequestCounter).ToString();
                 payload["method"] = commandName;
                 payload["params"] = paramsJobject;
 
@@ -90,6 +91,17 @@ namespace Apollo.IntegrationTests
             data.Add("getTodoItems", new object(), true);
             data.Add("updateTodoItem", new { item = new {id = 1, title = "Test Item 2"}}, true);
             data.Add("updateTodoItem", new { item = new {id = 1, title = "Test Item 2", completed_at=DateTime.Now}}, true);
+            data.Add("addTodoQueueItem", new { item = new {title = "Test Item 2"}}, true);
+            data.Add("addTodoQueueItem", new { item = new {title = "Test Item 3", link="http://example.com", description="whatever"}}, true);
+            data.Add("getTodoQueueItems", new { }, true);
+            data.Add("updateTodoQueueItem", new { item = new
+            {
+                id=1,
+                title = "Test Item 3",
+                link="http://example.com",
+                description="whatever",
+                completed_at = DateTime.Now
+            }}, true);
             return data;
         }
     }
