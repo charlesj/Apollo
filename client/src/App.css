@@ -123,8 +123,11 @@ footer{
 textarea {
   width: 100%;
 }
+.chartsContainer{
+    display: flex;
+    flex-flow: row wrap;
+}
 .chartContainer{
-  display:inline-table;
   margin: 5px;
 }
 

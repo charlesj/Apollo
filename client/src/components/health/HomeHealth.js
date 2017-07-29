@@ -119,7 +119,7 @@ class HomeHealth extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (<div className="chartsContainer">
         <div className='chartContainer pt-card'>
         <LineChart width={600} height={300} data={this.state.weightData}>
             <XAxis dataKey="key"/>
