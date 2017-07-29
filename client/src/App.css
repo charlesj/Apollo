@@ -211,3 +211,7 @@ textarea {
     padding: 4px;
     text-align: center;
 }
+.updateAvailable{
+    animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+}
+@keyframes blinker { to { opacity: 0; } }
