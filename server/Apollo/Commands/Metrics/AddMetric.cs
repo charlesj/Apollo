@@ -9,11 +9,11 @@ namespace Apollo.Commands.Metrics
     public class AddMetric : AuthenticatedCommand
     {
         private readonly IMetricsDataService metricsDataService;
-        
+
         public string Category { get; set; }
         public string Name { get; set; }
-        public float Value { get; set; }
-        
+        public decimal Value { get; set; }
+
         public AddMetric(
             ILoginService loginService,
             IMetricsDataService metricsDataService
@@ -21,7 +21,7 @@ namespace Apollo.Commands.Metrics
         {
             Logger.Trace("Created AddMetric Instance");
             this.metricsDataService = metricsDataService;
-            this.Value = default(float);
+            this.Value = default(decimal);
         }
 
         public override async Task<CommandResult> Execute()

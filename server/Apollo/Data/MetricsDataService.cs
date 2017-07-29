@@ -7,7 +7,7 @@ namespace Apollo.Data
 {
     public interface IMetricsDataService
     {
-        Task InsertMetric(string category, string name, float value);
+        Task InsertMetric(string category, string name, decimal value);
         Task<IReadOnlyList<Metric>> GetMetrics(string category, string name);
     }
 
@@ -28,7 +28,7 @@ namespace Apollo.Data
         {
         }
 
-        public async Task InsertMetric(string category, string name, float value)
+        public async Task InsertMetric(string category, string name, decimal value)
         {
             await Execute(InsertSql, new {category, name, value});
         }
@@ -52,7 +52,7 @@ namespace Apollo.Data
         public int id { get; set; }
         public string category { get; set; }
         public string name { get; set; }
-        public float value { get; set; }
+        public decimal value { get; set; }
         public DateTime created_at { get; set; }
     }
 }
