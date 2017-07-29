@@ -102,6 +102,7 @@ namespace Apollo.IntegrationTests
                 description="whatever",
                 completed_at = DateTime.Now
             }}, true);
+            data.Add("getSummaries", new { }, true);
             return data;
         }
     }

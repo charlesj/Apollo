@@ -10,6 +10,7 @@ namespace Apollo.Data
         Task Insert(Bookmark bookmark);
         Task<int> GetTotal();
         Task<IReadOnlyList<Bookmark>> Get(int start, string link);
+        Task<int> GetRecentCount();
     }
 
     public class BookmarksDataService : BaseDataService, IBookmarksDataService
@@ -20,6 +21,8 @@ namespace Apollo.Data
                                         "@created_at, @modified_at)";
 
         public const string CountSql = "select count(*) from bookmarks;";
+
+        public const string RecentCountSql = "select count(*) from bookmarks where created_at>@created_at;";
 
         public const string BasicGetSql = "select * from bookmarks order by id desc limit 100 offset @start";
 
@@ -49,6 +52,11 @@ namespace Apollo.Data
             if(!string.IsNullOrWhiteSpace(link))
                 return await QueryAsync<Bookmark>(UrlGetSql, new {link});
             return await QueryAsync<Bookmark>(BasicGetSql, new {start});
+        }
+
+        public async Task<int> GetRecentCount()
+        {
+            return (await QueryAsync<CountResult>(RecentCountSql, new { created_at = DateTime.Now.AddDays(-7)})).Single().count;
         }
     }
 
