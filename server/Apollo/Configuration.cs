@@ -11,6 +11,7 @@ namespace Apollo
         string DatabaseServer();
         string DatabaseUsername();
         string DatabasePassword();
+        int JobProcessThrottleMs();
 
         bool IsValid();
     }
@@ -42,6 +43,11 @@ namespace Apollo
         public string DatabasePassword()
         {
             return reader.Read(Constants.EnvironmentalVars.DatabasePassword);
+        }
+
+        public int JobProcessThrottleMs()
+        {
+            return 60000;
         }
 
         public bool IsValid()

@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Apollo.IntegrationTests
 {
@@ -103,6 +104,18 @@ namespace Apollo.IntegrationTests
                 completed_at = DateTime.Now
             }}, true);
             data.Add("getSummaries", new { }, true);
+
+            data.Add("getActiveJobs", new {}, true);
+            data.Add("addJob",
+                new
+                {
+                    commandName = "testCommand",
+                    parameters = new object(),
+                    schedule = new {hourly = true, start = DateTime.Now}
+                }, true);
+            data.Add("cancelJob", new {jobId = 1}, true);
+            data.Add("getAvailableCommands", new {}, true);
+            data.Add("getJobHistory", new {jobId = 1}, true);
             return data;
         }
     }

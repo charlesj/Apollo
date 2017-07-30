@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Apollo.Services
 {
     public interface ISchedulerService
     {
-        IEnumerable<DateTimeOffset> GenerateEvents(Schedule schedule, DateTimeOffset start);
+        IEnumerable<DateTimeOffset> GenerateEvents(Schedule schedule);
+        DateTimeOffset? GetNextEvent(Schedule schedule, DateTime? jobLastExecutedAt);
     }
 
-    public class SchedulerService
+    public class SchedulerService : ISchedulerService
     {
         public IEnumerable<DateTimeOffset> GenerateEvents(Schedule schedule)
         {
@@ -17,9 +19,21 @@ namespace Apollo.Services
             var interval = GenerateInterval(schedule);
             while (schedule.repeat_count == null || generatedCount++ < schedule.repeat_count.Value)
             {
-                curr = curr.Add(interval);
                 yield return curr;
+                curr = curr.Add(interval);
             }
+        }
+
+        public DateTimeOffset? GetNextEvent(Schedule schedule, DateTime? jobLastExecutedAt)
+        {
+            if (jobLastExecutedAt == null)
+                return GenerateEvents(schedule).Take(1).Single();
+
+            var lastExecuted = new DateTimeOffset(jobLastExecutedAt.Value, TimeSpan.Zero);
+            var nextEvent = GenerateEvents(schedule).Where(dt => dt > lastExecuted).Take(1).SingleOrDefault();
+            if (nextEvent == default(DateTimeOffset))
+                return null;
+            return nextEvent;
         }
 
         public TimeSpan GenerateInterval(Schedule schedule)

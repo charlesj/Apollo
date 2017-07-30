@@ -1,6 +1,7 @@
 ﻿using System;
 using Apollo.CommandSystem;
 using Apollo.Data;
+using Apollo.Jobs;
 using Apollo.Runtime;
 using Apollo.Server;
 using Apollo.Services;
@@ -32,11 +33,15 @@ namespace Apollo.ServiceLocator
             container.Register<IBookmarksDataService, BookmarksDataService>();
             container.Register<IConnectionFactory, ConnectionFactory>();
             container.Register<IJournalDataService, JournalDataService>();
+            container.Register<IJobsDataService, JobsDataService>();
             container.Register<ILoginSessionDataService, LoginSessionDataService>();
             container.Register<IMetricsDataService, MetricsDataService>();
             container.Register<ITodoItemDataService, TodoItemDataService>();
             container.Register<ITodoQueueItemDataService, TodoQueueItemDataService>();
             container.Register<IUserSettignsDataService, UserSettingsDataService>();
+
+            // jobs bindings
+            container.Register<IJobProcessor, JobProcessor>();
 
             // runtime bindings
             container.Register<IRuntime, SimpleLoopRuntime>();
@@ -52,6 +57,7 @@ namespace Apollo.ServiceLocator
             // service bindings
             container.Register<IPersonalHealthService, PersonalHealthService>();
             container.Register<ILoginService, LoginService>();
+            container.Register<ISchedulerService, SchedulerService>();
             container.Register<IUserSettingsService, UserSettingsService>();
 
             // utility binding

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Apollo.Jobs;
 using Apollo.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -54,6 +57,12 @@ namespace Apollo
             });
 
             Logger.Info("Boot Complete!");
+
+            Logger.Info("Starting jobs");
+            var jobProcessor = locator.Get<IJobProcessor>();
+            var token = new CancellationToken();
+            Task.Run(() => jobProcessor.Process(token), token);
+            Logger.Info("Jobs Started");
         }
 
         public void ConfigureServices(IServiceCollection services)

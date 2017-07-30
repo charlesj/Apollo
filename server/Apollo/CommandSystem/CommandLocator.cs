@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Apollo.ServiceLocator;
@@ -30,6 +31,15 @@ namespace Apollo.CommandSystem
             var commandInstance = (ICommand)serviceLocator.Get(commandType);
             Logger.Trace("Built instance of command");
             return commandInstance;
+        }
+
+        public IReadOnlyList<Type> GetAllAvailableCommands()
+        {
+            var type = typeof(ICommand);
+            var types = type.GetTypeInfo().Assembly.GetTypes()
+                .Where(p => type.IsAssignableFrom(p));
+
+            return types.ToList();
         }
     }
 }

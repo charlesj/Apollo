@@ -6,12 +6,11 @@ APOLLO_CONSOLE_EXE=$PROJECT_DIR/Apollo.CLI/bin/Debug/netcoreapp1.1/Apollo.CLI.dl
 
 APOLLO_CONSOLE_MODE="dev"
 
-if [ ! -f "$APOLLO_CONSOLE_EXE" ]; then
-    pushd Apollo.CLI
-    dotnet restore
-    dotnet build
-    popd
-fi
+pushd Apollo.CLI
+dotnet clean
+dotnet restore
+dotnet build
+popd
 
 export APOLLO_CONSOLE_MODE
 dotnet "$APOLLO_CONSOLE_EXE" "$@"

@@ -12,11 +12,21 @@ namespace Apollo.Tests.Services
         public class GenerateNextEvents : ScheduleServiceTests
         {
             [Fact]
+            public void StartsWithStartTime()
+            {
+                var schedule = new Schedule {hourly = true, start = beginTime};
+                var next = ClassUnderTest.GenerateEvents(schedule).Take(1);
+                Assert.Collection(next,
+                    e => Assert.Equal(beginTime, e));
+            }
+
+            [Fact]
             public void CanGenerateHourlySchedule()
             {
                 var schedule = new Schedule {hourly = true, start = beginTime};
-                var next = ClassUnderTest.GenerateEvents(schedule).Take(3);
+                var next = ClassUnderTest.GenerateEvents(schedule).Take(4);
                 Assert.Collection(next,
+                    e => Assert.Equal(beginTime, e),
                     e => Assert.Equal(beginTime.AddHours(1), e),
                     e => Assert.Equal(beginTime.AddHours(2), e),
                     e => Assert.Equal(beginTime.AddHours(3), e));
@@ -28,7 +38,7 @@ namespace Apollo.Tests.Services
                 var schedule = new Schedule {daily = true, repeat_count = 1, start = beginTime};
                 var next = ClassUnderTest.GenerateEvents(schedule).Take(3);
                 Assert.Collection(next,
-                    e => Assert.Equal(beginTime.AddDays(1), e));
+                    e => Assert.Equal(beginTime, e));
             }
         }
 

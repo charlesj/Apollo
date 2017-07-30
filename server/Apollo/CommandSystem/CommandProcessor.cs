@@ -55,7 +55,7 @@ namespace Apollo.CommandSystem
                 return new CommandResult
                 {
                     ErrorMessage = exception.Message,
-                    Result = new {command, exception},
+                    Result = command,
                     ResultStatus = CommandResultType.Error
                 };
             }
@@ -107,7 +107,7 @@ namespace Apollo.CommandSystem
             {
                 result.ErrorMessage = exception.Message;
                 result.ResultStatus = CommandResultType.Invalid;
-                result.Result = new {command, exception};
+                result.Result = command;
             }
 
             return result;
