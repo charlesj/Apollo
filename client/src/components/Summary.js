@@ -3,20 +3,20 @@ import React from 'react';
 import apolloServer from '../services/apollo-server';
 
 class Summary extends React.Component {
-  constructor(props){
-      super(props);
-      this.state = {
-          summaries:[]
-      };
+  constructor(props) {
+    super(props);
+    this.state = {
+      summaries: []
+    };
 
-      this.loadSummaries = this.loadSummaries.bind(this);
+    this.loadSummaries = this.loadSummaries.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.loadSummaries();
   }
 
-  loadSummaries(){
+  loadSummaries() {
     apolloServer.invoke("getSummaries", {}).then(data => {
       this.setState({
         summaries: data
@@ -28,11 +28,11 @@ class Summary extends React.Component {
     return (
       <div className="summaryContainer">
           { this.state.summaries.map((summary) => {
-              return (<div key={summary.id} className="summary">
+        return (<div key={summary.id} className="summary">
                   <div className="summaryAmount">{summary.amount}</div>
                   <div className="summaryLabel">{summary.label}</div>
               </div>)
-          })}
+      })}
       </div>
     )
   }

@@ -21,14 +21,18 @@ class ServerInfo extends React.Component {
   getServerInfo() {
     apollo.invoke('applicationInfo', {})
       .then((data) => {
-        if(this.state.serverInfo != null && !this.state.updateAvailable && data.version !== this.state.serverInfo.version){
-          this.setState({updateAvailable: true});
+        if (this.state.serverInfo != null && !this.state.updateAvailable && data.version !== this.state.serverInfo.version) {
+          this.setState({
+            updateAvailable: true
+          });
         }
-        if(this.state.updateAvailable){
-            return;
+        if (this.state.updateAvailable) {
+          return;
         }
 
-        this.setState({ serverInfo: data });
+        this.setState({
+          serverInfo: data
+        });
       })
       .catch(() => {
         console.log("error communicating to server");

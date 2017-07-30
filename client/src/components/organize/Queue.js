@@ -7,7 +7,7 @@ import QueueService from './QueueService';
 
 
 class Queue extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -23,11 +23,11 @@ class Queue extends React.Component {
     this.markItemCompleted = this.markItemCompleted.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.loadItems();
   }
 
-  loadItems(){
+  loadItems() {
     QueueService.getQueueItems().then((data) => {
       this.setState({
         queueItems: data
@@ -35,30 +35,32 @@ class Queue extends React.Component {
     });
   }
 
-  markItemCompleted(item){
+  markItemCompleted(item) {
     item.completed_at = new Date();
     QueueService.updateItem(item).then(() => {
       this.loadItems();
     });
   }
 
-  addItem(){
+  addItem() {
     var newItem = {
       title: this.state.newItemTitle,
       link: this.state.newItemLink,
       description: this.state.newItemDescription,
       completed_at: null
     }
-    QueueService.addItem(newItem).then(() =>{
+    QueueService.addItem(newItem).then(() => {
       this.loadItems();
     });
   }
 
   handleChange(e) {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
-  render(){
+  render() {
     return (<div className="queuePanel">
       <h2>Queue</h2>
       <div className="pt-card queueAddItem">
@@ -70,9 +72,9 @@ class Queue extends React.Component {
 
 
       {this.state.queueItems.map((item) => {
-          var createTime = moment(item.created_at);
-          return (
-            <div className="queueList" key={item.id}>
+        var createTime = moment(item.created_at);
+        return (
+          <div className="queueList" key={item.id}>
               <div className="pt-card queueItem">
                 <div className="queueHeader">
                   <span className="queueAdded">{createTime.calendar()}</span><a href={item.link}>{item.title}</a>

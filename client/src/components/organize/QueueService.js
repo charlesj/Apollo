@@ -1,15 +1,19 @@
 import apolloServer from '../../services/apollo-server';
 
-function getQueueItems(){
+function getQueueItems() {
   return apolloServer.invoke("getTodoQueueItems", {});
 }
 
-function updateItem(item){
-  return apolloServer.invoke("updateTodoQueueItem", {item});
+function updateItem(item) {
+  return apolloServer.invoke("updateTodoQueueItem", {
+    item
+  });
 }
 
-function addItem(item){
-  return apolloServer.invoke("addTodoQueueItem", {item});
+function addItem(item) {
+  return apolloServer.invoke("addTodoQueueItem", {
+    item
+  });
 }
 
 module.exports = {

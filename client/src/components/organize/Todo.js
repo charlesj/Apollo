@@ -51,8 +51,8 @@ class Todo extends React.Component {
       !item.completed_at;
   }
 
-  getItemClasses(item){
-    if(item.completed_at){
+  getItemClasses(item) {
+    if (item.completed_at) {
       return "todoItemCompleted";
     }
 
@@ -82,23 +82,23 @@ class Todo extends React.Component {
         <h2>To Do</h2>
         <div className='pt-card'>
           {this.state.items.map((item, index) => {
-            var checked = item.completed_at !== undefined && item.completed_at !== null;
-            return (
-              <div key={item.id}>
+        var checked = item.completed_at !== undefined && item.completed_at !== null;
+        return (
+          <div key={item.id}>
                 { (this.shouldDisplay(item)) &&
-                  (<div>
+          (<div>
                     <input type="checkbox" checked={checked} onChange={this.toggleCompleted.bind(null, item)} value={checked} />
                     <span className={this.getItemClasses(item)}>{item.title}</span>
                   </div>)
-                }
-              </div>)
-            })
           }
+              </div>)
+      })
+      }
           <input type="text" value={this.state.newItem} onKeyPress={this.handleNewItemKeyPress} onChange={this.handleNewItemChange} />
           <button className="textButton green" onClick={this.toggleShowCompleted}>Toggle Completed</button>
           </div>
         </div>
-    );
+      );
   }
 }
 

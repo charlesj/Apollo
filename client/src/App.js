@@ -15,6 +15,7 @@ import Home from './components/Home';
 import Settings from './components/settings/Settings';
 import Health from './components/health/Health';
 import Bookmarks from './components/bookmarks/Bookmarks';
+import Jobs from './components/jobs/Jobs';
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
@@ -50,11 +51,11 @@ class App extends Component {
     apolloServer.invoke('revokeLoginSession', {
       tokenToRevoke: token
     }).then(data => {
-        loginService.logout();
-        this.setState({
-          loggedIn: false
-        });
+      loginService.logout();
+      this.setState({
+        loggedIn: false
       });
+    });
   }
 
   render() {
@@ -74,10 +75,11 @@ class App extends Component {
               <Route exact path='/journal' component={Journal} />
               <Route exact path='/health' component={Health} />
               <Route exact path='/bookmarks' component={Bookmarks} />
+              <Route exact path='/jobs' component={Jobs} />
               <Route exact path='/settings' component={Settings} />
               <Route render={function() {
-                return (<p>Not Found</p>)
-              }} />
+        return (<p>Not Found</p>)
+      }} />
             </Switch>
             </div>
           </div>

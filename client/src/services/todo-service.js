@@ -11,11 +11,15 @@ function toggleCompleted(item) {
     item.completed_at = new Date();
   }
 
-  return apolloServer.invoke("updateTodoItem", {item});
+  return apolloServer.invoke("updateTodoItem", {
+    item
+  });
 }
 
 function addItem(title) {
-  return apolloServer.invoke("addTodoItem", {title});
+  return apolloServer.invoke("addTodoItem", {
+    title
+  });
 }
 
 module.exports = {

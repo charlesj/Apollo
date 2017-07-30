@@ -57,16 +57,16 @@ class Bookmarks extends React.Component {
     return (<div>
         <Tabs2 id="BookmarkTabs" >
           <Tab2 id="bookmarks" title="Bookmarks" panel={
-            <BookmarksDisplay
-              bookmarks={this.state.bookmarks}
-              totalBookmarks={this.state.totalBookmarks}
-              loadBookmarks={this.loadBookmarks}
-              refreshBookmarks={this.refreshBookmarks}
-            />}
-          />
+      <BookmarksDisplay
+      bookmarks={this.state.bookmarks}
+      totalBookmarks={this.state.totalBookmarks}
+      loadBookmarks={this.loadBookmarks}
+      refreshBookmarks={this.refreshBookmarks}
+      />}
+      />
           <Tab2 id="add_bookmark" title="Add bookmark" panel={
-            <AddBookmark addBookmark={this.addBookmark} />
-          } />
+      <AddBookmark addBookmark={this.addBookmark} />
+      } />
           <Tabs2.Expander />
         </Tabs2></div>);
   }

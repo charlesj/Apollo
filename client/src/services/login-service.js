@@ -19,4 +19,9 @@ function logout() {
 }
 
 
-module.exports = { isLoggedIn, getToken, storeToken, logout };
+module.exports = {
+  isLoggedIn,
+  getToken,
+  storeToken,
+  logout
+};
