@@ -17,11 +17,13 @@ namespace Apollo.Data
         Task CancelJob(int jobId);
         Task<IReadOnlyList<JobExecution>> GetJobHistory(int jobId);
         Task MarkJobExpired(int jobId);
+        Task<IReadOnlyList<Job>> GetExpiredJobs();
     }
 
     public class JobsDataService : BaseDataService, IJobsDataService
     {
         public const string GetActiveJobsSql = "select * from jobs where expired_at is null";
+        public const string GetExpiredJobsSql = "select * from jobs where expired_at is not null";
 
         public const string BeingExecutionSql = "insert into job_history(job_id, execution_id, executed_at) " +
                                                 "values (@jobId, @executionId, current_timestamp)";
@@ -103,6 +105,11 @@ namespace Apollo.Data
         public async Task MarkJobExpired(int jobId)
         {
             await Execute(ExpireJobSql, new {jobId});
+        }
+
+        public async Task<IReadOnlyList<Job>> GetExpiredJobs()
+        {
+            return await QueryAsync<Job>(GetExpiredJobsSql);
         }
     }
 

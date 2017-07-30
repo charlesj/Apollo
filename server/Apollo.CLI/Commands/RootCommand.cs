@@ -30,7 +30,7 @@ namespace Apollo.CLI.Commands
             app.Command("changePassword", c => ChangePasswordCommand.Configure(c, options));
             app.Command("displayConfig", c => DisplayConfigurationCommand.Configure(c, options));
             app.Command("changeEndpoint", c => ChangeEndpointCommand.Configure(c, options));
-            app.Command("getActiveJobs", c => GetActiveJobsCommand.Configure(c, options));
+            app.Command("getActiveJobs", c => GetJobsCommand.Configure(c, options));
             app.Command("getJobHistory", c => GetJobHistoryCommand.Configure(c, options));
             app.Command("addJob", c => AddJobCommand.Configure(c, options));
 

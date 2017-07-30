@@ -3,15 +3,15 @@ using Microsoft.Extensions.CommandLineUtils;
 
 namespace Apollo.CLI.Commands.Jobs
 {
-    public class GetActiveJobsCommand : BaseCommand
+    public class GetJobsCommand : BaseCommand
     {
-        public GetActiveJobsCommand(CommandLineOptions options) : base(options)
+        public GetJobsCommand(CommandLineOptions options) : base(options)
         {
         }
 
         public override async Task Execute()
         {
-            await Execute("getActiveJobs", new { });
+            await Execute("getJobs", new { });
         }
 
         public static void Configure(CommandLineApplication command, CommandLineOptions options)
@@ -21,7 +21,7 @@ namespace Apollo.CLI.Commands.Jobs
 
             command.OnExecute(() =>
             {
-                options.Command = new GetActiveJobsCommand(options);
+                options.Command = new GetJobsCommand(options);
 
                 return 0;
             });

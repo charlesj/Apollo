@@ -105,7 +105,8 @@ namespace Apollo.IntegrationTests
             }}, true);
             data.Add("getSummaries", new { }, true);
 
-            data.Add("getActiveJobs", new {}, true);
+            data.Add("getJobs", new {}, true);
+            data.Add("getJobs", new {expired=true}, true);
             data.Add("addJob",
                 new
                 {
