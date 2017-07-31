@@ -25,7 +25,7 @@ namespace Apollo.Services
             var weightMetrics = (await metricsDataService.GetMetrics(null, "weight")).Reverse().Take(7).ToList();
             if (!weightMetrics.Any())
                 return 0;
-            return weightMetrics.First().value - weightMetrics.Last().value;
+            return Math.Round(weightMetrics.First().value - weightMetrics.Last().value, 1);
         }
 
         public async Task<decimal> TotalWeightChange()
@@ -33,7 +33,7 @@ namespace Apollo.Services
             var weightMetrics = await metricsDataService.GetMetrics(null, "weight");
             var maxWeight = weightMetrics.Max(m => m.value);
             var minWeight = weightMetrics.Min(m => m.value);
-            return minWeight - maxWeight;
+            return Math.Round(minWeight - maxWeight, 1);
         }
     }
 }
