@@ -22,8 +22,8 @@ namespace Apollo.Data
 
     public class JobsDataService : BaseDataService, IJobsDataService
     {
-        public const string GetActiveJobsSql = "select * from jobs where expired_at is null";
-        public const string GetExpiredJobsSql = "select * from jobs where expired_at is not null";
+        public const string GetActiveJobsSql = "select * from jobs where expired_at is null order by last_executed_at desc";
+        public const string GetExpiredJobsSql = "select * from jobs where expired_at is not null order by last_executed_at desc";
 
         public const string BeingExecutionSql = "insert into job_history(job_id, execution_id, executed_at) " +
                                                 "values (@jobId, @executionId, current_timestamp)";
@@ -41,7 +41,7 @@ namespace Apollo.Data
 
         public const string CancelJobSql = "update jobs set expired_at=current_timestamp where id=@jobId";
 
-        public const string GetJobHistorySql = "select * from job_history where job_id=@jobId";
+        public const string GetJobHistorySql = "select * from job_history where job_id=@jobId order by id desc limit 100";
 
         public const string ExpireJobSql = "update jobs set expired_at=current_timestamp where id=@jobId";
 
