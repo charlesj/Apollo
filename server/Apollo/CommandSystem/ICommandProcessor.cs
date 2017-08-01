@@ -4,6 +4,6 @@ namespace Apollo.CommandSystem
 {
     public interface ICommandProcessor
     {
-        Task<CommandResult> Process(ICommand command, object parameters);
+        Task<CommandResult> Process(ICommand command, object parameters, bool overrideAuth = false);
     }
 }

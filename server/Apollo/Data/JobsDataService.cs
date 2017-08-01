@@ -122,6 +122,11 @@ namespace Apollo.Data
         public DateTime created_at { get; set; }
         public DateTime? last_executed_at { get; set; }
         public DateTime? expired_at { get; set; }
+
+        public string GetJobIdentifier()
+        {
+            return $"{command_name}:{id}";
+        }
     }
 
     public class JobExecution

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Apollo.CommandSystem;
 using Microsoft.Extensions.CommandLineUtils;
 using Newtonsoft.Json;
 
@@ -12,6 +13,7 @@ namespace Apollo.CLI.Commands.Jobs
         public int RepeatCount { get; set; }
         public bool Hourly { get; set; }
         public bool Daily { get; set; }
+        public bool Minutely { get; set; }
 
         public AddJobCommand(CommandLineOptions options) : base(options)
         {
@@ -28,6 +30,10 @@ namespace Apollo.CLI.Commands.Jobs
             if (!string.IsNullOrWhiteSpace(ParametersJson))
                 jobParameters = JsonConvert.DeserializeObject<object>(ParametersJson);
 
+            int? repeatCount = null;
+            if (RepeatCount > 0)
+                repeatCount = RepeatCount;
+
             var parameters = new
             {
                 CommandName,
@@ -35,13 +41,21 @@ namespace Apollo.CLI.Commands.Jobs
                 Schedule = new
                 {
                     start = DateTime.Now,
-                    repeat_count = RepeatCount,
-                    hourly = Hourly
+                    repeat_count = repeatCount,
+                    hourly = Hourly,
+                    minutely=Minutely
                 }
             };
 
-            await Execute("addJob", parameters);
-            Console.Green("Job Scheduled");
+            var result = await Execute("addJob", parameters);
+            if (result.ResultStatus == CommandResultType.Success)
+            {
+                Console.Green("Job Scheduled");
+            }
+            else
+            {
+                Console.Red("Error scheduling job");
+            }
         }
 
         public static void Configure(CommandLineApplication command, CommandLineOptions options)
@@ -52,6 +66,7 @@ namespace Apollo.CLI.Commands.Jobs
             var parameters = command.Option("-p", "Parameters json", CommandOptionType.SingleValue);
             var repeatOption = command.Option("-r", "The number of times to repeat", CommandOptionType.SingleValue);
             var hourlyOption = command.Option("--hourly", "whether to repeat hourly", CommandOptionType.NoValue);
+            var minutelyOption = command.Option("--minutely", "whether to repeat minutely", CommandOptionType.NoValue);
 
             command.OnExecute(() =>
             {
@@ -60,7 +75,8 @@ namespace Apollo.CLI.Commands.Jobs
                     CommandName = commandName.Value(),
                     ParametersJson = parameters.Value(),
                     RepeatCount = Convert.ToInt32(repeatOption.Value()),
-                    Hourly = hourlyOption.HasValue()
+                    Hourly = hourlyOption.HasValue(),
+                    Minutely = minutelyOption.HasValue()
                 };
 
                 return 0;

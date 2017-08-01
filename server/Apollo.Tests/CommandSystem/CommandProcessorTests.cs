@@ -80,6 +80,18 @@ namespace Apollo.Tests.CommandSystem
         }
 
         [Fact]
+        public async void DoesNotCallAuthorizeIfOverridden()
+        {
+            var commandMock = Mock<ICommand>();
+            commandMock.Setup(c => c.IsValid()).Returns(Task.FromResult(true));
+            var commandResult = new CommandResult();
+            commandMock.Setup(c => c.Execute()).Returns(Task.FromResult(commandResult));
+            await ClassUnderTest.Process(command, parameters, true);
+
+            commandMock.Verify(c => c.Authorize(), Times.Never);
+        }
+
+        [Fact]
         public async void ReturnsErrorResult_WhenExecuteThrowsException()
         {
             var commandMock = Mock<ICommand>();

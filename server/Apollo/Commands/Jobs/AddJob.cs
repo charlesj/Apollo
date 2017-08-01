@@ -29,6 +29,7 @@ namespace Apollo.Commands.Jobs
 
         public override async Task<CommandResult> Execute()
         {
+            //Logger.Info("Scheduling new Job", new {CommandName, Parameters, Schedule});
             await jobsDataService.AddJob(CommandName, Parameters, Schedule);
             return CommandResult.SuccessfulResult;
         }
@@ -39,7 +40,9 @@ namespace Apollo.Commands.Jobs
             var validCommandName = command != null;
             commandHydrator.Hydrate(ref command, Parameters);
             var validParameters = await command.IsValid();
-            var validSchedule = Schedule != null && Schedule.start != default(DateTime);
+            var validSchedule = Schedule != null &&
+                                Schedule.start != default(DateTime) &&
+                                (Schedule.repeat_count == null || Schedule.repeat_count > 0);
 
             return validCommandName && validParameters && validSchedule;
         }

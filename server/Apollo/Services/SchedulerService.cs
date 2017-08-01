@@ -17,6 +17,7 @@ namespace Apollo.Services
             var curr = schedule.start;
             var generatedCount = 0;
             var interval = GenerateInterval(schedule);
+
             while (schedule.repeat_count == null || generatedCount++ < schedule.repeat_count.Value)
             {
                 yield return curr;
@@ -48,13 +49,19 @@ namespace Apollo.Services
                 return TimeSpan.FromHours(1);
             }
 
-            return TimeSpan.MaxValue;
+            if (schedule.minutely)
+            {
+                return TimeSpan.FromMinutes(1);
+            }
+
+            throw new Exception("Invalid Job Schedule");
         }
     }
 
     public class Schedule
     {
         public DateTime start;
+        public bool minutely { get; set; }
         public bool hourly { get; set; }
         public bool daily { get; set; }
         public int? repeat_count { get; set; }

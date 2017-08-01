@@ -46,15 +46,28 @@ namespace Apollo.Jobs
         public async Task Process(CancellationToken token)
         {
             var stopwatch = new Stopwatch();
+            Job currentJob = null;
             while (!token.IsCancellationRequested)
             {
+                stopwatch.Start();
                 try
                 {
-                    stopwatch.Start();
                     var activeJobs = await jobsDataService.GetActiveJobs();
                     foreach (var job in activeJobs)
                     {
+                        currentJob = job;
+                        if (CircuitBreakers.IsBroken(job.GetJobIdentifier()))
+                        {
+                            Logger.Error($"{job.GetJobIdentifier()} has a broken circuit breaker");
+                            continue;
+                        }
+
                         var schedule = jsonSerializer.Deserialize<Schedule>(job.schedule);
+                        if (schedule.start >= DateTime.UtcNow)
+                        {
+                            continue;
+                        }
+
                         var nextEvent = schedulerService.GetNextEvent(schedule, job.last_executed_at);
                         Logger.Trace($"Next execution for {job.command_name}:{job.id} at {nextEvent}");
                         if (nextEvent != null && nextEvent < clock.UtcNow)
@@ -69,17 +82,22 @@ namespace Apollo.Jobs
                             await jobsDataService.MarkJobExpired(job.id);
                         }
                     }
-
-                    while (stopwatch.ElapsedMilliseconds < configuration.JobProcessThrottleMs())
-                    {
-                        await Task.Delay(100, token);
-                    }
-                    stopwatch.Reset();
                 }
                 catch(Exception e)
                 {
-                    Logger.Error($"Error Job Processing: {e.Message}");
+                    Logger.Error($"Error Job {currentJob?.command_name}:{currentJob?.id} Processing: {e.Message}");
+
+                    if (currentJob != null)
+                    {
+                        CircuitBreakers.RecordBreak(currentJob.GetJobIdentifier());
+                    }
                 }
+
+                while (stopwatch.ElapsedMilliseconds < configuration.JobProcessThrottleMs())
+                {
+                    await Task.Delay(100, token);
+                }
+                stopwatch.Reset();
             }
         }
 
@@ -97,7 +115,7 @@ namespace Apollo.Jobs
                 await jobsDataService.BeginExecution(job, executionId);
                 var command = commandLocator.Locate(job.command_name);
                 var parameters = jsonSerializer.Deserialize<object>(job.parameters);
-                var result = await commandProcessor.Process(command, parameters);
+                var result = await commandProcessor.Process(command, parameters, true);
                 await jobsDataService.EndExecution(job, executionId, result);
                 Logger.Info($"Completed job {job.command_name}:{executionId}", new {job, result});
             }

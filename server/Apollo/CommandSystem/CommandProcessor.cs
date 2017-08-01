@@ -13,7 +13,7 @@ namespace Apollo.CommandSystem
             this.hydrator = hydrator;
         }
 
-        public async Task<CommandResult> Process(ICommand command, object parameters)
+        public async Task<CommandResult> Process(ICommand command, object parameters, bool overrideAuth = false)
         {
             var stopWatch = Stopwatch.StartNew();
 
@@ -24,7 +24,7 @@ namespace Apollo.CommandSystem
             var result = await ValidateCommand(command);
             Logger.Trace("Validated command", result);
 
-            if (result == null)
+            if (result == null && !overrideAuth)
             {
                 Logger.Trace("Authorizing command");
                 result = await AuthorizeCommand(command);

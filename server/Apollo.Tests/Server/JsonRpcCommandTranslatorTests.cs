@@ -35,11 +35,11 @@ namespace Apollo.Tests.Server
         {
             request.Params = new object();
             var processor = Mock<ICommandProcessor>();
-            processor.Setup(r => r.Process(command, request.Params))
+            processor.Setup(r => r.Process(command, request.Params, false))
                 .Returns(Task.FromResult(goodResult));
             await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
 
-            processor.Verify(p => p.Process(command, request.Params), Times.Once());
+            processor.Verify(p => p.Process(command, request.Params, false), Times.Once());
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Apollo.Tests.Server
         {
             request.Params = new object();
             var processor = Mock<ICommandProcessor>();
-            processor.Setup(r => r.Process(command, request.Params))
+            processor.Setup(r => r.Process(command, request.Params, false))
                 .Returns(Task.FromResult(goodResult));
             var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
 
@@ -59,7 +59,7 @@ namespace Apollo.Tests.Server
         {
             request.Params = new object();
             var processor = Mock<ICommandProcessor>();
-            processor.Setup(r => r.Process(command, request.Params))
+            processor.Setup(r => r.Process(command, request.Params, false))
                 .Returns(Task.FromResult(goodResult));
 
             var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
@@ -72,7 +72,7 @@ namespace Apollo.Tests.Server
         {
             request.Params = new object();
             var processor = Mock<ICommandProcessor>();
-            processor.Setup(r => r.Process(command, request.Params))
+            processor.Setup(r => r.Process(command, request.Params, false))
                 .Returns(Task.FromResult(goodResult));
 
             var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
@@ -95,7 +95,7 @@ namespace Apollo.Tests.Server
             };
 
             var processor = Mock<ICommandProcessor>();
-            processor.Setup(r => r.Process(command, request.Params))
+            processor.Setup(r => r.Process(command, request.Params, false))
                 .Returns(Task.FromResult(badResult));
 
             var result = await ClassUnderTest.ExecuteCommand(command, request, clientInfo);
@@ -107,7 +107,7 @@ namespace Apollo.Tests.Server
         {
             request.Params = new object();
             var processor = Mock<ICommandProcessor>();
-            processor.Setup(r => r.Process(command, request.Params))
+            processor.Setup(r => r.Process(command, request.Params, false))
                 .Returns(Task.FromResult(goodResult));
 
             clientInfo.Agent = "YES I AM AGENT";
@@ -119,7 +119,7 @@ namespace Apollo.Tests.Server
                 p.Process(
                     It.Is<SimpleCommand>(c => c.ClientIpAddress == clientInfo.IpAddress
                                          && c.ClientUserAgent == clientInfo.Agent),
-                request.Params), Times.Once());
+                request.Params, false), Times.Once());
         }
 
         private class SimpleCommand : CommandBase
