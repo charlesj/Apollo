@@ -26,7 +26,7 @@ class ExecutionDisplay extends React.Component {
     return (
       <div className='executionHistory'>
             {executedAt.calendar()} |
-            {this.state.exe.result_type === "0" ? "Success" : "Error" }
+            { this.state.exe.result_type }
              | 
             <Button className='pt-button pt-small pt-intent-success' onClick={this.handleClick}>
                 {this.state.showResult ? "Hide" : "Show"} Result
