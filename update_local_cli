@@ -16,7 +16,7 @@ dotnet restore
 dotnet publish -c Release -o ../../clipublish
 popd
 
-rm -rf "$TARGET_DIR"
-cp -r "$PUBLISH_DIR" "$TARGET_DIR"
-cp prod_cli "$TARGET_SCRIPT"
-chmod +x "$TARGET_SCRIPT"
+sudo rm -rf "$TARGET_DIR"
+sudo cp -r "$PUBLISH_DIR" "$TARGET_DIR"
+sudo cp prod_cli "$TARGET_SCRIPT"
+sudo chmod +x "$TARGET_SCRIPT"
