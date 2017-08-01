@@ -1,6 +1,7 @@
 ﻿using System;
 using Apollo.CommandSystem;
 using Apollo.Data;
+using Apollo.External.Coinbase;
 using Apollo.Jobs;
 using Apollo.Runtime;
 using Apollo.Server;
@@ -32,6 +33,7 @@ namespace Apollo.ServiceLocator
             // data bindings
             container.Register<IBookmarksDataService, BookmarksDataService>();
             container.Register<IConnectionFactory, ConnectionFactory>();
+            container.Register<IFinancialAssetPriceDataService, FinancialAssetPriceDataService>();
             container.Register<IJournalDataService, JournalDataService>();
             container.Register<IJobsDataService, JobsDataService>();
             container.Register<ILoginSessionDataService, LoginSessionDataService>();
@@ -39,6 +41,9 @@ namespace Apollo.ServiceLocator
             container.Register<ITodoItemDataService, TodoItemDataService>();
             container.Register<ITodoQueueItemDataService, TodoQueueItemDataService>();
             container.Register<IUserSettignsDataService, UserSettingsDataService>();
+
+            // external service bindings
+            container.Register<IGdaxClient, GdaxClient>();
 
             // jobs bindings
             container.Register<IJobProcessor, JobProcessor>();
@@ -66,6 +71,7 @@ namespace Apollo.ServiceLocator
             container.Register<IEnvironmentReader, EnvironmentReader>(Lifestyle.Singleton);
             container.Register<IJsonSerializer, ApolloJsonSerializer>(Lifestyle.Singleton);
             container.Register<IPasswordHasher, PasswordHasher>(Lifestyle.Singleton);
+            container.Register<IRestClient, RestClient>();
         }
 
         public TService Get<TService>() where TService : class

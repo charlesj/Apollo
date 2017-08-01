@@ -74,14 +74,14 @@ namespace Apollo.Data
         {
             var serializedResult = serializer.Serialize(result);
             await Execute(EndExecutionSql,
-                new {results = serializedResult, resultType = result.ResultStatus, executionId});
+                new {results = serializedResult, resultType = Enum.GetName(typeof(CommandResultType), result.ResultStatus), executionId});
         }
 
         public async Task ExecutionError(Job job, string executionId, Exception exception)
         {
             var serializedResult = serializer.Serialize(new {message = exception.Message});
             await Execute(EndExecutionSql,
-                new {results = serializedResult, resultType = CommandResultType.Error, executionId});
+                new {results = serializedResult, resultType = "Error", executionId});
         }
 
         public async Task AddJob(string commandName, object parameters, Schedule schedule)

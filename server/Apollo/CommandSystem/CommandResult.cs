@@ -1,4 +1,7 @@
-﻿namespace Apollo.CommandSystem
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace Apollo.CommandSystem
 {
     public class CommandResult
     {
@@ -7,6 +10,7 @@
             Elapsed = -1;
         }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public CommandResultType ResultStatus { get; set; }
         public object Result { get; set; }
         public long Elapsed { get; set; }

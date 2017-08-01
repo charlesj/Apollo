@@ -107,16 +107,17 @@ namespace Apollo.IntegrationTests
 
             data.Add("getJobs", new {}, true);
             data.Add("getJobs", new {expired=true}, true);
-            data.Add("addJob",
-                new
-                {
-                    commandName = "testCommand",
-                    parameters = new object(),
-                    schedule = new {hourly = true, start = DateTime.Now}
-                }, true);
+//            data.Add("addJob",
+//                new
+//                {
+//                    commandName = "testCommand",
+//                    parameters = new object(),
+//                    schedule = new {hourly = true, start = DateTime.Now}
+//                }, true);
             data.Add("cancelJob", new {jobId = 1}, true);
             data.Add("getAvailableCommands", new {}, true);
             data.Add("getJobHistory", new {jobId = 1}, true);
+            data.Add("UpdateCryptoPrices", new {}, true);
             return data;
         }
     }
