@@ -29,9 +29,9 @@ namespace Apollo.Data
             return Execute(RecordPriceSql, new {symbol, price, source, validAt});
         }
 
-        public async Task<FinancialAssetPrice> GetMostRecentPrice(string identifier)
+        public async Task<FinancialAssetPrice> GetMostRecentPrice(string symbol)
         {
-            var results = await QueryAsync<FinancialAssetPrice>(GetMostRecentPriceSql, new {identifier});
+            var results = await QueryAsync<FinancialAssetPrice>(GetMostRecentPriceSql, new {symbol});
             return results.SingleOrDefault();
         }
     }

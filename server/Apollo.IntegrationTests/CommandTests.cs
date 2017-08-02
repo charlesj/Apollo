@@ -118,6 +118,7 @@ namespace Apollo.IntegrationTests
             data.Add("getAvailableCommands", new {}, true);
             data.Add("getJobHistory", new {jobId = 1}, true);
             data.Add("UpdateCryptoPrices", new {}, true);
+            data.Add("GetAssetPrice", new {symbol="btc"}, true);
             return data;
         }
     }
