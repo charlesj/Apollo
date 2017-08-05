@@ -24,7 +24,9 @@ class Jobs extends React.Component {
   }
 
   loadActiveJobs(expired) {
-    apolloServer.invoke("getJobs", {expired})
+    apolloServer.invoke("getJobs", {
+      expired
+    })
       .then((jobs) => {
         this.setState({
           jobs
@@ -32,7 +34,7 @@ class Jobs extends React.Component {
       });
   }
 
-  cancelJob(job){
+  cancelJob(job) {
     alert('Not Implemented');
   }
 
@@ -49,9 +51,11 @@ class Jobs extends React.Component {
     });
   }
 
-  jobFilterChange(e){
-      this.setState({jobFilter: e.target.value});
-      this.loadActiveJobs(e.target.value === "expired");
+  jobFilterChange(e) {
+    this.setState({
+      jobFilter: e.target.value
+    });
+    this.loadActiveJobs(e.target.value === "expired");
   }
 
   render() {
