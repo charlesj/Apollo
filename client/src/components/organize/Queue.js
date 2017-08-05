@@ -1,10 +1,10 @@
 import moment from 'moment';
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import { InputGroup } from "@blueprintjs/core";
-
+import { InputGroup, Intent } from "@blueprintjs/core";
 import QueueService from './QueueService';
-
+import { Notifier } from '../../services/notifier';
+import MarkdownRenderer from 'react-markdown-renderer';
 
 class Queue extends React.Component {
   constructor(props) {
@@ -38,6 +38,10 @@ class Queue extends React.Component {
   markItemCompleted(item) {
     item.completed_at = new Date();
     QueueService.updateItem(item).then(() => {
+      Notifier.show({
+        intent: Intent.SUCCESS,
+        message: "Marked item as complete",
+      });
       this.loadItems();
     });
   }
@@ -50,6 +54,15 @@ class Queue extends React.Component {
       completed_at: null
     }
     QueueService.addItem(newItem).then(() => {
+      Notifier.show({
+        intent: Intent.SUCCESS,
+        message: "Successfully added queue item",
+      });
+      this.setState({
+        newItemTitle: '',
+        newItemLink: '',
+        newItemDescription: ''
+      })
       this.loadItems();
     });
   }
@@ -80,7 +93,7 @@ class Queue extends React.Component {
                   <span className="queueAdded">{createTime.calendar()}</span><a href={item.link}>{item.title}</a>
                 </div>
                 <div className="queueDescription">
-                  {item.description}
+                  <MarkdownRenderer markdown={item.description} />
                 </div>
                 <div className="queueFooter">
                   <button className="textButton green" onClick={this.markItemCompleted.bind(null, item)}><FontAwesome name='check-circle-o'  /> Mark Completed</button>
