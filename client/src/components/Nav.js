@@ -11,6 +11,7 @@ function Nav() {
       <NavLink activeClassName='active' to='/health'><FontAwesome name='medkit' /> Health</NavLink>
       <NavLink activeClassName='active' to='/financial'><FontAwesome name='dollar' /> Financial</NavLink>
       <NavLink activeClassName='active' to='/bookmarks'><FontAwesome name='bookmark-o' /> Bookmarks</NavLink>
+      <NavLink activeClassName='active' to='/feeds'><FontAwesome name='rss-square' /> Feeds</NavLink>
       <NavLink activeClassName='active' to='/jobs'><FontAwesome name='gavel' /> Jobs</NavLink>
       <NavLink activeClassName='active' to='/settings'><FontAwesome name='gear' /> Settings</NavLink>
     </nav>

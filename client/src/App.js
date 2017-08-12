@@ -17,6 +17,7 @@ import Health from './components/health/Health';
 import Bookmarks from './components/bookmarks/Bookmarks';
 import Jobs from './components/jobs/Jobs';
 import Finance from './components/financial/Finance';
+import Feeds from './components/feeds/Feeds';
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
@@ -77,6 +78,7 @@ class App extends Component {
               <Route exact path='/health' component={Health} />
               <Route exact path='/financial' component={Finance} />
               <Route exact path='/bookmarks' component={Bookmarks} />
+              <Route exact path='/feeds' component={Feeds} />
               <Route exact path='/jobs' component={Jobs} />
               <Route exact path='/settings' component={Settings} />
               <Route render={function() {

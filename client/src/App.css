@@ -221,3 +221,34 @@ textarea {
 .executionHistory{
     margin-top: 10px;
 }
+.feeds{
+  display: flex;
+  flex-flow: row;
+}
+.feedsContainer{
+  width: 200px;
+  border: 1px solid black;
+}
+.activeFeed {
+  background-color: #aaa;
+}
+.feedItemsContainer{
+  width: 80%;
+  margin-left: 5px;
+}
+.previousFeedItem,.nextFeedItem{
+  border: 1px solid #aaa;
+  color: #aaa;
+  padding: 3px;
+}
+.currentFeedItem{
+  border: 1px solid black;
+  background-color: #fff;
+}
+.feedItemTitle{
+  padding: 3px;
+  border-bottom: 1px solid black;
+}
+.feedItemBody{
+  padding: 10px;
+}
