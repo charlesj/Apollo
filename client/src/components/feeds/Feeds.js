@@ -39,6 +39,7 @@ class Feeds extends React.Component {
     this.changeSelectedFeed = this.changeSelectedFeed.bind(this);
     this.moveNextItem = this.moveNextItem.bind(this);
     this.movePreviousItem = this.movePreviousItem.bind(this);
+    this.openItem = this.openItem.bind(this);
   }
 
   componentDidMount() {
@@ -143,6 +144,10 @@ class Feeds extends React.Component {
     })
   }
 
+  openItem(){
+    window.open(this.state.currentItem.url, '_blank');
+  }
+
   render() {
     return (<div className="feeds">
       <HotKey
@@ -152,6 +157,10 @@ class Feeds extends React.Component {
       <HotKey
       keys={['k']}
       onKeysCoincide={this.movePreviousItem}
+      />
+      <HotKey
+      keys={['o']}
+      onKeysCoincide={this.openItem}
       />
       <FeedDisplay
       feeds={this.state.feeds}

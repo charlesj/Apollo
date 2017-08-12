@@ -14,7 +14,7 @@ class FeedItems extends React.Component {
       })}
 
       <div className='currentFeedItem'>
-        <div className='feedItemTitle'>{this.props.currentItem.title} - {this.props.currentItem.feed_name}</div>
+        <div className='feedItemTitle'><a href={this.props.currentItem.url}>{this.props.currentItem.title}</a> - {this.props.currentItem.feed_name}</div>
         <div className='feedItemBody'>
           <div dangerouslySetInnerHTML={{__html: this.props.currentItem.body}} />
         </div>
