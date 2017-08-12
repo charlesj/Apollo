@@ -14,7 +14,7 @@ namespace Apollo
         static void Main(string[] args)
         {
             Logger.Enabled = true;
-            //Logger.TraceEnabled = true;
+            Logger.TraceEnabled = true;
             var host = new WebHostBuilder()
                 .UseKestrel(opt => opt.AddServerHeader = false)
                 .UseStartup<Startup>()

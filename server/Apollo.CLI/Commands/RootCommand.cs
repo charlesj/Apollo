@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Apollo.CLI.Commands.Feeds;
 using Apollo.CLI.Commands.Jobs;
 using Apollo.CLI.Commands.Local;
 using Apollo.CLI.Commands.Meta;
@@ -33,6 +34,8 @@ namespace Apollo.CLI.Commands
             app.Command("getActiveJobs", c => GetJobsCommand.Configure(c, options));
             app.Command("getJobHistory", c => GetJobHistoryCommand.Configure(c, options));
             app.Command("addJob", c => AddJobCommand.Configure(c, options));
+            app.Command("addFeed", c => AddFeedCommand.Configure(c, options));
+            app.Command("testFeed", c => TestFeedCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {

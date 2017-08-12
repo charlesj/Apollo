@@ -1,6 +1,7 @@
 ﻿using System;
 using Apollo.CommandSystem;
 using Apollo.Data;
+using Apollo.External;
 using Apollo.External.Coinbase;
 using Apollo.Jobs;
 using Apollo.Runtime;
@@ -33,6 +34,7 @@ namespace Apollo.ServiceLocator
             // data bindings
             container.Register<IBookmarksDataService, BookmarksDataService>();
             container.Register<IConnectionFactory, ConnectionFactory>();
+            container.Register<IFeedDataService, FeedDataService>();
             container.Register<IFinancialAssetPriceDataService, FinancialAssetPriceDataService>();
             container.Register<IJournalDataService, JournalDataService>();
             container.Register<IJobsDataService, JobsDataService>();
@@ -43,6 +45,7 @@ namespace Apollo.ServiceLocator
             container.Register<IUserSettignsDataService, UserSettingsDataService>();
 
             // external service bindings
+            container.Register<IExternalFeedService, ExternalFeedService>();
             container.Register<IGdaxClient, GdaxClient>();
 
             // jobs bindings
@@ -63,6 +66,7 @@ namespace Apollo.ServiceLocator
             container.Register<IPersonalHealthService, PersonalHealthService>();
             container.Register<ILoginService, LoginService>();
             container.Register<ISchedulerService, SchedulerService>();
+            container.Register<IUrlFetcher, UrlFetcher>();
             container.Register<IUserSettingsService, UserSettingsService>();
 
             // utility binding
