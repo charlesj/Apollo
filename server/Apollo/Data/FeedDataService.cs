@@ -81,6 +81,14 @@ namespace Apollo.Data
 
         public Task AddItem(int feedId, string title, string url, string body, DateTime publishDate)
         {
+            if (string.IsNullOrWhiteSpace(title))
+                title = "Untitled assumed by Apollo";
+            if (title.Length > 255)
+                title = title.Substring(0, 251) + "...";
+            if (string.IsNullOrWhiteSpace(body))
+                body = "<h3>No Content</h3>";
+            if (string.IsNullOrEmpty(url))
+                return Task.CompletedTask;
             return Execute(AddItemSql, new {feedId, title, url, body, publishDate});
         }
 
