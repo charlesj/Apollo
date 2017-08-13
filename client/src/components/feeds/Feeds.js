@@ -17,7 +17,7 @@ function FeedDisplay(props) {
     <div className={getFeedClasses(props.selectedId, -1)} onClick={props.changeFeed.bind(null, -1)}>All Items ({ props.feeds.reduce((p, n) => {
       return p + n.unread_count;
     }, 0)})</div>
-    { props.feeds.map(f => {
+    { props.feeds.filter(f => {return f.unread_count > 0}).map(f => {
       return (<div className={getFeedClasses(props.selectedId, f.id)} key={f.id} onClick={props.changeFeed.bind(null, f.id)}>{f.name} ({f.unread_count})</div>)
     })}
   </div>)
@@ -75,6 +75,19 @@ class Feeds extends React.Component {
   }
 
   moveNextItem() {
+    var currentItem = this.state.currentItem;
+    if (currentItem.read_at === null) {
+      FeedService.markItemAsRead(currentItem.id);
+      currentItem.read_at = new Date();
+      var feeds = this.state.feeds;
+      feeds.forEach(f => {
+        if(f.id === currentItem.feed_id){
+          f.unread_count--;
+        }
+      });
+      this.setState({feeds});
+    }
+
     if (this.state.nextItems.length === 0) {
       return;
     }
@@ -99,19 +112,6 @@ class Feeds extends React.Component {
             nextItems: newNextItems
           });
         });
-    }
-
-    var currentItem = this.state.currentItem;
-    if (currentItem.read_at === null) {
-      FeedService.markItemAsRead(currentItem.id);
-      currentItem.read_at = new Date();
-      var feeds = this.state.feeds;
-      feeds.forEach(f => {
-        if(f.id === currentItem.feed_id){
-          f.unread_count--;
-        }
-      });
-      this.setState({feeds});
     }
 
     var newPreviousItems = this.state.previousItems;

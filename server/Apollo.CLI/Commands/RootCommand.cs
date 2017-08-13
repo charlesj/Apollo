@@ -36,6 +36,7 @@ namespace Apollo.CLI.Commands
             app.Command("addJob", c => AddJobCommand.Configure(c, options));
             app.Command("addFeed", c => AddFeedCommand.Configure(c, options));
             app.Command("testFeed", c => TestFeedCommand.Configure(c, options));
+            app.Command("importFeeds", c => ImportFeedsCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {

@@ -40,12 +40,12 @@ namespace Apollo.Data
         public const string GetAllUnreadItemsSql = "select feed_items.*, feeds.name as feed_name from feed_items " +
                                                    "join feeds on feed_items.feed_id = feeds.id " +
                                                    "where read_at is null " +
-                                                   "order by published_at";
+                                                   "order by published_at limit 100";
 
         public const string GetFeedUnreadItemsSql = "select feed_items.*, feeds.name as feed_name from feed_items " +
                                                     "join feeds on feed_items.feed_id = feeds.id " +
                                                     "where read_at is null " +
-                                                    "and feed_id=@feedId order by published_at";
+                                                    "and feed_id=@feedId order by published_at limit 100";
 
         public const string MarkItemReadSql = "update feed_items set read_at=current_timestamp " +
                                               "where id=@feedItemId";
