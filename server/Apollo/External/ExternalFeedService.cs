@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Apollo.Data;
+using Apollo.External.SyndicationToolbox;
 using Apollo.Services;
 using Apollo.Utilities;
+using Feed = Apollo.Data.Feed;
 
 namespace Apollo.External
 {
@@ -33,15 +34,12 @@ namespace Apollo.External
         public async Task<FeedDetails> GetFeedDetails(string url)
         {
             var content = await urlFetcher.Get(url);
-            var feedType = DetectFeedType(content);
-            if (feedType == FeedType.Unknown)
+            var feedParser = FeedParser.Create(content);
+            var parsed = feedParser.Parse();
+            return new FeedDetails
             {
-                throw new FeedException("Cannot determine feedtype");
-            }
-
-            var reader = GetFeedReader(feedType);
-
-            return await reader.GetFeedDetails(content);
+                Name = parsed.Name
+            };
         }
 
         public async Task<IReadOnlyList<ExternalFeedItem>> GetItems(Feed feed)
@@ -49,14 +47,15 @@ namespace Apollo.External
             try
             {
                 var content = await urlFetcher.Get(feed.url);
-                var feedType = DetectFeedType(content);
-                if (feedType == FeedType.Unknown)
+                var feedParser = FeedParser.Create(content);
+                var parsed = feedParser.Parse();
+                return parsed.Articles.Select(a => new ExternalFeedItem
                 {
-                    throw new FeedException("Cannot determine feedtype");
-                }
-
-                var reader = GetFeedReader(feedType);
-                return await reader.GetItems(content);
+                    Title = a.Title,
+                    Content = a.Content,
+                    Link = a.WebUri,
+                    PublishDate = a.Published
+                }).ToList();
             }
             catch (Exception exception)
             {
@@ -64,41 +63,6 @@ namespace Apollo.External
                 return null;
             }
         }
-
-        private IFeedReader GetFeedReader(FeedType type)
-        {
-            switch (type)
-            {
-                case FeedType.Atom:
-                    return new AtomFeedReader();
-                case FeedType.RSS:
-                    return new RssFeedReader();
-                default:
-                    return null;
-            }
-        }
-
-        public FeedType DetectFeedType(string feed)
-        {
-            if(feed.Contains("<rss"))
-            {
-                return FeedType.RSS;
-            }
-
-            if (feed.Contains("<feed "))
-            {
-                return FeedType.Atom;
-            }
-
-            return FeedType.Unknown;
-        }
-    }
-
-    public enum FeedType
-    {
-        RSS,
-        Atom,
-        Unknown
     }
 
     public class FeedDetails
@@ -114,93 +78,6 @@ namespace Apollo.External
         public string Title { get; set; }
     }
 
-    public class AtomFeedReader : IFeedReader
-    {
-        public Task<FeedDetails> GetFeedDetails(string content)
-        {
-            var document = XDocument.Parse(content);
-            if (document.Root == null)
-            {
-                Logger.Error("Could not parse Atom Feed", new {content});
-                throw new FeedException("Could not parse atom feed");
-            }
-
-            var title = document.Root.Descendants().First(d => d.Name.LocalName == "title").Value;
-            return Task.FromResult(new FeedDetails {Name = title});
-        }
-
-        public Task<IReadOnlyList<ExternalFeedItem>> GetItems(string content)
-        {
-            Logger.Trace("Attempting to extract atom items", new {content});
-            var document = XDocument.Parse(content);
-            var items = document.Root.Elements().Where(i => i.Name.LocalName == "entry").Select(item => new ExternalFeedItem
-            {
-                Content = item.Elements().First(i => i.Name.LocalName == "content").Value,
-                Link = item.Elements().First(i => i.Name.LocalName == "link").Attribute("href")?.Value,
-                PublishDate = item.Elements().First(i => i.Name.LocalName == "published").Value.ToDateTime(),
-                Title = item.Elements().First(i => i.Name.LocalName == "title").Value
-            });
-
-            return Task.FromResult((IReadOnlyList<ExternalFeedItem>)items.ToList());
-        }
-    }
-
-    public class RssFeedReader : IFeedReader
-    {
-        public Task<FeedDetails> GetFeedDetails(string content)
-        {
-            var document = XDocument.Parse(content);
-            if (document.Root == null)
-            {
-                Logger.Error("Could not parse RSS Feed", new {content});
-                throw new FeedException("Could not parse RSS feed");
-            }
-
-            var title = document.Root.Descendants()
-                .First(d => d.Name.LocalName == "channel")
-                .Descendants()
-                .First(i => i.Name.LocalName == "title").Value;
-            return Task.FromResult(new FeedDetails {Name = title});
-        }
-
-        public Task<IReadOnlyList<ExternalFeedItem>> GetItems(string content)
-        {
-            Logger.Trace("Attempting to extract rss items", new {content});
-            var document = XDocument.Parse(content);
-
-            var items = document.Root.Descendants()
-                .First(i => i.Name.LocalName == "channel").Elements()
-                .Where(i => i.Name.LocalName == "item").Select(item =>
-            {
-                Logger.Trace($"Processing item", item);
-                try
-                {
-                    var description = item.Elements().FirstOrDefault(i => i.Name.LocalName == "description")?.Value;
-                    if (description == null)
-                    {
-                        // holy carp this is stupid.
-                        description = item.Elements().FirstOrDefault(i => i.Name.LocalName == "encoded")?.Value;
-                    }
-
-                    var extractedItem = new ExternalFeedItem
-                    {
-                        Content = description,
-                        Link = item.Elements().First(i => i.Name.LocalName == "link").Value,
-                        PublishDate = item.Elements().First(i => i.Name.LocalName == "pubDate").Value.ToDateTime(),
-                        Title = item.Elements().First(i => i.Name.LocalName == "title").Value
-                    };
-                    return extractedItem;
-                }
-                catch (Exception e)
-                {
-                    Logger.Error("Could not extract item", new{e.Message, item});
-                    return null;
-                }
-            });
-
-            return Task.FromResult((IReadOnlyList<ExternalFeedItem>)items.ToList());
-        }
-    }
 
     public class FeedException : Exception
     {
