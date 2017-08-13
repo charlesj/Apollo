@@ -12,6 +12,7 @@ namespace Apollo.Commands.Meta
     public class GetSummaries : AuthenticatedCommand
     {
         private readonly IBookmarksDataService bookmarksDataService;
+        private readonly IFeedDataService feedDataService;
         private readonly IJournalDataService journalDataService;
         private readonly IJobsDataService jobsDataService;
         private readonly ILoginSessionDataService loginSessionDataService;
@@ -21,6 +22,7 @@ namespace Apollo.Commands.Meta
 
         public GetSummaries(
             IBookmarksDataService bookmarksDataService,
+            IFeedDataService feedDataService,
             IJournalDataService journalDataService,
             IJobsDataService jobsDataService,
             ILoginSessionDataService loginSessionDataService,
@@ -30,6 +32,7 @@ namespace Apollo.Commands.Meta
             ITodoQueueItemDataService todoQueueItemDataService) : base(loginService)
         {
             this.bookmarksDataService = bookmarksDataService;
+            this.feedDataService = feedDataService;
             this.journalDataService = journalDataService;
             this.jobsDataService = jobsDataService;
             this.loginSessionDataService = loginSessionDataService;
@@ -42,15 +45,17 @@ namespace Apollo.Commands.Meta
         {
             var values = new Dictionary<string, Func<Task<string>>>();
             values.Add("login sessions", async () => (await loginSessionDataService.GetAllActiveSessions()).Count.ToString());
-            values.Add("total bookmarks", async () => (await bookmarksDataService.GetTotal()).ToString());
+            values.Add("bookmarks", async () => (await bookmarksDataService.GetTotal()).ToString());
             values.Add("new bookmarks", async () => (await bookmarksDataService.GetRecentCount()).ToString());
-            values.Add("weight change", async () => (await personalHealthService.CalculateRecentlyLostWeight()).ToString(CultureInfo.InvariantCulture));
-            values.Add("total weight change", async () => (await personalHealthService.TotalWeightChange()).ToString(CultureInfo.InvariantCulture));
-            values.Add("total log entries", async () => (await journalDataService.GetAllJournalEntries()).Count.ToString() );
+            values.Add("weight change (week)", async () => (await personalHealthService.CalculateRecentlyLostWeight()).ToString(CultureInfo.InvariantCulture));
+            values.Add("weight change", async () => (await personalHealthService.TotalWeightChange()).ToString(CultureInfo.InvariantCulture));
+            values.Add("log entries", async () => (await journalDataService.GetAllJournalEntries()).Count.ToString() );
             values.Add("new log entries", async () => (await journalDataService.GetRecentEntryCount()).ToString() );
             values.Add("to do items", async () => (await todoItemDataService.GetIncompleteItems()).Count.ToString());
             values.Add("do later items", async () => (await todoQueueItemDataService.GetIncompleteItems()).Count.ToString());
             values.Add("active jobs", async () => (await jobsDataService.GetActiveJobs()).Count.ToString());
+            values.Add("feeds", async () => (await feedDataService.GetFeeds()).Count.ToString());
+            values.Add("unread items", async () => (await feedDataService.GetFeeds()).Sum(i => i.unread_count).ToString());
 
             var counter = 0;
             var summaries = await Task.WhenAll(values.Select(async v => new {label = v.Key, amount = await v.Value(), id = ++counter}));
