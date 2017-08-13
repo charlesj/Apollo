@@ -75,6 +75,7 @@ class Feeds extends React.Component {
   }
 
   moveNextItem() {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     var currentItem = this.state.currentItem;
     if (currentItem.read_at === null) {
       FeedService.markItemAsRead(currentItem.id);
@@ -129,7 +130,7 @@ class Feeds extends React.Component {
   }
 
   movePreviousItem() {
-
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     if (this.state.previousItems.length === 0) {
       return;
     }
