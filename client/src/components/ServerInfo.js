@@ -11,7 +11,6 @@ class ServerInfo extends React.Component {
     }
 
     this.getServerInfo = this.getServerInfo.bind(this);
-    setInterval(this.getServerInfo, 900000); // every 15 minutes
   }
 
   componentDidMount() {
@@ -48,7 +47,10 @@ class ServerInfo extends React.Component {
     var shortHash = this.state.serverInfo.commitHash.slice(0, 6);
     var compiledOn = moment(this.state.serverInfo.compiledOn);
     return (
-      <span> { this.state.updateAvailable && (<i className="updateAvailable">Update Available!</i>)}  Apollo v{version} ({shortHash}) compiled on { compiledOn.format('YYYY-MM-DD HH:mm')} </span>
+      <div className='serverInfo'>
+        { this.state.updateAvailable && (<i className="updateAvailable">Update Available!</i>)} Apollo v{version} ({shortHash})
+         { compiledOn.calendar()}
+      </div>
     )
   }
 }

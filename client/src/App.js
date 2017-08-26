@@ -5,9 +5,7 @@ var Route = ReactRouter.Route;
 var Switch = ReactRouter.Switch;
 import loginService from './services/login-service';
 import apolloServer from './services/apollo-server';
-import FontAwesome from 'react-fontawesome';
 import Login from './components/Login';
-import ServerInfo from './components/ServerInfo';
 import Organize from './components/organize/Organize';
 import Journal from './components/journal/Journal';
 import Nav from './components/Nav';
@@ -69,7 +67,7 @@ class App extends Component {
       <div>
         <Router>
           <div className='mid'>
-            <Nav />
+            <Nav logout={this.logout} />
             <div  className='mainContainer'>
             <Switch>
               <Route exact path='/' component={Home} />
@@ -88,11 +86,6 @@ class App extends Component {
             </div>
           </div>
         </Router>
-
-        <footer className="footer">
-           <ServerInfo /> 
-           <a onClick={this.logout} className='pt-button pt-small'><FontAwesome name='sign-out' /> logout</a>
-        </footer>
       </div>
       );
   }

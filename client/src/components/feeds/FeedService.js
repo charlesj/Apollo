@@ -5,11 +5,15 @@ var getFeeds = () => {
 }
 
 var getItems = (feedId) => {
-  return apolloServer.invoke('getFeedItems', {feedId});
+  return apolloServer.invoke('getFeedItems', {
+    feedId
+  });
 }
 
 var markItemAsRead = (itemId) => {
-  return apolloServer.invoke('markItemAsRead', {itemId});
+  return apolloServer.invoke('markItemAsRead', {
+    itemId
+  });
 }
 
 module.exports = {

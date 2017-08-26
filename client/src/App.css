@@ -5,22 +5,22 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #424242;
   font-family: 'Monda', sans-serif;
   position: relative;
   height: 100%;
+  background-color: #eeeeee;
 }
+
 input, button, span{
   font-family: 'Monda', sans-serif;
 }
-nav {
-  color: white;
+.navContainer{
+  width: 500px;
   background-color: #424242;
-  width: 150px;
-  float: left;
-  height: 100%;
-  margin-top: 0px;
-  border-top: 1px solid #525252;
+  color: white;
+  margin:auto;
+  padding: 5px;
+  margin-top: 100px;
 }
 
 nav a {
@@ -36,9 +36,10 @@ nav a.active {
   background-color: #555;
 }
 
-nav a:hover {
+nav .selected a, nav a:hover {
   background-color: #ddd;
   text-decoration: none;
+  color: #0E5A8A;
 }
 nav .fa{
     width: 15px;
@@ -58,10 +59,7 @@ nav .fa{
 }
 .mainContainer{
   padding: 15px;
-  background-color: #eeeeee;
-  margin-left: 150px;
   min-height: 500px;
-  border-bottom-left-radius:5px;
 }
 
 .mid{
@@ -115,14 +113,24 @@ nav .fa{
   background-color:#ddd;;
 
 }
-footer{
+.serverInfo {
   width:100%;
-  box-sizing:border-box;
   padding: 5px;
   font-size: 12px;
   color: white;
   text-align: right;
+  display: inline;
 }
+
+.logoutButton {
+  display: inline;
+  text-align: right;
+}
+
+.logoutButton a{
+  color: white;
+}
+
 textarea {
   width: 100%;
 }

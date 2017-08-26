@@ -17,7 +17,9 @@ function FeedDisplay(props) {
     <div className={getFeedClasses(props.selectedId, -1)} onClick={props.changeFeed.bind(null, -1)}>All Items ({ props.feeds.reduce((p, n) => {
       return p + n.unread_count;
     }, 0)})</div>
-    { props.feeds.filter(f => {return f.unread_count > 0}).map(f => {
+    { props.feeds.filter(f => {
+      return f.unread_count > 0
+    }).map(f => {
       return (<div className={getFeedClasses(props.selectedId, f.id)} key={f.id} onClick={props.changeFeed.bind(null, f.id)}>{f.name} ({f.unread_count})</div>)
     })}
   </div>)
@@ -82,11 +84,13 @@ class Feeds extends React.Component {
       currentItem.read_at = new Date();
       var feeds = this.state.feeds;
       feeds.forEach(f => {
-        if(f.id === currentItem.feed_id){
+        if (f.id === currentItem.feed_id) {
           f.unread_count--;
         }
       });
-      this.setState({feeds});
+      this.setState({
+        feeds
+      });
     }
 
     if (this.state.nextItems.length === 0) {
@@ -95,8 +99,8 @@ class Feeds extends React.Component {
 
     var shouldAdd = (items, previousItems, newItem) => {
       return this.state.currentItem.id !== newItem.id &&
-            previousItems.filter(item => item.id === newItem.id).length === 0 &&
-             items.filter(item => item.id === newItem.id).length === 0;
+        previousItems.filter(item => item.id === newItem.id).length === 0 &&
+        items.filter(item => item.id === newItem.id).length === 0;
     };
 
     if (this.state.nextItems.length <= 5) {
@@ -105,7 +109,7 @@ class Feeds extends React.Component {
           var newNextItems = this.state.nextItems;
           for (var i = 0; i < items.length; i++) {
             var item = items[i];
-            if (shouldAdd(newNextItems,this.state.previousItems, item)) {
+            if (shouldAdd(newNextItems, this.state.previousItems, item)) {
               newNextItems.push(item);
             }
           }
@@ -145,7 +149,7 @@ class Feeds extends React.Component {
     })
   }
 
-  openItem(){
+  openItem() {
     window.open(this.state.currentItem.url, '_blank');
   }
 

@@ -22,7 +22,9 @@ class FeedItems extends React.Component {
           <span className='feedPubDate'>{ moment(this.props.currentItem.published_at).calendar()}</span>
         </div>
         <div className='feedItemBody'>
-          <div dangerouslySetInnerHTML={{__html: this.props.currentItem.body}} />
+          <div dangerouslySetInnerHTML={{
+        __html: this.props.currentItem.body
+      }} />
         </div>
       </div>
 
