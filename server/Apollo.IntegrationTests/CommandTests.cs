@@ -13,7 +13,7 @@ namespace Apollo.IntegrationTests
         private static int RequestCounter = 0;
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
-        private string loginToken = "189f15a4231e47a3b027b4a09b4fe6ca";
+        private string loginToken = "7b585522a6a24258ab07509c16b293fc";
 
         [Fact]
         public void EnsureLoginTokenSet()
@@ -119,6 +119,10 @@ namespace Apollo.IntegrationTests
             data.Add("getJobHistory", new {jobId = 1}, true);
             data.Add("UpdateCryptoPrices", new {}, true);
             data.Add("GetAssetPrice", new {symbol="btc"}, true);
+            data.Add("AddNote", new {name="test note", body="yes I am note"}, true);
+            data.Add("GetNotes", new{}, true);
+            data.Add("GetNote", new {id = 1}, true);
+            data.Add("UpdateNote", new {id = 1, name = "two", body = "I am updated note"}, true);
             return data;
         }
     }

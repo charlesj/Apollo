@@ -39,6 +39,7 @@ namespace Apollo.ServiceLocator
             container.Register<IJournalDataService, JournalDataService>();
             container.Register<IJobsDataService, JobsDataService>();
             container.Register<ILoginSessionDataService, LoginSessionDataService>();
+            container.Register<INotebookDataService, NotebookDataService>();
             container.Register<IMetricsDataService, MetricsDataService>();
             container.Register<ITodoItemDataService, TodoItemDataService>();
             container.Register<ITodoQueueItemDataService, TodoQueueItemDataService>();

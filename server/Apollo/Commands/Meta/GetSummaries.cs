@@ -16,6 +16,7 @@ namespace Apollo.Commands.Meta
         private readonly IJournalDataService journalDataService;
         private readonly IJobsDataService jobsDataService;
         private readonly ILoginSessionDataService loginSessionDataService;
+        private readonly INotebookDataService notebookDataService;
         private readonly IPersonalHealthService personalHealthService;
         private readonly ITodoItemDataService todoItemDataService;
         private readonly ITodoQueueItemDataService todoQueueItemDataService;
@@ -27,6 +28,7 @@ namespace Apollo.Commands.Meta
             IJobsDataService jobsDataService,
             ILoginSessionDataService loginSessionDataService,
             ILoginService loginService,
+            INotebookDataService notebookDataService,
             IPersonalHealthService personalHealthService,
             ITodoItemDataService todoItemDataService,
             ITodoQueueItemDataService todoQueueItemDataService) : base(loginService)
@@ -36,6 +38,7 @@ namespace Apollo.Commands.Meta
             this.journalDataService = journalDataService;
             this.jobsDataService = jobsDataService;
             this.loginSessionDataService = loginSessionDataService;
+            this.notebookDataService = notebookDataService;
             this.personalHealthService = personalHealthService;
             this.todoItemDataService = todoItemDataService;
             this.todoQueueItemDataService = todoQueueItemDataService;
@@ -56,15 +59,28 @@ namespace Apollo.Commands.Meta
             values.Add("active jobs", async () => (await jobsDataService.GetActiveJobs()).Count.ToString());
             values.Add("feeds", async () => (await feedDataService.GetFeeds()).Count.ToString());
             values.Add("unread items", async () => (await feedDataService.GetFeeds()).Sum(i => i.unread_count).ToString());
+            values.Add("notes", async() => (await notebookDataService.GetNoteCount()).ToString());
 
             var counter = 0;
-            var summaries = await Task.WhenAll(values.Select(async v => new {label = v.Key, amount = await v.Value(), id = ++counter}));
-            return CommandResult.CreateSuccessResult(summaries);
+            try
+            {
+                var summaries = await Task.WhenAll(values.Select(async v =>
+                    new {label = v.Key, amount = await v.Value(), id = ++counter}));
+                return CommandResult.CreateSuccessResult(summaries);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Could not build summaries");
+                Logger.Error(e.Message);
+
+                var summary = new {label = "Errors Building Summaries", amount = "1"};
+                return CommandResult.CreateSuccessResult(new List<object> {summary});
+            }
         }
 
         public override Task<bool> IsValid()
         {
             return Task.FromResult(true);
-        }
+        }        
     }
 }
