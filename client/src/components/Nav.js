@@ -55,6 +55,11 @@ class Nav extends React.Component {
       icon: "pencil"
     },
     {
+      href: "/notebooks",
+      label: "Notes",
+      icon: "sticky-note"
+    },
+    {
       href: "/health",
       label: "Health",
       icon: "medkit"

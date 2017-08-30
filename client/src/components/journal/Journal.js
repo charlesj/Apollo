@@ -85,7 +85,7 @@ class Journal extends React.Component {
     }).then(() => {
       Notifier.show({
         intent: Intent.SUCCESS,
-        message: "Successfully added a new note.",
+        message: "Successfully added a new log entry.",
       });
       this.loadEntries();
     });
