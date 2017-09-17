@@ -7,5 +7,7 @@ namespace Apollo.ServiceLocator
         TService Get<TService>() where TService : class;
 
         object Get(Type type);
+
+        void RegisterServices();
     }
 }

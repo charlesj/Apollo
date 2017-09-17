@@ -4,6 +4,7 @@ using Apollo.CLI.Commands.Feeds;
 using Apollo.CLI.Commands.Jobs;
 using Apollo.CLI.Commands.Local;
 using Apollo.CLI.Commands.Meta;
+using Apollo.CLI.Commands.Weather;
 using Microsoft.Extensions.CommandLineUtils;
 
 namespace Apollo.CLI.Commands
@@ -37,6 +38,7 @@ namespace Apollo.CLI.Commands
             app.Command("addFeed", c => AddFeedCommand.Configure(c, options));
             app.Command("testFeed", c => TestFeedCommand.Configure(c, options));
             app.Command("importFeeds", c => ImportFeedsCommand.Configure(c, options));
+            app.Command("updateWeather", c => UpdateForecastsCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {

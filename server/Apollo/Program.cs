@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Apollo.Jobs;
 using Apollo.Server;
+using Apollo.ServiceLocator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,15 +33,11 @@ namespace Apollo
             Logger.Info("Booting...");
 
             var kernel = new Kernel();
-            var locator = kernel.Boot(BootOptions.Defaults);
-            var httpRequestProcessor = locator.Get<IHttpRequestProcessor>();
-
-            var configuration = locator.Get<Configuration>();
-            if (!configuration.IsValid())
-            {
-                Logger.Error("Invalid Configuration");
+            var locator = kernel.Boot(BootOptions.Defaults, new SimpleInjectorServiceLocator());
+            if (locator == null)
                 Environment.Exit(1);
-            }
+
+            var httpRequestProcessor = locator.Get<IHttpRequestProcessor>();
 
             app.UseCors(builder =>
                     builder.AllowAnyOrigin()

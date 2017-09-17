@@ -15,5 +15,10 @@
         {
             public const string PasswordHash = "password_hash";
         }
+
+        public static class Documents
+        {
+            public const string WeatherLocations = "weatherLocations";
+        }
     }
 }
