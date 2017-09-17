@@ -20,6 +20,8 @@ import Notebooks from './components/notebooks/Notebooks';
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
+import './styles/weather-icons.css';
+import './styles/weather-icons-wind.css';
 import './App.css';
 
 class App extends Component {
