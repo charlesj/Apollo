@@ -32,7 +32,6 @@ namespace Apollo.ServiceLocator
             container.Register<ICommandProcessor, CommandProcessor>(Lifestyle.Singleton);
 
             // data bindings
-            container.Register<IApolloDocumentStore, ApolloDocumentStore>(Lifestyle.Singleton);
             container.Register<IBookmarksDataService, BookmarksDataService>();
             container.Register<IConnectionFactory, ConnectionFactory>();
             container.Register<IDocumentStoreBoostrapper, DocumentStoreBootstrapper>();
@@ -46,6 +45,7 @@ namespace Apollo.ServiceLocator
             container.Register<ITodoItemDataService, TodoItemDataService>();
             container.Register<ITodoQueueItemDataService, TodoQueueItemDataService>();
             container.Register<IUserSettignsDataService, UserSettingsDataService>();
+            container.Register<IWeatherDataService, WeatherDataService>();
 
             // external service bindings
             container.Register<IExternalFeedService, ExternalFeedService>();

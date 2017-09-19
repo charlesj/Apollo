@@ -18,7 +18,7 @@ namespace Apollo.Utilities
         public RestClient(IJsonSerializer serializer)
         {
             this.serializer = serializer;
-            this.client = new HttpClient();
+            client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", $"Apollo Server/{Apollo.Version}");

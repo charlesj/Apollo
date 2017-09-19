@@ -1,21 +1,23 @@
 ﻿using System.Threading.Tasks;
-using DarkSky.Models;
-using DarkSky.Services;
+using Apollo.Services;
+using Newtonsoft.Json.Linq;
 
 namespace Apollo.External.DarkSky
 {
     public class DarkSkyWeatherService
     {
-        public virtual async Task<Forecast> GetForecast(string apiKey, double latitude, double longitude)
-        {
-            var service = new DarkSkyService(apiKey);
-            var response = await service.GetForecast(latitude, longitude);
-            if (!response.IsSuccessStatus)
-            {
-                Logger.Error("Failed to talk to dark sky", response);
-            }
+        private readonly IUrlFetcher urlFetcher;
 
-            return response.Response;
+        public DarkSkyWeatherService(IUrlFetcher urlFetcher)
+        {
+            this.urlFetcher = urlFetcher;
+        }
+
+        public virtual async Task<JObject> GetForecast(string apiKey, double latitude, double longitude)
+        {
+            var url = $"https://api.darksky.net/forecast/{apiKey}/{latitude},{longitude}";
+            var result = await urlFetcher.Get(url);
+            return JObject.Parse(result);
         }
     }
 }

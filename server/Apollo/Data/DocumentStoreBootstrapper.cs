@@ -11,11 +11,11 @@ namespace Apollo.Data
 
     public class DocumentStoreBootstrapper : IDocumentStoreBoostrapper
     {
-        private readonly IApolloDocumentStore documentStore;
+        private readonly IWeatherDataService weatherDocStore;
 
-        public DocumentStoreBootstrapper(IApolloDocumentStore documentStore)
+        public DocumentStoreBootstrapper(IWeatherDataService weatherDocStore)
         {
-            this.documentStore = documentStore;
+            this.weatherDocStore = weatherDocStore;
         }
 
         public Task Bootstrap()
@@ -27,7 +27,7 @@ namespace Apollo.Data
 
         private void BootstrapWeatherDoc()
         {
-            var current = documentStore.Get<WeatherLocations>(Constants.Documents.WeatherLocations);
+            var current = weatherDocStore.GetWeatherLocations();
             if (current == null)
             {
                 var defaultLocations = new WeatherLocations
@@ -44,7 +44,7 @@ namespace Apollo.Data
                     }
                 };
 
-                documentStore.Upsert(defaultLocations);
+                weatherDocStore.UpdateLocations(defaultLocations);
                 Logger.Info("Created Weather Locations Document");
             }
         }

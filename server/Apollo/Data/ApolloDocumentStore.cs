@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Marten;
+using Marten.Linq;
 
 namespace Apollo.Data
 {
@@ -7,7 +8,7 @@ namespace Apollo.Data
     {
         TDocumentType Get<TDocumentType>(string key) where TDocumentType : IDocument;
         void Upsert<TDocumentType>(TDocumentType document) where TDocumentType : IDocument;
-        void Delete<TDocumentType>(string key)  where TDocumentType : IDocument;
+        void Delete<TDocumentType>(string key) where TDocumentType : IDocument;
     }
 
     public interface IDocument
@@ -15,9 +16,9 @@ namespace Apollo.Data
         string Id { get; }
     }
 
-    public class ApolloDocumentStore : IApolloDocumentStore
+    public abstract class ApolloDocumentStore : IApolloDocumentStore
     {
-        private DocumentStore documentStore;
+        protected DocumentStore documentStore { get; }
         private const string ConnectionStringTemplate = "Host={0};Username={1};Password={2};Database={3}";
 
         public ApolloDocumentStore(IConfiguration configuration)

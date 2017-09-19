@@ -14,7 +14,7 @@ namespace Apollo.CLI.Commands.Weather
 
         public override async Task Execute()
         {
-            var result = await Execute("UpdateWeather", new { ApiKey });
+            var result = await Execute("UpdateWeatherForecasts", new { ApiKey });
             if (result.ResultStatus == CommandResultType.Success)
             {
                 Console.Green("Weather Updated");

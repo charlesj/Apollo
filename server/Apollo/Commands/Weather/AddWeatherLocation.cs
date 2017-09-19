@@ -9,13 +9,13 @@ namespace Apollo.Commands.Weather
 {
     public class AddWeatherLocation : AuthenticatedCommand
     {
-        private readonly IApolloDocumentStore documentStore;
+        private readonly IWeatherDataService documentStore;
         public string Name { get; set; }
         public string Identifier { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        public AddWeatherLocation(ILoginService loginService, IApolloDocumentStore documentStore) : base(loginService)
+        public AddWeatherLocation(ILoginService loginService, IWeatherDataService documentStore) : base(loginService)
         {
             this.documentStore = documentStore;
         }
@@ -31,12 +31,12 @@ namespace Apollo.Commands.Weather
                 Longitude = Longitude
             };
 
-            var doc = documentStore.Get<WeatherLocations>(Constants.Documents.WeatherLocations);
+            var doc = documentStore.GetWeatherLocations();
 
             if (doc.Locations.All(l => l.Identifier != Identifier))
             {
                 doc.Locations.Add(location);
-                documentStore.Upsert(doc);
+                documentStore.UpdateLocations(doc);
             }
 
             return CommandResult.SuccessfulResult;

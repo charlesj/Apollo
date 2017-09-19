@@ -9,10 +9,10 @@ namespace Apollo.Commands.Weather
 {
     public class RemoveWeatherLocation : AuthenticatedCommand
     {
-        private readonly IApolloDocumentStore documentStore;
+        private readonly IWeatherDataService documentStore;
         public string Identifier { get; set; }
 
-        public RemoveWeatherLocation(ILoginService loginService, IApolloDocumentStore documentStore) : base(loginService)
+        public RemoveWeatherLocation(ILoginService loginService, IWeatherDataService documentStore) : base(loginService)
         {
             this.documentStore = documentStore;
         }
@@ -20,12 +20,12 @@ namespace Apollo.Commands.Weather
         public override async Task<CommandResult> Execute()
         {
             await Task.CompletedTask;
-            var doc = documentStore.Get<WeatherLocations>(Constants.Documents.WeatherLocations);
+            var doc = documentStore.GetWeatherLocations();
             var location = doc.Locations.FirstOrDefault(l => l.Identifier == Identifier);
             if (location != null)
                 doc.Locations.Remove(location);
 
-            documentStore.Upsert(doc);
+            documentStore.UpdateLocations(doc);
             return CommandResult.SuccessfulResult;
         }
 

@@ -52,6 +52,7 @@ namespace Apollo.CommandSystem
             }
             catch (Exception exception)
             {
+                Logger.Error($"Error Processing Command: {exception.Message}");
                 return new CommandResult
                 {
                     ErrorMessage = exception.Message,

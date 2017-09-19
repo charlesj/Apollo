@@ -8,9 +8,9 @@ namespace Apollo.Commands.Weather
 {
     public class GetWeatherLocations : AuthenticatedCommand
     {
-        private readonly IApolloDocumentStore documentStore;
+        private readonly IWeatherDataService documentStore;
 
-        public GetWeatherLocations(ILoginService loginService, IApolloDocumentStore documentStore) : base(loginService)
+        public GetWeatherLocations(ILoginService loginService, IWeatherDataService documentStore) : base(loginService)
         {
             this.documentStore = documentStore;
         }
@@ -18,8 +18,7 @@ namespace Apollo.Commands.Weather
         public override async Task<CommandResult> Execute()
         {
             await Task.CompletedTask;
-            var document = documentStore.Get<WeatherLocations>(Constants.Documents.WeatherLocations);
-            return CommandResult.CreateSuccessResult(document.Locations);
+            return CommandResult.CreateSuccessResult(documentStore.GetWeatherLocations().Locations);
         }
 
         public override Task<bool> IsValid()
