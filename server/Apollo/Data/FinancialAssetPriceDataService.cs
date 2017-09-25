@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace Apollo.Data
     {
         Task RecordPrice(string symbol, decimal price, string source, DateTimeOffset validAt);
         Task<FinancialAssetPrice> GetMostRecentPrice(string identifier);
+        Task<IReadOnlyList<FinancialAssetPrice>> GetHistoricalPrices(string symbol);
     }
 
     public class FinancialAssetPriceDataService : BaseDataService, IFinancialAssetPriceDataService
@@ -19,6 +21,10 @@ namespace Apollo.Data
         public const string GetMostRecentPriceSql = "select * from financial_asset_prices " +
                                                     "where symbol=@symbol " +
                                                     "order by valid_at desc limit 1";
+
+        public const string GetHistoricalPricesSql = "select * from financial_asset_prices " +
+                                                     "where symbol=@symbol " +
+                                                     "order by valid_at asc";
 
         public FinancialAssetPriceDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
@@ -33,6 +39,11 @@ namespace Apollo.Data
         {
             var results = await QueryAsync<FinancialAssetPrice>(GetMostRecentPriceSql, new {symbol});
             return results.SingleOrDefault();
+        }
+
+        public async Task<IReadOnlyList<FinancialAssetPrice>> GetHistoricalPrices(string symbol)
+        {
+            return await QueryAsync<FinancialAssetPrice>(GetHistoricalPricesSql, new {symbol});
         }
     }
 
