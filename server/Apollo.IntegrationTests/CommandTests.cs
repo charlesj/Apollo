@@ -125,11 +125,13 @@ namespace Apollo.IntegrationTests
             data.Add("GetNote", new {id = 1}, true);
             data.Add("UpdateNote", new {id = 1, name = "two", body = "I am updated note"}, true);
             data.Add("AddBoard", new {title="test"}, true);
-            data.Add("UpdateBoard", new {title="test", id=1}, true);
+            data.Add("UpdateBoard", new {title="test", load_order=0, id=1}, true);
             data.Add("GetBoards", new {}, true);
             data.Add("GetBoardItems", new {board_id = 1}, true);
             data.Add("AddBoardItem", new {title="test"}, true);
             data.Add("UpdateBoardItem", new {title="test update", id=1}, true);
+            data.Add("DeleteBoard", new {id = 3}, true);
+            data.Add("DeleteBoardItem", new {id = 3}, true);
             return data;
         }
     }

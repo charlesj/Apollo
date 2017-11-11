@@ -9,9 +9,11 @@ namespace Apollo.Data
         Task AddBoard(Board board);
         Task<IReadOnlyList<Board>> GetBoards();
         Task UpdateBoard(Board board);
+        Task DeleteBoard(int id);
         Task AddItem(BoardItem item);
         Task<IReadOnlyList<BoardItem>> GetBoardItems(int id);
         Task UpdateItem(BoardItem item);
+        Task DeleteBoardItem(int id);
     }
 
     public class BoardDataService : BaseDataService, IBoardDataService
@@ -19,9 +21,11 @@ namespace Apollo.Data
         public const string InsertBoardSql = "insert into boards(title, list_order, created_at) " +
                                              "values (@title, @list_order, current_timestamp)";
 
-        public const string GetBoardsSql = "select * from boards order by list_order desc";
+        public const string GetBoardsSql = "select * from boards order by list_order asc";
 
         public const string UpdateBoardSql = "update boards set title=@title, list_order=@list_order where id=@id";
+
+        public const string DeleteBoardSql = "delete from boards where id=@id";
 
         public const string InsertItemSql = "insert into board_items(board_id, title, link, description, created_at) " +
                                         "values (@board_id, @title, @link, @description, current_timestamp)";
@@ -34,6 +38,8 @@ namespace Apollo.Data
                                         "link=@link, " +
                                         "description=@description, " +
                                         "completed_at=@completed_at where id=@id";
+
+        public const string DeleteItemSql = "delete from board_items where id=@id";
 
         public BoardDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
@@ -54,6 +60,11 @@ namespace Apollo.Data
             await Execute(UpdateBoardSql, board);
         }
 
+        public async Task DeleteBoard(int id)
+        {
+            await Execute(DeleteBoardSql, new {id});
+        }
+
         public async Task AddItem(BoardItem item)
         {
             await Execute(InsertItemSql, item);
@@ -61,12 +72,17 @@ namespace Apollo.Data
 
         public async Task<IReadOnlyList<BoardItem>> GetBoardItems(int id)
         {
-            return await QueryAsync<BoardItem>(GetBoardItemsSql, new { id });
+            return await QueryAsync<BoardItem>(GetBoardItemsSql, new {id});
         }
 
         public async Task UpdateItem(BoardItem item)
         {
             await Execute(UpdateItemSql, item);
+        }
+
+        public async Task DeleteBoardItem(int id)
+        {
+            await Execute(DeleteItemSql, new {id});
         }
     }
 

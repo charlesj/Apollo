@@ -24,7 +24,7 @@ namespace Apollo.Commands.Boards
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(!string.IsNullOrWhiteSpace(title));
+            return Task.FromResult(!string.IsNullOrWhiteSpace(title) && list_order >= 0);
         }
     }
 }

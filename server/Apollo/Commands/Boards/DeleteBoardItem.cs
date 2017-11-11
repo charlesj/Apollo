@@ -5,27 +5,25 @@ using Apollo.Services;
 
 namespace Apollo.Commands.Boards
 {
-    public class UpdateBoard : AuthenticatedCommand
+    public class DeleteBoardItem : AuthenticatedCommand
     {
         private readonly IBoardDataService dataService;
         public int id { get; set; }
-        public string title { get; set; }
-        public int list_order { get; set; }
 
-        public UpdateBoard(ILoginService loginService, IBoardDataService dataService) : base(loginService)
+        public DeleteBoardItem(ILoginService loginService, IBoardDataService dataService) : base(loginService)
         {
             this.dataService = dataService;
         }
 
         public override async Task<CommandResult> Execute()
         {
-            await dataService.UpdateBoard(new Board {id=id, title = title, list_order = list_order});
+            await dataService.DeleteBoardItem(id);
             return CommandResult.SuccessfulResult;
         }
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(!string.IsNullOrWhiteSpace(title) && id > 0 && list_order >= 0);
+            return Task.FromResult(true);
         }
     }
 }

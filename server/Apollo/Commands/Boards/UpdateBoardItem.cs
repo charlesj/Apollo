@@ -10,6 +10,7 @@ namespace Apollo.Commands.Boards
     {
         private readonly IBoardDataService dataService;
 
+        public int id { get; set; }
         public int board_id { get; set; }
         public string title { get; set; }
         public string link { get; set; }
@@ -25,6 +26,7 @@ namespace Apollo.Commands.Boards
         {
             await dataService.AddItem(new BoardItem
             {
+                id = id,
                 board_id = board_id,
                 title = title,
                 link = link,
@@ -36,7 +38,7 @@ namespace Apollo.Commands.Boards
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(!string.IsNullOrWhiteSpace(title));
+            return Task.FromResult(!string.IsNullOrWhiteSpace(title) && id > 0 && board_id > 0);
         }
     }
 }
