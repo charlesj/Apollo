@@ -1,0 +1,30 @@
+﻿using System.Threading.Tasks;
+using Apollo.CommandSystem;
+using Apollo.Data;
+using Apollo.Services;
+
+namespace Apollo.Commands.Boards
+{
+    public class UpdateBoard : AuthenticatedCommand
+    {
+        private readonly IBoardDataService dataService;
+        public string title { get; set; }
+        public int list_order { get; set; }
+
+        public UpdateBoard(ILoginService loginService, IBoardDataService dataService) : base(loginService)
+        {
+            this.dataService = dataService;
+        }
+
+        public override async Task<CommandResult> Execute()
+        {
+            await dataService.UpdateBoard(new Board {title = title, list_order = list_order});
+            return CommandResult.SuccessfulResult;
+        }
+
+        public override Task<bool> IsValid()
+        {
+            return Task.FromResult(!string.IsNullOrWhiteSpace(title));
+        }
+    }
+}
