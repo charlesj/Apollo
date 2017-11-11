@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Todo from './Todo';
 import Queue from './Queue';
 

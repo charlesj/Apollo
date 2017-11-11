@@ -22,7 +22,7 @@ function NoteListingDisplay(props) {
 }
 
 class Notebooks extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -44,40 +44,48 @@ class Notebooks extends React.Component {
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.loadNotes();
   }
 
-  loadNotes(){
+  loadNotes() {
     apolloServer.invoke('getNotes', {})
       .then(notes => {
-        this.setState({notes});
+        this.setState({
+          notes
+        });
       });
   }
 
-  changeSelectedNote(id){
-    if(id === -1){
+  changeSelectedNote(id) {
+    if (id === -1) {
       this.setState({
         selectedNoteId: -1,
         noteName: "",
         noteBody: ""
       });
       return;
-    };
+    }
+    ;
 
-    apolloServer.invoke('getNote', {id})
+    apolloServer.invoke('getNote', {
+      id
+    })
       .then(note => {
         this.setState({
           selectedNoteId: id,
           noteName: note.name,
           noteBody: note.body
         });
-    });
+      });
   }
 
-  save(){
-    if(this.state.selectedNoteId === -1){
-      apolloServer.invoke('addNote', {name: this.state.noteName, body: this.state.noteBody})
+  save() {
+    if (this.state.selectedNoteId === -1) {
+      apolloServer.invoke('addNote', {
+        name: this.state.noteName,
+        body: this.state.noteBody
+      })
         .then(() => {
           Notifier.show({
             intent: Intent.SUCCESS,
@@ -96,32 +104,32 @@ class Notebooks extends React.Component {
         name: this.state.noteName,
         body: this.state.noteBody
       }).then(() => {
-          Notifier.show({
-            intent: Intent.SUCCESS,
-            message: "Successfully updated note.",
-          });
+        Notifier.show({
+          intent: Intent.SUCCESS,
+          message: "Successfully updated note.",
+        });
       });
     }
   }
 
-  render(){
+  render() {
     return (<div className='notebooksContainer'>
       <NoteListingDisplay
-        selectedId={this.state.selectedNoteId}
-        notes={this.state.notes}
-        onChangeNote={this.changeSelectedNote} />
+      selectedId={this.state.selectedNoteId}
+      notes={this.state.notes}
+      onChangeNote={this.changeSelectedNote} />
       <div className='notebookDisplay'>
         <div className='notebookCommandBar'>
           <button className='pt-button pt-intent-primary' onClick={this.save}>Save</button>
         </div>
         <div>
           <input
-            type="text"
-            name="noteName"
-            className='pt-input pt-fill'
-            placeholder='note name'
-            onChange={this.handleChange}
-            value={this.state.noteName} />
+      type="text"
+      name="noteName"
+      className='pt-input pt-fill'
+      placeholder='note name'
+      onChange={this.handleChange}
+      value={this.state.noteName} />
           <textarea name="noteBody" className='pt-input' onChange={this.handleChange} value={this.state.noteBody}></textarea>
         </div>
       </div>

@@ -17,6 +17,7 @@ import Jobs from './components/jobs/Jobs';
 import Finance from './components/financial/Finance';
 import Feeds from './components/feeds/Feeds';
 import Notebooks from './components/notebooks/Notebooks';
+import Boards from './components/boards/Boards';
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
@@ -74,6 +75,7 @@ class App extends Component {
             <div  className='mainContainer'>
             <Switch>
               <Route exact path='/' component={Home} />
+              <Route exact path='/boards' component={Boards} />
               <Route exact path='/organize' component={Organize} />
               <Route exact path='/journal' component={Journal} />
               <Route exact path='/notebooks' component={Notebooks} />

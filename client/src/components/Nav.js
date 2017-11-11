@@ -45,6 +45,11 @@ class Nav extends React.Component {
       icon: "home"
     },
     {
+      href: "/boards",
+      label: "Boards",
+      icon: "check-square-o"
+    },
+    {
       href: "/organize",
       label: "Organize",
       icon: "check-square-o"

@@ -321,3 +321,30 @@ nav .fa{
 .forecastDay div {
   margin-right: 5px;
 }
+
+.boardContainer{
+  display: flex;
+  flex-flow: row;
+}
+
+.board{
+  border: 1px solid black;
+  margin: 5px;
+  padding: 0px;
+  width: 300px;
+}
+
+.boardTitle{
+  background-color: #fff;
+  border-bottom: 1px solid black;
+  padding: 3px;
+}
+.boardMenuToggle{
+  float: right;
+}
+.boardItem{
+  margin: 5px;
+  padding: 3px;
+  background-color: #fff;
+  border: 1px solid black;
+}
