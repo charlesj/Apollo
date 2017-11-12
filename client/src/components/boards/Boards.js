@@ -1,4 +1,6 @@
 import React from 'react';
+import { InputGroup } from "@blueprintjs/core";
+import FontAwesome from 'react-fontawesome';
 import apolloServer from '../../services/apollo-server';
 
 function BoardMenu(props) {
@@ -10,17 +12,91 @@ function BoardMenu(props) {
   </div>)
 }
 
+class BoardItem extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      editMode: false,
+      newItemTitle: props.item.title,
+      newItemLink: props.item.link,
+      newItemDescription: props.item.description,
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
+    this.toggleCompleted = this.toggleCompleted.bind(this);
+    this.updateItem = this.updateItem.bind(this);
+  }
+
+  toggleEdit(){
+    this.setState({
+      editMode: !this.state.editMode
+    });
+  }
+
+  toggleCompleted(){
+    var date = new Date();
+    if(this.props.item.completed_at !== null){
+      date = null;
+    }
+    return this.props.updateItem(this.props.item.id, this.props.item.title, this.props.item.link, this.props.item.description, date);
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  updateItem(){
+    return this.props.updateItem(this.props.item.id, this.state.newItemTitle, this.state.newItemLink, this.state.newItemDescription, this.props.item.completed_at)
+      .then(() => {
+        this.setState({editMode:false});
+      });
+  }
+
+  render(){
+    if(this.state.editMode){
+      return (<div className="pt-card">
+              <InputGroup id="itemTitle" placeholder="title" onChange={this.handleChange} name="newItemTitle" value={this.state.newItemTitle} />
+              <InputGroup id="itemLink" placeholder="link" onChange={this.handleChange} name="newItemLink" value={this.state.newItemLink} />
+              <div><textarea className="pt-input" placeholder="description" onChange={this.handleChange} name="newItemDescription" value={this.state.newItemDescription} /></div>
+              <button className='pt-button pt-intent-primary pt-icon-add buttonSpace' onClick={this.toggleEdit}>Cancel</button>
+              <button className='pt-button pt-intent-primary pt-icon-add buttonSpace' onClick={this.updateItem}>updateItem</button>
+            </div>)
+    }
+
+    return <div className="boardItem" >
+      <div className="boardItemTitle">{this.props.item.title} &nbsp;
+      {this.props.item.link.length > 0 && ( <a href={this.props.item.link} target="_blank"><FontAwesome name='external-link'  /></a>)}
+      </div>
+      <div className="boardItemDescription">{this.props.item.description}</div>
+      <div className="boardItemMenu">
+        <button className='textButton pt-icon-edit pt-small' onClick={this.toggleEdit}></button>
+        <button className='textButton pt-icon-tick pt-small' onClick={this.toggleCompleted}></button>
+        <button className='textButton pt-icon-cross pt-small' onClick={this.props.deleteItem}></button>
+
+        </div>
+    </div>
+  }
+}
+
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      showMenu: false
+      showMenu: false,
+      showCompleted: false
     };
 
+    this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.loadItems = this.loadItems.bind(this);
+    this.toggleCompleted = this.toggleCompleted.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.updateBoardName = this.updateBoardName.bind(this);
+    this.updateItem = this.updateItem.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +104,7 @@ class Board extends React.Component {
   }
 
   loadItems() {
-    apolloServer.invoke("getBoardItems", {
+    return apolloServer.invoke("getBoardItems", {
       board_id: this.props.board.id
     })
       .then(items => {
@@ -51,6 +127,31 @@ class Board extends React.Component {
     }
   }
 
+  addItem(){
+    return apolloServer.invoke('addBoardItem', {board_id: this.props.board.id, title:'new item', link:'', description:''}).then(() => {
+      return this.loadItems();
+    });
+  }
+
+  deleteItem(id){
+    return apolloServer.invoke("deleteBoardItem", {id}).then(() => {
+      return this.loadItems();
+    });
+  }
+
+  updateItem(id, title, link, description, completed_at){
+    return apolloServer.invoke("updateBoardItem", {id, board_id: this.props.board.id, title, link, description, completed_at})
+      .then(() =>{
+        this.loadItems();
+      });
+  }
+
+  toggleCompleted(){
+    this.setState({
+      showCompleted: !this.state.showCompleted
+    });
+  }
+
   render() {
     return <div className="board">
       <div className="boardTitle">
@@ -65,9 +166,20 @@ class Board extends React.Component {
       deleteBoard={this.props.deleteBoard.bind(null, this.props.board.id)}
       />}
       </div>
-      {this.state.items.map(item => {
-        return <div className="boardItem" key={item.id}>{item.title}</div>
+      {this.state.items.filter(item => {
+        if(item.completed_at == null){
+          return true;
+        }
+        return (item.completed_at !== null) === this.state.showCompleted;
+      }).map(item => {
+        return <BoardItem
+          key={item.id}
+          item={item}
+          deleteItem={this.deleteItem.bind(null, item.id)}
+          updateItem={this.updateItem}></BoardItem>
       })}
+      <button className="textButton" onClick={this.addItem}>New</button>
+      <button className="textButton" onClick={this.toggleCompleted}>Show Completed</button>
     </div>
   }
 }

@@ -15,7 +15,7 @@ namespace Apollo.Commands.Boards
         public string title { get; set; }
         public string link { get; set; }
         public string description { get; set; }
-        public DateTime completed_at { get; set; }
+        public DateTime? completed_at { get; set; }
 
         public UpdateBoardItem(ILoginService loginService, IBoardDataService dataService) : base(loginService)
         {
@@ -24,7 +24,7 @@ namespace Apollo.Commands.Boards
 
         public override async Task<CommandResult> Execute()
         {
-            await dataService.AddItem(new BoardItem
+            await dataService.UpdateItem(new BoardItem
             {
                 id = id,
                 board_id = board_id,

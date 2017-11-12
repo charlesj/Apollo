@@ -343,8 +343,23 @@ nav .fa{
   float: right;
 }
 .boardItem{
-  margin: 5px;
-  padding: 3px;
   background-color: #fff;
-  border: 1px solid black;
+  margin-top: 10px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.boardItemMenu{
+  border-top: 1px solid black;
+  padding: 0px;
+  margin: 0px;
+  background-color: #48AFF0;
+  color: #fff;
+}
+.boardItemTitle{
+  border-bottom:  1px solid black;
+  padding: 2px;
+  font-weight: bold;
+}
+.boardItemDescription{
+  padding: 5px;
 }
