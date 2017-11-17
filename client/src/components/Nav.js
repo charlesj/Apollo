@@ -50,11 +50,6 @@ class Nav extends React.Component {
       icon: "check-square-o"
     },
     {
-      href: "/organize",
-      label: "Organize",
-      icon: "check-square-o"
-    },
-    {
       href: "/journal",
       label: "Log",
       icon: "pencil"

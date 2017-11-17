@@ -18,8 +18,6 @@ namespace Apollo.Commands.Meta
         private readonly ILoginSessionDataService loginSessionDataService;
         private readonly INotebookDataService notebookDataService;
         private readonly IPersonalHealthService personalHealthService;
-        private readonly ITodoItemDataService todoItemDataService;
-        private readonly ITodoQueueItemDataService todoQueueItemDataService;
 
         public GetSummaries(
             IBookmarksDataService bookmarksDataService,
@@ -29,9 +27,7 @@ namespace Apollo.Commands.Meta
             ILoginSessionDataService loginSessionDataService,
             ILoginService loginService,
             INotebookDataService notebookDataService,
-            IPersonalHealthService personalHealthService,
-            ITodoItemDataService todoItemDataService,
-            ITodoQueueItemDataService todoQueueItemDataService) : base(loginService)
+            IPersonalHealthService personalHealthService) : base(loginService)
         {
             this.bookmarksDataService = bookmarksDataService;
             this.feedDataService = feedDataService;
@@ -40,8 +36,6 @@ namespace Apollo.Commands.Meta
             this.loginSessionDataService = loginSessionDataService;
             this.notebookDataService = notebookDataService;
             this.personalHealthService = personalHealthService;
-            this.todoItemDataService = todoItemDataService;
-            this.todoQueueItemDataService = todoQueueItemDataService;
         }
 
         public override async Task<CommandResult> Execute()
@@ -54,8 +48,6 @@ namespace Apollo.Commands.Meta
             values.Add("weight change", async () => (await personalHealthService.TotalWeightChange()).ToString(CultureInfo.InvariantCulture));
             values.Add("log entries", async () => (await journalDataService.GetAllJournalEntries()).Count.ToString() );
             values.Add("new log entries", async () => (await journalDataService.GetRecentEntryCount()).ToString() );
-            values.Add("to do items", async () => (await todoItemDataService.GetIncompleteItems()).Count.ToString());
-            values.Add("do later items", async () => (await todoQueueItemDataService.GetIncompleteItems()).Count.ToString());
             values.Add("active jobs", async () => (await jobsDataService.GetActiveJobs()).Count.ToString());
             values.Add("feeds", async () => (await feedDataService.GetFeeds()).Count.ToString());
             values.Add("unread items", async () => (await feedDataService.GetFeeds()).Sum(i => i.unread_count).ToString());
@@ -81,6 +73,6 @@ namespace Apollo.Commands.Meta
         public override Task<bool> IsValid()
         {
             return Task.FromResult(true);
-        }        
+        }
     }
 }

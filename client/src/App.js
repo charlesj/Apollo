@@ -6,7 +6,6 @@ var Switch = ReactRouter.Switch;
 import loginService from './services/login-service';
 import apolloServer from './services/apollo-server';
 import Login from './components/Login';
-import Organize from './components/organize/Organize';
 import Journal from './components/journal/Journal';
 import Nav from './components/Nav';
 import Home from './components/Home';
@@ -76,7 +75,6 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/boards' component={Boards} />
-              <Route exact path='/organize' component={Organize} />
               <Route exact path='/journal' component={Journal} />
               <Route exact path='/notebooks' component={Notebooks} />
               <Route exact path='/health' component={Health} />

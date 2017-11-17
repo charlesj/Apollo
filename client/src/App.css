@@ -158,50 +158,10 @@ nav .fa{
 .bookmarksDisplayHeader button{
   margin-left: 10px;
 }
-.organizeContainer{
-    display: table;
-}
-.todoPanel{
-  width: 300px;
-  margin: 5px;
-  display: table-cell;
-}
-.todoItemCompleted{
-  text-decoration: line-through;
-}
-
-.queuePanel{
-  width: 600px;
-  margin: 5px;
-}
-.queueItem{
-  margin-top: 10px;
-  padding: 3px;
-}
-.queueHeader {
-  margin: 0px;
-  padding: 5px;
-}
-
-.queueHeader .queueAdded{
-  margin-right: 10px;
-  margin-left: 5px;
-  float: right;
-}
-.queueDescription {
-  margin: 5px;
-  padding: 5px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-}
-.queueAddItem input {
-  margin-bottom: 10px;
-}
 .summaryContainer{
     display: flex;
     flex-flow: row wrap;
 }
-
 .summary {
     margin: 5px;
     border: 1px solid #444;
