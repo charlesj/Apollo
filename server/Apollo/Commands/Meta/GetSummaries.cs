@@ -18,6 +18,7 @@ namespace Apollo.Commands.Meta
         private readonly ILoginSessionDataService loginSessionDataService;
         private readonly INotebookDataService notebookDataService;
         private readonly IPersonalHealthService personalHealthService;
+        private readonly IBoardDataService boardDataService;
 
         public GetSummaries(
             IBookmarksDataService bookmarksDataService,
@@ -27,7 +28,8 @@ namespace Apollo.Commands.Meta
             ILoginSessionDataService loginSessionDataService,
             ILoginService loginService,
             INotebookDataService notebookDataService,
-            IPersonalHealthService personalHealthService) : base(loginService)
+            IPersonalHealthService personalHealthService,
+            IBoardDataService boardDataService) : base(loginService)
         {
             this.bookmarksDataService = bookmarksDataService;
             this.feedDataService = feedDataService;
@@ -36,6 +38,7 @@ namespace Apollo.Commands.Meta
             this.loginSessionDataService = loginSessionDataService;
             this.notebookDataService = notebookDataService;
             this.personalHealthService = personalHealthService;
+            this.boardDataService = boardDataService;
         }
 
         public override async Task<CommandResult> Execute()
@@ -52,13 +55,26 @@ namespace Apollo.Commands.Meta
             values.Add("feeds", async () => (await feedDataService.GetFeeds()).Count.ToString());
             values.Add("unread items", async () => (await feedDataService.GetFeeds()).Sum(i => i.unread_count).ToString());
             values.Add("notes", async() => (await notebookDataService.GetNoteCount()).ToString());
+            values.Add("boards", async() => (await boardDataService.GetBoardCount()).ToString());
+            values.Add("incomplete board items", async() => (await boardDataService.GetIncompleteItemCount()).ToString());
+            values.Add("recently added board items", async() => (await boardDataService.GetRecentlyAddedItemCount()).ToString());
+            values.Add("recently completed board items", async() => (await boardDataService.GetRecentlyCompletedItemCount()).ToString());
 
             var counter = 0;
             try
             {
                 var summaries = await Task.WhenAll(values.Select(async v =>
-                    new {label = v.Key, amount = await v.Value(), id = ++counter}));
-                return CommandResult.CreateSuccessResult(summaries);
+                {
+                    try
+                    {
+                        return new {label = v.Key, amount = await v.Value(), id = ++counter};
+                    }
+                    catch(Exception)
+                    {
+                        return null;
+                    }
+                }));
+                return CommandResult.CreateSuccessResult(summaries.Where(s => s!= null));
             }
             catch (Exception e)
             {

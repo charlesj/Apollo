@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Apollo.Data
@@ -14,6 +15,10 @@ namespace Apollo.Data
         Task<IReadOnlyList<BoardItem>> GetBoardItems(int id);
         Task UpdateItem(BoardItem item);
         Task DeleteBoardItem(int id);
+        Task<int> GetBoardCount();
+        Task<int> GetRecentlyAddedItemCount();
+        Task<int> GetIncompleteItemCount();
+        Task<int> GetRecentlyCompletedItemCount();
     }
 
     public class BoardDataService : BaseDataService, IBoardDataService
@@ -41,8 +46,37 @@ namespace Apollo.Data
 
         public const string DeleteItemSql = "delete from board_items where id=@id";
 
+        public const string BoardCountSql = "select count(*) from boards";
+
+        public const string IncompleteBoardItemCountSql = "select count(*) from board_items where completed_at is null";
+
+        public const string RecentlyAddedBoardItems = "select count(*) from board_items where created_at>@created_at";
+
+        public const string RecentlyCompletedBoardItems =
+            "select count(*) from board_items where completed_at>@completed_at";
+
         public BoardDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
+        }
+
+        public async Task<int> GetBoardCount()
+        {
+            return (await QueryAsync<CountResult>(BoardCountSql, null)).Single().count;
+        }
+
+        public async Task<int> GetRecentlyAddedItemCount()
+        {
+            return (await QueryAsync<CountResult>(RecentlyAddedBoardItems, new { created_at = DateTime.Now.AddDays(-7)})).Single().count;
+        }
+
+        public async Task<int> GetIncompleteItemCount()
+        {
+            return (await QueryAsync<CountResult>(IncompleteBoardItemCountSql, null)).Single().count;
+        }
+
+        public async Task<int> GetRecentlyCompletedItemCount()
+        {
+            return (await QueryAsync<CountResult>(RecentlyCompletedBoardItems, new { completed_at = DateTime.Now.AddDays(-7)})).Single().count;
         }
 
         public async Task AddBoard(Board board)
