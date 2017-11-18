@@ -262,26 +262,43 @@ nav .fa{
   border: 1px solid black;
   border-radius: 5px;
   background-color: #fff;
+  padding: 0px;
+}
+.weatherLocation{
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #0A6640;
   padding: 5px;
 }
-
 .weatherIcon {
   color: #0E5A8A;
   font-size: 50px;
+  margin: 10px;
+  text-align: center;
 }
-
-.currentConditions {
+.forecastsContainer{
   display: flex;
-  border-bottom: 1px solid black;
+  flex-flow: row;
 }
 
 .forecastDay {
-  display: flex;
+  padding: 5px;
+  border-right: 1px solid  #0A6640;
+  width: 11%;
 }
-.forecastDay div {
-  margin-right: 5px;
+.forecastsContainer .forecastDay:last-child{
+  border: none;
 }
-
+.forecastSummary{
+  font-style: italic;
+}
+.weeklySummary{
+  display: inline;
+  font-weight: normal;
+  font-style: italic;
+  text-transform:none;
+}
 .boardContainer{
   display: flex;
   flex-flow: row;

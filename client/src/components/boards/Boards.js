@@ -12,8 +12,8 @@ function BoardMenu(props) {
   </div>)
 }
 
-class BoardItem extends React.Component{
-  constructor(props){
+class BoardItem extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       editMode: false,
@@ -28,15 +28,15 @@ class BoardItem extends React.Component{
     this.updateItem = this.updateItem.bind(this);
   }
 
-  toggleEdit(){
+  toggleEdit() {
     this.setState({
       editMode: !this.state.editMode
     });
   }
 
-  toggleCompleted(){
+  toggleCompleted() {
     var date = new Date();
-    if(this.props.item.completed_at !== null){
+    if (this.props.item.completed_at !== null) {
       date = null;
     }
     return this.props.updateItem(this.props.item.id, this.props.item.title, this.props.item.link, this.props.item.description, date);
@@ -48,15 +48,17 @@ class BoardItem extends React.Component{
     });
   }
 
-  updateItem(){
+  updateItem() {
     return this.props.updateItem(this.props.item.id, this.state.newItemTitle, this.state.newItemLink, this.state.newItemDescription, this.props.item.completed_at)
       .then(() => {
-        this.setState({editMode:false});
+        this.setState({
+          editMode: false
+        });
       });
   }
 
-  render(){
-    if(this.state.editMode){
+  render() {
+    if (this.state.editMode) {
       return (<div className="pt-card">
               <InputGroup id="itemTitle" placeholder="title" onChange={this.handleChange} name="newItemTitle" value={this.state.newItemTitle} />
               <InputGroup id="itemLink" placeholder="link" onChange={this.handleChange} name="newItemLink" value={this.state.newItemLink} />
@@ -67,7 +69,7 @@ class BoardItem extends React.Component{
     }
 
     return <div className="boardItem" >
-      <div className="boardItemTitle">{this.props.item.title} &nbsp;
+      <div className="boardItemTitle">{this.props.item.title}  
       {this.props.item.link.length > 0 && ( <a href={this.props.item.link} target="_blank"><FontAwesome name='external-link'  /></a>)}
       </div>
       <div className="boardItemDescription">{this.props.item.description}</div>
@@ -127,26 +129,40 @@ class Board extends React.Component {
     }
   }
 
-  addItem(){
-    return apolloServer.invoke('addBoardItem', {board_id: this.props.board.id, title:'new item', link:'', description:''}).then(() => {
+  addItem() {
+    return apolloServer.invoke('addBoardItem', {
+      board_id: this.props.board.id,
+      title: 'new item',
+      link: '',
+      description: ''
+    }).then(() => {
       return this.loadItems();
     });
   }
 
-  deleteItem(id){
-    return apolloServer.invoke("deleteBoardItem", {id}).then(() => {
+  deleteItem(id) {
+    return apolloServer.invoke("deleteBoardItem", {
+      id
+    }).then(() => {
       return this.loadItems();
     });
   }
 
-  updateItem(id, title, link, description, completed_at){
-    return apolloServer.invoke("updateBoardItem", {id, board_id: this.props.board.id, title, link, description, completed_at})
-      .then(() =>{
+  updateItem(id, title, link, description, completed_at) {
+    return apolloServer.invoke("updateBoardItem", {
+      id,
+      board_id: this.props.board.id,
+      title,
+      link,
+      description,
+      completed_at
+    })
+      .then(() => {
         this.loadItems();
       });
   }
 
-  toggleCompleted(){
+  toggleCompleted() {
     this.setState({
       showCompleted: !this.state.showCompleted
     });
@@ -167,7 +183,7 @@ class Board extends React.Component {
       />}
       </div>
       {this.state.items.filter(item => {
-        if(item.completed_at == null){
+        if (item.completed_at == null) {
           return true;
         }
         return (item.completed_at !== null) === this.state.showCompleted;

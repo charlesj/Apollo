@@ -19,30 +19,51 @@ var DarkSkyIconMapping = {
   "tornado": "wi-tornado"
 }
 
+function PrecipDisplay(props) {
+  var percentDisplay = Math.round(props.chance * 100);
+  if (percentDisplay === 0) {
+    return (<div>No Precipitation</div>)
+  }
+  return (<div>
+    {percentDisplay}% chance for {props.precipType}
+  </div>)
+}
+
 function ForecastDay(props) {
-  console.log(props.f);
   var date = moment.unix(props.f.time);
   return (<div className='forecastDay'>
-    <div><WeatherIcon icon={DarkSkyIconMapping[props.f.icon]} /></div>
-    <div>{date.calendar()}</div>
-    <div>{props.f.summary}</div>
-    <div>H {props.f.temperatureHigh}℉</div>
-    <div>L {props.f.temperatureLow}℉</div>
+    <div>{date.format('dddd')} {date.format('MMM Do')}</div>
+    <div className="weatherIcon"><WeatherIcon icon={DarkSkyIconMapping[props.f.icon]} /></div>
+    <div>L {props.f.temperatureLow}℉ - H {props.f.temperatureHigh}℉</div>
+    <div className="forecastSummary">{props.f.summary}</div>
+    <PrecipDisplay chance={props.f.precipProbability} precipType={props.f.precipType} />
+    <div>{Math.round(props.f.humidity * 100)}% humidity</div>
   </div>);
 }
 
 function ForecastDisplay(props) {
+  console.log(props.data.Forecast.currently);
+  var curr = props.data.Forecast.currently;
   return (<div className='weatherForecast'>
-    <div className='currentConditions'>
+    <div className="weatherLocation">{props.data.Location}
+      <div className="weeklySummary"> - {props.data.Forecast.daily.summary}</div>
+    </div>
+    <div className="forecastsContainer">
+    <div className='forecastDay'>
+      Now
     <div className='weatherIcon'>
-    <WeatherIcon icon={DarkSkyIconMapping[props.data.Forecast.currently.icon]} />
+    <WeatherIcon icon={DarkSkyIconMapping[curr.icon]} />
     </div>
-    {props.data.Location} - {props.data.Forecast.currently.summary} <br />
-    {props.data.Forecast.currently.temperature}℉
+    <div>{curr.temperature}℉ (feels: {curr.apparentTemperature} ℉) </div>
+    <div className="forecastSummary">{curr.summary} </div>
+    <PrecipDisplay chance={curr.precipProbability} precipType={curr.precipType} />
+    <div>{Math.round(curr.humidity * 100)}% humidity</div>
     </div>
+
     {props.data.Forecast.daily.data.map((d, i) => {
       return <ForecastDay key={i} f={d} />
     })}
+    </div>
   </div>)
 }
 
