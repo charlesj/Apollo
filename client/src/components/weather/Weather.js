@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import apolloServer from '../../services/apollo-server';
 import WeatherIcon from './WeatherIcon';
+import FontAwesome from 'react-fontawesome';
 
 var DarkSkyIconMapping = {
   "clear-day": "wi-day-sunny",
@@ -42,7 +43,6 @@ function ForecastDay(props) {
 }
 
 function ForecastDisplay(props) {
-  console.log(props.data.Forecast.currently);
   var curr = props.data.Forecast.currently;
   return (<div className='weatherForecast'>
     <div className="weatherLocation">{props.data.Location}
@@ -62,6 +62,16 @@ function ForecastDisplay(props) {
 
     {props.data.Forecast.daily.data.map((d, i) => {
       return <ForecastDay key={i} f={d} />
+    })}
+    </div>
+    <div>
+      {props.data.Forecast.alerts.map((a, i) => {
+      var expiresOn = moment.unix(a.expires);
+      return (<div className="weatherAlerts" key={i}>
+          <FontAwesome name="exclamation-triangle"/> <a href={a.uri} target="_blank">{a.title}</a>
+          - expires {expiresOn.calendar()}
+          <div className="alertDescription">{a.description}</div>
+        </div>)
     })}
     </div>
   </div>)

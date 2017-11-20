@@ -293,6 +293,21 @@ nav .fa{
 .forecastSummary{
   font-style: italic;
 }
+.weatherAlerts{
+  border-top: 10px solid #A82A2A;
+  padding: 5px;
+}
+.weatherAlerts .fa {
+  color: #A82A2A;
+  font-size: 25px;
+}
+.alertDescription{
+  border: 3px solid #A82A2A;
+  text-transform: uppercase;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 3px;
+}
 .weeklySummary{
   display: inline;
   font-weight: normal;
