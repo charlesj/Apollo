@@ -355,3 +355,17 @@ nav .fa{
 .boardItemDescription{
   padding: 5px;
 }
+.obliqueStrategies{
+  border-radius: 5px;
+  border: 3px solid #A66321;
+  background-color: #fff;
+}
+.strategyTitle{
+  font-weight: bold;
+  padding: 5px;
+}
+.strategyDescription{
+  font-style: italic;
+  border-top:1px solid #A66321;
+  padding: 5px;
+}
