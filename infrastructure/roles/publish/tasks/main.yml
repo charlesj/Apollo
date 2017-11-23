@@ -7,6 +7,6 @@
   with_items:
     - apollo-client
     - apollo-server
-- include: build_and_copy.yml
-- include: db_migrations.yml
-- include: services.yml
+- include_tasks: build_and_copy.yml
+- include_tasks: db_migrations.yml
+- include_tasks: services.yml

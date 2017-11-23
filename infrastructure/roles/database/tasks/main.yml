@@ -60,4 +60,4 @@
     src: ../templates/pgpass
     dest: ~/.pgpass
     mode: 0600
-- include: backups.yml
+- include_tasks: backups.yml
