@@ -3,6 +3,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import metricsService from '../../services/metrics-service';
+import FontAwesome from 'react-fontawesome';
 
 class HomeHealth extends React.Component {
 
@@ -16,6 +17,7 @@ class HomeHealth extends React.Component {
 
     this.extractBloodPressure = this.extractBloodPressure.bind(this);
     this.formatDateTime = this.formatDateTime.bind(this);
+    this.loadData = this.loadData.bind(this);
   }
 
   componentDidMount() {
@@ -119,7 +121,11 @@ class HomeHealth extends React.Component {
   }
 
   render() {
-    return (<div className="chartsContainer">
+    return (
+      <div className="healthCharts">
+        <div>History <button className="textButton pt-intent-success" onClick={this.loadData}><FontAwesome name='refresh' /></button></div>
+      <div className="chartsContainer">
+
         <div className='chartContainer pt-card'>
         <LineChart width={600} height={300} data={this.state.weightData}>
             <XAxis dataKey="key"/>
@@ -127,9 +133,7 @@ class HomeHealth extends React.Component {
             <CartesianGrid strokeDasharray="3 3"/>
             <Tooltip/>
             <Legend verticalAlign="bottom" height={36}/>
-            <Line type="monotone" dataKey="weight" stroke="#8884d8" activeDot={{
-        r: 8
-      }}/>
+            <Line type="monotone" dataKey="weight" stroke="#1F4B99" />
         </LineChart>
         </div>
         <div className='chartContainer pt-card'>
@@ -153,11 +157,10 @@ class HomeHealth extends React.Component {
             <CartesianGrid strokeDasharray="3 3"/>
             <Tooltip/>
             <Legend verticalAlign="bottom" height={36}/>
-            <Line type="monotone" dataKey="sleepTime" stroke="#8884d8" activeDot={{
-        r: 8
-      }}/>
+            <Line type="monotone" dataKey="sleepTime" stroke="#1F4B99" />
         </LineChart>
         </div>
+    </div>
     </div>);
   }
 }

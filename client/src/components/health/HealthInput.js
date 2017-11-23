@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button } from "@blueprintjs/core";
+import { Button, Intent } from "@blueprintjs/core";
 import metricsService from '../../services/metrics-service';
+import { Notifier } from '../../services/notifier';
 
 class Health extends React.Component {
   constructor(props) {
@@ -26,9 +27,7 @@ class Health extends React.Component {
       temperature: '',
       heartrate: '',
       bloodOxygen: '',
-      sleepTime: '',
-      showSuccess: false,
-      showError: false
+      sleepTime: ''
     };
   }
 
@@ -93,18 +92,19 @@ class Health extends React.Component {
         temperature: '',
         heartrate: '',
         bloodOxygen: '',
-        sleepTime: '',
-        showSuccess: true,
-        showError: false
+        sleepTime: ''
       })
-
+      Notifier.show({
+        intent: Intent.SUCCESS,
+        message: "Health information recorded successfully",
+      })
     }).catch(reason => {
       console.log('at least one metric failes');
       console.log(reason);
-      this.setState({
-        showSuccess: false,
-        showError: true
-      });
+      Notifier.show({
+        intent: Intent.DANGER,
+        message: "Error recording at least some of this information",
+      })
     });
   }
 

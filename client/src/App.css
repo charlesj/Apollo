@@ -130,9 +130,13 @@ nav .fa{
 .logoutButton a{
   color: white;
 }
+.healthCharts{
+  margin-top: 10px;
+}
 .chartsContainer{
-    display: flex;
-    flex-flow: row wrap;
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 10px;
 }
 .chartContainer{
   margin: 5px;
