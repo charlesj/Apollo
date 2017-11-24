@@ -14,7 +14,7 @@ namespace Apollo.IntegrationTests
         private static int RequestCounter = 0;
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
-        private string loginToken = "8066c726d8ef4a50bcef85d2510869df";
+        private string loginToken = "98e742cc98f649f3ab79dbf79353a633";
 
         [Fact]
         public void EnsureLoginTokenSet()
@@ -114,9 +114,90 @@ namespace Apollo.IntegrationTests
             data.Add("GetBoards", new {}, true);
             data.Add("GetBoardItems", new {board_id = 1}, true);
             data.Add("AddBoardItem", new {title="test"}, true);
-            data.Add("UpdateBoardItem", new {title="test update", id=1}, true);
+            data.Add("UpdateBoardItem", new {title="test update", id=1}, false);
+            data.Add("UpdateBoardItem", new {title="test update", id=1, board_id=1}, true);
             data.Add("DeleteBoard", new {id = 3}, true);
             data.Add("DeleteBoardItem", new {id = 3}, true);
+            data.Add("UpsertChecklist", new {checklist = new
+            {
+                name="test checklist",
+                type="daily",
+                description="yes this is description"
+            }}, true);
+            data.Add("UpsertChecklist", new {checklist = new
+            {
+                id=1,
+                name="test checklist",
+                type="daily",
+                description="yes this is description"
+            }}, true);
+            data.Add("UpsertChecklistItem", new
+            {
+                Item = new
+                {
+                    checklist_id=1,
+                    name="first item",
+                    type="required",
+                    description="i am describe"
+                }
+            }, true);
+            data.Add("UpsertChecklistItem", new
+            {
+                Item = new
+                {
+                    id=1,
+                    checklist_id=1,
+                    name="first item",
+                    type="required",
+                    description="i am describe"
+                }
+            }, true);
+            data.Add("GetChecklists", new {}, true);
+            data.Add("GetChecklistItems", new {id=1}, true);
+            data.Add("DeleteChecklist", new {id=1}, true);
+            data.Add("DeleteChecklistItem", new {id=1}, true);
+            data.Add("UpsertChecklistCompletion", new
+            {
+                item=new
+                {
+                    checklist_id=1,
+                    notes=string.Empty
+                }
+            }, true );
+            data.Add("UpsertChecklistCompletion", new
+            {
+                item=new
+                {
+                    id=1,
+                    checklist_id=1,
+                    notes=string.Empty
+                }
+            }, true );
+            data.Add("GetChecklistCompletions", new {id=1}, true);
+            data.Add("DeleteChecklistCompletion", new {id=1}, true);
+            data.Add("GetChecklistCompletionItems", new {id=1}, true);
+            data.Add("DeleteChecklistCompletionItem", new {id=1}, true);
+            data.Add("UpsertChecklistCompletionItem", new
+            {
+                item= new
+                {
+                   checklist_completion_id=1,
+                   checklist_item_id=1,
+                   completed=1
+                }
+            }, true);
+            data.Add("UpsertChecklistCompletionItem", new
+            {
+                item= new
+                {
+                    id=1,
+                    checklist_completion_id=1,
+                    checklist_item_id=1,
+                    completed=1
+                }
+            }, true);
+            data.Add("GetChecklistItemHistory", new { }, false);
+            data.Add("GetChecklistItemHistory", new {checklist_item_id=1 }, true);
             return data;
         }
     }
