@@ -47,7 +47,7 @@ class Nav extends React.Component {
     {
       href: "/boards",
       label: "Boards",
-      icon: "check-square-o"
+      icon: "tasks"
     },
     {
       href: "/journal",
@@ -58,6 +58,11 @@ class Nav extends React.Component {
       href: "/notebooks",
       label: "Notes",
       icon: "sticky-note"
+    },
+    {
+      href: "/checklists",
+      label: "Checklists",
+      icon: "check-circle-o"
     },
     {
       href: "/health",

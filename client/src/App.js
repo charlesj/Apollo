@@ -17,6 +17,7 @@ import Finance from './components/financial/Finance';
 import Feeds from './components/feeds/Feeds';
 import Notebooks from './components/notebooks/Notebooks';
 import Boards from './components/boards/Boards';
+import Checklists from './components/checklists/Checklists'
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
@@ -77,6 +78,7 @@ class App extends Component {
               <Route exact path='/boards' component={Boards} />
               <Route exact path='/journal' component={Journal} />
               <Route exact path='/notebooks' component={Notebooks} />
+              <Route exact path='/checklists' component={Checklists} />
               <Route exact path='/health' component={Health} />
               <Route exact path='/financial' component={Finance} />
               <Route exact path='/bookmarks' component={Bookmarks} />

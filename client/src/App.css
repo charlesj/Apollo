@@ -373,3 +373,25 @@ nav .fa{
   border-top:1px solid #A66321;
   padding: 5px;
 }
+.checklistsContainer{
+  display: flex;
+  flex-flow: row;
+}
+.checklistsSelector{
+  border: 1px solid #48AFF0;
+  background-color: #fff;
+  width: 150px;
+}
+.checklistGroupHeading{
+  padding: 5px;
+  border-bottom: 1px solid #48AFF0;
+  color: #0A6640;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.checklistListingDisplay{
+  padding: 5px;
+}
+.checklistListing{
+  padding: 5px;
+}
