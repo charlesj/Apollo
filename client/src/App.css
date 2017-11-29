@@ -395,3 +395,18 @@ nav .fa{
 .checklistListing{
   padding: 5px;
 }
+.checklistDisplay{
+  margin-left: 10px;
+  border: 1px solid #48AFF0;
+  background-color: #fff;
+  width: 400px;
+}
+.checklistDisplay h2{
+  padding: 5px;
+  font-size: 22px;
+  border-bottom: 1px solid #48AFF0;
+  text-transform: capitalize;
+}
+.checklistItem{
+  padding: 5px;
+}
