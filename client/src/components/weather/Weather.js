@@ -43,6 +43,9 @@ function ForecastDay(props) {
 }
 
 function ForecastDisplay(props) {
+  if(!props.data){
+    return (<div className='weatherForecast'>There are no forecasts configured</div>);
+  }
   var curr = props.data.Forecast.currently;
   return (<div className='weatherForecast'>
     <div className="weatherLocation">{props.data.Location}
