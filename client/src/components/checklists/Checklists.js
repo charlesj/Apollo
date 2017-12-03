@@ -92,9 +92,9 @@ class Checklists extends React.Component {
               delete={this.deleteChecklist.bind(null, c.id)}
               />
           })}
-          <button className="textButton" onClick={this.newChecklist.bind(null, type)}>new</button>
         </div>)
       })}
+      <button className="textButton" onClick={this.newChecklist.bind(null, "daily")}>new</button>
       </div>
       { this.state.selectedChecklist && (<ChecklistDisplay checklist={this.state.selectedChecklist} />) }
       <CompleteChecklist />
