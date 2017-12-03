@@ -415,6 +415,7 @@ nav .fa{
   border: 3px solid #48AFF0;
   background-color: #fff;
   border-radius: 5px;
+  min-width: 300px;
 }
 .checklistCompletionContainer .textButton {
   margin-left: 10px;
@@ -455,4 +456,41 @@ nav .fa{
 .checklistCompletionContainer #notes {
   margin-top: 15px;
   width: 500px;
+}
+.checklistReportingContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.completionLogContainer{
+  background-color: white;
+  border: 1px solid #48AFF0;
+  width: 400px;
+}
+.completionLogContainer h1{
+  border-bottom: 1px solid #48AFF0;
+  padding: 5px;
+  font-size: 20px;
+}
+.completionLogEntry {
+  margin-left: 5px;
+}
+.checklistCompletionDisplayContainer {
+  background-color: white;
+  border: 1px solid #48AFF0;
+  width: 400px;
+  margin-left: 10px;
+}
+.compeletedChecklistHeader {
+  border-bottom: 1px solid #48AFF0;
+  padding: 5px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.checklistCompletionDisplayContainer p {
+  margin: 10px;
+  font-style: italic;
+}
+.completedChecklistItem {
+  margin: 5px;
 }

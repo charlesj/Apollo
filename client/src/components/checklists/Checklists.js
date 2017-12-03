@@ -4,7 +4,9 @@ import apolloServer from '../../services/apollo-server.js';
 //import FontAwesome from 'react-fontawesome';
 import ChecklistListing from './ChecklistListing';
 import ChecklistDisplay from './ChecklistDisplay';
-
+import CompleteChecklist from './CompleteChecklist';
+import ChecklistCompletionLog from './ChecklistCompletionLog';
+import CompletedChecklistDisplay from './CompletedChecklistDisplay';
 
 class Checklists extends React.Component {
   constructor(props) {
@@ -12,7 +14,8 @@ class Checklists extends React.Component {
 
     this.state = {
       checklists: [],
-      selectedChecklist: null
+      selectedChecklist: null,
+      selectedCompletedChecklist: null
     };
 
     this.deleteChecklist = this.deleteChecklist.bind(this);
@@ -20,6 +23,7 @@ class Checklists extends React.Component {
     this.newChecklist = this.newChecklist.bind(this);
     this.selectChecklist = this.selectChecklist.bind(this);
     this.upsertChecklist = this.upsertChecklist.bind(this);
+    this.selectChecklistCompletion = this.selectChecklistCompletion.bind(this);
   }
 
   componentDidMount() {
@@ -66,9 +70,15 @@ class Checklists extends React.Component {
     });
   }
 
+  selectChecklistCompletion(id) {
+    this.setState({
+      selectedCompletedChecklist: id
+    });
+  }
+
   render() {
     var checklistGroups = _.groupBy(this.state.checklists, 'type');
-    return (<div className="checklistsContainer">
+    return (<div className="checklistsPage"><div className="checklistsContainer">
       <div className="checklistsSelector">
       { _.map(checklistGroups, (checklists, type) => {
         return (<div className="checklistGroup" key={type}>
@@ -87,7 +97,13 @@ class Checklists extends React.Component {
       })}
       </div>
       { this.state.selectedChecklist && (<ChecklistDisplay checklist={this.state.selectedChecklist} />) }
-    </div>)
+      <CompleteChecklist />
+    </div>
+    <div className="checklistReportingContainer">
+      <ChecklistCompletionLog selectCompletion={this.selectChecklistCompletion} />
+      {this.state.selectedCompletedChecklist && (<CompletedChecklistDisplay completionId={this.state.selectedCompletedChecklist} />)}
+    </div>
+  </div>)
   }
 }
 

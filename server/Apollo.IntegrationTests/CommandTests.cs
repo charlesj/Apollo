@@ -209,6 +209,8 @@ namespace Apollo.IntegrationTests
                     new {checklist_item_id=2, completed=0}
                 }
             }, true);
+
+            data.Add("GetChecklistCompletion", new {completed_checklist_id = 19}, true);
             return data;
         }
     }

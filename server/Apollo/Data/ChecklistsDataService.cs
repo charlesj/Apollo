@@ -20,6 +20,8 @@ namespace Apollo.Data
         Task<IReadOnlyList<ChecklistCompletion>> GetChecklistCompletions(int checklist_id);
         Task<IReadOnlyList<ChecklistCompletionItem>> GetCompletionItems(int checklist_completion_id);
         Task<IReadOnlyList<ChecklistCompletionItem>> GetCompletionHistory(int checklist_item_id);
+        Task<IReadOnlyList<ChecklistCompletionLogEntry>> GetChecklistCompletionLog();
+        Task<IReadOnlyList<CompletedChecklistItemInfo>> GetCompletedChecklistItemInfo(int completed_checklist_id);
     }
 
     public class ChecklistsDataService : BaseDataService, IChecklistsDataService
@@ -138,6 +140,27 @@ namespace Apollo.Data
                                                              "where checklist_item_id=@checklist_item_id",
                 new {checklist_item_id});
         }
+
+        public async Task<IReadOnlyList<ChecklistCompletionLogEntry>> GetChecklistCompletionLog()
+        {
+            return await QueryAsync<ChecklistCompletionLogEntry>("select cc.id as completion_id, c.name as name, " +
+                                                                 "cc.notes, cc.created_at as completed_at from " +
+                                                                 "checklist_completions cc " +
+                                                                 "join checklists c on cc.checklist_id=c.id " +
+                                                                 "where cc.deleted_at is null " +
+                                                                 "order by cc.created_at desc;");
+        }
+
+        public async Task<IReadOnlyList<CompletedChecklistItemInfo>> GetCompletedChecklistItemInfo(int completed_checklist_id)
+        {
+            return await QueryAsync<CompletedChecklistItemInfo>(
+                "select cci.id,cci.completed,cci.checklist_completion_id," +
+                "ci.name,ci.type,ci.description,ci.id as source_item_id " +
+                "from checklist_completion_items cci join checklist_items " +
+                "ci on cci.checklist_item_id=ci.id " +
+                "where cci.checklist_completion_id=@completed_checklist_id",
+                new {completed_checklist_id});
+        }
     }
 
     public class Checklist
@@ -182,5 +205,24 @@ namespace Apollo.Data
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
         public DateTime? deleted_at { get; set; }
+    }
+
+    public class ChecklistCompletionLogEntry
+    {
+        public int completion_id { get; set; }
+        public string name { get; set; }
+        public string notes { get; set; }
+        public DateTime completed_at { get; set; }
+    }
+
+    public class CompletedChecklistItemInfo
+    {
+        public int id { get; set; }
+        public int completed { get; set; }
+        public int checklist_completion_id { get; set; }
+        public string name { get; set; }
+        public string type { get; set; }
+        public string description { get; set; }
+        public int source_item_id { get; set; }
     }
 }
