@@ -3,7 +3,7 @@
 version_file_path = "./VERSION"
 file = open(version_file_path, "r")
 major = 0
-minor = 3
+minor = 4
 current_version = file.read()
 current = current_version.split(".")
 revision = 0
