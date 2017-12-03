@@ -204,13 +204,9 @@ class ObliqueStrategies extends React.Component {
     super(props);
 
     this.state = {
-      selected: 0
+      selected: ''
     }
     this.getRandomStrategy = this.getRandomStrategy.bind(this);
-  }
-
-  componentDidMount() {
-    this.getRandomStrategy();
   }
 
   getRandomStrategy() {
@@ -225,7 +221,8 @@ class ObliqueStrategies extends React.Component {
       Oblique Strategies <button className="textButton"><FontAwesome name="retweet" onClick={this.getRandomStrategy} /></button>
       </div>
       <div className="strategyDescription">
-        {this.state.selected}
+        {this.state.selected.length > 0 && this.state.selected}
+        {this.state.selected.length === 0 && (<span>Click refresh to get a strategy</span>)}
       </div>
 
     </div>)
