@@ -49,9 +49,4 @@ namespace Apollo.Data
             connection?.Dispose();
         }
     }
-
-    public class CountResult
-    {
-        public int count { get; set; }
-    }
 }

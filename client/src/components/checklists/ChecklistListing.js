@@ -4,15 +4,17 @@ import FontAwesome from 'react-fontawesome';
 
 var checklistTypes = ['daily', 'weekly', 'monthly', 'ad-hoc'];
 
-function CheckListListingDisplay(props){
-   return (<div className="checklistListingDisplay">
+function CheckListListingDisplay(props) {
+  return (<div className="checklistListingDisplay">
      <span onClick={props.select}>{props.checklist.name}</span>
-     <FontAwesome name='edit' style={{'float': 'right'}} onClick={props.toggle} />
+     <FontAwesome name='edit' style={{
+      'float': 'right'
+    }} onClick={props.toggle} />
    </div>)
 }
 
 class ChecklistListing extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       edit: false,
@@ -26,8 +28,10 @@ class ChecklistListing extends React.Component {
   }
 
 
-  toggleMode(){
-    this.setState({edit: !this.state.edit});
+  toggleMode() {
+    this.setState({
+      edit: !this.state.edit
+    });
   }
 
   handleChange(e) {
@@ -36,7 +40,7 @@ class ChecklistListing extends React.Component {
     });
   }
 
-  upsertChecklist(){
+  upsertChecklist() {
     this.toggleMode();
     var updated = this.props.checklist;
     updated.name = this.state.name;
@@ -45,8 +49,8 @@ class ChecklistListing extends React.Component {
     return this.props.upsert(updated);
   }
 
-  render(){
-    if(!this.state.edit){
+  render() {
+    if (!this.state.edit) {
       return <CheckListListingDisplay checklist={this.props.checklist} select={this.props.select} toggle={this.toggleMode}/>
     }
 
@@ -54,8 +58,8 @@ class ChecklistListing extends React.Component {
         <input id="name" placeholder="name" onChange={this.handleChange} name="name" value={this.state.name} />
         <select name="type" value={this.state.type} onChange={this.handleChange} >
           {checklistTypes.map(ct => {
-            return <option value={ct} key={ct}>{ct}</option>
-          })}
+        return <option value={ct} key={ct}>{ct}</option>
+      })}
         </select>
         <textarea id="description" placeholder="description" onChange={this.handleChange} name="description" value={this.state.description}></textarea>
         <button className='pt-button pt-intent-primary' onClick={this.upsertChecklist}>Save</button>

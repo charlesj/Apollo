@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Apollo.Data
@@ -12,7 +13,7 @@ namespace Apollo.Data
         Task DeleteChecklistItem(int id);
         Task<IReadOnlyList<Checklist>> GetChecklists();
         Task<IReadOnlyList<ChecklistItem>> GetChecklistItems(int checklist_id);
-        Task UpsertChecklistCompletion(ChecklistCompletion completion);
+        Task<int> UpsertChecklistCompletion(ChecklistCompletion completion);
         Task UpsertChecklistCompletionItem(ChecklistCompletionItem item);
         Task DeleteChecklistCompletion(int id);
         Task DeleteChecklistCompletionItem(int id);
@@ -77,18 +78,20 @@ namespace Apollo.Data
                                                    "and checklist_id=@checklist_id", new {checklist_id});
         }
 
-        public async Task UpsertChecklistCompletion(ChecklistCompletion completion)
+        public async Task<int> UpsertChecklistCompletion(ChecklistCompletion completion)
         {
             if (completion.id == 0)
             {
-                await Execute("insert into checklist_completions(checklist_id, notes, created_at, updated_at) " +
-                              "values (@checklist_id, @notes, current_timestamp, current_timestamp)", completion);
+                var idResults = await QueryAsync<IdResult>("insert into checklist_completions(checklist_id, notes, created_at, " +
+                                           "updated_at) values (@checklist_id, @notes, current_timestamp, " +
+                                           "current_timestamp) returning id", completion);
+                return idResults.Single().id;
             }
-            else
-            {
-                await Execute("update checklist_completions set notes=@notes, updated_at=current_timestamp " +
-                              "where id=@id", completion);
-            }
+
+            await Execute("update checklist_completions set notes=@notes, updated_at=current_timestamp " +
+                          "where id=@id", completion);
+
+            return completion.id;
         }
 
         public async Task UpsertChecklistCompletionItem(ChecklistCompletionItem item)

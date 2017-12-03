@@ -3,16 +3,18 @@ import _ from 'lodash';
 import apolloServer from '../../services/apollo-server.js';
 import FontAwesome from 'react-fontawesome';
 
-const itemTypes = ['mandatory','recommended','optional'];
+const itemTypes = ['mandatory', 'recommended', 'optional'];
 
-function ChecklistItemListingDisplay(props){
+function ChecklistItemListingDisplay(props) {
   return (<div className="checklistItem" key={props.item.id}>{props.item.name}
-    <FontAwesome name='edit' style={{'float': 'right'}} onClick={props.toggle} />
+    <FontAwesome name='edit' style={{
+      'float': 'right'
+    }} onClick={props.toggle} />
   </div>)
 }
 
 class ChecklistItemListing extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       editMode: false,
@@ -26,8 +28,10 @@ class ChecklistItemListing extends React.Component {
     this.upsertItem = this.upsertItem.bind(this);
   }
 
-  toggleEdit(){
-    this.setState({editMode: !this.state.editMode});
+  toggleEdit() {
+    this.setState({
+      editMode: !this.state.editMode
+    });
   }
 
   handleChange(e) {
@@ -36,7 +40,7 @@ class ChecklistItemListing extends React.Component {
     });
   }
 
-  upsertItem(){
+  upsertItem() {
     this.toggleEdit();
     var updated = this.props.item;
     updated.name = this.state.name;
@@ -45,8 +49,8 @@ class ChecklistItemListing extends React.Component {
     return this.props.upsert(updated);
   }
 
-  render(){
-    if(!this.state.editMode){
+  render() {
+    if (!this.state.editMode) {
       return <ChecklistItemListingDisplay item={this.props.item} toggle={this.toggleEdit} />
     }
 
@@ -54,8 +58,8 @@ class ChecklistItemListing extends React.Component {
         <input id="name" placeholder="name" onChange={this.handleChange} name="name" value={this.state.name} /><br />
         <select name="type" value={this.state.type} onChange={this.handleChange} >
           {itemTypes.map(ct => {
-            return <option value={ct} key={ct}>{ct}</option>
-          })}
+        return <option value={ct} key={ct}>{ct}</option>
+      })}
         </select><br />
         <textarea id="description" placeholder="description" onChange={this.handleChange} name="description" value={this.state.description}></textarea><br />
         <button className='pt-button pt-intent-primary' onClick={this.upsertItem}>Save</button>
@@ -66,7 +70,7 @@ class ChecklistItemListing extends React.Component {
 }
 
 class ChecklistDisplay extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -79,22 +83,26 @@ class ChecklistDisplay extends React.Component {
     this.upsertItem = this.upsertItem.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.loadItems(this.props.checklist.id);
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.loadItems(nextProps.checklist.id);
   }
 
-  loadItems(checklistId){
-    return apolloServer.invoke('GetChecklistItems', {id: checklistId})
-    .then((items) => {
-      this.setState({items});
-    });
+  loadItems(checklistId) {
+    return apolloServer.invoke('GetChecklistItems', {
+      id: checklistId
+    })
+      .then((items) => {
+        this.setState({
+          items
+        });
+      });
   }
 
-  newItem(){
+  newItem() {
     var item = {
       checklist_id: this.props.checklist.id,
       name: "new item",
@@ -105,17 +113,25 @@ class ChecklistDisplay extends React.Component {
     return this.upsertItem(item);
   }
 
-  upsertItem(item){
-    return apolloServer.invoke("UpsertChecklistItem", {item})
-              .then(() => {this.loadItems(this.props.checklist.id)});
+  upsertItem(item) {
+    return apolloServer.invoke("UpsertChecklistItem", {
+      item
+    })
+      .then(() => {
+        this.loadItems(this.props.checklist.id)
+      });
   }
 
-  deleteItem(id){
-    return apolloServer.invoke("DeleteChecklistItem", {id})
-        .then(() => {this.loadItems(this.props.checklist.id)});
+  deleteItem(id) {
+    return apolloServer.invoke("DeleteChecklistItem", {
+      id
+    })
+      .then(() => {
+        this.loadItems(this.props.checklist.id)
+      });
   }
 
-  render(){
+  render() {
     return (<div className="checklistDisplay">
       <h2>{this.props.checklist.name}</h2>
 
@@ -125,7 +141,7 @@ class ChecklistDisplay extends React.Component {
           key={item.id}
           upsert={this.upsertItem}
           delete={this.deleteItem.bind(null, item.id)}
-        />);
+          />);
       })}
       <div className="checklistItem">
         <button className="textButton" onClick={this.newItem}>new</button>

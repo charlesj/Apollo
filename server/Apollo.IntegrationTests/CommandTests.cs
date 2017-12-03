@@ -198,6 +198,17 @@ namespace Apollo.IntegrationTests
             }, true);
             data.Add("GetChecklistItemHistory", new { }, false);
             data.Add("GetChecklistItemHistory", new {checklist_item_id=1 }, true);
+
+            data.Add("AddCompletedChecklist", new
+            {
+                checklist_id=1,
+                notes="This was completed",
+                items = new[]
+                {
+                    new {checklist_item_id=1, completed=1},
+                    new {checklist_item_id=2, completed=0}
+                }
+            }, true);
             return data;
         }
     }

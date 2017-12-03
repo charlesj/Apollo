@@ -65,7 +65,7 @@ function ForecastDisplay(props) {
     })}
     </div>
     <div>
-      {props.data.Forecast.alerts.map((a, i) => {
+      {props.data.Forecast.alerts && props.data.Forecast.alerts.map((a, i) => {
       var expiresOn = moment.unix(a.expires);
       return (<div className="weatherAlerts" key={i}>
           <FontAwesome name="exclamation-triangle"/> <a href={a.uri} target="_blank">{a.title}</a>
@@ -96,7 +96,7 @@ class Weather extends React.Component {
   }
 
   render() {
-    if (this.state.data === null) {
+    if (this.state.data == null || this.state.data.forecasts == null) {
       return (<div className='weatherContainer'>Loading Weather...</div>);
     }
 

@@ -7,7 +7,7 @@ import ChecklistDisplay from './ChecklistDisplay';
 
 
 class Checklists extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -22,11 +22,11 @@ class Checklists extends React.Component {
     this.upsertChecklist = this.upsertChecklist.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.loadChecklists();
   }
 
-  loadChecklists(){
+  loadChecklists() {
     return apolloServer.invoke("GetChecklists", {}).then((checklists) => {
       this.setState({
         checklists
@@ -34,12 +34,14 @@ class Checklists extends React.Component {
     });
   }
 
-  selectChecklist(checklist){
-    this.setState({selectedChecklist: checklist});
+  selectChecklist(checklist) {
+    this.setState({
+      selectedChecklist: checklist
+    });
   }
 
-  newChecklist(type){
-    var checklist={
+  newChecklist(type) {
+    var checklist = {
       name: "new checklist",
       type: type,
       description: "this is a new checklist"
@@ -48,19 +50,23 @@ class Checklists extends React.Component {
     return this.upsertChecklist(checklist);
   }
 
-  upsertChecklist(checklist){
-    return apolloServer.invoke("upsertChecklist", {checklist}).then(() => {
+  upsertChecklist(checklist) {
+    return apolloServer.invoke("upsertChecklist", {
+      checklist
+    }).then(() => {
       return this.loadChecklists();
     });
   }
 
-  deleteChecklist(id){
-    return apolloServer.invoke("deleteChecklist", {id}).then(() => {
+  deleteChecklist(id) {
+    return apolloServer.invoke("deleteChecklist", {
+      id
+    }).then(() => {
       return this.loadChecklists();
     });
   }
 
-  render(){
+  render() {
     var checklistGroups = _.groupBy(this.state.checklists, 'type');
     return (<div className="checklistsContainer">
       <div className="checklistsSelector">
@@ -74,7 +80,7 @@ class Checklists extends React.Component {
               upsert={this.upsertChecklist}
               select={this.selectChecklist.bind(null, c)}
               delete={this.deleteChecklist.bind(null, c.id)}
-            />
+              />
           })}
           <button className="textButton" onClick={this.newChecklist.bind(null, type)}>new</button>
         </div>)
