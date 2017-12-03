@@ -19,6 +19,7 @@ namespace Apollo.Commands.Meta
         private readonly INotebookDataService notebookDataService;
         private readonly IPersonalHealthService personalHealthService;
         private readonly IBoardDataService boardDataService;
+        private readonly IChecklistsDataService checklistsDataService;
 
         public GetSummaries(
             IBookmarksDataService bookmarksDataService,
@@ -29,7 +30,8 @@ namespace Apollo.Commands.Meta
             ILoginService loginService,
             INotebookDataService notebookDataService,
             IPersonalHealthService personalHealthService,
-            IBoardDataService boardDataService) : base(loginService)
+            IBoardDataService boardDataService,
+            IChecklistsDataService checklistsDataService) : base(loginService)
         {
             this.bookmarksDataService = bookmarksDataService;
             this.feedDataService = feedDataService;
@@ -39,6 +41,7 @@ namespace Apollo.Commands.Meta
             this.notebookDataService = notebookDataService;
             this.personalHealthService = personalHealthService;
             this.boardDataService = boardDataService;
+            this.checklistsDataService = checklistsDataService;
         }
 
         public override async Task<CommandResult> Execute()
@@ -59,7 +62,8 @@ namespace Apollo.Commands.Meta
             values.Add("incomplete board items", async() => (await boardDataService.GetIncompleteItemCount()).ToString());
             values.Add("recently added board items", async() => (await boardDataService.GetRecentlyAddedItemCount()).ToString());
             values.Add("recently completed board items", async() => (await boardDataService.GetRecentlyCompletedItemCount()).ToString());
-
+            values.Add("checklists", async () => (await checklistsDataService.GetChecklists()).Count.ToString());
+            values.Add("completed checklists", async () => (await checklistsDataService.GetChecklistCompletionLog()).Count.ToString());
             var counter = 0;
             try
             {
