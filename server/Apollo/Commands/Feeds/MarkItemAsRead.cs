@@ -25,5 +25,10 @@ namespace Apollo.Commands.Feeds
         {
             return Task.FromResult(itemId > 0);
         }
+
+        public override object ExamplePayload()
+        {
+            return new { itemId };
+        }
     }
 }

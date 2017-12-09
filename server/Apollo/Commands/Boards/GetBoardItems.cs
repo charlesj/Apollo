@@ -25,5 +25,10 @@ namespace Apollo.Commands.Boards
         {
             return Task.FromResult(board_id > 0);
         }
+
+        public override object ExamplePayload()
+        {
+            return new { board_id=0};
+        }
     }
 }

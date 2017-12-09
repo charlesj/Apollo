@@ -26,5 +26,10 @@ namespace Apollo.Commands.Boards
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(title) && list_order >= 0);
         }
+
+        public override object ExamplePayload()
+        {
+            return new {title = "board title", list_order = 1};
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Apollo.Commands.Notebook
     {
         private readonly INotebookDataService dataService;
         public int Id { get; set; }
-        
+
         public GetNote(ILoginService loginService, INotebookDataService dataService) : base(loginService)
         {
             this.dataService = dataService;
@@ -24,6 +24,11 @@ namespace Apollo.Commands.Notebook
         public override Task<bool> IsValid()
         {
             return Task.FromResult(Id > 0);
+        }
+
+        public override object ExamplePayload()
+        {
+            return new { id=0};
         }
     }
 }

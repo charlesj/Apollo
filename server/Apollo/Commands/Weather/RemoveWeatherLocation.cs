@@ -33,5 +33,10 @@ namespace Apollo.Commands.Weather
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(Identifier));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { Identifier };
+        }
     }
 }

@@ -10,9 +10,9 @@ namespace Apollo.Commands.Metrics
     {
         private readonly IMetricsDataService metricsDataService;
 
-        public string Category { get; set; }
-        public string Name { get; set; }
-        public decimal Value { get; set; }
+        public string category { get; set; }
+        public string name { get; set; }
+        public decimal value { get; set; }
 
         public AddMetric(
             ILoginService loginService,
@@ -21,23 +21,28 @@ namespace Apollo.Commands.Metrics
         {
             Logger.Trace("Created AddMetric Instance");
             this.metricsDataService = metricsDataService;
-            this.Value = default(decimal);
+            this.value = default(decimal);
         }
 
         public override async Task<CommandResult> Execute()
         {
             Logger.Trace("Began Executing AddMetric");
-            await this.metricsDataService.InsertMetric(Category, Name, Value);
+            await this.metricsDataService.InsertMetric(category, name, value);
             Logger.Trace("Left Data Service");
             return CommandResult.SuccessfulResult;
         }
 
         public override Task<bool> IsValid()
         {
-            if (string.IsNullOrWhiteSpace(Category) ||
-                string.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(category) ||
+                string.IsNullOrWhiteSpace(name))
                 return Task.FromResult(false);
             return Task.FromResult(true);
+        }
+
+        public override object ExamplePayload()
+        {
+            return new { category, name, value};
         }
     }
 }

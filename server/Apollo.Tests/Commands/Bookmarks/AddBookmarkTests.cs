@@ -14,12 +14,12 @@ namespace Apollo.Tests.Commands.Bookmarks
     {
         public AddBookmarkTests()
         {
-            this.ClassUnderTest.Description = "description";
-            this.ClassUnderTest.Tags = new List<string>{"tag1", "tag2"};
-            this.ClassUnderTest.Link = "http://example.com";
-            this.ClassUnderTest.Title = "title";
-            this.ClassUnderTest.CreatedAt = DateTime.Now;
-            this.ClassUnderTest.ModifiedAt = DateTime.Today;
+            this.ClassUnderTest.description = "description";
+            this.ClassUnderTest.tags = new List<string>{"tag1", "tag2"};
+            this.ClassUnderTest.link = "http://example.com";
+            this.ClassUnderTest.title = "title";
+            this.ClassUnderTest.createdAt = DateTime.Now;
+            this.ClassUnderTest.modifiedAt = DateTime.Today;
         }
 
         public class Execute : AddBookmarkTests
@@ -39,12 +39,12 @@ namespace Apollo.Tests.Commands.Bookmarks
                 this.Mock<IBookmarksDataService>()
                     .Verify(bds => bds.Insert(
                         It.Is<Bookmark>(
-                            b => b.title == this.ClassUnderTest.Title &&
-                                 b.link == this.ClassUnderTest.Link &&
-                                 b.description == this.ClassUnderTest.Description &&
-                                 b.tags.All(t => this.ClassUnderTest.Tags.Contains(t)) &&
-                                 b.created_at == this.ClassUnderTest.CreatedAt &&
-                                 b.modified_at == this.ClassUnderTest.ModifiedAt)),
+                            b => b.title == this.ClassUnderTest.title &&
+                                 b.link == this.ClassUnderTest.link &&
+                                 b.description == this.ClassUnderTest.description &&
+                                 b.tags.All(t => this.ClassUnderTest.tags.Contains(t)) &&
+                                 b.created_at == this.ClassUnderTest.createdAt &&
+                                 b.modified_at == this.ClassUnderTest.modifiedAt)),
                         Times.Once());
             }
 
@@ -72,7 +72,7 @@ namespace Apollo.Tests.Commands.Bookmarks
             [InlineData("\t")]
             public async void IsFalseWhenTitleIsNullOrWhitespace(string value)
             {
-                this.ClassUnderTest.Title = value;
+                this.ClassUnderTest.title = value;
                 Assert.False(await this.ClassUnderTest.IsValid());
             }
 
@@ -84,7 +84,7 @@ namespace Apollo.Tests.Commands.Bookmarks
             [InlineData("\t")]
             public async void IsFalseWhenLinkIsNullOrWhitespace(string value)
             {
-                this.ClassUnderTest.Link = value;
+                this.ClassUnderTest.link = value;
                 Assert.False(await this.ClassUnderTest.IsValid());
             }
         }

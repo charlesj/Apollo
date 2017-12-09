@@ -37,5 +37,10 @@ namespace Apollo.Commands.Checklists
         {
             return Task.FromResult(notes != null && checklist_id > 0);
         }
+
+        public override object ExamplePayload()
+        {
+            return new { checklist_id=0, notes, items=new List<ChecklistCompletionItem>{new ChecklistCompletionItem(), new ChecklistCompletionItem()}};
+        }
     }
 }

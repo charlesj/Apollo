@@ -30,5 +30,10 @@ namespace Apollo.Commands.Jobs
         {
             return Task.FromResult(true);
         }
+
+        public override object ExamplePayload()
+        {
+            return new { Expired="optional" };
+        }
     }
 }

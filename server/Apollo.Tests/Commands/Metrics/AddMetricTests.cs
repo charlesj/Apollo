@@ -11,9 +11,9 @@ namespace Apollo.Tests.Commands.Metrics
     {
         public AddMetricTests()
         {
-            this.ClassUnderTest.Category = "category";
-            this.ClassUnderTest.Name = "name";
-            this.ClassUnderTest.Value = 1.0m;
+            this.ClassUnderTest.category = "category";
+            this.ClassUnderTest.name = "name";
+            this.ClassUnderTest.value = 1.0m;
         }
 
         public class IsValid : AddMetricTests
@@ -21,14 +21,14 @@ namespace Apollo.Tests.Commands.Metrics
             [Fact]
             public async void RequiresCategory()
             {
-                this.ClassUnderTest.Category = string.Empty;
+                this.ClassUnderTest.category = string.Empty;
                 Assert.False(await this.ClassUnderTest.IsValid());
             }
 
             [Fact]
             public async void RequiresName()
             {
-                this.ClassUnderTest.Name = string.Empty;
+                this.ClassUnderTest.name = string.Empty;
                 Assert.False(await this.ClassUnderTest.IsValid());
             }
 
@@ -57,9 +57,9 @@ namespace Apollo.Tests.Commands.Metrics
                 this.Mock<IMetricsDataService>()
                     .Verify(mds =>
                         mds.InsertMetric(
-                            this.ClassUnderTest.Category,
-                            this.ClassUnderTest.Name,
-                            this.ClassUnderTest.Value),
+                            this.ClassUnderTest.category,
+                            this.ClassUnderTest.name,
+                            this.ClassUnderTest.value),
                         Times.Once());
             }
 

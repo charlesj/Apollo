@@ -48,5 +48,10 @@ namespace Apollo.Commands.Weather
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(ApiKey));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { ApiKey };
+        }
     }
 }

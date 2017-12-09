@@ -40,5 +40,10 @@ namespace Apollo.Commands
         {
             public string token { get; set; }
         }
+
+        public override object ExamplePayload()
+        {
+            return new { Password };
+        }
     }
 }

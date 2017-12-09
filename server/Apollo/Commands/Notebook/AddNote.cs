@@ -8,9 +8,9 @@ namespace Apollo.Commands.Notebook
     public class AddNote : AuthenticatedCommand
     {
         private readonly INotebookDataService dataService;
-        public string Name { get; set; }
-        public string Body { get; set; }
-        
+        public string name { get; set; }
+        public string body { get; set; }
+
         public AddNote(ILoginService loginService, INotebookDataService dataService) : base(loginService)
         {
             this.dataService = dataService;
@@ -18,13 +18,18 @@ namespace Apollo.Commands.Notebook
 
         public override async Task<CommandResult> Execute()
         {
-            await dataService.CreateNote(Name, Body);
+            await dataService.CreateNote(name, body);
             return CommandResult.SuccessfulResult;
         }
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(!string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Body));
+            return Task.FromResult(!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(body));
+        }
+
+        public override object ExamplePayload()
+        {
+            return new { name, body};
         }
     }
 }

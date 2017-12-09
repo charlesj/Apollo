@@ -40,5 +40,10 @@ namespace Apollo.Commands.UserSettings
 
             return NewPassword == NewPasswordVerification;
         }
+
+        public override object ExamplePayload()
+        {
+            return new { CurrentPassword, NewPassword, NewPasswordVerification };
+        }
     }
 }

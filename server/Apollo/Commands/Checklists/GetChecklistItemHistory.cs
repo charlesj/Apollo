@@ -26,5 +26,10 @@ namespace Apollo.Commands.Checklists
         {
             return Task.FromResult(checklist_item_id > 0);
         }
+
+        public override object ExamplePayload()
+        {
+            return new { checklist_item_id };
+        }
     }
 }

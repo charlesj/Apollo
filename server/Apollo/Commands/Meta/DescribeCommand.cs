@@ -94,6 +94,11 @@ namespace Apollo.Commands.Meta
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(command));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { command };
+        }
     }
 
     public class PropertyTreeNode

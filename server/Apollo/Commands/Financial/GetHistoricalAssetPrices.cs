@@ -24,5 +24,10 @@ namespace Apollo.Commands.Financial
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(Symbol));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { Symbol };
+        }
     }
 }

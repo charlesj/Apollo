@@ -498,9 +498,6 @@ nav .fa{
   display: flex;
   flex-direction: row;
 }
-.commandListSelector{
-  width: 250px;
-}
 .commandDescriptionHeader{
   font-size: 30px;
   font-weight: bold;
@@ -525,4 +522,16 @@ nav .fa{
 .commandPayloadContainer{
   margin: 10px;
   height: 300px;
+}
+.commandListSelector{
+  border: 1px solid #000;
+  margin-right: 10px;
+  background-color: #fff;
+  width: 300px;
+}
+.commandListing{
+  padding: 5px;
+}
+.selectedCommand{
+  background-color: #48AFF0;
 }

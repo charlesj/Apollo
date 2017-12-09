@@ -26,5 +26,10 @@ namespace Apollo.Commands.Jobs
         {
             return Task.FromResult(JobId > 0);
         }
+
+        public override object ExamplePayload()
+        {
+            return new { JobId };
+        }
     }
 }

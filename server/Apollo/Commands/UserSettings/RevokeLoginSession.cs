@@ -22,5 +22,10 @@ namespace Apollo.Commands.UserSettings
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(this.TokenToRevoke));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { TokenToRevoke };
+        }
     }
 }

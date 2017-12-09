@@ -33,5 +33,10 @@ namespace Apollo.Commands.Journal
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(this.Note));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { Note, Tags=new List<string>{"tag1", "tag2"}};
+        }
     }
 }

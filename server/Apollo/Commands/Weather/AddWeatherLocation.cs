@@ -48,5 +48,10 @@ namespace Apollo.Commands.Weather
                 !string.IsNullOrWhiteSpace(Name) &&
                 !string.IsNullOrWhiteSpace(Identifier));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { Name, Identifier, Latitude, Longitude };
+        }
     }
 }

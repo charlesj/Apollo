@@ -8,10 +8,10 @@ namespace Apollo.Commands.Metrics
     public class GetMetrics : AuthenticatedCommand
     {
         private readonly IMetricsDataService metricsDataService;
-        
+
         public string Category { get; set; }
         public string Name { get; set; }
-        
+
         public GetMetrics(
             ILoginService loginService,
             IMetricsDataService metricsDataService) : base(loginService)
@@ -28,6 +28,11 @@ namespace Apollo.Commands.Metrics
         public override Task<bool> IsValid()
         {
             return Task.FromResult(true);
+        }
+
+        public override object ExamplePayload()
+        {
+            return new {category="optional", name="optional" };
         }
     }
 }

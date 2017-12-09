@@ -35,5 +35,10 @@ namespace Apollo.Commands.Boards
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(title));
         }
+
+        public override object ExamplePayload()
+        {
+            return new {board_id = 1, title, link, description};
+        }
     }
 }

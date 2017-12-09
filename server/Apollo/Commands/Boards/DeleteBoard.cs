@@ -27,5 +27,10 @@ namespace Apollo.Commands.Boards
             var items = await dataService.GetBoardItems(id);
             return !items.Any();
         }
+
+        public override object ExamplePayload()
+        {
+            return new { id=0};
+        }
     }
 }

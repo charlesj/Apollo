@@ -8,10 +8,10 @@ namespace Apollo.Commands.Notebook
     public class UpdateNote : AuthenticatedCommand
     {
         private readonly INotebookDataService dataService;
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Body { get; set; }
-        
+        public int id { get; set; }
+        public string name { get; set; }
+        public string body { get; set; }
+
         public UpdateNote(ILoginService loginService, INotebookDataService dataService) : base(loginService)
         {
             this.dataService = dataService;
@@ -19,13 +19,18 @@ namespace Apollo.Commands.Notebook
 
         public override async Task<CommandResult> Execute()
         {
-            await dataService.UpdateNote(Id, Name, Body);
+            await dataService.UpdateNote(id, name, body);
             return CommandResult.SuccessfulResult;
         }
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(Id > 0 && !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Body));
+            return Task.FromResult(id > 0 && !string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(body));
+        }
+
+        public override object ExamplePayload()
+        {
+            return new { id=0, name, body};
         }
     }
 }

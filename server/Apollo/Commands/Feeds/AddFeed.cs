@@ -44,5 +44,10 @@ namespace Apollo.Commands.Feeds
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(Url));
         }
+
+        public override object ExamplePayload()
+        {
+            return new { Url };
+        }
     }
 }

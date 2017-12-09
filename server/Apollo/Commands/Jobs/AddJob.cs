@@ -46,5 +46,10 @@ namespace Apollo.Commands.Jobs
 
             return validCommandName && validParameters && validSchedule;
         }
+
+        public override object ExamplePayload()
+        {
+            return new { CommandName, Parameters, Schedule = new Schedule()};
+        }
     }
 }
