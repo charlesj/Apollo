@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Apollo.CommandSystem;
 using Apollo.Services;
 
-namespace Apollo.Commands.Jobs
+namespace Apollo.Commands.Meta
 {
     public class GetAvailableCommands : AuthenticatedCommand
     {

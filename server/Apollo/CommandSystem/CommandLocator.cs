@@ -38,7 +38,11 @@ namespace Apollo.CommandSystem
             var type = typeof(ICommand);
             var types = type.GetTypeInfo().Assembly.GetTypes()
                 .Where(p => type.IsAssignableFrom(p));
-
+            types = types.Where(t =>
+            {
+                var typeInfo = t.GetTypeInfo();
+                return !typeInfo.IsAbstract && !typeInfo.IsInterface;
+            });
             return types.ToList();
         }
     }

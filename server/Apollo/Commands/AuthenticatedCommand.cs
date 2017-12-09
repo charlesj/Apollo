@@ -13,6 +13,7 @@ namespace Apollo.Commands
             this.loginService = loginService;
         }
 
+        [ServerOnly]
         public string Token { get; set; }
 
         public abstract override Task<CommandResult> Execute();

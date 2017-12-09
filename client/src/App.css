@@ -494,3 +494,35 @@ nav .fa{
 .completedChecklistItem {
   margin: 5px;
 }
+.commandInterfaceContainer{
+  display: flex;
+  flex-direction: row;
+}
+.commandListSelector{
+  width: 250px;
+}
+.commandDescriptionHeader{
+  font-size: 30px;
+  font-weight: bold;
+}
+.commandExplorer{
+  background-color: white;
+  padding: 20px;
+  flex-grow: 1;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.commandMember{
+  margin-left: 10px;
+}
+.commandExecutionResult {
+  margin-top: 30px;
+}
+.commandResultJsonContainer{
+  padding: 20px;
+  background-color: rgb(0, 43, 54);
+}
+.commandPayloadContainer{
+  margin: 10px;
+  height: 300px;
+}

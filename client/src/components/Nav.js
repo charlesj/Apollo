@@ -85,6 +85,11 @@ class Nav extends React.Component {
       icon: "rss-square"
     },
     {
+      href: "/commands",
+      label: "Commands",
+      icon: "magic"
+    },
+    {
       href: "/jobs",
       label: "Jobs",
       icon: "gavel"

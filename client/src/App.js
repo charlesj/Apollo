@@ -18,6 +18,7 @@ import Feeds from './components/feeds/Feeds';
 import Notebooks from './components/notebooks/Notebooks';
 import Boards from './components/boards/Boards';
 import Checklists from './components/checklists/Checklists'
+import CommandInterface from './components/meta/CommandInterface';
 
 import '../node_modules/gridforms/gridforms/gridforms.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
@@ -84,6 +85,7 @@ class App extends Component {
               <Route exact path='/bookmarks' component={Bookmarks} />
               <Route exact path='/feeds' component={Feeds} />
               <Route exact path='/jobs' component={Jobs} />
+              <Route exact path='/commands' component={CommandInterface} />
               <Route exact path='/settings' component={Settings} />
               <Route render={function() {
         return (<p>Not Found</p>)
