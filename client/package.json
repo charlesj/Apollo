@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.17.1",
     "history": "^4.7.2",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.2",
@@ -13,7 +14,9 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "react-shortcut": "^1.0.6",
     "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
+    "store": "^2.0.12",
     "terminal-in-react": "^3.5.1"
   },
   "devDependencies": {

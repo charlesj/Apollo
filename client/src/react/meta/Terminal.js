@@ -4,9 +4,10 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import HotKey from "react-shortcut";
 import Terminal from "terminal-in-react";
-import { RoutesMap } from "../redux/navigator";
+import { RoutesMap } from "../../redux/navigator";
+import { meta } from "../../redux/actions";
 
-import "../../node_modules/terminal-in-react/lib/bundle/terminal-react.css";
+import "../../../node_modules/terminal-in-react/lib/bundle/terminal-react.css";
 import "./Terminal.css";
 
 class ApolloTerminal extends Component {
@@ -19,16 +20,21 @@ class ApolloTerminal extends Component {
         [route.name]: () => props.changePage(route.path)
       };
     }, {});
+
+    commands.logout = () => {
+      props.logout();
+    };
     let descriptions = RoutesMap.reduce((reducer, route) => {
       return {
         ...reducer,
         [route.name]: `Navigate to ${route.label}`
       };
     }, {});
+
     this.state = {
       commands,
       descriptions,
-      showTerminal: true
+      showTerminal: false
     };
 
     this.toggleTerminal = this.toggleTerminal.bind(this);
@@ -60,12 +66,11 @@ class ApolloTerminal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changePage: path => push(path)
-    },
-    dispatch
-  );
+function mapDispatchToProps(dispatch, props) {
+  return {
+    ...bindActionCreators({ changePage: path => push(path) }, dispatch),
+    logout: password => dispatch(meta.logout())
+  };
+}
 
 export default connect(null, mapDispatchToProps)(ApolloTerminal);
