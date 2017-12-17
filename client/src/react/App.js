@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { RoutesMap } from "../redux/navigator";
 import { Terminal, Login } from "./meta";
@@ -33,4 +33,4 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));

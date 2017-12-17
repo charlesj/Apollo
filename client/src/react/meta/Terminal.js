@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { push } from "react-router-redux";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import HotKey from "react-shortcut";
 import Terminal from "terminal-in-react";
@@ -48,6 +47,7 @@ class ApolloTerminal extends Component {
 
   render() {
     const { commands, descriptions, showTerminal } = this.state;
+
     return (
       <div>
         <HotKey keys={["escape"]} onKeysCoincide={this.toggleTerminal} />
@@ -68,7 +68,7 @@ class ApolloTerminal extends Component {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    ...bindActionCreators({ changePage: path => push(path) }, dispatch),
+    changePage: path => dispatch(push(path)),
     logout: password => dispatch(metaActions.logout())
   };
 }
