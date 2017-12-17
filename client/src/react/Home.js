@@ -1,11 +1,16 @@
-import React, { Component } from "react";
-
+import React from "react";
 import Summaries from "./meta/Summaries";
+import Weather from "./weather/Weather";
+import Strategies from "./thinking/ObliqueStrategies";
 
-class Home extends Component {
-  render() {
-    return <div><Summaries /></div>;
-  }
+function Home(props) {
+  return (
+    <div>
+      <Weather />
+      <Summaries />
+      <Strategies />
+    </div>
+  );
 }
 
 export default Home;

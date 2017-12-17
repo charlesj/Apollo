@@ -18,10 +18,7 @@ export default handleActions(
       actions.logout.start
     )]: basicStartReducer,
 
-    [combineActions(
-      actions.login.fail,
-      actions.logout.fail
-    )]: basicFailReducer,
+    [combineActions(actions.login.fail, actions.logout.fail)]: basicFailReducer,
 
     [actions.login.complete]: (state, action) => {
       const { token, loginError } = action.payload;

@@ -1,7 +1,4 @@
 import * as metaActions from "./meta/actions";
-import * as summaryActions from "./summaries/actions"
+import * as summaryActions from "./summaries/actions";
 
-export {
-  metaActions,
-  summaryActions
-};
+export { metaActions, summaryActions };

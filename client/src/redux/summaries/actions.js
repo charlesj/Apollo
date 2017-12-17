@@ -4,7 +4,7 @@ import apolloServer from "../../services/apolloServer";
 
 const actionCreators = createActions({
   summaries: {
-    getSummaries: basicActions(),
+    getSummaries: basicActions()
   }
 });
 

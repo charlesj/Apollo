@@ -12,13 +12,9 @@ const initialState = {
 
 export default handleActions(
   {
-    [combineActions(
-      actions.getSummaries.start
-    )]: basicStartReducer,
+    [combineActions(actions.getSummaries.start)]: basicStartReducer,
 
-    [combineActions(
-      actions.getSummaries.fail,
-    )]: basicFailReducer,
+    [combineActions(actions.getSummaries.fail)]: basicFailReducer,
 
     [actions.getSummaries.complete]: (state, action) => {
       const { summaries } = action.payload;
@@ -27,7 +23,7 @@ export default handleActions(
         ...basicLoadCompleteReducer(state, action),
         summaries
       };
-    },
+    }
   },
   initialState
 );

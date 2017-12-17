@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { RoutesMap } from "../redux/navigator";
 import { Terminal, Login } from "./meta";
 
+import "font-awesome/css/font-awesome.css";
+
 class App extends Component {
   render() {
     const { isLoggedIn } = this.props;

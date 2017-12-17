@@ -1,0 +1,58 @@
+
+.weatherForecast {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 0px;
+}
+.weatherLocation{
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #0A6640;
+  padding: 5px;
+}
+.weatherIcon {
+  color: #0E5A8A;
+  font-size: 50px;
+  margin: 10px;
+  text-align: center;
+}
+.forecastsContainer{
+  display: flex;
+  flex-flow: row;
+}
+
+.forecastDay {
+  padding: 5px;
+  border-right: 1px solid  #0A6640;
+  width: 11%;
+}
+.forecastsContainer .forecastDay:last-child{
+  border: none;
+}
+.forecastSummary{
+  font-style: italic;
+}
+.weatherAlerts{
+  border-top: 10px solid #A82A2A;
+  padding: 5px;
+}
+.weatherAlerts .fa {
+  color: #A82A2A;
+  font-size: 25px;
+}
+.alertDescription{
+  border: 3px solid #A82A2A;
+  text-transform: uppercase;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.weeklySummary{
+  display: inline;
+  font-weight: normal;
+  font-style: italic;
+  text-transform:none;
+}
