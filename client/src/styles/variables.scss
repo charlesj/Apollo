@@ -5,5 +5,11 @@ $orange: #A66321;
 $red: #A82A2A;
 $white: #fff;
 
+$lightGreen: $green + #333;
+
 $background-color: $gray;
+$primary: $blue;
 $error: $red;
+$success: $green;
+$invalid: $orange;
+$selectedBackground: $lightGreen;

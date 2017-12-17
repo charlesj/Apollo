@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { summaryActions } from "../../redux/actions";
-import { Card, FlowRow } from "../general/";
+import { Card, FlexRow } from "../general/";
 
 class Summaries extends Component {
   componentWillMount() {
@@ -11,7 +11,7 @@ class Summaries extends Component {
   render() {
     const { summaries } = this.props;
     return (
-      <FlowRow>
+      <FlexRow>
         {summaries.map(summary => {
           return (
             <Card
@@ -21,7 +21,7 @@ class Summaries extends Component {
             />
           );
         })}
-      </FlowRow>
+      </FlexRow>
     );
   }
 }

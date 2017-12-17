@@ -1,9 +1,9 @@
 import React from "react";
 
-import "./FlowRow.css";
+import "./FlexRow.css";
 
-function FlowRow(props) {
+function FlexRow(props) {
   return <div className="flowRow">{props.children}</div>;
 }
 
-export default FlowRow;
+export default FlexRow;

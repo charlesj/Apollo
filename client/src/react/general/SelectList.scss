@@ -1,0 +1,13 @@
+@import 'styles/variables.scss';
+
+.selectList {
+  width: 100%;
+}
+
+.selectListItem {
+  padding: 5px;
+}
+
+.selectListItem-selected {
+  background-color: $selectedBackground;
+}

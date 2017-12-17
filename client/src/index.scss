@@ -2,8 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=Monda:regular,bold,italic&subset=latin,latin-ext');
 
 body {
+  background-color: $background-color;
+}
+body, input, textarea {
   margin: 0;
   padding: 0;
-  background-color: $background-color;
   font-family: 'Monda', sans-serif;
+  font-size: 14px;
 }

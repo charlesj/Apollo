@@ -1,0 +1,14 @@
+@import 'styles/variables.scss';
+
+.container {
+  background-color: $white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0px;
+  margin: 10px;
+  min-width: 300px
+}
+
+.container-grow {
+  flex-grow: 1;
+}
