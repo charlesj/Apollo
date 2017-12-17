@@ -1,0 +1,20 @@
+@import 'styles/variables.scss';
+
+.card {
+  border: 1px solid black;
+  border-radius: 5px;
+  min-width: 100px;
+  background-color: $white;
+  margin:5px;
+  text-align: center;
+}
+
+.cardContent {
+  font-size: 50px;
+}
+
+.cardTitle {
+  border-top: 1px solid black;
+  font-size: 10px;
+  padding: 5px;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { meta } from "../../redux/actions";
+import { metaActions } from "../../redux/actions";
 
 import "./Login.css";
 
@@ -62,7 +62,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    login: password => dispatch(meta.login(password))
+    login: password => dispatch(metaActions.login(password))
   };
 }
 

@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import createHistory from "history/createBrowserHistory";
 
 import metaReducer from "./meta/reducers";
+import summariesReducer from "./summaries/reducers";
 
 export const history = createHistory();
 
@@ -22,6 +23,7 @@ const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 
 const rootReducer = combineReducers({
   meta: metaReducer,
+  summaries: summariesReducer,
   routing: routerReducer
 });
 

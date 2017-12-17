@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import HotKey from "react-shortcut";
 import Terminal from "terminal-in-react";
 import { RoutesMap } from "../../redux/navigator";
-import { meta } from "../../redux/actions";
+import { metaActions } from "../../redux/actions";
 
 import "../../../node_modules/terminal-in-react/lib/bundle/terminal-react.css";
 import "./Terminal.css";
@@ -69,7 +69,7 @@ class ApolloTerminal extends Component {
 function mapDispatchToProps(dispatch, props) {
   return {
     ...bindActionCreators({ changePage: path => push(path) }, dispatch),
-    logout: password => dispatch(meta.logout())
+    logout: password => dispatch(metaActions.logout())
   };
 }
 

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 
+import Summaries from "./meta/Summaries";
+
 class Home extends Component {
   render() {
-    return <div>Hello Home</div>;
+    return <div><Summaries /></div>;
   }
 }
 
