@@ -1,0 +1,42 @@
+
+.boardContainer{
+  display: flex;
+  flex-flow: row;
+}
+
+.board{
+  border: 1px solid black;
+  margin: 5px;
+  padding: 0px;
+  width: 300px;
+}
+
+.boardTitle{
+  background-color: #fff;
+  border-bottom: 1px solid black;
+  padding: 3px;
+}
+.boardMenuToggle{
+  float: right;
+}
+.boardItem{
+  background-color: #fff;
+  margin-top: 10px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.boardItemMenu{
+  border-top: 1px solid black;
+  padding: 0px;
+  margin: 0px;
+  background-color: #48AFF0;
+  color: #fff;
+}
+.boardItemTitle{
+  border-bottom:  1px solid black;
+  padding: 2px;
+  font-weight: bold;
+}
+.boardItemDescription{
+  padding: 5px;
+}
