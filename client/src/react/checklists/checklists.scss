@@ -1,0 +1,122 @@
+
+.checklistsContainer{
+  display: flex;
+  flex-flow: row;
+}
+.checklistsSelector{
+  border: 1px solid #48AFF0;
+  background-color: #fff;
+  width: 150px;
+}
+.checklistGroupHeading{
+  padding: 5px;
+  border-bottom: 1px solid #48AFF0;
+  color: #0A6640;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.checklistListingDisplay{
+  padding: 5px;
+}
+.checklistListing{
+  padding: 5px;
+}
+.checklistDisplay{
+  margin-left: 10px;
+  border: 1px solid #48AFF0;
+  background-color: #fff;
+  width: 400px;
+}
+.checklistDisplay h2{
+  padding: 5px;
+  font-size: 22px;
+  border-bottom: 1px solid #48AFF0;
+  text-transform: capitalize;
+}
+.checklistItem{
+  padding: 5px;
+}
+.checklistCompletionContainer{
+  margin: 15px;
+  border: 3px solid #48AFF0;
+  background-color: #fff;
+  border-radius: 5px;
+  min-width: 300px;
+}
+.checklistCompletionContainer .textButton {
+  margin-left: 10px;
+}
+.checklistCompletionHeader{
+  height: 60px;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+}
+.checklistCompletionHeader > *{
+  margin: 5px;
+}
+.checklistCompletionHeader select {
+  background: white;
+  border-radius: 5px;
+  font-size: 25px;
+}
+.checklistCompletionItemList{
+  border-top: 3px solid #48AFF0;
+  padding: 15px;
+}
+.checklistCompletionItemMandatory {
+  border-left: 10px solid #ff4242;
+}
+
+.checklistCompletionItemRecommended {
+  border-left: 10px solid #48AFF0;
+}
+.checklistCompletionItemOptional {
+  border-left: 10px solid #42f233;
+}
+.checklistCompletionItemDisplay {
+  padding-bottom: 15px;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+.checklistCompletionContainer #notes {
+  margin-top: 15px;
+  width: 500px;
+}
+.checklistReportingContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.completionLogContainer{new item
+  background-color: white;
+  border: 1px solid #48AFF0;
+  width: 400px;
+}
+.completionLogContainer h1{
+  border-bottom: 1px solid #48AFF0;
+  padding: 5px;
+  font-size: 20px;
+}
+.completionLogEntry {
+  margin-left: 5px;
+}
+.checklistCompletionDisplayContainer {
+  background-color: white;
+  border: 1px solid #48AFF0;
+  width: 400px;
+  margin-left: 10px;
+}
+.compeletedChecklistHeader {
+  border-bottom: 1px solid #48AFF0;
+  padding: 5px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.checklistCompletionDisplayContainer p {
+  margin: 10px;
+  font-style: italic;
+}
+.completedChecklistItem {
+  margin: 5px;
+}
