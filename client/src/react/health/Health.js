@@ -1,8 +1,13 @@
-import React, { Component } from "react";
+import React from 'react';
+import HealthInput from './HealthInput';
+import HomeHealth from './HomeHealth';
 
-class Health extends Component {
+class Health extends React.Component {
   render() {
-    return <div>Health</div>;
+    return (<div><HealthInput />
+
+              <HomeHealth />
+    </div>);
   }
 }
 
