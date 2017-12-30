@@ -1,13 +1,16 @@
-import React from 'react';
-import HealthInput from './HealthInput';
-import HomeHealth from './HomeHealth';
+import React from "react";
+import HealthInput from "./HealthInput";
+import HomeHealth from "./HomeHealth";
 
 class Health extends React.Component {
   render() {
-    return (<div><HealthInput />
+    return (
+      <div>
+        <HealthInput />
 
-              <HomeHealth />
-    </div>);
+        <HomeHealth />
+      </div>
+    );
   }
 }
 

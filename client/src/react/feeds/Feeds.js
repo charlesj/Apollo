@@ -1,30 +1,46 @@
-import React from 'react';
-import HotKey from 'react-shortcut';
-import FeedItems from './FeedItems';
-import FeedService from './FeedService';
+import React from "react";
+import HotKey from "react-shortcut";
+import FeedItems from "./FeedItems";
+import FeedService from "./FeedService";
 
-import './feeds.css';
+import "./feeds.css";
 
 function getFeedClasses(selectedId, feedId) {
   if (selectedId !== feedId) {
     return "feed";
   }
 
-  return "feed activeFeed"
+  return "feed activeFeed";
 }
 
 function FeedDisplay(props) {
-
-  return (<div className='feedsContainer'>
-    <div className={getFeedClasses(props.selectedId, -1)} onClick={props.changeFeed.bind(null, -1)}>All Items ({ props.feeds.reduce((p, n) => {
-      return p + n.unread_count;
-    }, 0)})</div>
-    { props.feeds.filter(f => {
-      return f.unread_count > 0
-    }).map(f => {
-      return (<div className={getFeedClasses(props.selectedId, f.id)} key={f.id} onClick={props.changeFeed.bind(null, f.id)}>{f.name} ({f.unread_count})</div>)
-    })}
-  </div>)
+  return (
+    <div className="feedsContainer">
+      <div
+        className={getFeedClasses(props.selectedId, -1)}
+        onClick={props.changeFeed.bind(null, -1)}
+      >
+        All Items ({props.feeds.reduce((p, n) => {
+          return p + n.unread_count;
+        }, 0)})
+      </div>
+      {props.feeds
+        .filter(f => {
+          return f.unread_count > 0;
+        })
+        .map(f => {
+          return (
+            <div
+              className={getFeedClasses(props.selectedId, f.id)}
+              key={f.id}
+              onClick={props.changeFeed.bind(null, f.id)}
+            >
+              {f.name} ({f.unread_count})
+            </div>
+          );
+        })}
+    </div>
+  );
 }
 
 class Feeds extends React.Component {
@@ -51,26 +67,25 @@ class Feeds extends React.Component {
   }
 
   setFeed(feedId) {
-    FeedService.getFeeds().then((feeds) => {
-      FeedService.getItems(feedId)
-        .then((items) => {
-          if (items.length > 0) {
-            this.setState({
-              feeds,
-              nextItems: items.slice(1),
-              currentItem: items.slice(0, 1)[0],
-              selectedFeedId: feedId
-            });
-          } else {
-            this.setState({
-              feeds,
-              nextItems: [],
-              previousItems: [],
-              selectedFeedId: feedId,
-              currentItem: null
-            });
-          }
-        });
+    FeedService.getFeeds().then(feeds => {
+      FeedService.getItems(feedId).then(items => {
+        if (items.length > 0) {
+          this.setState({
+            feeds,
+            nextItems: items.slice(1),
+            currentItem: items.slice(0, 1)[0],
+            selectedFeedId: feedId
+          });
+        } else {
+          this.setState({
+            feeds,
+            nextItems: [],
+            previousItems: [],
+            selectedFeedId: feedId,
+            currentItem: null
+          });
+        }
+      });
     });
   }
 
@@ -100,25 +115,26 @@ class Feeds extends React.Component {
     }
 
     var shouldAdd = (items, previousItems, newItem) => {
-      return this.state.currentItem.id !== newItem.id &&
+      return (
+        this.state.currentItem.id !== newItem.id &&
         previousItems.filter(item => item.id === newItem.id).length === 0 &&
-        items.filter(item => item.id === newItem.id).length === 0;
+        items.filter(item => item.id === newItem.id).length === 0
+      );
     };
 
     if (this.state.nextItems.length <= 5) {
-      FeedService.getItems(this.state.selectedFeedId)
-        .then((items) => {
-          var newNextItems = this.state.nextItems;
-          for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            if (shouldAdd(newNextItems, this.state.previousItems, item)) {
-              newNextItems.push(item);
-            }
+      FeedService.getItems(this.state.selectedFeedId).then(items => {
+        var newNextItems = this.state.nextItems;
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i];
+          if (shouldAdd(newNextItems, this.state.previousItems, item)) {
+            newNextItems.push(item);
           }
-          this.setState({
-            nextItems: newNextItems
-          });
+        }
+        this.setState({
+          nextItems: newNextItems
         });
+      });
     }
 
     var newPreviousItems = this.state.previousItems;
@@ -132,7 +148,7 @@ class Feeds extends React.Component {
       previousItems: newPreviousItems,
       currentItem: newCurrent,
       nextItems: this.state.nextItems.slice(1)
-    })
+    });
   }
 
   movePreviousItem() {
@@ -147,39 +163,32 @@ class Feeds extends React.Component {
     this.setState({
       nextItems: newNextItems,
       currentItem,
-      previousItems: previousItems,
-    })
+      previousItems: previousItems
+    });
   }
 
   openItem() {
-    window.open(this.state.currentItem.url, '_blank');
+    window.open(this.state.currentItem.url, "_blank");
   }
 
   render() {
-    return (<div className="feeds">
-      <HotKey
-      keys={['j']}
-      onKeysCoincide={this.moveNextItem}
-      />
-      <HotKey
-      keys={['k']}
-      onKeysCoincide={this.movePreviousItem}
-      />
-      <HotKey
-      keys={['o']}
-      onKeysCoincide={this.openItem}
-      />
-      <FeedDisplay
-      feeds={this.state.feeds}
-      changeFeed={this.changeSelectedFeed}
-      selectedId={this.state.selectedFeedId}
-      />
-       <FeedItems
-      previousItems={this.state.previousItems}
-      nextItems={this.state.nextItems}
-      currentItem={this.state.currentItem}
-      />
-    </div>);
+    return (
+      <div className="feeds">
+        <HotKey keys={["j"]} onKeysCoincide={this.moveNextItem} />
+        <HotKey keys={["k"]} onKeysCoincide={this.movePreviousItem} />
+        <HotKey keys={["o"]} onKeysCoincide={this.openItem} />
+        <FeedDisplay
+          feeds={this.state.feeds}
+          changeFeed={this.changeSelectedFeed}
+          selectedId={this.state.selectedFeedId}
+        />
+        <FeedItems
+          previousItems={this.state.previousItems}
+          nextItems={this.state.nextItems}
+          currentItem={this.state.currentItem}
+        />
+      </div>
+    );
   }
 }
 

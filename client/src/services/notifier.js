@@ -1,7 +1,3 @@
-export const NotifySuccess = (message) => {
+export const NotifySuccess = message => {};
 
-}
-
-export const NotifyError = (message) => {
-
-}
+export const NotifyError = message => {};

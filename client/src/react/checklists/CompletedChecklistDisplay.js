@@ -1,7 +1,7 @@
-import React from 'react';
-import moment from 'moment';
-import FontAwesome from 'react-fontawesome';
-import apolloServer from '../../services/apolloServer.js';
+import React from "react";
+import moment from "moment";
+import FontAwesome from "react-fontawesome";
+import apolloServer from "../../services/apolloServer.js";
 
 class CompletedChecklistDisplay extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class CompletedChecklistDisplay extends React.Component {
     this.state = {
       checklistInfo: null,
       items: null
-    }
+    };
   }
 
   componentDidMount() {
@@ -21,9 +21,10 @@ class CompletedChecklistDisplay extends React.Component {
   }
 
   loadInformation(completed_checklist_id) {
-    apolloServer.invoke('GetChecklistCompletion', {
-      completed_checklist_id
-    })
+    apolloServer
+      .invoke("GetChecklistCompletion", {
+        completed_checklist_id
+      })
       .then(data => {
         this.setState({
           checklistInfo: data.checklistInfo,
@@ -34,24 +35,34 @@ class CompletedChecklistDisplay extends React.Component {
 
   render() {
     if (!this.state.checklistInfo) {
-      return (<div className="checklistCompletionDisplayContainer">loading...</div>)
+      return (
+        <div className="checklistCompletionDisplayContainer">loading...</div>
+      );
     }
 
     const completed_at = moment(this.state.checklistInfo.completed_at);
 
-    return (<div className="checklistCompletionDisplayContainer">
-      <div className="compeletedChecklistHeader">
-      {this.state.checklistInfo.name} - {completed_at.calendar()}
+    return (
+      <div className="checklistCompletionDisplayContainer">
+        <div className="compeletedChecklistHeader">
+          {this.state.checklistInfo.name} - {completed_at.calendar()}
+        </div>
+        <p>{this.state.checklistInfo.notes}</p>
+        {this.state.items.map(item => {
+          return (
+            <div className="completedChecklistItem" key={item.id}>
+              {item.completed === 0 && (
+                <FontAwesome name="circle-o" className="red" />
+              )}
+              {item.completed > 0 && (
+                <FontAwesome name="check-circle-o" className="green" />
+              )}
+                {item.name}
+            </div>
+          );
+        })}
       </div>
-      <p>{this.state.checklistInfo.notes}</p>
-      { this.state.items.map(item => {
-        return (<div className="completedChecklistItem" key={item.id}>
-          {item.completed === 0 && (<FontAwesome name='circle-o' className='red' />) }
-          {item.completed > 0 && (<FontAwesome name='check-circle-o' className='green' />)}
-            {item.name}
-        </div>)
-      })}
-    </div>)
+    );
   }
 }
 

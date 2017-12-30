@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import apolloServer from '../../services/apolloServer';
+import React, { Component } from "react";
+import moment from "moment";
+import apolloServer from "../../services/apolloServer";
 
 class Finance extends Component {
   constructor(props) {
@@ -19,11 +19,12 @@ class Finance extends Component {
   loadAssetPrices() {
     var assets = ["btc", "eth", "ltc"];
     assets.forEach(a => {
-      apolloServer.invoke('getAssetPrice', {
-        symbol: a
-      })
+      apolloServer
+        .invoke("getAssetPrice", {
+          symbol: a
+        })
         .then(price => {
-          if(!price){
+          if (!price) {
             return;
           }
           var currentPrices = this.state.assetPrices;
@@ -39,16 +40,22 @@ class Finance extends Component {
   }
 
   render() {
-    return (<div className="summaryContainer">
-      Financial
-        { this.state.assetPrices.map((ap) => {
-        var validAt = moment(ap.valid_at);
-        return (<div key={ap.id} className="summary">
-                <div className="summaryAmount">${ap.price}</div>
-                <div className="summaryLabel">{ap.symbol.toUpperCase()} ({validAt.calendar()})</div>
-            </div>);
-      })}
-    </div>)
+    return (
+      <div className="summaryContainer">
+        Financial
+        {this.state.assetPrices.map(ap => {
+          var validAt = moment(ap.valid_at);
+          return (
+            <div key={ap.id} className="summary">
+              <div className="summaryAmount">${ap.price}</div>
+              <div className="summaryLabel">
+                {ap.symbol.toUpperCase()} ({validAt.calendar()})
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 }
 

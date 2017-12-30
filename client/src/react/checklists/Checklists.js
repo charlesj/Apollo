@@ -1,11 +1,11 @@
-import React from 'react';
-import _ from 'lodash';
-import apolloServer from '../../services/apolloServer.js';
-import ChecklistListing from './ChecklistListing';
-import ChecklistDisplay from './ChecklistDisplay';
-import CompleteChecklist from './CompleteChecklist';
-import ChecklistCompletionLog from './ChecklistCompletionLog';
-import CompletedChecklistDisplay from './CompletedChecklistDisplay';
+import React from "react";
+import _ from "lodash";
+import apolloServer from "../../services/apolloServer.js";
+import ChecklistListing from "./ChecklistListing";
+import ChecklistDisplay from "./ChecklistDisplay";
+import CompleteChecklist from "./CompleteChecklist";
+import ChecklistCompletionLog from "./ChecklistCompletionLog";
+import CompletedChecklistDisplay from "./CompletedChecklistDisplay";
 
 import "./checklists.css";
 
@@ -32,7 +32,7 @@ class Checklists extends React.Component {
   }
 
   loadChecklists() {
-    return apolloServer.invoke("GetChecklists", {}).then((checklists) => {
+    return apolloServer.invoke("GetChecklists", {}).then(checklists => {
       this.setState({
         checklists
       });
@@ -56,19 +56,23 @@ class Checklists extends React.Component {
   }
 
   upsertChecklist(checklist) {
-    return apolloServer.invoke("upsertChecklist", {
-      checklist
-    }).then(() => {
-      return this.loadChecklists();
-    });
+    return apolloServer
+      .invoke("upsertChecklist", {
+        checklist
+      })
+      .then(() => {
+        return this.loadChecklists();
+      });
   }
 
   deleteChecklist(id) {
-    return apolloServer.invoke("deleteChecklist", {
-      id
-    }).then(() => {
-      return this.loadChecklists();
-    });
+    return apolloServer
+      .invoke("deleteChecklist", {
+        id
+      })
+      .then(() => {
+        return this.loadChecklists();
+      });
   }
 
   selectChecklistCompletion(id) {
@@ -78,33 +82,53 @@ class Checklists extends React.Component {
   }
 
   render() {
-    var checklistGroups = _.groupBy(this.state.checklists, 'type');
-    return (<div className="checklistsPage"><div className="checklistsContainer">
-      <div className="checklistsSelector">
-      { _.map(checklistGroups, (checklists, type) => {
-        return (<div className="checklistGroup" key={type}>
-          <div className="checklistGroupHeading">{type}</div>
-          {checklists.map((c) => {
-            return <ChecklistListing
-              checklist={c}
-              key={c.id}
-              upsert={this.upsertChecklist}
-              select={this.selectChecklist.bind(null, c)}
-              delete={this.deleteChecklist.bind(null, c.id)}
-              />
-          })}
-        </div>)
-      })}
-      <button className="textButton" onClick={this.newChecklist.bind(null, "daily")}>new</button>
+    var checklistGroups = _.groupBy(this.state.checklists, "type");
+    return (
+      <div className="checklistsPage">
+        <div className="checklistsContainer">
+          <div className="checklistsSelector">
+            {_.map(checklistGroups, (checklists, type) => {
+              return (
+                <div className="checklistGroup" key={type}>
+                  <div className="checklistGroupHeading">{type}</div>
+                  {checklists.map(c => {
+                    return (
+                      <ChecklistListing
+                        checklist={c}
+                        key={c.id}
+                        upsert={this.upsertChecklist}
+                        select={this.selectChecklist.bind(null, c)}
+                        delete={this.deleteChecklist.bind(null, c.id)}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+            <button
+              className="textButton"
+              onClick={this.newChecklist.bind(null, "daily")}
+            >
+              new
+            </button>
+          </div>
+          {this.state.selectedChecklist && (
+            <ChecklistDisplay checklist={this.state.selectedChecklist} />
+          )}
+          <CompleteChecklist />
+        </div>
+        <div className="checklistReportingContainer">
+          <ChecklistCompletionLog
+            selectCompletion={this.selectChecklistCompletion}
+          />
+          {this.state.selectedCompletedChecklist && (
+            <CompletedChecklistDisplay
+              completionId={this.state.selectedCompletedChecklist}
+            />
+          )}
+        </div>
       </div>
-      { this.state.selectedChecklist && (<ChecklistDisplay checklist={this.state.selectedChecklist} />) }
-      <CompleteChecklist />
-    </div>
-    <div className="checklistReportingContainer">
-      <ChecklistCompletionLog selectCompletion={this.selectChecklistCompletion} />
-      {this.state.selectedCompletedChecklist && (<CompletedChecklistDisplay completionId={this.state.selectedCompletedChecklist} />)}
-    </div>
-  </div>)
+    );
   }
 }
 

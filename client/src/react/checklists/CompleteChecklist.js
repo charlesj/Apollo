@@ -1,7 +1,7 @@
-import React from 'react';
-import { NotifySuccess } from '../../services/notifier';
-import apolloServer from '../../services/apolloServer';
-import { TextButton } from '../general';
+import React from "react";
+import { NotifySuccess } from "../../services/notifier";
+import apolloServer from "../../services/apolloServer";
+import { TextButton } from "../general";
 
 class CompleteChecklist extends React.Component {
   constructor(props) {
@@ -11,14 +11,16 @@ class CompleteChecklist extends React.Component {
       active: false,
       checklists: [],
       selectedChecklistId: null,
-      notes: ''
+      notes: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleChecklistChange = this.handleChecklistChange.bind(this);
     this.activate = this.activate.bind(this);
     this.toggleActive = this.toggleActive.bind(this);
-    this.toggleChecklistItemComplete = this.toggleChecklistItemComplete.bind(this);
+    this.toggleChecklistItemComplete = this.toggleChecklistItemComplete.bind(
+      this
+    );
     this.getChecklistItemClasses = this.getChecklistItemClasses.bind(this);
     this.saveCompletion = this.saveCompletion.bind(this);
   }
@@ -34,21 +36,21 @@ class CompleteChecklist extends React.Component {
   }
 
   activate() {
-    apolloServer.invoke('GetChecklists', {}).then(checklists => {
-      apolloServer.invoke('getChecklistItems', {
-        id: checklists[0].id
-      })
-        .then((checkListItems) => {
+    apolloServer.invoke("GetChecklists", {}).then(checklists => {
+      apolloServer
+        .invoke("getChecklistItems", {
+          id: checklists[0].id
+        })
+        .then(checkListItems => {
           this.setState({
             checklists,
             selectedChecklistId: checklists[0].id,
             checkListItems,
             active: true
           });
-        })
+        });
     });
   }
-
 
   handleChange(e) {
     this.setState({
@@ -58,15 +60,16 @@ class CompleteChecklist extends React.Component {
 
   handleChecklistChange(e) {
     var selectedChecklistId = e.target.value;
-    apolloServer.invoke('getChecklistItems', {
-      id: selectedChecklistId
-    })
-      .then((checkListItems) => {
+    apolloServer
+      .invoke("getChecklistItems", {
+        id: selectedChecklistId
+      })
+      .then(checkListItems => {
         this.setState({
           selectedChecklistId,
           checkListItems
         });
-      })
+      });
   }
 
   toggleChecklistItemComplete(checklist_item_id) {
@@ -107,7 +110,7 @@ class CompleteChecklist extends React.Component {
         return {
           checklist_item_id: item.id,
           completed: item.completed ? item.completed : 0
-        }
+        };
       })
     };
     apolloServer.invoke("AddCompletedChecklist", payload).then(() => {
@@ -120,32 +123,61 @@ class CompleteChecklist extends React.Component {
 
   render() {
     if (!this.state.active) {
-      return (<div className="checklistCompletionContainer"><button className="textButton" onClick={this.toggleActive}>Start a checklist</button></div>)
+      return (
+        <div className="checklistCompletionContainer">
+          <button className="textButton" onClick={this.toggleActive}>
+            Start a checklist
+          </button>
+        </div>
+      );
     }
 
-    return (<div className="checklistCompletionContainer">
+    return (
+      <div className="checklistCompletionContainer">
         <div className="checklistCompletionHeader">
-          <select name="selectedChecklist" value={this.state.selectedChecklistId} onChange={this.handleChecklistChange} >
+          <select
+            name="selectedChecklist"
+            value={this.state.selectedChecklistId}
+            onChange={this.handleChecklistChange}
+          >
             {this.state.checklists.map(ct => {
-        return <option value={ct.id} key={ct.id}>{ct.name}</option>
-      })}
+              return (
+                <option value={ct.id} key={ct.id}>
+                  {ct.name}
+                </option>
+              );
+            })}
           </select>
           <TextButton onClick={this.toggleActive}>Cancel</TextButton>
           <TextButton onClick={this.saveCompletion}>Save</TextButton>
         </div>
         <div className="checklistCompletionItemList">
-          {this.state.checkListItems.map((item) => {
-        return (<div className={this.getChecklistItemClasses(item)} key={item.id}>
-              <input type="checkbox"
-          className="pt-large"
-          checked={item.completed === 1}
-          onChange={this.toggleChecklistItemComplete.bind(null, item.id)}
-          /> {item.name} <em>{item.description}</em>
-            </div>)
-      })}
-          <textarea name="notes" id="notes" onChange={this.handleChange} value={this.state.notes} placeholder="enter any notes here"/>
+          {this.state.checkListItems.map(item => {
+            return (
+              <div className={this.getChecklistItemClasses(item)} key={item.id}>
+                <input
+                  type="checkbox"
+                  className="pt-large"
+                  checked={item.completed === 1}
+                  onChange={this.toggleChecklistItemComplete.bind(
+                    null,
+                    item.id
+                  )}
+                />{" "}
+                {item.name} <em>{item.description}</em>
+              </div>
+            );
+          })}
+          <textarea
+            name="notes"
+            id="notes"
+            onChange={this.handleChange}
+            value={this.state.notes}
+            placeholder="enter any notes here"
+          />
         </div>
-    </div>)
+      </div>
+    );
   }
 }
 

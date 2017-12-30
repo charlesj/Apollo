@@ -1,8 +1,8 @@
-import React from 'react';
-import apolloServer from '../../services/apolloServer';
+import React from "react";
+import apolloServer from "../../services/apolloServer";
 import "./bookmarks.css";
-import BookmarksDisplay from './BookmarksDisplay';
-import AddBookmark from './AddBookmark';
+import BookmarksDisplay from "./BookmarksDisplay";
+import AddBookmark from "./AddBookmark";
 
 class Bookmarks extends React.Component {
   constructor(props) {
@@ -21,14 +21,16 @@ class Bookmarks extends React.Component {
   loadBookmarks() {
     var start = this.state.bookmarks.length;
     var currentBookmarks = this.state.bookmarks;
-    apolloServer.invoke('getBookmarks', {
-      start: start
-    }).then(data => {
-      this.setState({
-        bookmarks: currentBookmarks.concat(data.bookmarks),
-        totalBookmarks: data.total
+    apolloServer
+      .invoke("getBookmarks", {
+        start: start
+      })
+      .then(data => {
+        this.setState({
+          bookmarks: currentBookmarks.concat(data.bookmarks),
+          totalBookmarks: data.total
+        });
       });
-    });
   }
 
   componentDidMount() {
@@ -36,14 +38,16 @@ class Bookmarks extends React.Component {
   }
 
   addBookmark(title, link, description, tags) {
-    return apolloServer.invoke('addBookmark', {
-      title: title,
-      link: link,
-      description: description,
-      tags: tags
-    }).then(() => {
-      this.refreshBookmarks();
-    });
+    return apolloServer
+      .invoke("addBookmark", {
+        title: title,
+        link: link,
+        description: description,
+        tags: tags
+      })
+      .then(() => {
+        this.refreshBookmarks();
+      });
   }
 
   refreshBookmarks() {
@@ -54,16 +58,17 @@ class Bookmarks extends React.Component {
   }
 
   render() {
-    return (<div>
-      <BookmarksDisplay
-      bookmarks={this.state.bookmarks}
-      totalBookmarks={this.state.totalBookmarks}
-      loadBookmarks={this.loadBookmarks}
-      refreshBookmarks={this.refreshBookmarks}
-      />
-      <AddBookmark addBookmark={this.addBookmark} />
-
-</div>);
+    return (
+      <div>
+        <BookmarksDisplay
+          bookmarks={this.state.bookmarks}
+          totalBookmarks={this.state.totalBookmarks}
+          loadBookmarks={this.loadBookmarks}
+          refreshBookmarks={this.refreshBookmarks}
+        />
+        <AddBookmark addBookmark={this.addBookmark} />
+      </div>
+    );
   }
 }
 
