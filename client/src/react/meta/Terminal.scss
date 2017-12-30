@@ -1,10 +1,20 @@
+@import 'styles/variables.scss';
+
 .terminal-base {
   max-width: unset;
   height: unset;
+  width: unset;
 }
 .terminal-container-main {
-  height: 300px;
+  height: 100px;
   max-height: unset;
   overflow: unset;
   max-width: unset;
+}
+.notificationsContainer {
+  height: 100px;
+  overflow-y: scroll;
+  background-color: $white;
+  width: 300px;
+  font-size: 10px
 }

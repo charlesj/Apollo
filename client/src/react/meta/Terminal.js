@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { push } from "react-router-redux";
 import { connect } from "react-redux";
 import HotKey from "react-shortcut";
-import Terminal from "terminal-in-react";
+import CLI from "terminal-in-react";
 import { RoutesMap } from "../../redux/navigator";
 import { metaActions } from "../../redux/actions";
-
+import MenuBar from "./MenuBar";
+import Notifications from "./Notifications";
+import { FlexRow } from "../general";
 import "../../../node_modules/terminal-in-react/lib/bundle/terminal-react.css";
 import "./Terminal.css";
 
@@ -47,20 +49,23 @@ class ApolloTerminal extends Component {
 
   render() {
     const { commands, descriptions, showTerminal } = this.state;
-
     return (
       <div>
         <HotKey keys={["escape"]} onKeysCoincide={this.toggleTerminal} />
         {showTerminal && (
-          <Terminal
-            commands={commands}
-            hideTopBar={true}
-            backgroundColor="black"
-            allowTabs={false}
-            watchConsoleLogging={false}
-            descriptions={descriptions}
-          />
+          <FlexRow>
+            <CLI
+              commands={commands}
+              hideTopBar={true}
+              backgroundColor="black"
+              allowTabs={false}
+              watchConsoleLogging={false}
+              descriptions={descriptions}
+            />
+            <Notifications />
+          </FlexRow>
         )}
+        <MenuBar />
       </div>
     );
   }
