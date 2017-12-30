@@ -21,5 +21,12 @@
 - name: Set correct api url in env.js
   lineinfile:
     path: /var/apollo/client/env.js
-    regexp: '^  API_URL:'
-    line: "  API_URL: '{{ apollo_url }}'"
+    regexp: "{{ item.regex }}"
+    line:  "{{ item.line }}"
+  withItems:
+    - regex: '^  API_URL:'
+      line: "  API_URL: '{{ apollo_url }}',"
+    - regex: '^  BIRTH_DATE:'
+      line: "  BIRTH_DATE: {{ birthdate }},"
+    - regex: '^  END_DATE:'
+      line: "  END_DATE: {{ enddate }},"

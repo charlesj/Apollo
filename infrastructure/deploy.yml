@@ -5,7 +5,6 @@
     apollo_url: "https://{{ apollo_domain }}/"
     dbname: apollo_db
     dbuser: apollo_pg
-    dbpassword: apollo_db_password
     dblisten_addresses:
       - localhost
     use_ssl: True
