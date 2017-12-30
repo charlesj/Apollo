@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import apolloServer from '../../services/apolloServer.js';
 import FontAwesome from 'react-fontawesome';
 

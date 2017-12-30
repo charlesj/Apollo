@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import FontAwesome from 'react-fontawesome';
 
 var checklistTypes = ['daily', 'weekly', 'monthly', 'ad-hoc'];
