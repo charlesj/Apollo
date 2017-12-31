@@ -1,0 +1,9 @@
+---
+apollo_domain: apollo.sudolife.org
+apollo_url: "https://{{ apollo_domain }}/"
+dbname: apollo_db
+dbuser: apollo_pg
+dblisten_addresses:
+  - localhost
+use_ssl: True
+db_backup_dir: ~/apollo_db_backups/

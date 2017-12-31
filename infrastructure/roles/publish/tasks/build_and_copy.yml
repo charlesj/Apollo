@@ -23,7 +23,7 @@
     path: /var/apollo/client/env.js
     regexp: "{{ item.regex }}"
     line:  "{{ item.line }}"
-  withItems:
+  with_items:
     - regex: '^  API_URL:'
       line: "  API_URL: '{{ apollo_url }}',"
     - regex: '^  BIRTH_DATE:'
