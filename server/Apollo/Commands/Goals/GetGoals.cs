@@ -9,19 +9,16 @@ namespace Apollo.Commands.Goals
 {
     public class GetGoals : AuthenticatedCommand
     {
-        private readonly IApolloDocumentStore documentStore;
+        private readonly IGoalsDataService goalsDataService;
 
-        public bool IncludeCompleted { get; set; }
-
-        public GetGoals(ILoginService loginService, IApolloDocumentStore documentStore) : base(loginService)
+        public GetGoals(ILoginService loginService, IGoalsDataService goalsDataService) : base(loginService)
         {
-            this.documentStore = documentStore;
+            this.goalsDataService = goalsDataService;
         }
 
         public override Task<CommandResult> Execute()
         {
-            var query = documentStore.Query<Goal>().Where(g => !IncludeCompleted && g.Completed == false);
-            return Task.FromResult(CommandResult.CreateSuccessResult(query.ToArray()));
+            return Task.FromResult(CommandResult.CreateSuccessResult(goalsDataService.GetGoals()));
         }
 
         public override Task<bool> IsValid()

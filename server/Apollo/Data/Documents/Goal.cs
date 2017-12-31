@@ -4,16 +4,17 @@ namespace Apollo.Data.Documents
 {
     public class Goal : IDocument
     {
-        public string Slug { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset EndDate { get; set; }
-        public string MetricName { get; set; }
-        public Decimal TargetValue { get; set; }
-        public bool Completed { get; set; }
-        public DateTimeOffset CompletedAt { get; set; }
+        public string slug { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public DateTimeOffset startDate { get; set; }
+        public DateTimeOffset endDate { get; set; }
+        public string metricName { get; set; }
+        public Decimal targetValue { get; set; }
+        public bool completed { get; set; }
+        public DateTimeOffset completedAt { get; set; }
+        public bool featured { get; set; }
 
-        public string Id => $"goal:{Slug}";
+        public string Id => $"goal:{slug}";
     }
 }

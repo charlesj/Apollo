@@ -4,11 +4,13 @@ import "./Container.css";
 
 function Container(props) {
   const { children, grow } = props;
-  let classes = "container";
+  let { className } = props;
+  className = className + " container";
   if (grow) {
-    classes = classes + " container-grow";
+    className = className + " container-grow";
   }
-  return <div className={classes}>{children}</div>;
+
+  return <div className={className}>{children}</div>;
 }
 
 export default Container;

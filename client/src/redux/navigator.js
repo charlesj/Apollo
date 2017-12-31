@@ -10,6 +10,7 @@ import Jobs from "../react/jobs/Jobs";
 import Log from "../react/log/Log";
 import Notebooks from "../react/notebooks/Notebooks";
 import Settings from "../react/settings/Settings";
+import Goals from "../react/goals/Goals";
 
 export const RoutesMap = [
   {
@@ -95,5 +96,12 @@ export const RoutesMap = [
     label: "Settings",
     icon: "gear",
     component: Settings
+  },
+  {
+    path: "/goals",
+    name: "goals",
+    label: "Goals",
+    icon: "gear",
+    component: Goals
   }
 ];

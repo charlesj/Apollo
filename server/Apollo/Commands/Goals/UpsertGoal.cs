@@ -25,7 +25,7 @@ namespace Apollo.Commands.Goals
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(!string.IsNullOrWhiteSpace(Goal.Slug));
+            return Task.FromResult(!string.IsNullOrWhiteSpace(Goal.slug));
         }
     }
 }

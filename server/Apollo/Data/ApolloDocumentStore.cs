@@ -9,7 +9,7 @@ namespace Apollo.Data
         TDocumentType Get<TDocumentType>(string key) where TDocumentType : IDocument;
         void Upsert<TDocumentType>(TDocumentType document) where TDocumentType : IDocument;
         void Delete<TDocumentType>(string key) where TDocumentType : IDocument;
-        IQueryable<TDocumentType> Query<TDocumentType>() where TDocumentType : IDocument;
+        IQuerySession GetQuerySession();
     }
 
     public interface IDocument
@@ -33,9 +33,9 @@ namespace Apollo.Data
             documentStore = DocumentStore.For(connectionString);
         }
 
-        public IQueryable<TDocumentType> Query<TDocumentType>() where TDocumentType : IDocument
+        public IQuerySession GetQuerySession()
         {
-            return documentStore.LightweightSession().Query<TDocumentType>();
+            return documentStore.QuerySession();
         }
 
         public TDocumentType Get<TDocumentType>(string key) where TDocumentType : IDocument
