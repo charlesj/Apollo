@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
 using Marten;
 using Marten.Linq;
 
@@ -9,6 +9,7 @@ namespace Apollo.Data
         TDocumentType Get<TDocumentType>(string key) where TDocumentType : IDocument;
         void Upsert<TDocumentType>(TDocumentType document) where TDocumentType : IDocument;
         void Delete<TDocumentType>(string key) where TDocumentType : IDocument;
+        IQueryable<TDocumentType> Query<TDocumentType>() where TDocumentType : IDocument;
     }
 
     public interface IDocument
@@ -16,7 +17,7 @@ namespace Apollo.Data
         string Id { get; }
     }
 
-    public abstract class ApolloDocumentStore : IApolloDocumentStore
+    public class ApolloDocumentStore : IApolloDocumentStore
     {
         protected DocumentStore documentStore { get; }
         private const string ConnectionStringTemplate = "Host={0};Username={1};Password={2};Database={3}";
@@ -30,6 +31,11 @@ namespace Apollo.Data
                 configuration.DatabasePassword(),
                 configuration.DatabaseName());
             documentStore = DocumentStore.For(connectionString);
+        }
+
+        public IQueryable<TDocumentType> Query<TDocumentType>() where TDocumentType : IDocument
+        {
+            return documentStore.LightweightSession().Query<TDocumentType>();
         }
 
         public TDocumentType Get<TDocumentType>(string key) where TDocumentType : IDocument

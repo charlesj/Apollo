@@ -14,7 +14,7 @@ namespace Apollo.IntegrationTests
         private static int RequestCounter = 0;
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
-        private string loginToken = "98e742cc98f649f3ab79dbf79353a633";
+        private string loginToken = "c016b4c1b5444986981eab0fa320d1cf";
 
         [Fact]
         public void EnsureLoginTokenSet()
@@ -210,7 +210,13 @@ namespace Apollo.IntegrationTests
                 }
             }, true);
 
-            data.Add("GetChecklistCompletion", new {completed_checklist_id = 19}, true);
+            //data.Add("GetChecklistCompletion", new {completed_checklist_id = 1}, true);
+
+            data.Add("UpsertGoal", new { Goal= new { Slug="testGoal" } }, true);
+            data.Add("GetGoal", new { Id="goal:testGoal" }, true);
+            data.Add("UpsertGoal", new { Goal= new { Slug="deletableGoal" } }, true);
+            data.Add("DeleteGoal", new { Id="goal:deletableGoal" }, true);
+            data.Add("GetGoals", new { }, true);
             return data;
         }
     }

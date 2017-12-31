@@ -32,6 +32,7 @@ namespace Apollo.ServiceLocator
             container.Register<ICommandProcessor, CommandProcessor>(Lifestyle.Singleton);
 
             // data bindings
+            container.Register<IApolloDocumentStore, ApolloDocumentStore>();
             container.Register<IBoardDataService, BoardDataService>();
             container.Register<IBookmarksDataService, BookmarksDataService>();
             container.Register<IConnectionFactory, ConnectionFactory>();
