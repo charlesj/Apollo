@@ -4,4 +4,12 @@
   background-color: $menuBarBackground;
   margin-bottom: 10px;
   color: #fff;
+  padding: 3px;
+}
+.menuBar .textButton {
+  margin-bottom: 0px;
+}
+.menuBar a {
+  color: $white;
+  text-decoration: none;
 }

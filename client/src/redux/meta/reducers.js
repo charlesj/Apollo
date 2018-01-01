@@ -17,13 +17,15 @@ export default handleActions(
     [combineActions(
       actions.login.start,
       actions.logout.start,
-      actions.notify.start
+      actions.notify.start,
+      actions.dismissNotification.start
     )]: basicStartReducer,
 
     [combineActions(
       actions.login.fail,
       actions.logout.fail,
-      actions.notify.fail
+      actions.notify.fail,
+      actions.dismissNotification.fail
     )]: basicFailReducer,
 
     [actions.login.complete]: (state, action) => {
@@ -60,11 +62,23 @@ export default handleActions(
 
     [actions.toggleNotificationRead.complete]: (state, action) => {
       const updated = action.payload;
-      const notifications = { ...state.notifications };
+      const notifications = [...state.notifications];
       notifications.forEach(n => {
         if (n.time === updated.time && n.message === updated.message) {
           n.unread = updated.unread;
         }
+      });
+
+      return {
+        ...basicLoadCompleteReducer(state, action),
+        notifications
+      };
+    },
+
+    [actions.dismissNotification.complete]: (state, action) => {
+      const toRemove = action.payload;
+      const notifications = state.notifications.filter(n => {
+        return n.time !== toRemove.time;
       });
 
       return {

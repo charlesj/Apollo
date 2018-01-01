@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { push } from "react-router-redux";
 import { connect } from "react-redux";
 import HotKey from "react-shortcut";
@@ -25,6 +26,7 @@ class ApolloTerminal extends Component {
     commands.logout = () => {
       props.logout();
     };
+
     let descriptions = RoutesMap.reduce((reducer, route) => {
       return {
         ...reducer,
@@ -63,9 +65,16 @@ class ApolloTerminal extends Component {
               descriptions={descriptions}
             />
             <Notifications />
+            <div>
+              <Link to="/">Home</Link>
+            </div>
           </FlexRow>
         )}
-        <MenuBar />
+        <MenuBar
+          toggleTerminal={() => {
+            this.toggleTerminal();
+          }}
+        />
       </div>
     );
   }

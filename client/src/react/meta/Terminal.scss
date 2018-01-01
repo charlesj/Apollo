@@ -3,18 +3,12 @@
 .terminal-base {
   max-width: unset;
   height: unset;
-  width: unset;
+  width: 25%;
 }
+
 .terminal-container-main {
-  height: 100px;
+  height: $terminalPanelHeight;
   max-height: unset;
   overflow: unset;
   max-width: unset;
-}
-.notificationsContainer {
-  height: 100px;
-  overflow-y: scroll;
-  background-color: $white;
-  width: 300px;
-  font-size: 10px
 }

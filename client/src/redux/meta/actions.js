@@ -9,7 +9,8 @@ const actionCreators = createActions({
     login: basicActions(),
     logout: basicActions(),
     notify: basicActions(),
-    toggleNotificationRead: basicActions()
+    toggleNotificationRead: basicActions(),
+    dismissNotification: basicActions()
   }
 });
 
@@ -18,7 +19,6 @@ const actions = actionCreators.meta;
 export default actions;
 
 export function notify({ type, message }) {
-  console.log("action", type, message);
   return dispatchBasicActions(actions.notify, () => {
     return { type, message, unread: true, time: moment() };
   });
@@ -27,6 +27,12 @@ export function notify({ type, message }) {
 export function toggleNotificationRead({ type, message, unread, time }) {
   return dispatchBasicActions(actions.toggleNotificationRead, () => {
     return { type, message, unread: !unread, time };
+  });
+}
+
+export function dismissNotification(notification) {
+  return dispatchBasicActions(actions.dismissNotification, () => {
+    return notification;
   });
 }
 
