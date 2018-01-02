@@ -9,7 +9,8 @@ import loginService from "../../services/loginService";
 
 const initialState = {
   token: loginService.getToken(),
-  notifications: []
+  notifications: [],
+  activeRequests: 0
 };
 
 export default handleActions(
@@ -84,6 +85,20 @@ export default handleActions(
       return {
         ...basicLoadCompleteReducer(state, action),
         notifications
+      };
+    },
+
+    [actions.incrementRequests]: (state, action) => {
+      return {
+        ...state,
+        activeRequests: state.activeRequests + 1
+      };
+    },
+
+    [actions.decrementRequests]: (state, action) => {
+      return {
+        ...state,
+        activeRequests: state.activeRequests - 1
       };
     }
   },

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { FlexRow, TextButton } from "../general";
 import { metaSelectors } from "../../redux/selectors";
-
+import ServerActivity from "./ServerActivity";
 import "./MenuBar.css";
 
 class MenuBar extends Component {
@@ -15,6 +15,7 @@ class MenuBar extends Component {
     } = this.props;
     return (
       <FlexRow className="menuBar">
+        <ServerActivity />
         <TextButton onClick={toggleTerminal}>Terminal</TextButton>
 
         {unreadNotificationCount > 0 && (

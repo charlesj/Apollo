@@ -9,3 +9,7 @@ export function unreadNotificationCount(state) {
 export function latestNotification(state) {
   return _.last(_.orderBy(state.meta.notifications, ["time"], ["asc"]));
 }
+
+export function activeServerRequests(state) {
+  return state.meta.activeRequests > 0;
+}

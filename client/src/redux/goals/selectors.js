@@ -28,7 +28,7 @@ export function selectFeaturedGoal(state) {
   if (metrics.length > 0) {
     const firstMetric = _.head(metrics);
     const latestMetric = _.last(metrics);
-    console.log({ metrics, firstMetric, latestMetric });
+
     goal.metrics = metrics;
     goal.firstValue = firstMetric.value;
     goal.latestValue = latestMetric.value;

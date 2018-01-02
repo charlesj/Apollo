@@ -10,7 +10,9 @@ const actionCreators = createActions({
     logout: basicActions(),
     notify: basicActions(),
     toggleNotificationRead: basicActions(),
-    dismissNotification: basicActions()
+    dismissNotification: basicActions(),
+    incrementRequests: () => 1,
+    decrementRequests: () => 1
   }
 });
 
@@ -60,4 +62,16 @@ export function logout() {
       result: true
     };
   });
+}
+
+export function incrementRequests() {
+  return dispatch => {
+    dispatch(actions.incrementRequests());
+  };
+}
+
+export function decrementRequests() {
+  return dispatch => {
+    dispatch(actions.decrementRequests());
+  };
 }

@@ -36,7 +36,7 @@ class FeaturedGoal extends Component {
     if (!goal) {
       return <div />;
     }
-    console.log({ goal });
+
     return (
       <Container className="featuredGoal">
         <FlexRow>
@@ -79,7 +79,6 @@ function mapStateToProps(state, props) {
   const goal = goalSelectors.selectFeaturedGoal(state);
 
   if (goal === null) {
-    console.log("no goals");
     return { goal: null };
   }
 

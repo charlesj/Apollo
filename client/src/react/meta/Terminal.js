@@ -8,6 +8,7 @@ import { RoutesMap } from "../../redux/navigator";
 import { metaActions } from "../../redux/actions";
 import MenuBar from "./MenuBar";
 import Notifications from "./Notifications";
+
 import { FlexRow } from "../general";
 import "../../../node_modules/terminal-in-react/lib/bundle/terminal-react.css";
 import "./Terminal.css";
