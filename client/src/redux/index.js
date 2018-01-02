@@ -40,3 +40,7 @@ const store = createStore(rootReducer, composedEnhancers);
 store.dispatch(goalActions.getGoals());
 
 export default store;
+
+export function getStore() {
+  return store;
+}

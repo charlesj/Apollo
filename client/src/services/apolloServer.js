@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config";
 import loginService from "./loginService";
 import { metaActions } from "../redux/actions";
-import store from "../redux";
+import { getStore } from "../redux";
 
 var requestCounter = 0;
 
@@ -10,9 +10,10 @@ const invokeFull = async (commandName, payload) => {
   if (loginService.isLoggedIn()) {
     payload.token = loginService.getToken();
   }
+  const store = getStore();
 
-  store.dispatch(metaActions.incrementRequests());
   try {
+    store.dispatch(metaActions.incrementRequests());
     var result = await axios.post(
       config.apiUrl + "api",
       {
@@ -33,6 +34,7 @@ const invokeFull = async (commandName, payload) => {
       return [];
     }
   } catch (err) {
+    console.log('ERROR talking to server', err);
     throw err;
   } finally {
     store.dispatch(metaActions.decrementRequests());

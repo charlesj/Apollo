@@ -16,6 +16,7 @@ export default actions;
 export function getGoals() {
   return dispatchBasicActions(actions.getGoals, async () => {
     const goals = await apolloServer.invoke("getGoals", {});
+
     if (Array.isArray(goals)) {
       return { goals };
     } else {
