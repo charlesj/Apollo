@@ -77,8 +77,8 @@ namespace Apollo.IntegrationTests
             data.Add("getMetrics", new object(), true);
             data.Add("getMetrics", new {category="testCategory"}, true);
             data.Add("getMetrics", new {category="testCategory", name="testname"}, true);
-            data.Add("addBookmark", new {title="title", link="link", description="description", tags=new[]{"tag1", "tag2"}}, true);
-            data.Add("addBookmark", new
+            data.Add("saveBookmark", new {title="title", link="link", description="description", tags=new[]{"tag1", "tag2"}}, true);
+            data.Add("saveBookmark", new
             {
                 title="title",
                 link="link",

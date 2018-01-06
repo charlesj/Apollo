@@ -4,10 +4,11 @@ import { reducer as formReducer } from "redux-form";
 import thunk from "redux-thunk";
 import createHistory from "history/createBrowserHistory";
 
+import bookmarksReducer from "./bookmarks/reducers";
+import goalsReducer from "./goals/reducers";
 import metaReducer from "./meta/reducers";
 import metricsReducer from "./metrics/reducers";
 import summariesReducer from "./summaries/reducers";
-import goalsReducer from "./goals/reducers";
 
 import { goalActions } from "./actions";
 
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === "development") {
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 
 const rootReducer = combineReducers({
+  bookmarks: bookmarksReducer,
   goals: goalsReducer,
   meta: metaReducer,
   metrics: metricsReducer,

@@ -7,7 +7,7 @@ using Apollo.Services;
 
 namespace Apollo.Commands.Bookmarks
 {
-    public class AddBookmark : AuthenticatedCommand
+    public class SaveBookmark : AuthenticatedCommand
     {
         private readonly IBookmarksDataService bookmarksDataService;
         public string title { get; set; }
@@ -17,7 +17,7 @@ namespace Apollo.Commands.Bookmarks
         public DateTime createdAt { get; set; }
         public DateTime modifiedAt { get; set; }
 
-        public AddBookmark(ILoginService loginService, IBookmarksDataService bookmarksDataService) : base(loginService)
+        public SaveBookmark(ILoginService loginService, IBookmarksDataService bookmarksDataService) : base(loginService)
         {
             this.bookmarksDataService = bookmarksDataService;
         }
@@ -34,9 +34,9 @@ namespace Apollo.Commands.Bookmarks
                 modified_at = modifiedAt
             };
 
-            await this.bookmarksDataService.Insert(bookmark);
+            var updated = await this.bookmarksDataService.Upsert(bookmark);
 
-            return CommandResult.SuccessfulResult;
+            return CommandResult.CreateSuccessResult(updated);
         }
 
         public override Task<bool> IsValid()

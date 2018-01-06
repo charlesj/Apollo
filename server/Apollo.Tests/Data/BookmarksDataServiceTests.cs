@@ -15,7 +15,7 @@ namespace Apollo.Tests.Data
             [Fact]
             public async void InsertsWithExpectedSqlAndObject()
             {
-                await ClassUnderTest.Insert(bookmark);
+                await ClassUnderTest.Upsert(bookmark);
 
                 this.connection.Verify( c => c.Execute(
                     It.Is<string>(s => s == BookmarksDataService.InsertSql),

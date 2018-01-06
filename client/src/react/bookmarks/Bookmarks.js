@@ -1,75 +1,86 @@
 import React from "react";
-import apolloServer from "../../services/apolloServer";
+import { connect } from "react-redux";
+import FontAwesome from "react-fontawesome";
+
+import { bookmarkActions } from "../../redux/actions";
+import { bookmarkSelectors } from "../../redux/selectors";
+
 import "./bookmarks.css";
+
+import { TextButton } from "../general";
 import BookmarksDisplay from "./BookmarksDisplay";
-import AddBookmark from "./AddBookmark";
+import BookmarkForm from "./BookmarkForm";
 
 class Bookmarks extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      bookmarks: [],
-      totalBookmarks: 0
+      editingBookmark: null
     };
-
-    this.loadBookmarks = this.loadBookmarks.bind(this);
-    this.addBookmark = this.addBookmark.bind(this);
-    this.refreshBookmarks = this.refreshBookmarks.bind(this);
-  }
-
-  loadBookmarks() {
-    var start = this.state.bookmarks.length;
-    var currentBookmarks = this.state.bookmarks;
-    apolloServer
-      .invoke("getBookmarks", {
-        start: start
-      })
-      .then(data => {
-        this.setState({
-          bookmarks: currentBookmarks.concat(data.bookmarks),
-          totalBookmarks: data.total
-        });
-      });
   }
 
   componentDidMount() {
-    this.loadBookmarks();
+    const { load, bookmarks } = this.props;
+    load(bookmarks.length);
   }
 
-  addBookmark(title, link, description, tags) {
-    return apolloServer
-      .invoke("addBookmark", {
-        title: title,
-        link: link,
-        description: description,
-        tags: tags
-      })
-      .then(() => {
-        this.refreshBookmarks();
-      });
+  saveBookmark(bookmark) {
+    const { save } = this.props;
+    save(bookmark);
+    this.setState({ editingBookmark: null });
   }
 
-  refreshBookmarks() {
-    this.setState({
-      bookmarks: []
-    });
-    this.loadBookmarks();
+  editBookmark(bookmark) {
+    this.setState({ editingBookmark: bookmark });
   }
 
   render() {
+    const { bookmarks, total, load, remove } = this.props;
+    const { editingBookmark } = this.state;
     return (
       <div>
+        <div>Total bookmarks: {total}</div>
+        {!editingBookmark && (
+          <TextButton onClick={() => this.editBookmark({})}>
+            <FontAwesome name="add" />Add Bookmark
+          </TextButton>
+        )}
+        {editingBookmark && (
+          <BookmarkForm
+            bookmark={editingBookmark}
+            onSubmit={data => this.saveBookmark(data)}
+            onCancel={() => this.editBookmark(null)}
+          />
+        )}
         <BookmarksDisplay
-          bookmarks={this.state.bookmarks}
-          totalBookmarks={this.state.totalBookmarks}
-          loadBookmarks={this.loadBookmarks}
-          refreshBookmarks={this.refreshBookmarks}
+          bookmarks={bookmarks}
+          totalBookmarks={total}
+          loadBookmarks={load}
+          refreshBookmarks={load}
+          editBookmark={bookmark => this.editBookmark(bookmark)}
+          deleteBookmark={bookmark => remove(bookmark)}
         />
-        <AddBookmark addBookmark={this.addBookmark} />
       </div>
     );
   }
 }
 
-export default Bookmarks;
+function mapStateToProps(state, props) {
+  const bookmarks = bookmarkSelectors.all(state);
+  const total = state.bookmarks.total;
+
+  return {
+    bookmarks,
+    total
+  };
+}
+
+function mapDispatchToProps(dispatch, props) {
+  return {
+    load: start => dispatch(bookmarkActions.load({ start })),
+    save: bookmark => dispatch(bookmarkActions.save(bookmark)),
+    remove: bookmark => dispatch(bookmarkActions.remove(bookmark))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Bookmarks);

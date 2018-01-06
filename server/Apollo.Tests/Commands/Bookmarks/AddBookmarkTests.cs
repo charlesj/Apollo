@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Apollo.Tests.Commands.Bookmarks
 {
-    public class AddBookmarkTests : BaseUnitTest<AddBookmark>
+    public class AddBookmarkTests : BaseUnitTest<SaveBookmark>
     {
         public AddBookmarkTests()
         {
@@ -27,7 +27,7 @@ namespace Apollo.Tests.Commands.Bookmarks
             public Execute()
             {
                 this.Mock<IBookmarksDataService>()
-                    .Setup(bds => bds.Insert(It.IsAny<Bookmark>()))
+                    .Setup(bds => bds.Upsert(It.IsAny<Bookmark>()))
                     .Returns(Task.FromResult(0));
             }
 
@@ -37,7 +37,7 @@ namespace Apollo.Tests.Commands.Bookmarks
                 await this.ClassUnderTest.Execute();
                 
                 this.Mock<IBookmarksDataService>()
-                    .Verify(bds => bds.Insert(
+                    .Verify(bds => bds.Upsert(
                         It.Is<Bookmark>(
                             b => b.title == this.ClassUnderTest.title &&
                                  b.link == this.ClassUnderTest.link &&

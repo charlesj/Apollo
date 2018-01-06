@@ -34,7 +34,7 @@ const invokeFull = async (commandName, payload) => {
       return [];
     }
   } catch (err) {
-    console.log('ERROR talking to server', err);
+    console.log("ERROR talking to server", err);
     throw err;
   } finally {
     store.dispatch(metaActions.decrementRequests());
