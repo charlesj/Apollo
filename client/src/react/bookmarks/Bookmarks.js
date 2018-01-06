@@ -4,12 +4,12 @@ import FontAwesome from "react-fontawesome";
 
 import { bookmarkActions } from "../../redux/actions";
 import { bookmarkSelectors } from "../../redux/selectors";
-
-import "./bookmarks.css";
-
+import { NotifySuccess } from "../../services/notifier";
 import { TextButton, Page } from "../_controls";
 import BookmarksDisplay from "./BookmarksDisplay";
 import BookmarkForm from "./BookmarkForm";
+
+import "./bookmarks.css";
 
 class Bookmarks extends React.Component {
   constructor(props) {
@@ -28,6 +28,7 @@ class Bookmarks extends React.Component {
     const { save } = this.props;
     save(bookmark);
     this.setState({ editingBookmark: null });
+    NotifySuccess("Bookmark Saved");
   }
 
   editBookmark(bookmark) {
@@ -60,7 +61,7 @@ class Bookmarks extends React.Component {
           loadBookmarks={load}
           refreshBookmarks={load}
           editBookmark={bookmark => this.editBookmark(bookmark)}
-          deleteBookmark={bookmark => remove(bookmark)}
+          deleteBookmark={bookmark => { remove(bookmark); NotifySuccess("Bookmark Removed"); }}
         />
       </Page>
     );
