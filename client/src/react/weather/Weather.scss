@@ -1,15 +1,10 @@
+@import 'styles/variables.scss';
 
-.weatherForecast {
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: #fff;
-  padding: 0px;
-}
 .weatherLocation{
   font-weight: bold;
   font-size: 15px;
   text-transform: uppercase;
-  border-bottom: 1px solid #0A6640;
+  border-bottom: 1px solid $borderColor;
   padding: 5px;
 }
 .weatherIcon {
@@ -25,7 +20,7 @@
 
 .forecastDay {
   padding: 5px;
-  border-right: 1px solid  #0A6640;
+  border-right: 1px solid  $borderColor;
   width: 11%;
 }
 .forecastsContainer .forecastDay:last-child{

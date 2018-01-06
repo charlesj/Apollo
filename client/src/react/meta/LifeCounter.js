@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import countdown from "countdown";
-import "./LifeCounter.css";
+
+import { Container } from "../_controls";
 import config from "../../config";
+
+import "./LifeCounter.css";
+
 
 const { birthDate, endDate } = config;
 
@@ -37,10 +41,10 @@ class LifeCounter extends Component {
 
   render() {
     return (
-      <div className="lifeCounterContainer">
+      <Container className="lifeCounterContainer">
         <div>E: {this.state.futureDisplay}</div>
         <div>A: {this.state.pastDisplay}</div>
-      </div>
+      </Container>
     );
   }
 }
