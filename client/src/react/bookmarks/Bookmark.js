@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesome from "react-fontawesome";
 
-import { TextButton } from "../general";
+import { TextButton } from "../_controls";
 
 function Bookmark(props) {
   const {
@@ -13,8 +13,10 @@ function Bookmark(props) {
   return (
     <div className="bookmark">
       <FontAwesome name="bookmark-o" />
-      {createdAtDisplay} -
-      <a href={link}>{title}</a>
+      {createdAtDisplay}{" "}
+      <a href={link} target="_blank">
+        {title}
+      </a>
       {description && <div className="description">{description}</div>}
       <div className="tags">
         {tags &&

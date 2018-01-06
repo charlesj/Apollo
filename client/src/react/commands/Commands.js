@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactJson from "react-json-view";
 import apolloServer from "../../services/apolloServer";
-import { Button, Container, FlexRow, SelectList } from "../general/";
+import { Button, Container, FlexRow, SelectList } from "../_controls";
 
 import "./Commands.css";
 

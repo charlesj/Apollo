@@ -1,0 +1,30 @@
+@import 'styles/variables.scss';
+
+.button {
+  background-color: $white;
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+}
+
+.button .fa {
+  margin-right: 5px;
+}
+
+.button-primary {
+  border: 1px solid $primary;
+  background-color: $primary + #666;
+}
+
+.textButton {
+  border: 0px;
+  background-color: inherit;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0px;
+}
+.textButton:hover {
+  background-color:#ddd;
+}

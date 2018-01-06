@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
 import { Field, reduxForm } from "redux-form";
-import { Button } from "../general";
+import { CancelButton, SaveButton, Container } from "../_controls";
+
+import "./BookmarkForm.css";
 
 class BookmarkForm extends Component {
   render() {
     const { handleSubmit, onCancel } = this.props;
     return (
-      <div>
+      <Container className="bookmarkFormContainer" width={300}>
         <form onSubmit={handleSubmit}>
           <div>
             <Field
@@ -29,7 +32,7 @@ class BookmarkForm extends Component {
           <div>
             <Field
               name="description"
-              component="input"
+              component="textarea"
               type="text"
               placeholder="Description"
             />
@@ -42,14 +45,10 @@ class BookmarkForm extends Component {
               placeholder="Tags"
             />
           </div>
-          <Button type="button" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button type="submit" primary>
-            Save
-          </Button>
+          <CancelButton type="button" onClick={onCancel} />
+          <SaveButton type="submit" primary />
         </form>
-      </div>
+      </Container>
     );
   }
 }

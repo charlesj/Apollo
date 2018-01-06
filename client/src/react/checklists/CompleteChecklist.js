@@ -1,7 +1,7 @@
 import React from "react";
 import { NotifySuccess } from "../../services/notifier";
 import apolloServer from "../../services/apolloServer";
-import { TextButton } from "../general";
+import { TextButton } from "../_controls";
 
 class CompleteChecklist extends React.Component {
   constructor(props) {

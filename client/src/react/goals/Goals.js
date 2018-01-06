@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { goalActions } from "../../redux/actions";
-import { TextButton, FlexRow, Container } from "../general";
+import { TextButton, FlexRow, Container } from "../_controls";
 import FontAwesome from "react-fontawesome";
 import GoalForm from "./GoalForm";
 

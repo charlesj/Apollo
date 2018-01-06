@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { FlexRow, TextButton } from "../general";
+import { FlexRow, TextButton } from "../_controls";
 import { metaSelectors } from "../../redux/selectors";
 import ServerActivity from "./ServerActivity";
 import "./MenuBar.css";

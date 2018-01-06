@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesome from "react-fontawesome";
-
+import { Button, Container, FlexRow } from "../_controls";
 import Bookmark from "./Bookmark";
 
 class BookmarksDisplay extends React.Component {
@@ -13,21 +13,23 @@ class BookmarksDisplay extends React.Component {
       deleteBookmark
     } = this.props;
     return (
-      <div className="bookmarksContainer">
-        {bookmarks.map(b => {
-          return (
-            <Bookmark
-              key={b.id}
-              bookmark={b}
-              editBookmark={editBookmark}
-              deleteBookmark={deleteBookmark}
-            />
-          );
-        })}
-        <button onClick={() => loadBookmarks(bookmarks.length)}>
+      <Container>
+        <FlexRow>
+          {bookmarks.map(b => {
+            return (
+              <Bookmark
+                key={b.id}
+                bookmark={b}
+                editBookmark={editBookmark}
+                deleteBookmark={deleteBookmark}
+              />
+            );
+          })}
+        </FlexRow>
+        <Button onClick={() => loadBookmarks(bookmarks.length)} primary>
           <FontAwesome name="chevron-circle-right" /> Load More
-        </button>
-      </div>
+        </Button>
+      </Container>
     );
   }
 }

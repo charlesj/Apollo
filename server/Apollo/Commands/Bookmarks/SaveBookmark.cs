@@ -10,6 +10,7 @@ namespace Apollo.Commands.Bookmarks
     public class SaveBookmark : AuthenticatedCommand
     {
         private readonly IBookmarksDataService bookmarksDataService;
+        public int id { get; set; }
         public string title { get; set; }
         public string link { get; set; }
         public string description { get; set; }
@@ -26,6 +27,7 @@ namespace Apollo.Commands.Bookmarks
         {
             var bookmark = new Bookmark
             {
+                id=id,
                 title = title,
                 link = link,
                 description = description,

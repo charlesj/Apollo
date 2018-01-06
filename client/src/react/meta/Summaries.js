@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { summaryActions } from "../../redux/actions";
-import { Card, FlexRow } from "../general/";
+import { Card, FlexRow } from "../_controls";
 
 class Summaries extends Component {
   componentWillMount() {

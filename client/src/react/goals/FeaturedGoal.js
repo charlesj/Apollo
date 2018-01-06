@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import countdown from "countdown";
 
-import { Container, FlexRow, Card } from "../general";
+import { Container, FlexRow, Card } from "../_controls";
 import { metricsActions } from "../../redux/actions";
 import { goalSelectors } from "../../redux/selectors";
 

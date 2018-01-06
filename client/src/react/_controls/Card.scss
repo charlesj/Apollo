@@ -1,11 +1,10 @@
 @import 'styles/variables.scss';
 
 .card {
-  border: 1px solid black;
-  border-radius: 5px;
+  @include standardBorder();
   min-width: 100px;
   background-color: $white;
-  margin:5px;
+  margin:$spacing;
   text-align: center;
 }
 
@@ -14,7 +13,7 @@
 }
 
 .cardTitle {
-  border-top: 1px solid black;
+  border-top: 1px solid $borderColor;
   font-size: 10px;
   padding: 5px;
 }

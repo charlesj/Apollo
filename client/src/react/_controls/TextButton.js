@@ -1,12 +1,11 @@
 import React from "react";
-
-import "./TextButton.css";
+import Button from "./Button";
 
 function TextButton(props) {
   return (
-    <button className="textButton" onClick={props.onClick}>
+    <Button className="textButton" onClick={props.onClick}>
       {props.children}
-    </button>
+    </Button>
   );
 }
 

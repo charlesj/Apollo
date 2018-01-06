@@ -7,7 +7,7 @@ import { bookmarkSelectors } from "../../redux/selectors";
 
 import "./bookmarks.css";
 
-import { TextButton } from "../general";
+import { TextButton, Page } from "../_controls";
 import BookmarksDisplay from "./BookmarksDisplay";
 import BookmarkForm from "./BookmarkForm";
 
@@ -38,13 +38,15 @@ class Bookmarks extends React.Component {
     const { bookmarks, total, load, remove } = this.props;
     const { editingBookmark } = this.state;
     return (
-      <div>
-        <div>Total bookmarks: {total}</div>
-        {!editingBookmark && (
-          <TextButton onClick={() => this.editBookmark({})}>
-            <FontAwesome name="add" />Add Bookmark
-          </TextButton>
-        )}
+      <Page>
+        <div>
+          Total bookmarks: {total}
+          {!editingBookmark && (
+            <TextButton onClick={() => this.editBookmark({})}>
+              <FontAwesome name="plus" />Add Bookmark
+            </TextButton>
+          )}
+        </div>
         {editingBookmark && (
           <BookmarkForm
             bookmark={editingBookmark}
@@ -60,7 +62,7 @@ class Bookmarks extends React.Component {
           editBookmark={bookmark => this.editBookmark(bookmark)}
           deleteBookmark={bookmark => remove(bookmark)}
         />
-      </div>
+      </Page>
     );
   }
 }

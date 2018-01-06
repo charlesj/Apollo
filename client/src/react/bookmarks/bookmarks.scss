@@ -1,14 +1,11 @@
 @import 'styles/variables.scss';
-.bookmarksContainer {
-  margin: 5px;
-  border: 1px solid $blue;
-  background-color: $white;
-  display: flex;
-  flex-direction: column
-}
+
 .bookmark{
-  padding-bottom: 5px;
+  padding: 5px;
   margin: 5px;
+  min-width: 300px;
+  border: 1px solid $lightBlue;
+
 }
 .bookmark .fa {
   margin-right: 5px;
@@ -26,7 +23,7 @@
   padding-left: 3px;
   padding-right: 3px;
   margin-right: 3px;
-  background-color: $lightBlue;
+  background-color: $lightBlue + #444;
 }
 .bookmarksDisplayHeader{
   margin-bottom: 10px;

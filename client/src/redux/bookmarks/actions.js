@@ -29,7 +29,7 @@ export function save(bookmark) {
       ...bookmark,
       tags: bookmark.unifiedTags ? bookmark.unifiedTags.split(",") : []
     });
-    console.log(updated);
+
     return { bookmark: updated };
   });
 }

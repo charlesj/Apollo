@@ -56,6 +56,7 @@ namespace Apollo.Data
             }
             else
             {
+                bookmark.modified_at = DateTime.Now;
                 await Execute(UpdateSql, bookmark);
             }
 

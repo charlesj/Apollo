@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FontAwesome from "react-fontawesome";
 import apolloServer from "../../services/apolloServer";
-import { TextButton } from "../general";
+import { TextButton } from "../_controls";
 
 import "./Boards.css";
 

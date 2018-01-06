@@ -9,7 +9,7 @@ import { metaActions } from "../../redux/actions";
 import MenuBar from "./MenuBar";
 import Notifications from "./Notifications";
 
-import { FlexRow } from "../general";
+import { FlexRow } from "../_controls";
 import "../../../node_modules/terminal-in-react/lib/bundle/terminal-react.css";
 import "./Terminal.css";
 

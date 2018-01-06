@@ -34,8 +34,8 @@ export default handleActions(
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        total,
-        bookmarks: current
+        bookmarks: current,
+        total
       };
     },
 
@@ -54,10 +54,10 @@ export default handleActions(
       const { bookmark } = action.payload;
       const current = { ...state.bookmarks };
       delete current[bookmark.id];
-
       return {
         ...basicLoadCompleteReducer(state, action),
-        bookmarks: current
+        bookmarks: current,
+        total: state.total - 1
       };
     }
   },

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { metaActions } from "../../redux/actions";
-import { TextButton } from "../general";
+import { TextButton } from "../_controls";
 
 import "./Notifications.css";
 

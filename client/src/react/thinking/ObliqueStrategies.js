@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesome from "react-fontawesome";
-import { TextButton } from "../general/";
+import { TextButton } from "../_controls";
 
 import "./ObliqueStrategies.css";
 
