@@ -4,7 +4,6 @@ $containerWidth: 500px;
 .quickNavigatorContainer {
   width: $containerWidth;
   height: $terminalPanelHeight;
-  overflow-y: scroll;
   overflow-x: hidden;
 }
 .quickNavigatorContainer input {

@@ -7,9 +7,17 @@ import "./Notifications.css";
 
 class Notifications extends Component {
   render() {
-    const { notifications, toggleRead, dismissNotification } = this.props;
+    const {
+      notifications,
+      toggleRead,
+      dismissNotification,
+      readAll,
+      dismissAll
+    } = this.props;
     return (
       <div className="notificationsContainer">
+        <TextButton onClick={() => readAll()}>Mark all Read</TextButton>
+        <TextButton onClick={() => dismissAll()}>Dismiss all</TextButton>
         {notifications.map((n, i) => {
           const className = "notification-" + n.type;
           return (
@@ -50,7 +58,9 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
   return {
     toggleRead: obj => dispatch(metaActions.toggleNotificationRead(obj)),
-    dismissNotification: obj => dispatch(metaActions.dismissNotification(obj))
+    dismissNotification: obj => dispatch(metaActions.dismissNotification(obj)),
+    readAll: () => dispatch(metaActions.markAllNotificationsRead()),
+    dismissAll: () => dispatch(metaActions.dismissAllNotifications())
   };
 }
 
