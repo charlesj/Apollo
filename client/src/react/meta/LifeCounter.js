@@ -28,7 +28,15 @@ class LifeCounter extends Component {
     };
 
     this.updateDisplay = this.updateDisplay.bind(this);
-    setInterval(this.updateDisplay, 1000);
+  }
+
+  componentDidMount() {
+    var intervalId = setInterval(this.updateDisplay, 1000);
+    this.setState({ intervalId: intervalId });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
   }
 
   updateDisplay() {

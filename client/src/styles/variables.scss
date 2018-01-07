@@ -4,6 +4,7 @@ $blue: #0375B4;
 $orange: #A66321;
 $red: #A82A2A;
 $white: #fff;
+$yellow: #fff500;
 
 $lightGreen: $green + #333;
 $lightBlue: $blue + #333;
@@ -23,6 +24,7 @@ $standardBorderRadius: 5px;
 $spacing: 5px;
 $borderColor: $background-color - #333;
 $tagBackground: $lightBlue;
+$quickCommandInputBackgroundColor: #1b1b14;
 
 @mixin standardBorder(){
   border: 1px solid $borderColor;

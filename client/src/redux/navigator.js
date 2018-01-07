@@ -18,6 +18,7 @@ export const RoutesMap = [
     name: "home",
     label: "Home",
     icon: "home",
+    main: true,
     component: Home
   },
   {
@@ -25,6 +26,7 @@ export const RoutesMap = [
     name: "boards",
     label: "Boards",
     icon: "tasks",
+    main: true,
     component: Boards
   },
   {
@@ -32,6 +34,7 @@ export const RoutesMap = [
     name: "log",
     label: "Log",
     icon: "pencil",
+    main: true,
     component: Log
   },
   {
@@ -39,6 +42,7 @@ export const RoutesMap = [
     name: "notebooks",
     label: "Notebooks",
     icon: "sticky-note",
+    main: true,
     component: Notebooks
   },
   {
@@ -46,6 +50,7 @@ export const RoutesMap = [
     name: "checklists",
     label: "Checklists",
     icon: "check-circle-o",
+    main: true,
     component: Checklists
   },
   {
@@ -53,6 +58,7 @@ export const RoutesMap = [
     name: "health",
     label: "Health",
     icon: "medkit",
+    main: true,
     component: Health
   },
   {
@@ -60,6 +66,7 @@ export const RoutesMap = [
     name: "financial",
     label: "Financial",
     icon: "dollar",
+    main: true,
     component: Financial
   },
   {
@@ -67,6 +74,7 @@ export const RoutesMap = [
     name: "bookmarks",
     label: "Bookmarks",
     icon: "bookmark-o",
+    main: true,
     component: Bookmarks
   },
   {
@@ -74,6 +82,7 @@ export const RoutesMap = [
     name: "feeds",
     label: "Feeds",
     icon: "rss-square",
+    main: true,
     component: Feeds
   },
   {
@@ -81,6 +90,7 @@ export const RoutesMap = [
     name: "commands",
     label: "Commands",
     icon: "magic",
+    main: true,
     component: Commands
   },
   {
@@ -88,6 +98,7 @@ export const RoutesMap = [
     name: "jobs",
     label: "Jobs",
     icon: "gavel",
+    main: true,
     component: Jobs
   },
   {
@@ -95,6 +106,7 @@ export const RoutesMap = [
     name: "settings",
     label: "Settings",
     icon: "gear",
+    main: true,
     component: Settings
   },
   {
@@ -102,6 +114,9 @@ export const RoutesMap = [
     name: "goals",
     label: "Goals",
     icon: "gear",
+    main: true,
     component: Goals
   }
 ];
+
+export const MainRoutes = RoutesMap.filter(r => r.main);

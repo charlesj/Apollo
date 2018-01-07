@@ -17,17 +17,10 @@ export default handleActions(
   {
     [combineActions(
       actions.login.start,
-      actions.logout.start,
-      actions.notify.start,
-      actions.dismissNotification.start
+      actions.logout.start
     )]: basicStartReducer,
 
-    [combineActions(
-      actions.login.fail,
-      actions.logout.fail,
-      actions.notify.fail,
-      actions.dismissNotification.fail
-    )]: basicFailReducer,
+    [combineActions(actions.login.fail, actions.logout.fail)]: basicFailReducer,
 
     [actions.login.complete]: (state, action) => {
       const { token, loginError } = action.payload;
@@ -61,7 +54,7 @@ export default handleActions(
       };
     },
 
-    [actions.toggleNotificationRead.complete]: (state, action) => {
+    [actions.toggleNotificationRead]: (state, action) => {
       const updated = action.payload;
       const notifications = [...state.notifications];
       notifications.forEach(n => {
@@ -76,7 +69,7 @@ export default handleActions(
       };
     },
 
-    [actions.dismissNotification.complete]: (state, action) => {
+    [actions.dismissNotification]: (state, action) => {
       const toRemove = action.payload;
       const notifications = state.notifications.filter(n => {
         return n.time !== toRemove.time;
@@ -85,6 +78,27 @@ export default handleActions(
       return {
         ...basicLoadCompleteReducer(state, action),
         notifications
+      };
+    },
+
+    [actions.markAllNotificationsRead]: (state, action) => {
+      const notifications = state.notifications.map(n => {
+        return {
+          ...n,
+          unread: false
+        };
+      });
+
+      return {
+        ...state,
+        notifications
+      };
+    },
+
+    [actions.dismissAllNotifications]: (state, action) => {
+      return {
+        ...state,
+        notifications: []
       };
     },
 

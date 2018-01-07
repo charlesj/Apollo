@@ -27,14 +27,14 @@ function Bookmark(props) {
               </span>
             );
           })}
-        <div className="bookmarkCommands">
-          <TextButton onClick={() => editBookmark(props.bookmark)}>
-            <FontAwesome name="pencil" />Edit
-          </TextButton>
-          <TextButton onClick={() => deleteBookmark(props.bookmark)}>
-            <FontAwesome name="remove" />Delete
-          </TextButton>
-        </div>
+      </div>
+      <div className="bookmarkCommands">
+        <TextButton onClick={() => editBookmark(props.bookmark)}>
+          <FontAwesome name="pencil" />Edit
+        </TextButton>
+        <TextButton onClick={() => deleteBookmark(props.bookmark)}>
+          <FontAwesome name="remove" />Delete
+        </TextButton>
       </div>
     </div>
   );

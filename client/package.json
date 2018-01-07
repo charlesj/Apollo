@@ -25,8 +25,7 @@
     "redux-actions": "^2.2.1",
     "redux-form": "^7.2.0",
     "redux-thunk": "^2.2.0",
-    "store": "^2.0.12",
-    "terminal-in-react": "^3.5.1"
+    "store": "^2.0.12"
   },
   "devDependencies": {
     "prettier": "^1.9.2",
