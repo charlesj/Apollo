@@ -6,7 +6,6 @@ import config from "../../config";
 
 import "./LifeCounter.css";
 
-
 const { birthDate, endDate } = config;
 
 const countdownUnits =

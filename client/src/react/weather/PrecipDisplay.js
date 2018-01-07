@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function PrecipDisplay(props) {
   var percentDisplay = Math.round(props.chance * 100);
@@ -15,7 +15,7 @@ function PrecipDisplay(props) {
 
 PrecipDisplay.propTypes = {
   chance: PropTypes.number.isRequired,
-  precipType: PropTypes.string,
-}
+  precipType: PropTypes.string
+};
 
 export default PrecipDisplay;

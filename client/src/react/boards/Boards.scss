@@ -1,42 +1,48 @@
-
-.boardContainer{
-  display: flex;
-  flex-flow: row;
-}
+@import 'styles/variables.scss';
 
 .board{
-  border: 1px solid black;
-  margin: 5px;
-  padding: 0px;
+  @include standardBorder();
+  margin: $spacing;
   width: 300px;
 }
 
 .boardTitle{
-  background-color: #fff;
-  border-bottom: 1px solid black;
+  background-color: $white;
+  border-top-left-radius: $standardBorderRadius;
+  border-top-right-radius: $standardBorderRadius;
+  border-bottom: 1px solid $borderColor;
   padding: 3px;
 }
-.boardMenuToggle{
+.boardMenu{
   float: right;
 }
 .boardItem{
   background-color: #fff;
-  margin-top: 10px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  margin: $spacing;
+  @include standardBorder();
 }
-.boardItemMenu{
-  border-top: 1px solid black;
-  padding: 0px;
-  margin: 0px;
-  background-color: #48AFF0;
-  color: #fff;
-}
+
 .boardItemTitle{
-  border-bottom:  1px solid black;
-  padding: 2px;
+  border-bottom:  1px solid $borderColor;
+  padding: 3px;
   font-weight: bold;
 }
+.boardItemTitle a{
+  float: right;
+  text-decoration: none;
+  color: $blue;
+}
 .boardItemDescription{
-  padding: 5px;
+  padding: $spacing;
+  font-style: italic;
+}
+.boardItemForm {
+  padding: $spacing;
+}
+.boardItemForm input {
+  margin-bottom: $spacing;
+  width: 99%;
+}
+.boardItemForm textarea {
+  width: 100%;
 }

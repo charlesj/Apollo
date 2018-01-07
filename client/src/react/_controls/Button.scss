@@ -7,6 +7,10 @@
   margin: 5px;
 }
 
+.button:hover {
+  background-color:#ddd;
+}
+
 .button .fa {
   margin-right: 5px;
 }
@@ -14,6 +18,10 @@
 .button-primary {
   border: 1px solid $primary;
   background-color: $primary + #666;
+}
+
+.button-primary:hover {
+  background-color: $primaryHover;
 }
 
 .textButton {
@@ -24,7 +32,4 @@
   text-decoration: none;
   cursor: pointer;
   border: 0px;
-}
-.textButton:hover {
-  background-color:#ddd;
 }

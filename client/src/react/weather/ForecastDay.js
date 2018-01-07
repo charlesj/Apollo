@@ -1,5 +1,5 @@
-import React from 'react';
-import moment from 'moment';
+import React from "react";
+import moment from "moment";
 
 import DarkSkyIconMap from "./DarkSkyIconMapping";
 import PrecipDisplay from "./PrecipDisplay";

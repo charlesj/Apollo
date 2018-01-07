@@ -7,13 +7,11 @@ namespace Apollo.Data
 {
     public interface IBoardDataService
     {
-        Task AddBoard(Board board);
         Task<IReadOnlyList<Board>> GetBoards();
-        Task UpdateBoard(Board board);
+        Task<Board> SaveBoard(Board board);
         Task DeleteBoard(int id);
-        Task AddItem(BoardItem item);
         Task<IReadOnlyList<BoardItem>> GetBoardItems(int id);
-        Task UpdateItem(BoardItem item);
+        Task<BoardItem> SaveItem(BoardItem item);
         Task DeleteBoardItem(int id);
         Task<int> GetBoardCount();
         Task<int> GetRecentlyAddedItemCount();
@@ -24,16 +22,20 @@ namespace Apollo.Data
     public class BoardDataService : BaseDataService, IBoardDataService
     {
         public const string InsertBoardSql = "insert into boards(title, list_order, created_at) " +
-                                             "values (@title, @list_order, current_timestamp)";
+                                             "values (@title, @list_order, current_timestamp) returning id";
 
         public const string GetBoardsSql = "select * from boards order by list_order asc";
+
+        public const string GetBoardSql = "select * from boards where id=@id";
 
         public const string UpdateBoardSql = "update boards set title=@title, list_order=@list_order where id=@id";
 
         public const string DeleteBoardSql = "delete from boards where id=@id";
 
         public const string InsertItemSql = "insert into board_items(board_id, title, link, description, created_at) " +
-                                        "values (@board_id, @title, @link, @description, current_timestamp)";
+                                        "values (@board_id, @title, @link, @description, current_timestamp) returning id";
+
+        public const string SingleItemSql = "select * from board_items where id=@id";
 
         public const string GetBoardItemsSql = "select * from board_items where board_id=@id";
 
@@ -89,9 +91,9 @@ namespace Apollo.Data
             return await QueryAsync<Board>(GetBoardsSql);
         }
 
-        public async Task UpdateBoard(Board board)
+        public async Task<Board> SaveBoard(Board board)
         {
-            await Execute(UpdateBoardSql, board);
+            return await Upsert(InsertBoardSql, UpdateBoardSql, GetBoardSql, board);
         }
 
         public async Task DeleteBoard(int id)
@@ -99,19 +101,14 @@ namespace Apollo.Data
             await Execute(DeleteBoardSql, new {id});
         }
 
-        public async Task AddItem(BoardItem item)
-        {
-            await Execute(InsertItemSql, item);
-        }
-
         public async Task<IReadOnlyList<BoardItem>> GetBoardItems(int id)
         {
             return await QueryAsync<BoardItem>(GetBoardItemsSql, new {id});
         }
 
-        public async Task UpdateItem(BoardItem item)
+        public async Task<BoardItem> SaveItem(BoardItem item)
         {
-            await Execute(UpdateItemSql, item);
+            return await Upsert(InsertItemSql, UpdateItemSql, SingleItemSql, item);
         }
 
         public async Task DeleteBoardItem(int id)
@@ -120,7 +117,7 @@ namespace Apollo.Data
         }
     }
 
-    public class Board
+    public class Board : ITableModel
     {
         public int id { get; set; }
         public string title { get; set; }
@@ -128,7 +125,7 @@ namespace Apollo.Data
         public DateTime created_at { get; set; }
     }
 
-    public class BoardItem
+    public class BoardItem : ITableModel
     {
         public int id { get; set; }
         public int board_id { get; set; }

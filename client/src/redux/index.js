@@ -4,6 +4,7 @@ import { reducer as formReducer } from "redux-form";
 import thunk from "redux-thunk";
 import createHistory from "history/createBrowserHistory";
 
+import boardReducer from "./boards/reducers";
 import bookmarksReducer from "./bookmarks/reducers";
 import goalsReducer from "./goals/reducers";
 import metaReducer from "./meta/reducers";
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === "development") {
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 
 const rootReducer = combineReducers({
+  boards: boardReducer,
   bookmarks: bookmarksReducer,
   goals: goalsReducer,
   meta: metaReducer,

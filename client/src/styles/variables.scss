@@ -1,6 +1,6 @@
 $gray: #eee;
-$green: #0A6640;
-$blue: #0E5A8A;
+$green: #007849;
+$blue: #0375B4;
 $orange: #A66321;
 $red: #A82A2A;
 $white: #fff;
@@ -10,7 +10,8 @@ $lightBlue: $blue + #333;
 $lightRed: $red + #333;
 
 $background-color: $gray;
-$primary: $blue;
+$primary: $green;
+$primaryHover: $lightGreen;
 $error: $red;
 $success: $green;
 $invalid: $orange;

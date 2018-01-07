@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import moment from "moment";
 import FontAwesome from "react-fontawesome";
 import WeatherIcon from "./WeatherIcon";
@@ -8,9 +8,7 @@ import ForecastDay from "./ForecastDay";
 
 function Forecast(props) {
   if (!props.data) {
-    return (
-      <div>There are no forecasts to display</div>
-    );
+    return <div>There are no forecasts to display</div>;
   }
   var curr = props.data.Forecast.currently;
   return (

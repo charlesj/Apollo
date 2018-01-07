@@ -75,3 +75,16 @@ export function basicStartReducer(state, action) {
     isFetching: true
   };
 }
+
+export function idReducer(current, incoming) {
+  const updated = { ...current };
+  if (!Array.isArray(incoming) && incoming.id) {
+    updated[incoming.id] = incoming;
+  } else {
+    incoming.forEach(obj => {
+      updated[obj.id] = obj;
+    });
+  }
+
+  return updated;
+}

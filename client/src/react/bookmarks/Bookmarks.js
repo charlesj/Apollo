@@ -61,7 +61,10 @@ class Bookmarks extends React.Component {
           loadBookmarks={load}
           refreshBookmarks={load}
           editBookmark={bookmark => this.editBookmark(bookmark)}
-          deleteBookmark={bookmark => { remove(bookmark); NotifySuccess("Bookmark Removed"); }}
+          deleteBookmark={bookmark => {
+            remove(bookmark);
+            NotifySuccess("Bookmark Removed");
+          }}
         />
       </Page>
     );

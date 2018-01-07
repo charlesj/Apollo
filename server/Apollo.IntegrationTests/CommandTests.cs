@@ -14,7 +14,7 @@ namespace Apollo.IntegrationTests
         private static int RequestCounter = 0;
         const string ApolloEndPoint = "http://192.168.142.10/api";
 
-        private string loginToken = "c016b4c1b5444986981eab0fa320d1cf";
+        private string loginToken = "9f0b556ece8e4c4ab9ba19fc92a52cf1";
 
         [Fact]
         public void EnsureLoginTokenSet()
@@ -109,13 +109,13 @@ namespace Apollo.IntegrationTests
             data.Add("GetNotes", new{}, true);
             data.Add("GetNote", new {id = 1}, true);
             data.Add("UpdateNote", new {id = 1, name = "two", body = "I am updated note"}, true);
-            data.Add("AddBoard", new {title="test"}, true);
-            data.Add("UpdateBoard", new {title="test", load_order=0, id=1}, true);
+            data.Add("SaveBoard", new { board = new {title="test board"}}, true);
+            data.Add("SaveBoard", new { board = new {title="test", load_order=0, id=1}}, true);
             data.Add("GetBoards", new {}, true);
             data.Add("GetBoardItems", new {board_id = 1}, true);
-            data.Add("AddBoardItem", new {title="test"}, true);
-            data.Add("UpdateBoardItem", new {title="test update", id=1}, false);
-            data.Add("UpdateBoardItem", new {title="test update", id=1, board_id=1}, true);
+            data.Add("SaveBoardItem", new {title="test", board_id=1}, true);
+            data.Add("SaveBoardItem", new {title="test update", id=1}, false);
+            data.Add("SaveBoardItem", new {title="test update", id=1, board_id=1}, true);
             data.Add("DeleteBoard", new {id = 3}, true);
             data.Add("DeleteBoardItem", new {id = 3}, true);
             data.Add("UpsertChecklist", new {checklist = new

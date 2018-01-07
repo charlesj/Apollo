@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace Apollo.Data
 {
+    public interface ITableModel
+    {
+        int id { get; set; }
+    }
+
     public abstract class BaseDataService
     {
         protected readonly IConnectionFactory connectionFactory;
@@ -26,6 +31,37 @@ namespace Apollo.Data
             catch (Exception exception)
             {
                 Logger.Error(exception.Message, new { query });
+                throw new DatabaseException(exception.Message);
+            }
+        }
+
+        protected async Task<TModel> Upsert<TModel>(string insertQuery, string updateQuery, string selectQuery, TModel parameters) where TModel : ITableModel
+        {
+            int id = parameters.id;
+            if (id == default(int))
+            {
+                id = await InsertAndReturnId(insertQuery, parameters);
+            }
+            else
+            {
+                await Execute(updateQuery, parameters);
+            }
+
+            return (await QueryAsync<TModel>(selectQuery, new {id})).Single();
+        }
+
+        protected async Task<int> InsertAndReturnId(string query, object parameters)
+        {
+            try
+            {
+                using (var conn = await connectionFactory.GetConnection())
+                {
+                    return (await conn.QueryAsync<IdResult>(query, parameters)).Single().id;
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger.Error(exception.Message, new { query, parameters });
                 throw new DatabaseException(exception.Message);
             }
         }
