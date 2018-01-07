@@ -16,12 +16,13 @@ $error: $red;
 $success: $green;
 $invalid: $orange;
 $selectedBackground: $lightGreen;
-$menuBarBackground: $lightBlue;
+$menuBarBackground: $lightGreen;
 $terminalPanelHeight: 150px;
 $pageMargin: 5px;
 $standardBorderRadius: 5px;
 $spacing: 5px;
 $borderColor: $background-color - #333;
+$tagBackground: $lightBlue;
 
 @mixin standardBorder(){
   border: 1px solid $borderColor;

@@ -11,7 +11,7 @@ class BookmarkForm extends Component {
   render() {
     const { handleSubmit, onCancel } = this.props;
     return (
-      <Container className="bookmarkFormContainer" width={300}>
+      <Container className="bookmarkFormContainer" width={400}>
         <form onSubmit={handleSubmit}>
           <div>
             <Field

@@ -3,3 +3,13 @@
 .bookmarkFormContainer {
   padding: 10px;
 }
+
+.bookmarkFormContainer input {
+  width: 99%;
+  margin-bottom: $spacing;
+}
+
+
+.bookmarkFormContainer textarea {
+  width: 100%;
+}
