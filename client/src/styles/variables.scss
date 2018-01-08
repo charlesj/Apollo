@@ -1,13 +1,14 @@
 $gray: #eee;
-$green: #007849;
+$green: #2a9d05;
 $blue: #0375B4;
-$orange: #A66321;
+$orange: #ff9a00;
 $red: #A82A2A;
 $white: #fff;
-$yellow: #fff500;
+$yellow: #fdff0c;
+$purple: #9800cd;
 
 $lightGreen: $green + #333;
-$lightBlue: $blue + #333;
+$lightBlue: #5db5fc;
 $lightRed: $red + #333;
 
 $background-color: $gray;
@@ -17,7 +18,7 @@ $error: $red;
 $success: $green;
 $invalid: $orange;
 $selectedBackground: $lightGreen;
-$menuBarBackground: $lightGreen;
+$menuBarBackground: $green;
 $terminalPanelHeight: 300px;
 $pageMargin: 5px;
 $standardBorderRadius: 5px;
