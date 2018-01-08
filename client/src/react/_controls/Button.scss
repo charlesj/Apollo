@@ -2,7 +2,7 @@
 
 .button {
   background-color: $white;
-  border: 1px solid black;
+  border: 2px solid black;
   padding: 5px;
   margin: 5px;
 }
@@ -16,14 +16,22 @@
 }
 
 .button-primary {
-  border: 1px solid $primary;
-  background-color: $primary + #666;
+  border-color: $primary;
+  color: $primary;
+  font-weight: bold;
 }
 
 .button-primary:hover {
-  background-color: $primaryHover;
+  background-color: $gray;
 }
-
+.cancelButton {
+  border-color: $orange;
+  color: $orange;
+}
+.loadMoreButton {
+  border-color: $blue;
+  color: $blue;
+}
 .textButton {
   border: 0px;
   background-color: inherit;
