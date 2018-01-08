@@ -7,6 +7,8 @@ import Page from "./Page";
 import SelectList from "./SelectList";
 import TextButton from "./TextButton";
 import SaveButton from "./SaveButton";
+import LoadMoreButton from "./LoadMoreButton";
+import Tag from "./Tag";
 
 export {
   Button,
@@ -17,5 +19,7 @@ export {
   Page,
   SaveButton,
   SelectList,
-  TextButton
+  TextButton,
+  LoadMoreButton,
+  Tag
 };

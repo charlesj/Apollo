@@ -70,7 +70,7 @@ namespace Apollo.IntegrationTests
             data.Add("testcommand", new object(), true);
             data.Add("BOGUS", new object(), false);
             data.Add("applicationInfo", new object(), true);
-            data.Add("getAllJournalEntries", new object(), true);
+            data.Add("getLogEntries", new object(), true);
             data.Add("getAllActiveLoginSessions", new object(), true);
             data.Add("addMetric", new {name="testName", category="testCategory", value=1.0f}, true);
             data.Add("getMetrics", new {name="testname"}, true);
@@ -113,9 +113,9 @@ namespace Apollo.IntegrationTests
             data.Add("SaveBoard", new { board = new {title="test", load_order=0, id=1}}, true);
             data.Add("GetBoards", new {}, true);
             data.Add("GetBoardItems", new {board_id = 1}, true);
-            data.Add("SaveBoardItem", new {title="test", board_id=1}, true);
-            data.Add("SaveBoardItem", new {title="test update", id=1}, false);
-            data.Add("SaveBoardItem", new {title="test update", id=1, board_id=1}, true);
+            data.Add("SaveBoardItem", new {title="test", link="", description="", board_id=1}, true);
+            data.Add("SaveBoardItem", new {title="test update", link="", description="", id=1}, false);
+            data.Add("SaveBoardItem", new {title="test update", link="", description="", id=1, board_id=1}, true);
             data.Add("DeleteBoard", new {id = 3}, true);
             data.Add("DeleteBoardItem", new {id = 3}, true);
             data.Add("UpsertChecklist", new {checklist = new

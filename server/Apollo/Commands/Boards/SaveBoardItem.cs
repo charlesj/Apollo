@@ -39,7 +39,7 @@ namespace Apollo.Commands.Boards
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(!string.IsNullOrWhiteSpace(title) && board_id > 0);
+            return Task.FromResult(!string.IsNullOrWhiteSpace(title) && link != null && description != null && board_id > 0);
         }
 
         public override object ExamplePayload()

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Apollo.Commands.Journal;
+using Apollo.Commands.Log;
 using Apollo.CommandSystem;
 using Apollo.Data;
 using Moq;
@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Apollo.Tests.Commands.Journal
 {
-    public class AddJournalEntryTests : BaseUnitTest<AddJournalEntry>
+    public class AddJournalEntryTests : BaseUnitTest<AddLogEntry>
     {
         public AddJournalEntryTests()
         {

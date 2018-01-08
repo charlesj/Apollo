@@ -4,29 +4,29 @@ using Apollo.CommandSystem;
 using Apollo.Data;
 using Apollo.Services;
 
-namespace Apollo.Commands.Journal
+namespace Apollo.Commands.Log
 {
-    public class AddJournalEntry : AuthenticatedCommand
+    public class AddLogEntry : AuthenticatedCommand
     {
         private readonly IJournalDataService journalDataService;
 
         public string Note { get; set; }
         public List<string> Tags { get; set; }
 
-        public AddJournalEntry(IJournalDataService journalDataService, ILoginService loginService) : base(loginService)
+        public AddLogEntry(IJournalDataService journalDataService, ILoginService loginService) : base(loginService)
         {
             this.journalDataService = journalDataService;
         }
 
         public override async Task<CommandResult> Execute()
         {
-            await this.journalDataService.CreateJournalEntry(new JournalEntry
+            var note = await this.journalDataService.CreateJournalEntry(new JournalEntry
             {
                 note = this.Note,
                 tags = this.Tags?.ToArray()
             });
 
-            return CommandResult.SuccessfulResult;
+            return CommandResult.CreateSuccessResult(note);
         }
 
         public override Task<bool> IsValid()

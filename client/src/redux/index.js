@@ -7,6 +7,7 @@ import createHistory from "history/createBrowserHistory";
 import boardReducer from "./boards/reducers";
 import bookmarksReducer from "./bookmarks/reducers";
 import goalsReducer from "./goals/reducers";
+import logReducer from "./log/reducers";
 import metaReducer from "./meta/reducers";
 import metricsReducer from "./metrics/reducers";
 import summariesReducer from "./summaries/reducers";
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   boards: boardReducer,
   bookmarks: bookmarksReducer,
   goals: goalsReducer,
+  log: logReducer,
   meta: metaReducer,
   metrics: metricsReducer,
   summaries: summariesReducer,

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FontAwesome from "react-fontawesome";
-import { Button, Container, FlexRow } from "../_controls";
+import { LoadMoreButton, Container, FlexRow } from "../_controls";
 import Bookmark from "./Bookmark";
 
 class BookmarksDisplay extends React.Component {
@@ -26,9 +25,7 @@ class BookmarksDisplay extends React.Component {
             );
           })}
         </FlexRow>
-        <Button onClick={() => loadBookmarks(bookmarks.length)} primary>
-          <FontAwesome name="chevron-circle-right" /> Load More
-        </Button>
+        <LoadMoreButton onClick={() => loadBookmarks(bookmarks.length)} />
       </Container>
     );
   }

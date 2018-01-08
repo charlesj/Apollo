@@ -4,7 +4,7 @@ import FontAwesome from "react-fontawesome";
 
 function CancelButton(props) {
   return (
-    <Button {...props}>
+    <Button {...props} type="button">
       <FontAwesome name="ban" /> Cancel
     </Button>
   );

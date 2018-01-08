@@ -1,16 +1,41 @@
+@import 'styles/variables.scss';
 
 .note {
-  margin: 10px;
+  @include standardBorder();
+  margin-bottom: $spacing;
+  background-color: $white;
 }
 
 .note .createdTime {
-  color: #424242;
+  font-size: 11px;
   display: inline;
-  margin-left: 5px;
+  margin-left: $spacing;
 }
 
 .note .content {
-  margin: 10px;
-  padding: 7px;
-  padding-bottom: 1px;
+  margin-left: $spacing * 2;
+}
+
+.note .content p {
+  margin-top: $spacing;
+  margin-bottom: $spacing;
+}
+.note .tags {
+  margin: $spacing;
+}
+.logEntryFormContainer{
+  width: 50%;
+  min-width: 500px;
+}
+
+.logEntryFormContainer input {
+  width: 97%;
+  margin: $spacing;
+  margin-top: 0;
+}
+
+.logEntryFormContainer textarea {
+  width: 97%;
+  margin: $spacing;
+  height: 100px;
 }

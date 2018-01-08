@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Apollo.Commands.Journal;
+using Apollo.Commands.Log;
 using Apollo.Data;
 using Xunit;
 
 namespace Apollo.Tests.Commands.Journal
 {
-    public class GetAllJournalEntriesTests : BaseUnitTest<GetAllJournalEntries>
+    public class GetAllJournalEntriesTests : BaseUnitTest<GetLogEntries>
     {
         [Fact]
         public async void ReturnsDataServiceResult()
@@ -19,7 +19,7 @@ namespace Apollo.Tests.Commands.Journal
             };
 
             var journalService = Mock<IJournalDataService>();
-            journalService.Setup(j => j.GetAllJournalEntries()).Returns(Task.FromResult(expected));
+            journalService.Setup(j => j.GetJournalEntries(0)).Returns(Task.FromResult(expected));
             var result = await ClassUnderTest.Execute();
 
             Assert.Null(result.ErrorMessage);
@@ -33,7 +33,7 @@ namespace Apollo.Tests.Commands.Journal
         {
             var exception = new Exception("Expected");
             var journalService = Mock<IJournalDataService>();
-            journalService.Setup(j => j.GetAllJournalEntries()).Throws(exception);
+            journalService.Setup(j => j.GetJournalEntries(0)).Throws(exception);
             var actual = await Assert.ThrowsAsync<Exception>(async () => await ClassUnderTest.Execute());
             Assert.Same(exception, actual);
         }

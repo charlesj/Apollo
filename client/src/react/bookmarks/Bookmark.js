@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesome from "react-fontawesome";
 
-import { TextButton } from "../_controls";
+import { TextButton, Tag } from "../_controls";
 
 function Bookmark(props) {
   const {
@@ -21,11 +21,7 @@ function Bookmark(props) {
       <div className="tags">
         {tags &&
           tags.map((t, i) => {
-            return (
-              <span key={i} className="tag">
-                {t}
-              </span>
-            );
+            return <Tag key={i} name={t} />;
           })}
       </div>
       <div className="bookmarkCommands">

@@ -1,55 +1,38 @@
 import React from "react";
-import PropTypes from "prop-types";
-import moment from "moment";
+import { connect } from "react-redux";
 import MarkdownRenderer from "react-markdown-renderer";
-import apollo from "../../services/apolloServer";
-import EntryInput from "./EntryInput";
+
+import { logActions } from "../../redux/actions";
+import { logSelectors } from "../../redux/selectors";
 import { NotifySuccess } from "../../services/notifier";
+import { Page, LoadMoreButton, Tag, TextButton } from "../_controls";
+import LogEntryForm from "./LogEntryForm";
+
 import "./logs.css";
 
 function EntryDisplay(props) {
-  var createTime = moment(props.createdAt);
+  const { entry } = props;
   return (
     <div className="note">
-      <span className="pt-icon-standard pt-icon-document" />
-      <div className="createdTime">{createTime.calendar()}</div>
-      <div className="content pt-card">
-        <MarkdownRenderer markdown={props.note} />
+      <div className="createdTime">{entry.createdAtDisplay}</div>
+      <div className="content">
+        <MarkdownRenderer markdown={entry.note} />
       </div>
       <div className="tags">
-        {props.tags &&
-          props.tags.map((t, i) => {
-            return (
-              <span key={i} className="pt-tag">
-                {t}
-              </span>
-            );
+        {entry.tags &&
+          entry.tags.map((t, i) => {
+            return <Tag key={i} name={t} />;
           })}
       </div>
     </div>
   );
 }
 
-EntryDisplay.propTypes = {
-  createdAt: PropTypes.string.isRequired,
-  note: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
-};
-
 function EntryListDisplay(props) {
   return (
     <div>
-      {" "}
       {props.entries.map(function(entry, index) {
-        return (
-          <EntryDisplay
-            id={entry.id}
-            key={entry.id}
-            note={entry.note}
-            createdAt={entry.created_at}
-            tags={entry.tags}
-          />
-        );
+        return <EntryDisplay entry={entry} key={entry.id} />;
       })}
     </div>
   );
@@ -58,54 +41,66 @@ function EntryListDisplay(props) {
 class Journal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      entries: []
-    };
-
-    this.loadEntries = this.loadEntries.bind(this);
-    this.addNewNote = this.addNewNote.bind(this);
+    this.state = { addNote: true };
   }
-
   componentDidMount() {
-    this.loadEntries();
+    const { loadEntries, entries } = this.props;
+    loadEntries(entries.length);
   }
 
-  loadEntries() {
-    this.setState(() => {
-      return {
-        entries: []
-      };
+  handleNewEntry(formResult) {
+    const { saveEntry } = this.props;
+
+    saveEntry({
+      note: formResult.note,
+      tags: formResult.unifiedTags.split(",")
     });
 
-    apollo.invoke("GetAllJournalEntries", {}).then(data => {
-      this.setState(() => {
-        return {
-          entries: data
-        };
-      });
-    });
+    NotifySuccess("Added note");
+    this.setState({ addNote: false });
   }
 
-  addNewNote(note, tags) {
-    apollo
-      .invoke("AddJournalEntry", {
-        note: note,
-        tags: tags
-      })
-      .then(() => {
-        NotifySuccess("Successfully added a new log entry.");
-        this.loadEntries();
-      });
-  }
-  log;
   render() {
+    const { entries, loadEntries, total } = this.props;
+    const { addNote } = this.state;
+
     return (
-      <div>
-        <EntryInput onSubmit={this.addNewNote} />
-        <EntryListDisplay entries={this.state.entries} />
-      </div>
+      <Page>
+        {!addNote && (
+          <TextButton onClick={() => this.setState({ addNote: !addNote })}>
+            Add Note
+          </TextButton>
+        )}
+        {addNote && (
+          <LogEntryForm
+            onCancel={() => this.setState({ addNote: !addNote })}
+            onSubmit={formResult => this.handleNewEntry(formResult)}
+          />
+        )}
+        <EntryListDisplay entries={entries} />
+        <div>
+          {total} Total Entries {entries.length} Loaded
+        </div>
+        <LoadMoreButton onClick={() => loadEntries(entries.length)} />
+      </Page>
     );
   }
 }
 
-export default Journal;
+function mapStateToProps(state, props) {
+  const entries = logSelectors.all(state);
+
+  return {
+    entries,
+    total: state.log.total
+  };
+}
+
+function mapDispatchToProps(dispatch, props) {
+  return {
+    loadEntries: start => dispatch(logActions.load({ start })),
+    saveEntry: entry => dispatch(logActions.save(entry))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Journal);
