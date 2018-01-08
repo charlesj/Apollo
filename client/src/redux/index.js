@@ -12,7 +12,7 @@ import metaReducer from "./meta/reducers";
 import metricsReducer from "./metrics/reducers";
 import summariesReducer from "./summaries/reducers";
 
-import { goalActions } from "./actions";
+import { goalActions, metaActions } from "./actions";
 
 export const history = createHistory();
 
@@ -44,6 +44,7 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, composedEnhancers);
 
 store.dispatch(goalActions.getGoals());
+store.dispatch(metaActions.applicationInfo());
 
 export default store;
 

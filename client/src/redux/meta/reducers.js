@@ -10,17 +10,23 @@ import loginService from "../../services/loginService";
 const initialState = {
   token: loginService.getToken(),
   notifications: [],
-  activeRequests: 0
+  activeRequests: 0,
+  applicationInfo: {}
 };
 
 export default handleActions(
   {
     [combineActions(
       actions.login.start,
-      actions.logout.start
+      actions.logout.start,
+      actions.applicationInfo.start
     )]: basicStartReducer,
 
-    [combineActions(actions.login.fail, actions.logout.fail)]: basicFailReducer,
+    [combineActions(
+      actions.login.fail,
+      actions.logout.fail,
+      actions.applicationInfo.fail
+    )]: basicFailReducer,
 
     [actions.login.complete]: (state, action) => {
       const { token, loginError } = action.payload;
@@ -42,6 +48,15 @@ export default handleActions(
         ...basicLoadCompleteReducer(state, action),
         token: null,
         loginError: null
+      };
+    },
+
+    [actions.applicationInfo.complete]: (state, action) => {
+      const { applicationInfo } = action.payload;
+
+      return {
+        ...state,
+        applicationInfo
       };
     },
 

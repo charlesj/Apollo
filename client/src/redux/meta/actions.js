@@ -14,7 +14,8 @@ const actionCreators = createActions({
     markAllNotificationsRead: payload => payload,
     dismissAllNotifications: payload => payload,
     incrementRequests: () => 1,
-    decrementRequests: () => 1
+    decrementRequests: () => 1,
+    applicationInfo: basicActions()
   }
 });
 
@@ -83,4 +84,11 @@ export function decrementRequests() {
   return dispatch => {
     dispatch(actions.decrementRequests());
   };
+}
+
+export function applicationInfo() {
+  return dispatchBasicActions(actions.applicationInfo, async () => {
+    const applicationInfo = await apolloServer.invoke("applicationInfo", {});
+    return { applicationInfo };
+  });
 }

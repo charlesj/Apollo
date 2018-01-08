@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { FlexRow, TextButton } from "../_controls";
 import { metaSelectors } from "../../redux/selectors";
 import ServerActivity from "./ServerActivity";
+import ApplicationInfo from "./ApplicationInfo";
 import "./MenuBar.css";
 
 class MenuBar extends Component {
@@ -23,6 +24,7 @@ class MenuBar extends Component {
             {unreadNotificationCount} new update: {latestMessage}
           </div>
         )}
+        <ApplicationInfo />
       </FlexRow>
     );
   }
