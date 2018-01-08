@@ -47,7 +47,7 @@ function Forecast(props) {
             var expiresOn = moment.unix(a.expires);
             return (
               <div className="weatherAlerts" key={i}>
-                <FontAwesome name="exclamation-triangle" />{" "}
+                <FontAwesome name="exclamation-triangle" />
                 <a href={a.uri} target="_blank">
                   {a.title}
                 </a>
