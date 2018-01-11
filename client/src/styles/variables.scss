@@ -1,15 +1,17 @@
 $gray: #eee;
 $green: #2a9d05;
 $blue: #0375B4;
-$orange: #ff9a00;
+$orange: #EB8921;
 $red: #A82A2A;
 $white: #fff;
 $yellow: #fdff0c;
+$darkYellow: #F2C500;
 $purple: #9800cd;
-
+$midnightBlue: #2B3E50;
 $lightGreen: $green + #333;
-$lightBlue: #5db5fc;
+$lightBlue: #2D96DD;
 $lightRed: $red + #333;
+$darkGray: $gray - #333;
 
 $background-color: $gray;
 $primary: $green;
@@ -23,9 +25,9 @@ $terminalPanelHeight: 300px;
 $pageMargin: 5px;
 $standardBorderRadius: 5px;
 $spacing: 5px;
-$borderColor: $background-color - #333;
+$borderColor: $darkGray;
 $tagBackground: $lightBlue;
-$quickCommandInputBackgroundColor: #1b1b14;
+$quickCommandInputBackgroundColor: $midnightBlue;
 
 @mixin standardBorder(){
   border: 1px solid $borderColor;
