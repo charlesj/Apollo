@@ -17,7 +17,7 @@ function Container(props) {
       className={ClassNames({
         container: true,
         "container-grow": grow,
-        [className]: true
+        [className]: className || false
       })}
       style={styles}
     >

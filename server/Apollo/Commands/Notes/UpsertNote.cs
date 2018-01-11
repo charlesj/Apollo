@@ -3,29 +3,29 @@ using Apollo.CommandSystem;
 using Apollo.Data;
 using Apollo.Services;
 
-namespace Apollo.Commands.Notebook
+namespace Apollo.Commands.Notes
 {
-    public class UpdateNote : AuthenticatedCommand
+    public class UpsertNote : AuthenticatedCommand
     {
         private readonly INotebookDataService dataService;
         public int id { get; set; }
         public string name { get; set; }
         public string body { get; set; }
 
-        public UpdateNote(ILoginService loginService, INotebookDataService dataService) : base(loginService)
+        public UpsertNote(ILoginService loginService, INotebookDataService dataService) : base(loginService)
         {
             this.dataService = dataService;
         }
 
         public override async Task<CommandResult> Execute()
         {
-            await dataService.UpdateNote(id, name, body);
-            return CommandResult.SuccessfulResult;
+            var note = await dataService.UpsertNote(new Note{id=id, name=name, body=body});
+            return CommandResult.CreateSuccessResult(note);
         }
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(id > 0 && !string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(body));
+            return Task.FromResult(!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(body));
         }
 
         public override object ExamplePayload()

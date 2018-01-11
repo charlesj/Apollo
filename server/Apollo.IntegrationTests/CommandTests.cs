@@ -105,10 +105,10 @@ namespace Apollo.IntegrationTests
             data.Add("getJobHistory", new {jobId = 1}, true);
             data.Add("UpdateCryptoPrices", new {}, true);
             data.Add("GetAssetPrice", new {symbol="btc"}, true);
-            data.Add("AddNote", new {name="test note", body="yes I am note"}, true);
+            data.Add("UpsertNote", new {name="test note", body="yes I am note"}, true);
             data.Add("GetNotes", new{}, true);
             data.Add("GetNote", new {id = 1}, true);
-            data.Add("UpdateNote", new {id = 1, name = "two", body = "I am updated note"}, true);
+            data.Add("UpsertNote", new {id = 1, name = "two", body = "I am updated note"}, true);
             data.Add("SaveBoard", new { board = new {title="test board"}}, true);
             data.Add("SaveBoard", new { board = new {title="test", load_order=0, id=1}}, true);
             data.Add("GetBoards", new {}, true);

@@ -5,6 +5,7 @@
   border: 2px solid black;
   padding: 5px;
   margin: 5px;
+  font-weight: bold;
 }
 
 .button:hover {
@@ -18,11 +19,14 @@
 .button-primary {
   border-color: $primary;
   color: $primary;
-  font-weight: bold;
 }
 
 .button-primary:hover {
   background-color: $gray;
+}
+.saveButton {
+  border-color: $green;
+  color: $green;
 }
 .cancelButton {
   border-color: $orange;

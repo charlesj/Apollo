@@ -8,7 +8,7 @@ import Financial from "../react/financial/Financial";
 import Health from "../react/health/Health";
 import Jobs from "../react/jobs/Jobs";
 import Log from "../react/log/Log";
-import Notebooks from "../react/notebooks/Notebooks";
+import Notes from "../react/notes/Notes";
 import Settings from "../react/settings/Settings";
 import Goals from "../react/goals/Goals";
 
@@ -38,12 +38,12 @@ export const RoutesMap = [
     component: Log
   },
   {
-    path: "/notebooks",
-    name: "notebooks",
-    label: "Notebooks",
+    path: "/notes",
+    name: "notes",
+    label: "Notes",
     icon: "sticky-note",
     main: true,
-    component: Notebooks
+    component: Notes
   },
   {
     path: "/checklists",

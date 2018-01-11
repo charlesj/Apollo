@@ -8,6 +8,7 @@ import boardReducer from "./boards/reducers";
 import bookmarksReducer from "./bookmarks/reducers";
 import goalsReducer from "./goals/reducers";
 import logReducer from "./log/reducers";
+import noteReducer from "./notes/reducers";
 import metaReducer from "./meta/reducers";
 import metricsReducer from "./metrics/reducers";
 import summariesReducer from "./summaries/reducers";
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   bookmarks: bookmarksReducer,
   goals: goalsReducer,
   log: logReducer,
+  notes: noteReducer,
   meta: metaReducer,
   metrics: metricsReducer,
   summaries: summariesReducer,

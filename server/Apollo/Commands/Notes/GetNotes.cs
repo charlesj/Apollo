@@ -3,7 +3,7 @@ using Apollo.CommandSystem;
 using Apollo.Data;
 using Apollo.Services;
 
-namespace Apollo.Commands.Notebook
+namespace Apollo.Commands.Notes
 {
     public class GetNotes : AuthenticatedCommand
     {

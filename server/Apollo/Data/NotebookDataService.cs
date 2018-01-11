@@ -10,18 +10,18 @@ namespace Apollo.Data
         Task CreateNote(string name, string body);
         Task<Note> GetNote(int id);
         Task<IReadOnlyList<Note>> GetNoteListing();
-        Task UpdateNote(int id, string name, string body);
+        Task<Note> UpsertNote(Note note);
         Task DeleteNote(int id);
         Task<int> GetNoteCount();
     }
-    
+
     public class NotebookDataService : BaseDataService, INotebookDataService
     {
         public const string CreateNoteSql = "insert into notes(name,body,created_at,modified_at) values " +
-                                            "(@name, @body, current_timestamp, current_timestamp)";
+                                            "(@name, @body, current_timestamp, current_timestamp) returning id";
 
         public const string CountSql = "select count(*) from notes";
-        
+
         public const string GetNoteSql = "select * from notes where id=@id";
 
         public const string GetNoteListingSql = "select id, name, created_at, modified_at from notes " +
@@ -31,7 +31,7 @@ namespace Apollo.Data
                                             "where id=@id";
 
         public const string DeleteNoteSql = "delete from notes where id=@id";
-        
+
         public NotebookDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
         }
@@ -52,9 +52,9 @@ namespace Apollo.Data
             return QueryAsync<Note>(GetNoteListingSql);
         }
 
-        public Task UpdateNote(int id, string name, string body)
+        public async Task<Note> UpsertNote(Note note)
         {
-            return Execute(UpdateNoteSql, new {id, name, body});
+            return await Upsert(CreateNoteSql, UpdateNoteSql, GetNoteSql, note);
         }
 
         public Task DeleteNote(int id)
@@ -68,7 +68,7 @@ namespace Apollo.Data
         }
     }
 
-    public class Note
+    public class Note : ITableModel
     {
         public int id { get; set; }
         public string name { get; set; }
