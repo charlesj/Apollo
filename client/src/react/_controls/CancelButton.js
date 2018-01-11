@@ -6,7 +6,11 @@ import ClassNames from "classnames";
 function CancelButton(props) {
   const { className } = props;
   return (
-    <Button {...props} type="button" className={ClassNames(className, 'cancelButton')}>
+    <Button
+      {...props}
+      type="button"
+      className={ClassNames(className, "cancelButton")}
+    >
       <FontAwesome name="ban" /> Cancel
     </Button>
   );

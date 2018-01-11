@@ -6,8 +6,12 @@ import ClassNames from "classnames";
 function LoadMoreButton(props) {
   const { className } = props;
   return (
-    <Button {...props} primary className={ClassNames(className, 'loadMoreButton')}>
-      <FontAwesome name="chevron-circle-right"/> Load More
+    <Button
+      {...props}
+      primary
+      className={ClassNames(className, "loadMoreButton")}
+    >
+      <FontAwesome name="chevron-circle-right" /> Load More
     </Button>
   );
 }
