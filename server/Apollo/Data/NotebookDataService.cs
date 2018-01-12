@@ -24,7 +24,7 @@ namespace Apollo.Data
 
         public const string GetNoteSql = "select * from notes where id=@id";
 
-        public const string GetNoteListingSql = "select id, name, created_at, modified_at from notes " +
+        public const string GetNoteListingSql = "select * from notes " +
                                                 "order by modified_at desc";
 
         public const string UpdateNoteSql = "update notes set name=@name, body=@body, modified_at=current_timestamp " +
