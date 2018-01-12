@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import FontAwesome from "react-fontawesome";
 
 import { bookmarkActions } from "../../redux/actions";
 import { bookmarkSelectors } from "../../redux/selectors";
 import { NotifySuccess } from "../../services/notifier";
-import { TextButton, Page } from "../_controls";
+import { AddButton, Page } from "../_controls";
 import BookmarksDisplay from "./BookmarksDisplay";
 import BookmarkForm from "./BookmarkForm";
 
@@ -43,9 +42,7 @@ class Bookmarks extends React.Component {
         <div>
           Total bookmarks: {total}
           {!editingBookmark && (
-            <TextButton onClick={() => this.editBookmark({})}>
-              <FontAwesome name="plus" />Add Bookmark
-            </TextButton>
+            <AddButton onClick={() => this.editBookmark({})} noun="Bookmark" />
           )}
         </div>
         {editingBookmark && (

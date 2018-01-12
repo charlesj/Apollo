@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import FontAwesome from "react-fontawesome";
 
 import { boardActions } from "../../redux/actions";
 import { boardSelectors } from "../../redux/selectors";
-import { TextButton } from "../_controls";
+import { TextButton, AddButton } from "../_controls";
 import BoardMenu from "./BoardMenu";
 import BoardItem from "./BoardItem";
 
@@ -80,7 +79,7 @@ class Board extends Component {
               />
             );
           })}
-        <TextButton
+        <AddButton
           onClick={() =>
             saveItem({
               title: "new item",
@@ -89,9 +88,9 @@ class Board extends Component {
               board_id: board.id
             })
           }
-        >
-          <FontAwesome name="plus" />New Item
-        </TextButton>
+          noun="Item"
+        />
+
         <TextButton
           onClick={() => this.setState({ showCompleted: !showCompleted })}
         >

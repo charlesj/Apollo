@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import FontAwesome from "react-fontawesome";
 
 import { directions } from "../../redux/enums";
 import { boardActions } from "../../redux/actions";
 import { boardSelectors } from "../../redux/selectors";
-import { FlexRow, TextButton, Page } from "../_controls";
+import { FlexRow, AddButton, Page } from "../_controls";
 import Board from "./Board";
 
 import "./Boards.css";
@@ -31,13 +30,12 @@ class Boards extends Component {
 
     return (
       <Page>
-        <TextButton
+        <AddButton
           onClick={() =>
             saveBoard({ title: "new board", list_order: nextListOrder })
           }
-        >
-          <FontAwesome name="plus" />Add Board
-        </TextButton>
+          noun="Board"
+        />
         <FlexRow>
           {boards.map((board, index) => {
             return (

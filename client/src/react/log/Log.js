@@ -5,7 +5,7 @@ import MarkdownRenderer from "react-markdown-renderer";
 import { logActions } from "../../redux/actions";
 import { logSelectors } from "../../redux/selectors";
 import { NotifySuccess } from "../../services/notifier";
-import { Page, LoadMoreButton, Tag, TextButton } from "../_controls";
+import { Page, LoadMoreButton, Tag, AddButton } from "../_controls";
 import LogEntryForm from "./LogEntryForm";
 
 import "./logs.css";
@@ -67,9 +67,7 @@ class Journal extends React.Component {
     return (
       <Page>
         {!addNote && (
-          <TextButton onClick={() => this.setState({ addNote: !addNote })}>
-            Add Note
-          </TextButton>
+          <AddButton onClick={() => this.setState({ addNote: !addNote })} noun="Entry"/>
         )}
         {addNote && (
           <LogEntryForm

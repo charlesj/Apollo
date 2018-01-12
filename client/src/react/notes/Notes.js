@@ -5,7 +5,7 @@ import ClassNames from "classnames";
 import { noteActions } from "../../redux/actions";
 import { noteSelectors } from "../../redux/selectors";
 
-import { Page, FlexRow, Container, TextButton } from "../_controls";
+import { Page, FlexRow, Container, AddButton } from "../_controls";
 import NoteForm from "./NoteForm";
 
 import "./Notes.css";
@@ -65,9 +65,7 @@ class Notebooks extends Component {
       <Page>
         <div>
           Total notes: {notes.length}
-          <TextButton onClick={() => this.selectNote({})}>
-            Add New Note
-          </TextButton>
+          <AddButton onClick={() => this.selectNote({})} noun="New Note" />
         </div>
         <FlexRow>
           <div>
