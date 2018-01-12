@@ -4,7 +4,7 @@ import moment from "moment";
 import { keyedIdToArray } from "../selector-helpers";
 
 export function all(state) {
-  const { entries } = state.log;
+  const { entries } = state.journal;
   const array = keyedIdToArray(entries).map(entry => {
     return {
       ...entry,

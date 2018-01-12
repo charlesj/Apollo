@@ -7,7 +7,7 @@ import Feeds from "../react/feeds/Feeds";
 import Financial from "../react/financial/Financial";
 import Health from "../react/health/Health";
 import Jobs from "../react/jobs/Jobs";
-import Log from "../react/log/Log";
+import Journal from "../react/journal/Journal";
 import Notes from "../react/notes/Notes";
 import Settings from "../react/settings/Settings";
 import Goals from "../react/goals/Goals";
@@ -30,12 +30,12 @@ export const RoutesMap = [
     component: Boards
   },
   {
-    path: "/log",
-    name: "log",
-    label: "Log",
+    path: "/journal",
+    name: "journal",
+    label: "Journal",
     icon: "pencil",
     main: true,
-    component: Log
+    component: Journal
   },
   {
     path: "/notes",

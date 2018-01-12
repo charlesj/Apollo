@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { CancelButton, SaveButton, Container } from "../_controls";
 
-class LogEntryForm extends React.Component {
+class JournalEntryForm extends React.Component {
   render() {
     const { handleSubmit, onCancel } = this.props;
     return (
@@ -34,14 +34,14 @@ class LogEntryForm extends React.Component {
   }
 }
 
-LogEntryForm.propTypes = {
+JournalEntryForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-LogEntryForm = reduxForm({
-  form: "logEntryForm",
+JournalEntryForm = reduxForm({
+  form: "journalEntryForm",
   enableReinitialize: true
-})(LogEntryForm);
+})(JournalEntryForm);
 
 function mapStateToProps(state, props) {
   return {
@@ -49,4 +49,4 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(LogEntryForm);
+export default connect(mapStateToProps)(JournalEntryForm);

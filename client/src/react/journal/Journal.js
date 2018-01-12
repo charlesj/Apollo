@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import MarkdownRenderer from "react-markdown-renderer";
 
-import { logActions } from "../../redux/actions";
-import { logSelectors } from "../../redux/selectors";
+import { journalActions } from "../../redux/actions";
+import { journalSelectors } from "../../redux/selectors";
 import { NotifySuccess } from "../../services/notifier";
 import { Page, LoadMoreButton, Tag, AddButton } from "../_controls";
-import LogEntryForm from "./LogEntryForm";
+import JournalEntryForm from "./JournalEntryForm";
 
 import "./logs.css";
 
@@ -67,10 +67,13 @@ class Journal extends React.Component {
     return (
       <Page>
         {!addNote && (
-          <AddButton onClick={() => this.setState({ addNote: !addNote })} noun="Entry"/>
+          <AddButton
+            onClick={() => this.setState({ addNote: !addNote })}
+            noun="Entry"
+          />
         )}
         {addNote && (
-          <LogEntryForm
+          <JournalEntryForm
             onCancel={() => this.setState({ addNote: !addNote })}
             onSubmit={formResult => this.handleNewEntry(formResult)}
           />
@@ -86,18 +89,18 @@ class Journal extends React.Component {
 }
 
 function mapStateToProps(state, props) {
-  const entries = logSelectors.all(state);
+  const entries = journalSelectors.all(state);
 
   return {
     entries,
-    total: state.log.total
+    total: state.journal.total
   };
 }
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    loadEntries: start => dispatch(logActions.load({ start })),
-    saveEntry: entry => dispatch(logActions.save(entry))
+    loadEntries: start => dispatch(journalActions.load({ start })),
+    saveEntry: entry => dispatch(journalActions.save(entry))
   };
 }
 

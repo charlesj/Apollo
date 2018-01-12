@@ -15,7 +15,7 @@ export default actions;
 
 export function load({ start }) {
   return dispatchBasicActions(actions.load, async () => {
-    const payload = await apolloServer.invoke("getLogEntries", {
+    const payload = await apolloServer.invoke("getJournalEntries", {
       start
     });
     return payload;
@@ -24,7 +24,7 @@ export function load({ start }) {
 
 export function save(entry) {
   return dispatchBasicActions(actions.save, async () => {
-    const updated = await apolloServer.invoke("addLogEntry", { ...entry });
+    const updated = await apolloServer.invoke("addJournalEntry", { ...entry });
 
     return { entry: updated };
   });

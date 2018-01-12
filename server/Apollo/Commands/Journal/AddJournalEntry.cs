@@ -6,14 +6,14 @@ using Apollo.Services;
 
 namespace Apollo.Commands.Log
 {
-    public class AddLogEntry : AuthenticatedCommand
+    public class AddJournalEntry : AuthenticatedCommand
     {
         private readonly IJournalDataService journalDataService;
 
         public string Note { get; set; }
         public List<string> Tags { get; set; }
 
-        public AddLogEntry(IJournalDataService journalDataService, ILoginService loginService) : base(loginService)
+        public AddJournalEntry(IJournalDataService journalDataService, ILoginService loginService) : base(loginService)
         {
             this.journalDataService = journalDataService;
         }

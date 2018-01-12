@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Apollo.Tests.Commands.Journal
 {
-    public class GetAllJournalEntriesTests : BaseUnitTest<GetLogEntries>
+    public class GetAllJournalEntriesTests : BaseUnitTest<GetJournalEntries>
     {
         [Fact]
         public async void ReturnsDataServiceResult()

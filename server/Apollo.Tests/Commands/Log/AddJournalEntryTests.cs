@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Apollo.Tests.Commands.Journal
 {
-    public class AddJournalEntryTests : BaseUnitTest<AddLogEntry>
+    public class AddJournalEntryTests : BaseUnitTest<AddJournalEntry>
     {
         public AddJournalEntryTests()
         {
