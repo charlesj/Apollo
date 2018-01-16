@@ -1,11 +1,13 @@
 @import 'styles/variables.scss';
 
 .button {
+  color: $midnightBlue;
   background-color: $white;
-  border: 2px solid black;
+  border: 1px solid $midnightBlue;
   padding: 5px;
   margin: 5px;
   font-weight: bold;
+  border-radius: 3px;
 }
 
 .button:hover {
@@ -28,9 +30,12 @@
   border-color: $green;
   color: $green;
 }
+.removeButton {
+  border-color: $red;
+  color: $red;
+}
 .cancelButton {
-  border-color: $orange;
-  color: $orange;
+
 }
 .loadMoreButton {
   border-color: $blue;

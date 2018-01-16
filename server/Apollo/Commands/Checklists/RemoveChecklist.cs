@@ -5,19 +5,20 @@ using Apollo.Services;
 
 namespace Apollo.Commands.Checklists
 {
-    public class DeleteChecklistCompletionItem : AuthenticatedCommand
+    public class RemoveChecklist : AuthenticatedCommand
     {
-        private readonly IChecklistsDataService checklistsDataService;
+        private readonly IChecklistService checklistService;
+
         public int id { get; set; }
 
-        public DeleteChecklistCompletionItem(ILoginService loginService, IChecklistsDataService checklistsDataService) : base(loginService)
+        public RemoveChecklist(ILoginService loginService, IChecklistService checklistService) : base(loginService)
         {
-            this.checklistsDataService = checklistsDataService;
+            this.checklistService = checklistService;
         }
 
         public override async Task<CommandResult> Execute()
         {
-            await checklistsDataService.DeleteChecklistCompletionItem(id);
+            await checklistService.DeleteChecklist(id);
             return CommandResult.SuccessfulResult;
         }
 

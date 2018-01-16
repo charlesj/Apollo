@@ -21,16 +21,8 @@ namespace Apollo.Commands.Checklists
 
         public override async Task<CommandResult> Execute()
         {
-            var checklistCompletion = new ChecklistCompletion {checklist_id = checklist_id, notes = notes};
-
-            var id = await checklistsDataService.UpsertChecklistCompletion(checklistCompletion);
-            foreach (var completionItem in items)
-            {
-                completionItem.checklist_completion_id = id;
-                await checklistsDataService.UpsertChecklistCompletionItem(completionItem);
-            }
-
-            return CommandResult.CreateSuccessResult(new {id});
+            var completedChecklist = await checklistsDataService.SaveCompletedChecklist(checklist_id, notes, items);
+            return CommandResult.CreateSuccessResult(completedChecklist);
         }
 
         public override Task<bool> IsValid()

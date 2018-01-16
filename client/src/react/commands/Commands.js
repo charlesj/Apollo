@@ -166,6 +166,7 @@ class Commands extends Component {
           <SelectList
             items={commandListing}
             onSelectItem={this.selectCommand}
+            labelField="label"
           />
         </Container>
         <Container grow>

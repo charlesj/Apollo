@@ -68,6 +68,7 @@ namespace Apollo.ServiceLocator
             container.Register<IJsonRpcProcessor, JsonRpcProcessor>();
 
             // service bindings
+            container.Register<IChecklistService, ChecklistService>();
             container.Register<IPersonalHealthService, PersonalHealthService>();
             container.Register<ILoginService, LoginService>();
             container.Register<ISchedulerService, SchedulerService>();

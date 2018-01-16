@@ -5,30 +5,30 @@ using Apollo.Services;
 
 namespace Apollo.Commands.Checklists
 {
-    public class UpsertChecklistCompletion : AuthenticatedCommand
+    public class GetCompletedChecklists : AuthenticatedCommand
     {
         private readonly IChecklistsDataService checklistsDataService;
-        public ChecklistCompletion Item { get; set; }
 
-        public UpsertChecklistCompletion(ILoginService loginService, IChecklistsDataService checklistsDataService) : base(loginService)
+        public int id { get; set; }
+
+        public GetCompletedChecklists(ILoginService loginService, IChecklistsDataService checklistsDataService) : base(loginService)
         {
             this.checklistsDataService = checklistsDataService;
         }
 
         public override async Task<CommandResult> Execute()
         {
-            await checklistsDataService.UpsertChecklistCompletion(Item);
-            return CommandResult.SuccessfulResult;
+            return CommandResult.CreateSuccessResult(await checklistsDataService.GetChecklistCompletions(id));
         }
 
         public override Task<bool> IsValid()
         {
-            return Task.FromResult(Item.notes != null && Item.checklist_id > 0);
+            return Task.FromResult(id > 0);
         }
 
         public override object ExamplePayload()
         {
-            return new { Item=new ChecklistCompletion()};
+            return new { id };
         }
     }
 }

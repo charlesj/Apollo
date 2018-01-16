@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ClassNames from "classnames";
 
 import "./SelectList.css";
 
@@ -25,19 +26,22 @@ class SelectList extends Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, labelField } = this.props;
     return (
       <div className="selectList">
         {items.map(item => {
           return (
             <div
-              className={this.getClasses(item)}
+              className={ClassNames({
+                selectListItem: true,
+                "selectListItem-selected": item.id === this.state.selectedItemId
+              })}
               key={item.id}
               onClick={() => {
                 this.selectItem(item);
               }}
             >
-              {item.label}
+              {item[labelField]}
             </div>
           );
         })}

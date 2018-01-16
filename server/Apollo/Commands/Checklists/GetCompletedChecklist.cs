@@ -6,13 +6,13 @@ using Apollo.Services;
 
 namespace Apollo.Commands.Checklists
 {
-    public class GetChecklistCompletion : AuthenticatedCommand
+    public class GetCompletedChecklist : AuthenticatedCommand
     {
         private readonly IChecklistsDataService checklistsDataService;
 
         public int completed_checklist_id { get; set; }
 
-        public GetChecklistCompletion(ILoginService loginService, IChecklistsDataService checklistsDataService) : base(loginService)
+        public GetCompletedChecklist(ILoginService loginService, IChecklistsDataService checklistsDataService) : base(loginService)
         {
             this.checklistsDataService = checklistsDataService;
         }

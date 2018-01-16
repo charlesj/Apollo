@@ -1,47 +1,47 @@
 import React from "react";
+import { connect } from "react-redux";
 import moment from "moment";
-import apolloServer from "../../services/apolloServer.js";
+
+import { checklistSelectors } from "../../redux/selectors";
+import { checklistActions } from "../../redux/actions";
+
+import { Container } from "../_controls";
 
 class ChecklistCompletionLog extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      completions: []
-    };
-  }
   componentDidMount() {
-    apolloServer.invoke("GetChecklistCompletionLog", {}).then(completions => {
-      this.setState({
-        completions
-      });
-    });
+    this.props.load();
   }
 
   render() {
+    const { log } = this.props;
     return (
-      <div className="completionLogContainer">
+      <Container width={350} className="completionLogContainer">
         <h1>Completion Log</h1>
-        {this.state.completions.map(c => {
+        {log.map(c => {
           let completed_at = moment(c.completed_at);
           return (
             <div className="completionLogEntry" key={c.completion_id}>
-              {completed_at.calendar()}:{" "}
-              <button
-                className="textButton"
-                onClick={this.props.selectCompletion.bind(
-                  null,
-                  c.completion_id
-                )}
-              >
-                {c.name}
-              </button>
+              {completed_at.calendar()}: {c.name}
             </div>
           );
         })}
-      </div>
+      </Container>
     );
   }
 }
 
-export default ChecklistCompletionLog;
+function mapStateToProps(state, props) {
+  return {
+    log: checklistSelectors.completionLog(state)
+  };
+}
+
+function mapDispatchToProps(dispatch, props) {
+  return {
+    load: () => dispatch(checklistActions.getChecklistCompletionLog())
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ChecklistCompletionLog
+);

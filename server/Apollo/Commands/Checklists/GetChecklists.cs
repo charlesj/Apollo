@@ -1,22 +1,21 @@
 ﻿using System.Threading.Tasks;
 using Apollo.CommandSystem;
-using Apollo.Data;
 using Apollo.Services;
 
 namespace Apollo.Commands.Checklists
 {
     public class GetChecklists : AuthenticatedCommand
     {
-        private readonly IChecklistsDataService checklistsDataService;
+        private readonly IChecklistService checklistService;
 
-        public GetChecklists(ILoginService loginService, IChecklistsDataService checklistsDataService) : base(loginService)
+        public GetChecklists(ILoginService loginService, IChecklistService checklistService) : base(loginService)
         {
-            this.checklistsDataService = checklistsDataService;
+            this.checklistService = checklistService;
         }
 
         public override async Task<CommandResult> Execute()
         {
-            return CommandResult.CreateSuccessResult(await checklistsDataService.GetChecklists());
+            return CommandResult.CreateSuccessResult(await checklistService.GetAll());
         }
 
         public override Task<bool> IsValid()

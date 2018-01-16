@@ -6,6 +6,7 @@ import createHistory from "history/createBrowserHistory";
 
 import boardReducer from "./boards/reducers";
 import bookmarksReducer from "./bookmarks/reducers";
+import checklistsReducer from "./checklists/reducers";
 import goalsReducer from "./goals/reducers";
 import journalReducer from "./journal/reducers";
 import noteReducer from "./notes/reducers";
@@ -33,6 +34,7 @@ const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 const rootReducer = combineReducers({
   boards: boardReducer,
   bookmarks: bookmarksReducer,
+  checklists: checklistsReducer,
   goals: goalsReducer,
   journal: journalReducer,
   notes: noteReducer,

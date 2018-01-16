@@ -1,122 +1,39 @@
+@import 'styles/variables.scss';
 
-.checklistsContainer{
-  display: flex;
-  flex-flow: row;
+.checklistListing {
+  padding-left: 3px;
+  padding-right: 3px;
 }
-.checklistsSelector{
-  border: 1px solid #48AFF0;
-  background-color: #fff;
-  width: 150px;
+.selected {
+  background-color: $selectedBackground
 }
-.checklistGroupHeading{
-  padding: 5px;
-  border-bottom: 1px solid #48AFF0;
-  color: #0A6640;
-  text-transform: capitalize;
-  font-weight: bold;
+.checklistFormContainer {
+  padding: $spacing;
 }
-.checklistListingDisplay{
-  padding: 5px;
+.checklistFormContainer select {
+  margin: $spacing;
 }
-.checklistListing{
-  padding: 5px;
+.checklistFormContainer input {
+  width: 75%;
+  margin: $spacing;
 }
-.checklistDisplay{
-  margin-left: 10px;
-  border: 1px solid #48AFF0;
-  background-color: #fff;
-  width: 400px;
+.checklistFormContainer textarea {
+  width: 90%;
+  margin: $spacing;
+  padding: $spacing;
 }
-.checklistDisplay h2{
-  padding: 5px;
-  font-size: 22px;
-  border-bottom: 1px solid #48AFF0;
-  text-transform: capitalize;
+.formItemContainer .removeButton {
+  float: right;
 }
-.checklistItem{
-  padding: 5px;
+.formItemContainer{
+  margin: $spacing;
+  padding: $spacing;
+  @include standardBorder();
 }
-.checklistCompletionContainer{
-  margin: 15px;
-  border: 3px solid #48AFF0;
-  background-color: #fff;
-  border-radius: 5px;
-  min-width: 300px;
-}
-.checklistCompletionContainer .textButton {
-  margin-left: 10px;
-}
-.checklistCompletionHeader{
-  height: 60px;
-  padding: 5px;
-  display: flex;
-  flex-direction: row;
-}
-.checklistCompletionHeader > *{
-  margin: 5px;
-}
-.checklistCompletionHeader select {
-  background: white;
-  border-radius: 5px;
-  font-size: 25px;
-}
-.checklistCompletionItemList{
-  border-top: 3px solid #48AFF0;
-  padding: 15px;
-}
-.checklistCompletionItemMandatory {
-  border-left: 10px solid #ff4242;
+.completionLogContainer {
+  padding: $spacing;
 }
 
-.checklistCompletionItemRecommended {
-  border-left: 10px solid #48AFF0;
-}
-.checklistCompletionItemOptional {
-  border-left: 10px solid #42f233;
-}
-.checklistCompletionItemDisplay {
-  padding-bottom: 15px;
-  padding-left: 10px;
-  padding-top: 5px;
-}
-.checklistCompletionContainer #notes {
-  margin-top: 15px;
-  width: 500px;
-}
-.checklistReportingContainer {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: row;
-}
-.completionLogContainer{
-  background-color: white;
-  border: 1px solid #48AFF0;
-  width: 400px;
-}
-.completionLogContainer h1{
-  border-bottom: 1px solid #48AFF0;
-  padding: 5px;
-  font-size: 20px;
-}
-.completionLogEntry {
-  margin-left: 5px;
-}
-.checklistCompletionDisplayContainer {
-  background-color: white;
-  border: 1px solid #48AFF0;
-  width: 400px;
-  margin-left: 10px;
-}
-.compeletedChecklistHeader {
-  border-bottom: 1px solid #48AFF0;
-  padding: 5px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-.checklistCompletionDisplayContainer p {
-  margin: 10px;
-  font-style: italic;
-}
-.completedChecklistItem {
-  margin: 5px;
+.completionLogContainer h1 {
+  margin: 0px;
 }

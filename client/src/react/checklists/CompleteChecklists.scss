@@ -1,0 +1,46 @@
+@import 'styles/variables.scss';
+
+.completeChecklists{
+  padding: $spacing;
+}
+
+.checklistName{
+  font-size: 16px;
+  font-weight: bold;
+}
+.checklistDescription {
+  font-style: italic;
+}
+
+.checklistContainer {
+  border-top: 1px solid $midnightBlue;
+  margin: $spacing;
+  padding: $spacing;
+}
+.checklistItems {
+  margin: $spacing;
+}
+.checklistContainer textarea {
+  width: 100%;
+  height: 100px;
+}
+.checklistItem {
+  padding-left: $spacing;
+}
+.checklistItemCheckbox {
+  float: left;
+  margin-top: 2px;
+  margin-right: $spacing;
+}
+.checklistItemDescription{
+  font-style: italic;
+}
+.checklistItem-mandatory {
+  border-left: $spacing solid $lightGreen;
+}
+.checklistItem-recommended {
+  border-left: $spacing solid $lightBlue;
+}
+.checklistItem-optional {
+  border-left: $spacing solid $gray;
+}
