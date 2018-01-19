@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import countdown from "countdown";
 
 import { Container, FlexRow, Card } from "../_controls";
-import { metricsActions } from "../../redux/actions";
+import { metricsActions, goalActions } from "../../redux/actions";
 import { goalSelectors } from "../../redux/selectors";
 
 import "./FeaturedGoal.css";
@@ -23,6 +23,11 @@ const getDisplay = date => {
 };
 
 class FeaturedGoal extends Component {
+
+  componentWillMount(){
+    this.props.loadGoals();
+  }
+
   componentWillReceiveProps(props) {
     const { goal, loadMetrics } = props;
     if (goal.metricName !== loadedMetrics) {
@@ -89,7 +94,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    loadMetrics: name => dispatch(metricsActions.loadMetrics(null, name))
+    loadMetrics: name => dispatch(metricsActions.loadMetrics(null, name)),
+    loadGoals: () => dispatch(goalActions.getGoals()),
   };
 }
 

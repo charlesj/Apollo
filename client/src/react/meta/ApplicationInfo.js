@@ -2,12 +2,18 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 
+import { metaActions} from "../../redux/actions";
+
 class ApplicationInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       compiledDisplay: null
     };
+  }
+
+  componentWillMount(){
+    this.props.load();
   }
 
   componentDidMount() {
@@ -48,4 +54,10 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(ApplicationInfo);
+function mapDispatchToProps(dispatch, props){
+  return {
+    load: () => dispatch(metaActions.applicationInfo()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicationInfo);
