@@ -7,14 +7,14 @@ class SelectList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedItemId: null
+      selectedItem: null
     };
   }
 
   selectItem(item) {
     this.props.onSelectItem(item);
     this.setState({
-      selectedItemId: item.id
+      selectedItem: item
     });
   }
 
@@ -34,7 +34,7 @@ class SelectList extends Component {
             <div
               className={ClassNames({
                 selectListItem: true,
-                "selectListItem-selected": item.id === this.state.selectedItemId
+                "selectListItem-selected": item === this.state.selectedItem
               })}
               key={item.id}
               onClick={() => {
