@@ -5,34 +5,10 @@ import ClassNames from "classnames";
 import { noteActions } from "../../redux/actions";
 import { noteSelectors } from "../../redux/selectors";
 
-import { Page, FlexRow, Container, AddButton } from "../_controls";
+import { Page, FlexRow, Container, AddButton, SelectList } from "../_controls";
 import NoteForm from "./NoteForm";
 
 import "./Notes.css";
-
-function NoteListingDisplay(props) {
-  const { notes, selectedNote, onSelectNote } = props;
-
-  return (
-    <div className="notesListings">
-      {notes.map((n, i) => {
-        const isSelected = selectedNote && n.id === selectedNote.id;
-        return (
-          <div
-            key={i}
-            className={ClassNames({
-              noteListing: true,
-              selected: isSelected
-            })}
-            onClick={() => onSelectNote(n)}
-          >
-            {n.name}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 class Notebooks extends Component {
   constructor(props) {
@@ -70,10 +46,10 @@ class Notebooks extends Component {
         <FlexRow>
           <div>
             <Container width={200}>
-              <NoteListingDisplay
-                selectedNote={selectedNote}
-                notes={notes}
-                onSelectNote={note => this.selectNote(note)}
+              <SelectList
+                items={notes}
+                onSelectItem={note => this.selectNote(note)}
+                labelField='name'
               />
             </Container>
           </div>
