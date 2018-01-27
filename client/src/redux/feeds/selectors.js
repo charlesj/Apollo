@@ -6,7 +6,9 @@ import { getDispatch } from "../";
 let throttleLoadItems = false;
 
 export function feeds(state) {
-  return keyedIdToArray(state.feeds.feeds);
+  const feeds = keyedIdToArray(state.feeds.feeds);
+
+  return _.orderBy(feeds, ['name']).filter(f => f.unread_count > 0);
 }
 
 export function currentFeed(state) {
