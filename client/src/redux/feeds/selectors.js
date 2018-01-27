@@ -1,5 +1,9 @@
 import _ from "lodash";
+import { loadItems } from './actions';
 import { keyedIdToArray } from "../selector-helpers";
+import { getDispatch } from '../';
+
+let throttleLoadItems = false;
 
 export function feeds(state) {
   return keyedIdToArray(state.feeds.feeds);
@@ -14,10 +18,10 @@ export function currentItem(state) {
 }
 
 export function items(state) {
-  const { selectedFeed } = state.feeds;
+  const { currentFeed } = state.feeds;
   let items = keyedIdToArray(state.feeds.items);
-  if (selectedFeed) {
-    items = items.filter(item => item.feed_id === selectedFeed.id);
+  if (currentFeed) {
+    items = items.filter(item => item.feed_id === currentFeed.id);
   }
 
   return _.orderBy(items, "published_at", "asc");
@@ -36,6 +40,16 @@ export function displayItems(state) {
     previous = [];
     next = allItems;
   }
+
+  if(next.length < 5 && !throttleLoadItems){
+    throttleLoadItems = true;
+    const { currentFeed } = state.feeds;
+    const dispatch = getDispatch();
+    const feedId = currentFeed ? currentFeed.id : -1;
+    dispatch(loadItems(feedId));
+    setTimeout(() => { throttleLoadItems = false; }, 30000);
+  }
+
   return {
     previousItem: _.last(previous),
     previous,

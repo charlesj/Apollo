@@ -2,8 +2,11 @@
 
 .feed {
   padding-left: 2px;
+  border-bottom: 1px solid $borderColor;
 }
-
+.feed:last-child {
+  border-bottom: unset;
+}
 .selectedFeed {
   background-color: $selectedBackground;
 }

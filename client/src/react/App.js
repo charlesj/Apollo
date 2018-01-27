@@ -46,7 +46,7 @@ class App extends Component {
       return <Login />;
     }
     return (
-      <Shortcuts name="APP" handler={(a,e) => this.handleShortcuts(a,e)} isolate global>
+      <Shortcuts name="APP" handler={(a,e) => this.handleShortcuts(a,e)} global>
         <div>
         <Terminal showTerminal={showTerminal} toggleTerminal={() => this.toggleTerminal() }/>
         {RoutesMap.map(r => {
