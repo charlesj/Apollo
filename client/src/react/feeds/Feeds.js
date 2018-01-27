@@ -1,13 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Shortcuts } from "react-shortcuts";
+import { HotKeys } from "react-hotkeys";
 import { feedsActions } from "../../redux/actions";
 import { feedsSelectors } from "../../redux/selectors";
-import { shortcuts } from "../keymap";
 import { FlexRow, FlexContainer } from "../_controls";
 import FeedItems from "./FeedItems";
 import FeedDisplay from "./FeedDisplay";
 import "./feeds.css";
+
+const shortcuts = {
+  moveNext: "moveNext",
+  movePrevious: "movePrevious",
+  openLink: "openLink"
+};
+
+const feedsKeyMap = {
+  [shortcuts.moveNext]: "j",
+  [shortcuts.movePrevious]: "k",
+  [shortcuts.openLink]: "o"
+};
 
 class Feeds extends React.Component {
   componentDidMount() {
@@ -23,24 +34,6 @@ class Feeds extends React.Component {
     }
   }
 
-  handleShortcuts(action, event) {
-    const { setCurrentItem, nextItem, previousItem } = this.props;
-
-    switch (action) {
-      case shortcuts.feeds.moveNext:
-        setCurrentItem(nextItem);
-        break;
-      case shortcuts.feeds.movePrevious:
-        setCurrentItem(previousItem);
-        break;
-      case shortcuts.feeds.openLink:
-        this.openItem();
-        break;
-      default:
-        console.warn("unknown shortcut");
-    }
-  }
-
   render() {
     const {
       next,
@@ -48,10 +41,20 @@ class Feeds extends React.Component {
       current,
       selectFeed,
       feeds,
-      currentFeed
+      currentFeed,
+      setCurrentItem,
+      nextItem,
+      previousItem
     } = this.props;
+
+    const shortcutHandlers = {
+      [shortcuts.moveNext]: () => setCurrentItem(nextItem),
+      [shortcuts.movePrevious]: () => setCurrentItem(previousItem),
+      [shortcuts.openLink]: () => this.openItem()
+    };
+
     return (
-      <Shortcuts name="FEEDS" handler={(a, e) => this.handleShortcuts(a, e)}>
+      <HotKeys keyMap={feedsKeyMap} handlers={shortcutHandlers}>
         <FlexRow>
           <FlexContainer>
             <FeedDisplay
@@ -68,7 +71,7 @@ class Feeds extends React.Component {
             />
           </FlexContainer>
         </FlexRow>
-      </Shortcuts>
+      </HotKeys>
     );
   }
 }

@@ -1,68 +1,59 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { Shortcuts, ShortcutManager } from "react-shortcuts";
+import { HotKeys } from "react-hotkeys";
 import { RoutesMap } from "../redux/navigator";
 import { Terminal, Login } from "./meta";
-import keymap, { shortcuts } from "./keymap";
 import "font-awesome/css/font-awesome.css";
 
-const shortcutManager = new ShortcutManager(keymap);
+const shortcuts = {
+  toggleTerminal: "toggleTerminal"
+};
+
+const appKeyMap = {
+  [shortcuts.toggleTerminal]: "esc"
+};
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
       showTerminal: false
     };
   }
-
-  getChildContext() {
-    return {
-      shortcuts: shortcutManager
-    };
-  }
-
-  toggleTerminal(){
-    this.setState({showTerminal: !this.state.showTerminal})
-  }
-
-  handleShortcuts(action, event) {
-    switch (action) {
-      case shortcuts.app.toggleTerminal:
-        this.toggleTerminal();
-        break;
-      default:
-        console.warn("unknown shortcut");
-    }
+  toggleTerminal() {
+    this.setState({ showTerminal: !this.state.showTerminal });
   }
 
   render() {
     const { isLoggedIn } = this.props;
     const { showTerminal } = this.state;
+
+    const shortcutsHandlers = {
+      [shortcuts.toggleTerminal]: () => this.toggleTerminal()
+    };
+
     if (!isLoggedIn) {
       return <Login />;
     }
     return (
-      <Shortcuts name="APP" handler={(a,e) => this.handleShortcuts(a,e)} global>
+      <HotKeys keyMap={appKeyMap} handlers={shortcutsHandlers}>
         <div>
-        <Terminal showTerminal={showTerminal} toggleTerminal={() => this.toggleTerminal() }/>
-        {RoutesMap.map(r => {
-          return (
-            <Route exact path={r.path} key={r.name} component={r.component} />
-          );
-        })}
+          <Terminal
+            showTerminal={showTerminal}
+            toggleTerminal={() => this.toggleTerminal()}
+          />
+          {RoutesMap.map(r => {
+            return (
+              <Route exact path={r.path} key={r.name} component={r.component} />
+            );
+          })}
         </div>
-      </Shortcuts>
+      </HotKeys>
     );
   }
 }
-
-App.childContextTypes = {
-  shortcuts: PropTypes.object.isRequired
-};
 
 function mapStateToProps(state, props) {
   const { token } = state.meta;

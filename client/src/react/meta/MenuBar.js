@@ -6,9 +6,7 @@ import "./MenuBar.css";
 
 class MenuBar extends Component {
   render() {
-    const {
-      toggleTerminal,
-    } = this.props;
+    const { toggleTerminal } = this.props;
     return (
       <FlexRow className="menuBar">
         <ServerActivity />

@@ -1,7 +1,7 @@
 import _ from "lodash";
-import { loadItems } from './actions';
+import { loadItems } from "./actions";
 import { keyedIdToArray } from "../selector-helpers";
-import { getDispatch } from '../';
+import { getDispatch } from "../";
 
 let throttleLoadItems = false;
 
@@ -41,13 +41,15 @@ export function displayItems(state) {
     next = allItems;
   }
 
-  if(next.length < 5 && !throttleLoadItems){
+  if (next.length < 5 && !throttleLoadItems) {
     throttleLoadItems = true;
     const { currentFeed } = state.feeds;
     const dispatch = getDispatch();
     const feedId = currentFeed ? currentFeed.id : -1;
     dispatch(loadItems(feedId));
-    setTimeout(() => { throttleLoadItems = false; }, 30000);
+    setTimeout(() => {
+      throttleLoadItems = false;
+    }, 30000);
   }
 
   return {

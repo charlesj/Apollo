@@ -31,12 +31,12 @@ class ApolloTerminal extends Component {
     });
 
     this.state = {
-      commands,
+      commands
     };
   }
 
   render() {
-    const { showTerminal, toggleTerminal } = this.props
+    const { showTerminal, toggleTerminal } = this.props;
     const { commands } = this.state;
     return (
       <div>
