@@ -53,7 +53,7 @@ class QuickNavigator extends Component {
             onKeyPress={e => this.handleKeyPress(e)}
           />
         </div>
-        <FlexRow>
+        <FlexRow wrap>
           {displayCommands.map(cmd => {
             return (
               <div

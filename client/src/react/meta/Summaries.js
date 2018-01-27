@@ -11,7 +11,7 @@ class Summaries extends Component {
   render() {
     const { summaries } = this.props;
     return (
-      <FlexRow>
+      <FlexRow wrap>
         {summaries.map(summary => {
           return (
             <Card
