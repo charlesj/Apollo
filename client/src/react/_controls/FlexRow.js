@@ -1,10 +1,19 @@
 import React from "react";
-
+import ClassNames from "classnames";
 import "./FlexRow.css";
 
 function FlexRow(props) {
-  const classNames = "flexRow " + props.className;
-  return <div className={classNames}>{props.children}</div>;
+  return (
+    <div
+      className={ClassNames({
+        flexRow: true,
+        "flexRow-wrap": props.wrap,
+        [props.className]: props.className
+      })}
+    >
+      {props.children}
+    </div>
+  );
 }
 
 export default FlexRow;

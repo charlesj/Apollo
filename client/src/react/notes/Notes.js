@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NotifySuccess } from "../../services/notifier";
-import ClassNames from "classnames";
 import { noteActions } from "../../redux/actions";
 import { noteSelectors } from "../../redux/selectors";
 
@@ -49,7 +48,7 @@ class Notebooks extends Component {
               <SelectList
                 items={notes}
                 onSelectItem={note => this.selectNote(note)}
-                labelField='name'
+                labelField="name"
               />
             </Container>
           </div>

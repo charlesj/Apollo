@@ -1,4 +1,10 @@
 .flexRow{
   display: flex;
+  flex-flow: row;
+}
+.flexRow-wrap {
   flex-flow: row wrap;
+}
+.flexContainer-grow {
+  flex-grow: 1;
 }

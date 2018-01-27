@@ -9,7 +9,7 @@ import {
   FlexRow,
   FlexContainer,
   SelectList,
-  AddButton,
+  AddButton
 } from "../_controls";
 import ChecklistForm from "./ChecklistForm";
 import CompleteChecklist from "./CompleteChecklist";
@@ -35,7 +35,10 @@ class Checklists extends React.Component {
       <Page>
         <FlexRow>
           <FlexContainer>
-            <AddButton noun="checklist" onClick={() => selectChecklist({ items: []})} />
+            <AddButton
+              noun="checklist"
+              onClick={() => selectChecklist({ items: [] })}
+            />
             <Container width={200}>
               <SelectList
                 items={checklists}

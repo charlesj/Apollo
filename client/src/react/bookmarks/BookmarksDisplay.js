@@ -13,7 +13,7 @@ class BookmarksDisplay extends React.Component {
     } = this.props;
     return (
       <Container>
-        <FlexRow>
+        <FlexRow wrap>
           {bookmarks.map(b => {
             return (
               <Bookmark

@@ -23,8 +23,7 @@ const getDisplay = date => {
 };
 
 class FeaturedGoal extends Component {
-
-  componentWillMount(){
+  componentWillMount() {
     this.props.loadGoals();
   }
 
@@ -95,7 +94,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
   return {
     loadMetrics: name => dispatch(metricsActions.loadMetrics(null, name)),
-    loadGoals: () => dispatch(goalActions.getGoals()),
+    loadGoals: () => dispatch(goalActions.getGoals())
   };
 }
 

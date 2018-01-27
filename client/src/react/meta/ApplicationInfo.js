@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 
-import { metaActions} from "../../redux/actions";
+import { metaActions } from "../../redux/actions";
 
 class ApplicationInfo extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class ApplicationInfo extends Component {
     };
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.load();
   }
 
@@ -54,10 +54,10 @@ function mapStateToProps(state, props) {
   };
 }
 
-function mapDispatchToProps(dispatch, props){
+function mapDispatchToProps(dispatch, props) {
   return {
-    load: () => dispatch(metaActions.applicationInfo()),
-  }
+    load: () => dispatch(metaActions.applicationInfo())
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationInfo);

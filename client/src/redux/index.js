@@ -7,6 +7,7 @@ import createHistory from "history/createBrowserHistory";
 import boardReducer from "./boards/reducers";
 import bookmarksReducer from "./bookmarks/reducers";
 import checklistsReducer from "./checklists/reducers";
+import feedsReducer from "./feeds/reducers";
 import goalsReducer from "./goals/reducers";
 import journalReducer from "./journal/reducers";
 import noteReducer from "./notes/reducers";
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   bookmarks: bookmarksReducer,
   checklists: checklistsReducer,
   goals: goalsReducer,
+  feeds: feedsReducer,
   journal: journalReducer,
   notes: noteReducer,
   meta: metaReducer,
@@ -49,4 +51,8 @@ export default store;
 
 export function getStore() {
   return store;
+}
+
+export function getDispatch() {
+  return store.dispatch;
 }
