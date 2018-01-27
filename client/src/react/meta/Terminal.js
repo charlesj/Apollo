@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { MainRoutes } from "../../redux/navigator";
 import { metaActions } from "../../redux/actions";
 import MenuBar from "./MenuBar";
-import Notifications from "./Notifications";
 import QuickNavigator from "./QuickNavigator";
 import { FlexRow } from "../_controls";
 import "./Terminal.css";
@@ -43,7 +42,6 @@ class ApolloTerminal extends Component {
       <div>
         {showTerminal && (
           <FlexRow>
-            <Notifications />
             <QuickNavigator commands={commands} />
           </FlexRow>
         )}

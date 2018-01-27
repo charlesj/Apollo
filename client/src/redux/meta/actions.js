@@ -9,10 +9,6 @@ const actionCreators = createActions({
     login: basicActions(),
     logout: basicActions(),
     notify: basicActions(),
-    toggleNotificationRead: payload => payload,
-    dismissNotification: payload => payload,
-    markAllNotificationsRead: payload => payload,
-    dismissAllNotifications: payload => payload,
     incrementRequests: () => 1,
     decrementRequests: () => 1,
     applicationInfo: basicActions()
@@ -27,25 +23,6 @@ export function notify({ type, message }) {
   return dispatchBasicActions(actions.notify, () => {
     return { type, message, unread: true, time: moment() };
   });
-}
-
-export function toggleNotificationRead({ type, message, unread, time }) {
-  return dispatch =>
-    dispatch(
-      actions.toggleNotificationRead({ type, message, unread: !unread, time })
-    );
-}
-
-export function dismissNotification(notification) {
-  return dispatch => dispatch(actions.dismissNotification(notification));
-}
-
-export function markAllNotificationsRead() {
-  return dispatch => dispatch(actions.markAllNotificationsRead());
-}
-
-export function dismissAllNotifications() {
-  return dispatch => dispatch(actions.dismissAllNotifications());
 }
 
 export function login(password) {

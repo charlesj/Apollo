@@ -60,63 +60,6 @@ export default handleActions(
       };
     },
 
-    [actions.notify.complete]: (state, action) => {
-      const notifications = [...state.notifications];
-      notifications.push(action.payload);
-      return {
-        ...basicLoadCompleteReducer(state, action),
-        notifications
-      };
-    },
-
-    [actions.toggleNotificationRead]: (state, action) => {
-      const updated = action.payload;
-      const notifications = [...state.notifications];
-      notifications.forEach(n => {
-        if (n.time === updated.time && n.message === updated.message) {
-          n.unread = updated.unread;
-        }
-      });
-
-      return {
-        ...basicLoadCompleteReducer(state, action),
-        notifications
-      };
-    },
-
-    [actions.dismissNotification]: (state, action) => {
-      const toRemove = action.payload;
-      const notifications = state.notifications.filter(n => {
-        return n.time !== toRemove.time;
-      });
-
-      return {
-        ...basicLoadCompleteReducer(state, action),
-        notifications
-      };
-    },
-
-    [actions.markAllNotificationsRead]: (state, action) => {
-      const notifications = state.notifications.map(n => {
-        return {
-          ...n,
-          unread: false
-        };
-      });
-
-      return {
-        ...state,
-        notifications
-      };
-    },
-
-    [actions.dismissAllNotifications]: (state, action) => {
-      return {
-        ...state,
-        notifications: []
-      };
-    },
-
     [actions.incrementRequests]: (state, action) => {
       return {
         ...state,

@@ -27,7 +27,6 @@ class Notebooks extends Component {
   }
 
   saveNote(note) {
-    console.log("submit", note);
     const { saveNote } = this.props;
     saveNote(note);
     NotifySuccess("Successfully saved note");
