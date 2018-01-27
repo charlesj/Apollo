@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { push } from "react-router-redux";
 import { connect } from "react-redux";
-import HotKey from "react-shortcut";
 import { MainRoutes } from "../../redux/navigator";
 import { metaActions } from "../../redux/actions";
 import MenuBar from "./MenuBar";
@@ -34,34 +33,21 @@ class ApolloTerminal extends Component {
 
     this.state = {
       commands,
-      showTerminal: false
     };
-
-    this.toggleTerminal = this.toggleTerminal.bind(this);
-  }
-
-  toggleTerminal() {
-    this.setState({
-      showTerminal: !this.state.showTerminal
-    });
   }
 
   render() {
-    const { commands, showTerminal } = this.state;
+    const { showTerminal, toggleTerminal } = this.props
+    const { commands } = this.state;
     return (
       <div>
-        <HotKey keys={["escape"]} onKeysCoincide={this.toggleTerminal} />
         {showTerminal && (
           <FlexRow>
             <Notifications />
             <QuickNavigator commands={commands} />
           </FlexRow>
         )}
-        <MenuBar
-          toggleTerminal={() => {
-            this.toggleTerminal();
-          }}
-        />
+        <MenuBar toggleTerminal={() => toggleTerminal()} />
       </div>
     );
   }

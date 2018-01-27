@@ -6,8 +6,6 @@ import { Container } from "../_controls";
 function FeedItems(props) {
   const { previousItems, nextItems, currentItem } = props;
 
-  console.log(props);
-
   return (
     <Container>
       {previousItems.map(i => {

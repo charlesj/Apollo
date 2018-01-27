@@ -41,7 +41,6 @@ class CompleteChecklist extends React.Component {
     const updated = { ...checklistItems };
     const current = checklistItems[checklist_item_id];
     updated[checklist_item_id] = !current;
-    console.log(updated);
     this.setState({ checklistItems: updated });
   }
 
@@ -58,7 +57,6 @@ class CompleteChecklist extends React.Component {
         completed: !!checklistItems[item.id] ? 1 : 0
       };
     });
-    console.log({ items });
     addCompletedChecklist(selectedChecklist.id, notes, items);
     selectChecklist(null);
     NotifySuccess(`Committed ${selectedChecklist.name}`);

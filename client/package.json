@@ -19,7 +19,7 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
-    "react-shortcut": "^1.0.6",
+    "react-shortcuts": "^2.0.0",
     "recharts": "^1.0.0-beta.7",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
