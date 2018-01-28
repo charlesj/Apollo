@@ -37,6 +37,9 @@ export function displayItems(state) {
     previous = allItems.filter(
       item => item.published_at < current.published_at
     );
+    if(previous.length > 5){
+      previous = previous.slice(Math.max(previous.length - 5, 1))
+    }
     next = allItems.filter(item => item.published_at > current.published_at);
   } else {
     previous = [];
