@@ -1,0 +1,38 @@
+@import 'styles/variables.scss';
+
+.jobTable {
+  margin: $spacing;
+  border-collapse: collapse;
+  width: 850px;
+}
+
+.jobTable tbody tr {
+  border-top: 1px solid $borderColor;
+}
+.jobTable td {
+  border-left: 1px solid $borderColor;
+  padding-left: 10px;
+}
+
+.jobDetails h3 {
+  margin: 0px;
+  padding-left: $spacing;
+  border-bottom: 1px solid $borderColor;
+}
+.executionHeader {
+  padding-left: $spacing;
+
+}
+.executionHeader-Success{
+  color: $success;
+}
+
+.executionHeader-Error{
+  color: $error;
+}
+.jobSchedule{
+  margin-left: $spacing;
+}
+.scheduleComponent{
+  margin-right: $spacing*10;
+}

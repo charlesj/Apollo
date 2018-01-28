@@ -3,6 +3,7 @@ import * as bookmarkActions from "./bookmarks/actions";
 import * as checklistActions from "./checklists/actions";
 import * as feedsActions from "./feeds/actions";
 import * as goalActions from "./goals/actions";
+import * as jobActions from "./jobs/actions";
 import * as journalActions from "./journal/actions";
 import * as noteActions from "./notes/actions";
 import * as metaActions from "./meta/actions";
@@ -15,6 +16,7 @@ export {
   checklistActions,
   feedsActions,
   goalActions,
+  jobActions,
   journalActions,
   noteActions,
   metaActions,

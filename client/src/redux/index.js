@@ -9,6 +9,7 @@ import bookmarksReducer from "./bookmarks/reducers";
 import checklistsReducer from "./checklists/reducers";
 import feedsReducer from "./feeds/reducers";
 import goalsReducer from "./goals/reducers";
+import jobsReducer from "./jobs/reducers";
 import journalReducer from "./journal/reducers";
 import noteReducer from "./notes/reducers";
 import metaReducer from "./meta/reducers";
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   checklists: checklistsReducer,
   goals: goalsReducer,
   feeds: feedsReducer,
+  jobs: jobsReducer,
   journal: journalReducer,
   notes: noteReducer,
   meta: metaReducer,

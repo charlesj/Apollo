@@ -1,3 +1,4 @@
+using System.Linq;
 ﻿using System.Threading.Tasks;
 using Apollo.CommandSystem;
 using Apollo.Data;
@@ -18,12 +19,15 @@ namespace Apollo.Commands.Jobs
 
         public override async Task<CommandResult> Execute()
         {
+            var activeJobs = await jobsDataService.GetActiveJobs();
+
             if (Expired)
             {
-                return CommandResult.CreateSuccessResult(await jobsDataService.GetExpiredJobs());
+                var expiredJobs = await jobsDataService.GetExpiredJobs();
+                return CommandResult.CreateSuccessResult(activeJobs.Concat(expiredJobs));
             }
 
-            return CommandResult.CreateSuccessResult(await jobsDataService.GetActiveJobs());
+            return CommandResult.CreateSuccessResult(activeJobs);
         }
 
         public override Task<bool> IsValid()
