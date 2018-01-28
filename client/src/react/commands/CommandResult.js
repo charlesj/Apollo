@@ -22,14 +22,23 @@ export default class CommandResult extends Component {
     const { result } = this.props;
     const { collapsed } = this.state;
     console.log(result);
-
+    if (!result.result) {
+      return (
+        <Container className="commandExecutionResult">
+          <div className="commandExecutionHeader commandExecutionHeader-Error">
+            ERROR {result.command}
+          </div>
+          <ReactJson src={result} theme="solarized" name={null} />
+        </Container>
+      );
+    }
     return (
       <Container className="commandExecutionResult">
         <div
           className={ClassNames({
             commandExecutionHeader: true,
             "commandExecutionHeader-Success":
-              result.result.ResultStatus === "Success",
+              result.result && result.result.ResultStatus === "Success",
             "commandExecutionHeader-Error": result.error
           })}
         >
