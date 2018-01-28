@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-
+import { CancelButton, SaveButton } from "../_controls";
 let GoalForm = props => {
   const { handleSubmit, onCancel } = props;
   return (
     <form className="goalEditContainer" onSubmit={handleSubmit}>
-      <h1>Editing Goal</h1>
       <label>Slug</label>
       <div>
         <Field name="slug" component="input" type="text" placeholder="slug" />
@@ -69,10 +68,8 @@ let GoalForm = props => {
       <div>
         <Field name="featured" component="input" type="text" />
       </div>
-      <button type="submit">Submit</button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
+      <CancelButton type="button" onClick={onCancel} />
+      <SaveButton />
     </form>
   );
 };

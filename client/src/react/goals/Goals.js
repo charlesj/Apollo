@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { goalActions } from "../../redux/actions";
-import { TextButton, FlexRow, Container } from "../_controls";
+import { TextButton, AddButton, FlexRow, Container, FlexContainer } from "../_controls";
 import FontAwesome from "react-fontawesome";
 import GoalForm from "./GoalForm";
 
@@ -16,6 +16,11 @@ class Goals extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  componentDidMount(){
+    this.props.load();
+  }
+
   newGoal() {
     return {
       slug: "",
@@ -48,8 +53,11 @@ class Goals extends Component {
 
     return (
       <FlexRow>
-        <Container>
-          Goals
+        <FlexContainer>
+          <AddButton noun="Goal"             onClick={() => {
+                        this.setEditingGoal(this.newGoal());
+                      }} />
+        <Container width={250}>
           {goals.map(g => {
             return (
               <div key={g.slug} className="goalListing">
@@ -64,16 +72,10 @@ class Goals extends Component {
               </div>
             );
           })}
-          <TextButton
-            onClick={() => {
-              this.setEditingGoal(this.newGoal());
-            }}
-          >
-            New Goal
-          </TextButton>
         </Container>
+        </FlexContainer>
         {this.state.editingGoal && (
-          <Container>
+          <Container grow>
             <GoalForm
               goal={this.state.editingGoal}
               onSubmit={this.onSubmit}
@@ -98,7 +100,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    upsertGoal: goal => dispatch(goalActions.upsertGoal(goal))
+    upsertGoal: goal => dispatch(goalActions.upsertGoal(goal)),
+    load: () => dispatch(goalActions.getGoals())
   };
 }
 

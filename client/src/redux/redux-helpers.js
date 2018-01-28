@@ -1,3 +1,5 @@
+import { NotifyError } from "../services/notifier";
+
 export function basicActions() {
   return {
     start: () => null,
@@ -61,6 +63,7 @@ export function basicLoadCompleteReducer(state, action) {
 }
 
 export function basicFailReducer(state, action) {
+  NotifyError(action.payload);
   return {
     ...state,
     error: action.payload,

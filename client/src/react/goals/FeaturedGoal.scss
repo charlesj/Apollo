@@ -27,6 +27,15 @@
   height: 30px;
 }
 
+.progressBarNegativeProgress {
+  background-color: $red;
+  color: $white;
+  text-align: right;
+  line-height: 30px;
+  padding-right: 5px;
+  height: 30px;
+}
+
 .featuredGoal .featuredGoalInfo {
   flex-grow: 1;
   max-width: 65%;

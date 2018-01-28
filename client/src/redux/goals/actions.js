@@ -1,6 +1,7 @@
 import { createActions } from "redux-actions";
 import { basicActions, dispatchBasicActions } from "../redux-helpers";
 import apolloServer from "../../services/apolloServer";
+import { NotifySuccess } from "../../services/notifier";
 
 const actionCreators = createActions({
   goals: {
@@ -28,6 +29,7 @@ export function getGoals() {
 export function upsertGoal(goal) {
   return dispatchBasicActions(actions.upsertGoal, async () => {
     await apolloServer.invoke("upsertGoal", { goal });
+    NotifySuccess('Saved Goal');
     return { goal };
   });
 }

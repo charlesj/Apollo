@@ -52,13 +52,22 @@ class FeaturedGoal extends Component {
               <Card title="Target" content={goal.targetValue} />
               <Card title="Completed" content={goal.completedDiff} />
             </FlexRow>
+
             <div className="progressBar">
+              { goal.percentComplete > 0 && (
               <div
                 className="progressBarProgress"
                 style={{ width: goal.percentComplete + "%" }}
               >
                 {goal.percentComplete}%
-              </div>
+              </div>)}
+              { goal.percentComplete < 0 && (
+              <div
+                className="progressBarNegativeProgress"
+                style={{ width: (goal.percentComplete * -1) + "%" }}
+              >
+                {goal.percentComplete}%
+              </div>)}
             </div>
             <div className="goalCountDown">
               You've got <strong>{getDisplay(new Date(goal.endDate))}</strong>{" "}
