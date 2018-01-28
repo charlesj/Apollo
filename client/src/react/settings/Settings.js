@@ -5,7 +5,7 @@ import ChangePassword from "./ChangePassword";
 class Settings extends Component {
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         <LoginSessions />
         <ChangePassword />
       </div>

@@ -1,6 +1,9 @@
 import React from "react";
 import moment from "moment";
 import apollo from "../../services/apolloServer";
+import { Container, Button } from "../_controls";
+
+import "./LoginSessions.css";
 
 class LoginSessions extends React.Component {
   constructor(props) {
@@ -51,8 +54,8 @@ class LoginSessions extends React.Component {
 
   render() {
     return (
-      <div>
-        <table className="pt-table pt-bordered">
+      <Container>
+        <table className="loginSessionsTable">
           <thead>
             <tr>
               <th>id</th>
@@ -69,27 +72,32 @@ class LoginSessions extends React.Component {
               return (
                 <tr key={session.id}>
                   <td>{session.id}</td>
-                  <td>{session.token}</td>
+                  <td>
+                    <span title={session.token}>
+                      {session.token.slice(0, 6)}...
+                    </span>
+                  </td>
                   <td>{this.formatDate(session.created_at)}</td>
                   <td>{this.formatDate(session.last_seen)}</td>
                   <td>{session.ip_address}</td>
-                  <td>{session.user_agent}</td>
                   <td>
-                    <button
-                      onClick={this.revokeLoginSession.bind(
-                        null,
-                        session.token
-                      )}
+                    <span title={session.user_agent}>
+                      {session.user_agent && session.user_agent.slice(0, 20)}...
+                    </span>
+                  </td>
+                  <td>
+                    <Button
+                      onClick={() => this.revokeLoginSession(session.token)}
                     >
                       revoke
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               );
             }, this)}
           </tbody>
         </table>
-      </div>
+      </Container>
     );
   }
 }

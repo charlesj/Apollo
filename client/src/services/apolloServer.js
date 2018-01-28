@@ -39,12 +39,16 @@ const invokeFull = async (commandName, payload) => {
   } finally {
     store.dispatch(metaActions.decrementRequests());
   }
-
+  result.data.status = result.status;
   return result.data;
 };
 
 const invoke = async (commandName, payload) => {
   var response = await invokeFull(commandName, payload);
+  if (response.status !== 200) {
+    console.warn("Server Error", response);
+    throw Error("Bad Request");
+  }
   return response.result.Result;
 };
 

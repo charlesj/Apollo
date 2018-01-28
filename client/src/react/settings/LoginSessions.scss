@@ -1,0 +1,16 @@
+@import 'styles/variables.scss';
+
+.loginSessionsTable {
+  margin: $spacing;
+  border-collapse: collapse;
+  width: 1150px;
+}
+
+.loginSessionsTable tbody tr {
+  border-top: 1px solid $borderColor;
+}
+.loginSessionsTable td {
+  border-left: 1px solid $borderColor;
+  text-align: center;
+  padding: 0px;
+}
