@@ -8,7 +8,7 @@ let throttleLoadItems = false;
 export function feeds(state) {
   const feeds = keyedIdToArray(state.feeds.feeds);
 
-  return _.orderBy(feeds, ['name']).filter(f => f.unread_count > 0);
+  return _.orderBy(feeds, ["name"]).filter(f => f.unread_count > 0);
 }
 
 export function currentFeed(state) {
@@ -37,8 +37,8 @@ export function displayItems(state) {
     previous = allItems.filter(
       item => item.published_at < current.published_at
     );
-    if(previous.length > 5){
-      previous = previous.slice(Math.max(previous.length - 5, 1))
+    if (previous.length > 5) {
+      previous = previous.slice(Math.max(previous.length - 5, 1));
     }
     next = allItems.filter(item => item.published_at > current.published_at);
   } else {

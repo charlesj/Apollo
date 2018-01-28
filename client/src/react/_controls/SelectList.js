@@ -18,15 +18,9 @@ class SelectList extends Component {
     });
   }
 
-  getClasses(item) {
-    if (item.id === this.state.selectedItemId) {
-      return "selectListItem selectListItem-selected";
-    }
-    return "selectListItem";
-  }
-
   render() {
     const { items, labelField } = this.props;
+    const { selectedItem } = this.state;
     return (
       <div className="selectList">
         {items.map(item => {
@@ -34,7 +28,8 @@ class SelectList extends Component {
             <div
               className={ClassNames({
                 selectListItem: true,
-                "selectListItem-selected": item === this.state.selectedItem
+                "selectListItem-selected":
+                  selectedItem && item.id === selectedItem.id
               })}
               key={item.id}
               onClick={() => {

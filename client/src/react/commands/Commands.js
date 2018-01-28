@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import ReactJson from "react-json-view";
 import apolloServer from "../../services/apolloServer";
-import { Button, Container, FlexRow, SelectList } from "../_controls";
+import {
+  Button,
+  Container,
+  FlexRow,
+  SelectList,
+  FlexContainer
+} from "../_controls";
+import CommandResult from "./CommandResult";
 
 import "./Commands.css";
 
@@ -27,53 +33,6 @@ function CommandInfo(props) {
   );
 }
 
-function getExecutionBorderStyle(resultType) {
-  var styles = {
-    Success: "#0A6640",
-    Error: "#A82A2A",
-    Invalid: "#A66321"
-  };
-  return {
-    border: "20px solid " + styles[resultType]
-  };
-}
-
-function CommandResult(props) {
-  return (
-    <div className="commandExecutionResult">
-      Result: {props.lastExecution.result.ResultStatus} ({
-        props.lastExecution.id
-      }: {props.lastExecution.result.Elapsed}ms)
-      {props.lastExecution.error && (
-        <div className="commandExecutionError">
-          {props.lastExecution.error}: {props.lastExecution.result.ErrorMessage}
-        </div>
-      )}
-      <div
-        className="commandResultJsonContainer"
-        style={getExecutionBorderStyle(props.lastExecution.result.ResultStatus)}
-      >
-        {props.lastExecution.result.Result && (
-          <ReactJson
-            src={props.lastExecution.result.Result}
-            theme="solarized"
-            name={null}
-          />
-        )}
-        {!props.lastExecution.result.Result && (
-          <h1
-            style={{
-              color: "#fff"
-            }}
-          >
-            SUCCESS
-          </h1>
-        )}
-      </div>
-    </div>
-  );
-}
-
 class Commands extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +41,7 @@ class Commands extends Component {
       commands: [],
       displayCommands: [],
       selectedCommand: null,
-      lastExecution: null,
+      results: [],
       payload: null,
       currentFilter: ""
     };
@@ -121,10 +80,14 @@ class Commands extends Component {
     });
   }
 
-  execute(command, parameters) {
-    apolloServer.invokeFull(command, JSON.parse(parameters)).then(result => {
+  execute(command, params) {
+    const parameters = JSON.parse(params);
+    apolloServer.invokeFull(command, parameters).then(result => {
       this.setState({
-        lastExecution: result
+        results: [
+          { command, ...result, parameters, id: this.state.results.length + 1 },
+          ...this.state.results
+        ]
       });
     });
   }
@@ -154,34 +117,40 @@ class Commands extends Component {
         label: cmd
       };
     });
+    const { results } = this.state;
     return (
       <FlexRow>
-        <Container>
-          <input
-            type="text"
-            onChange={this.filterCommands}
-            value={this.state.currentFilter}
-            placeholder="filter commands"
-          />
-          <SelectList
-            items={commandListing}
-            onSelectItem={this.selectCommand}
-            labelField="label"
-          />
-        </Container>
-        <Container grow>
-          {this.state.selectedCommand && (
-            <CommandInfo
-              payload={this.state.payload}
-              command={this.state.selectedCommand}
-              execute={this.execute}
-              updatePayload={this.updatePayload}
+        <FlexContainer>
+          <Container width={250}>
+            <input
+              type="text"
+              onChange={this.filterCommands}
+              value={this.state.currentFilter}
+              placeholder="filter commands"
+              className="commandFilterInput"
             />
-          )}
-          {this.state.lastExecution && (
-            <CommandResult lastExecution={this.state.lastExecution} />
-          )}
-        </Container>
+            <SelectList
+              items={commandListing}
+              onSelectItem={this.selectCommand}
+              labelField="label"
+            />
+          </Container>
+        </FlexContainer>
+        <FlexContainer grow>
+          <Container grow>
+            {this.state.selectedCommand && (
+              <CommandInfo
+                payload={this.state.payload}
+                command={this.state.selectedCommand}
+                execute={this.execute}
+                updatePayload={this.updatePayload}
+              />
+            )}
+          </Container>
+          {results.map((result, i) => {
+            return <CommandResult key={result.id} result={result} index={i} />;
+          })}
+        </FlexContainer>
       </FlexRow>
     );
   }
