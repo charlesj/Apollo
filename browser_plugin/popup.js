@@ -139,7 +139,7 @@ function submitBookmark(){
         tags = rawTags.split(',');
     }
 
-    apolloRPC('addbookmark',{
+    apolloRPC('saveBookmark',{
         title: title,
         link: link,
         description: description,
