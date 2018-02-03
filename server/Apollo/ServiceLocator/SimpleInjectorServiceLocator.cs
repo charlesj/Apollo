@@ -73,7 +73,6 @@ namespace Apollo.ServiceLocator
             container.Register<ILoginService, LoginService>();
             container.Register<ISchedulerService, SchedulerService>();
             container.Register<IUrlFetcher, UrlFetcher>();
-            container.Register<IUserSettingsService, UserSettingsService>();
 
             // utility binding
             container.Register<IBase64Converter, Base64Converter>(Lifestyle.Singleton);

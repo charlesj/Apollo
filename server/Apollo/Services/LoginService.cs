@@ -21,11 +21,11 @@ namespace Apollo.Services
     {
         private readonly ILoginSessionDataService loginSessionDataService;
         private readonly IPasswordHasher passwordHasher;
-        private readonly IUserSettingsService userSettingsService;
+        private readonly IUserSettignsDataService userSettingsService;
 
         public LoginService(ILoginSessionDataService loginSessionDataService,
                             IPasswordHasher passwordHasher,
-                            IUserSettingsService userSettingsService)
+                            IUserSettignsDataService userSettingsService)
         {
             this.loginSessionDataService = loginSessionDataService;
             this.passwordHasher = passwordHasher;
@@ -58,10 +58,9 @@ namespace Apollo.Services
 
         public async Task<bool> CheckPassword(string password)
         {
-            var passwordHash = await this.userSettingsService
-                .GetSetting<string>(Constants.UserSettings.PasswordHash);
+            var passwordHash = await this.userSettingsService.GetUserSetting(Constants.UserSettings.PasswordHash);
 
-            return this.passwordHasher.CheckHash(passwordHash, password);
+            return this.passwordHasher.CheckHash(passwordHash.value, password);
         }
 
         public async Task RevokeToken(string token)

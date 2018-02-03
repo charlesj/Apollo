@@ -89,26 +89,5 @@ namespace Apollo.Tests.Data
             }
 
         }
-
-        public class UpsertSetting : UserSettingsDataServiceTest
-        {
-            private const string newValue = "new value";
-
-            [Fact]
-            public async void MakesExpectedQuery()
-            {
-                await this.ClassUnderTest.UpdateSetting(new UserSetting
-                {
-                    name = settingName,
-                    value = newValue
-                });
-
-                connection.Verify(c =>
-                    c.Execute(It.Is<string>(
-                            q => q == "update user_settings set value=@newValue, updated_at=current_timestamp where name=@name"),
-                        It.Is<object>(o => GetAnonymousString(o, "name") == settingName && GetAnonymousString(o, "newValue") == newValue)
-                ), Times.Once());
-            }
-        }
     }
 }

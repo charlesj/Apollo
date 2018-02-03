@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Apollo.Commands.UserSettings;
 using Apollo.CommandSystem;
+using Apollo.Data;
 using Apollo.Services;
 using Apollo.Utilities;
 using Moq;
@@ -23,9 +24,9 @@ namespace Apollo.Tests.Commands.UserSettings
                 .Setup(p => p.GenerateHash(It.IsAny<string>()))
                 .Returns(newHash);
 
-            Mock<IUserSettingsService>()
-                .Setup(u => u.SetSetting<string>(Constants.UserSettings.PasswordHash, newHash))
-                .Returns(Task.FromResult(0));
+            Mock<IUserSettignsDataService>()
+                .Setup(u => u.UpdateSetting(It.IsAny<UserSetting>()))
+                .Returns(Task.FromResult(new UserSetting()));
         }
 
         [Fact]
@@ -71,8 +72,9 @@ namespace Apollo.Tests.Commands.UserSettings
         {
             await this.ClassUnderTest.Execute();
 
-            Mock<IUserSettingsService>()
-                .Verify(u => u.SetSetting<string>(Constants.UserSettings.PasswordHash, newHash));
+            Mock<IUserSettignsDataService>()
+                .Verify(u => u.UpdateSetting(
+                    It.Is<UserSetting>(us => us.name == Constants.UserSettings.PasswordHash && us.value == newHash)));
         }
 
         [Fact]

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Apollo.CommandSystem;
+using Apollo.Data;
 using Apollo.Services;
 using Apollo.Utilities;
 
@@ -8,7 +9,7 @@ namespace Apollo.Commands.UserSettings
     public class ChangePassword : AuthenticatedCommand
     {
         private readonly IPasswordHasher passwordHasher;
-        private readonly IUserSettingsService userSettingsService;
+        private readonly IUserSettignsDataService userSettingsService;
         public string CurrentPassword { get; set; }
         public string NewPassword { get; set; }
         public string NewPasswordVerification { get; set; }
@@ -17,7 +18,7 @@ namespace Apollo.Commands.UserSettings
         public ChangePassword(
             ILoginService loginService,
             IPasswordHasher passwordHasher,
-            IUserSettingsService userSettingsService) : base(loginService)
+            IUserSettignsDataService userSettingsService) : base(loginService)
         {
             this.passwordHasher = passwordHasher;
             this.userSettingsService = userSettingsService;
@@ -27,7 +28,13 @@ namespace Apollo.Commands.UserSettings
         {
             var newHash = this.passwordHasher.GenerateHash(this.NewPassword);
 
-            await this.userSettingsService.SetSetting<string>(Constants.UserSettings.PasswordHash, newHash);
+            var setting = new UserSetting
+            {
+                name = Constants.UserSettings.PasswordHash,
+                value = newHash
+            };
+
+            await this.userSettingsService.UpdateSetting(setting);
 
             return CommandResult.SuccessfulResult;
         }

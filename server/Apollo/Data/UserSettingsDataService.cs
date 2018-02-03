@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +8,8 @@ namespace Apollo.Data
     public interface IUserSettignsDataService
     {
         Task<UserSetting> GetUserSetting(string name);
-        Task UpdateSetting(UserSetting setting);
+        Task<UserSetting> UpdateSetting(UserSetting setting);
+        Task<IReadOnlyList<UserSetting>> GetAll();
     }
 
     public class UserSettingsDataService : BaseDataService, IUserSettignsDataService
@@ -16,6 +18,9 @@ namespace Apollo.Data
 
         public const string UpdateSettingSql =
             "update user_settings set value=@newValue, updated_at=current_timestamp where name=@name";
+
+        public const string InsertSettingsSql = "insert into user_settings (name, value, created_at, updated_at) " +
+                                                "values (@name, @value, current_timestamp, current_timestamp)";
 
         public UserSettingsDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
@@ -32,15 +37,29 @@ namespace Apollo.Data
             return results[0];
         }
 
-        public async Task UpdateSetting(UserSetting setting)
+        public async Task<UserSetting> UpdateSetting(UserSetting setting)
         {
-            await Execute(UpdateSettingSql, new {setting.name, newValue = setting.value});
+            var current = await QueryAsync<UserSetting>(UserSettingSql, setting);
+            if (current.Count == 0)
+                await Execute(InsertSettingsSql, setting);
+            else
+                await Execute(UpdateSettingSql, new {setting.name, newValue = setting.value});
+            current = await QueryAsync<UserSetting>(UserSettingSql, setting);
+            return current.Single();
+        }
+
+        public Task<IReadOnlyList<UserSetting>> GetAll()
+        {
+            return QueryAsync<UserSetting>("select * from user_settings where name != 'password_hash'");
         }
     }
 
     public class UserSetting
     {
+        public int id { get; set; }
         public string name { get; set; }
         public string value { get; set; }
+        public DateTime created_at { get; set; }
+        public DateTime updated_at { get; set; }
     }
 }
