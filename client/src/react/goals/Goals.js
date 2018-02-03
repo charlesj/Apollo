@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { goalActions } from "../../redux/actions";
-import { TextButton, AddButton, FlexRow, Container, FlexContainer } from "../_controls";
+import {
+  TextButton,
+  AddButton,
+  FlexRow,
+  Container,
+  FlexContainer
+} from "../_controls";
 import FontAwesome from "react-fontawesome";
 import GoalForm from "./GoalForm";
 
@@ -17,7 +23,7 @@ class Goals extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.load();
   }
 
@@ -54,25 +60,28 @@ class Goals extends Component {
     return (
       <FlexRow>
         <FlexContainer>
-          <AddButton noun="Goal"             onClick={() => {
-                        this.setEditingGoal(this.newGoal());
-                      }} />
-        <Container width={250}>
-          {goals.map(g => {
-            return (
-              <div key={g.slug} className="goalListing">
-                {g.title || g.slug}
-                <TextButton
-                  onClick={() => {
-                    this.setEditingGoal(g);
-                  }}
-                >
-                  <FontAwesome name="edit" />
-                </TextButton>
-              </div>
-            );
-          })}
-        </Container>
+          <AddButton
+            noun="Goal"
+            onClick={() => {
+              this.setEditingGoal(this.newGoal());
+            }}
+          />
+          <Container width={250}>
+            {goals.map(g => {
+              return (
+                <div key={g.slug} className="goalListing">
+                  {g.title || g.slug}
+                  <TextButton
+                    onClick={() => {
+                      this.setEditingGoal(g);
+                    }}
+                  >
+                    <FontAwesome name="edit" />
+                  </TextButton>
+                </div>
+              );
+            })}
+          </Container>
         </FlexContainer>
         {this.state.editingGoal && (
           <Container grow>

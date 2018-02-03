@@ -15,6 +15,7 @@ import noteReducer from "./notes/reducers";
 import metaReducer from "./meta/reducers";
 import metricsReducer from "./metrics/reducers";
 import summariesReducer from "./summaries/reducers";
+import userSettingsReducer from "./userSettings/reducers";
 
 export const history = createHistory();
 
@@ -44,7 +45,8 @@ const rootReducer = combineReducers({
   metrics: metricsReducer,
   summaries: summariesReducer,
   routing: routerReducer,
-  form: formReducer
+  form: formReducer,
+  userSettings: userSettingsReducer
 });
 
 const store = createStore(rootReducer, composedEnhancers);

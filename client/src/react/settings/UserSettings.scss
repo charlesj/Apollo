@@ -1,0 +1,20 @@
+@import 'styles/variables.scss';
+
+.userSettingsForm{
+  margin: $spacing;
+}
+
+.userSettingsTable {
+  margin: $spacing;
+  border-collapse: collapse;
+  width: 900px;
+}
+
+.userSettingsTable tbody tr {
+  border-top: 1px solid $borderColor;
+}
+.userSettingsTable td {
+  border-left: 1px solid $borderColor;
+  text-align: center;
+  padding: 0px;
+}

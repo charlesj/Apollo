@@ -8,6 +8,7 @@ import * as journalSelectors from "./journal/selectors";
 import * as noteSelectors from "./notes/selectors";
 import * as metaSelectors from "./meta/selectors";
 import * as metricsSelectors from "./metrics/selectors";
+import * as userSettingsSelectors from "./userSettings/selectors";
 
 export {
   boardSelectors,
@@ -19,5 +20,6 @@ export {
   journalSelectors,
   noteSelectors,
   metaSelectors,
-  metricsSelectors
+  metricsSelectors,
+  userSettingsSelectors
 };

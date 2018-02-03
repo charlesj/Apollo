@@ -37,6 +37,10 @@
 .cancelButton {
 
 }
+.editButton{
+    border-color: $blue;
+    color: $blue;
+}
 .loadMoreButton {
   border-color: $blue;
   color: $blue;
@@ -50,4 +54,13 @@
   cursor: pointer;
   border: 0px;
   font-weight: normal;
+}
+.smallButton{
+  padding: 1px;
+  width: 18px;
+}
+.smallButton .fa {
+  margin: 0px;
+  margin-top: 3px;
+  margin-left: 1px;
 }

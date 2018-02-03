@@ -9,6 +9,7 @@ import * as noteActions from "./notes/actions";
 import * as metaActions from "./meta/actions";
 import * as metricsActions from "./metrics/actions";
 import * as summaryActions from "./summaries/actions";
+import * as userSettingsActions from "./userSettings/actions";
 
 export {
   boardActions,
@@ -21,5 +22,6 @@ export {
   noteActions,
   metaActions,
   metricsActions,
-  summaryActions
+  summaryActions,
+  userSettingsActions
 };

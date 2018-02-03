@@ -29,7 +29,7 @@ export function getGoals() {
 export function upsertGoal(goal) {
   return dispatchBasicActions(actions.upsertGoal, async () => {
     await apolloServer.invoke("upsertGoal", { goal });
-    NotifySuccess('Saved Goal');
+    NotifySuccess("Saved Goal");
     return { goal };
   });
 }

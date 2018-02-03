@@ -3,6 +3,7 @@ import Button from "./Button";
 import CancelButton from "./CancelButton";
 import Card from "./Card";
 import Container from "./Container";
+import EditButton from "./EditButton";
 import FlexContainer from "./FlexContainer";
 import FlexRow from "./FlexRow";
 import FormSelect from "./FormSelect";
@@ -20,6 +21,7 @@ export {
   CancelButton,
   Card,
   Container,
+  EditButton,
   FlexContainer,
   FlexRow,
   FormSelect,
