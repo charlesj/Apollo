@@ -13,6 +13,7 @@
 
         public static class UserSettings
         {
+            public const string DarkSkyApiKey = "DarkSkyApiKey";
             public const string PasswordHash = "password_hash";
         }
 
