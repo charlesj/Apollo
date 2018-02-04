@@ -15,6 +15,7 @@ namespace Apollo.Data
 
     public class JournalDataService : BaseDataService, IJournalDataService
     {
+        private readonly ITimelineDataService tds;
         public const string SelectAllQuery = "select * from journal order by id desc limit 100 offset @start";
         public const string RecentCountSql = "select count(*) from journal where created_at>@created_at;";
         public const string CountSql = "select count(*) from journal;";
@@ -23,8 +24,9 @@ namespace Apollo.Data
         public const string InsertSql = "insert into journal(note, tags, created_at) " +
                                         "values (@note,@tags,current_timestamp) returning id";
 
-        public JournalDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
+        public JournalDataService(IConnectionFactory connectionFactory, ITimelineDataService tds) : base(connectionFactory)
         {
+            this.tds = tds;
         }
 
         public async Task<IReadOnlyList<JournalEntry>> GetJournalEntries(int start)
@@ -36,6 +38,7 @@ namespace Apollo.Data
         public async Task<JournalEntry> CreateJournalEntry(JournalEntry entry)
         {
             var id = await InsertAndReturnId(InsertSql, entry);
+            await tds.RecordEntry("Journaled", Constants.TimelineReferences.Journal, id);
             return (await QueryAsync<JournalEntry>(SingleSql, new {id})).Single();
         }
 

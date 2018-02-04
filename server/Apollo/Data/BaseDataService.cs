@@ -35,16 +35,24 @@ namespace Apollo.Data
             }
         }
 
-        protected async Task<TModel> Upsert<TModel>(string insertQuery, string updateQuery, string selectQuery, TModel parameters) where TModel : ITableModel
+        protected async Task<TModel> Upsert<TModel>(
+            string insertQuery,
+            string updateQuery,
+            string selectQuery,
+            TModel parameters,
+            Action<int> insertCallback = null,
+            Action<int> updateCallback = null) where TModel : ITableModel
         {
             int id = parameters.id;
             if (id == default(int))
             {
                 id = await InsertAndReturnId(insertQuery, parameters);
+                insertCallback?.Invoke(id);
             }
             else
             {
                 await Execute(updateQuery, parameters);
+                updateCallback?.Invoke(id);
             }
 
             return (await QueryAsync<TModel>(selectQuery, new {id})).Single();

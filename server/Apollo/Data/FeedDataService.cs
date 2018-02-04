@@ -18,8 +18,11 @@ namespace Apollo.Data
 
     public class FeedDataService : BaseDataService, IFeedDataService
     {
+        private readonly ITimelineDataService tds;
+
         public const string AddFeedSql = "insert into feeds(name, url, created_at, last_updated_at, last_attempted) " +
-                                         "values (@name, @url, current_timestamp, current_timestamp, current_timestamp);";
+                                         "values (@name, @url, current_timestamp, current_timestamp, current_timestamp) " +
+                                         "returning id;";
 
         public const string GetFeedsSql = "select feeds.*, " +
                                           "(select count(*) from feed_items where " +
@@ -50,13 +53,16 @@ namespace Apollo.Data
         public const string MarkItemReadSql = "update feed_items set read_at=current_timestamp " +
                                               "where id=@feedItemId";
 
-        public FeedDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
+        public FeedDataService(IConnectionFactory connectionFactory, ITimelineDataService tds) : base(connectionFactory)
         {
+            this.tds = tds;
         }
 
-        public Task AddFeed(string name, string url)
+        public async Task AddFeed(string name, string url)
         {
-            return Execute(AddFeedSql, new {name, url});
+
+            var id = await InsertAndReturnId(AddFeedSql, new {name, url});
+            await tds.RecordEntry($"Added feed {name}", Constants.TimelineReferences.Feed, id);
         }
 
         public Task<IReadOnlyList<Feed>> GetFeeds()

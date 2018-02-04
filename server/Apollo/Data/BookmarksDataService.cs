@@ -16,6 +16,8 @@ namespace Apollo.Data
 
     public class BookmarksDataService : BaseDataService, IBookmarksDataService
     {
+        private readonly ITimelineDataService tds;
+
         public const string InsertSql = "insert into bookmarks" +
                                         "(title, link, description, tags, created_at, modified_at)" +
                                         "values (@title, @link, @description, @tags, " +
@@ -37,8 +39,9 @@ namespace Apollo.Data
 
         public const string UrlGetSql = "select * from bookmarks where link=@link order by id desc";
 
-        public BookmarksDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
+        public BookmarksDataService(IConnectionFactory connectionFactory, ITimelineDataService tds) : base(connectionFactory)
         {
+            this.tds = tds;
         }
 
         public async Task<Bookmark> Upsert(Bookmark bookmark)
@@ -53,11 +56,13 @@ namespace Apollo.Data
             {
                 var idResult = await QueryAsync<IdResult>(InsertSql, bookmark);
                 id = idResult.Single().id;
+                await tds.RecordEntry($"Bookmarked {bookmark.title}", Constants.TimelineReferences.Bookmark, id);
             }
             else
             {
                 bookmark.modified_at = DateTime.Now;
                 await Execute(UpdateSql, bookmark);
+                await tds.RecordEntry($"Edited Bookmark {bookmark.title}", Constants.TimelineReferences.Bookmark, id);
             }
 
             return (await QueryAsync<Bookmark>(GetSingleSql, new {id})).Single();

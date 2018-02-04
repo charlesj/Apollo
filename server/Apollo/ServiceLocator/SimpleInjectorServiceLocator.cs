@@ -47,6 +47,7 @@ namespace Apollo.ServiceLocator
             container.Register<INotebookDataService, NotebookDataService>();
             container.Register<IMetricsDataService, MetricsDataService>();
             container.Register<IUserSettignsDataService, UserSettingsDataService>();
+            container.Register<ITimelineDataService, TimelineDataService>();
             container.Register<IWeatherDataService, WeatherDataService>();
 
             // external service bindings

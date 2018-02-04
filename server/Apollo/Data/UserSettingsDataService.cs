@@ -14,6 +14,7 @@ namespace Apollo.Data
 
     public class UserSettingsDataService : BaseDataService, IUserSettignsDataService
     {
+        private readonly ITimelineDataService tds;
         public const string UserSettingSql = "select * from user_settings where name=@name";
 
         public const string UpdateSettingSql =
@@ -22,8 +23,9 @@ namespace Apollo.Data
         public const string InsertSettingsSql = "insert into user_settings (name, value, created_at, updated_at) " +
                                                 "values (@name, @value, current_timestamp, current_timestamp)";
 
-        public UserSettingsDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
+        public UserSettingsDataService(IConnectionFactory connectionFactory, ITimelineDataService tds) : base(connectionFactory)
         {
+            this.tds = tds;
         }
 
         public async Task<UserSetting> GetUserSetting(string name)
@@ -44,6 +46,7 @@ namespace Apollo.Data
                 await Execute(InsertSettingsSql, setting);
             else
                 await Execute(UpdateSettingSql, new {setting.name, newValue = setting.value});
+            await tds.RecordEntry($"Edited setting {setting.name}");
             current = await QueryAsync<UserSetting>(UserSettingSql, setting);
             return current.Single();
         }

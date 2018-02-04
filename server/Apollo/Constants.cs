@@ -1,4 +1,6 @@
-﻿namespace Apollo
+﻿using Remotion.Linq.Clauses.ResultOperators;
+
+namespace Apollo
 {
     public static class Constants
     {
@@ -20,6 +22,16 @@
         public static class Documents
         {
             public const string WeatherLocations = "weatherLocations";
+        }
+
+        public static class TimelineReferences
+        {
+            public const string Bookmark = "bookmark";
+            public const string Checklist = "checklist";
+            public const string ChecklistCompletion = "checklistCompletion";
+            public const string Feed = "feed";
+            public const string Journal = "journal";
+            public const string Note = "note";
         }
     }
 }

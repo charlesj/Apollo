@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Remotion.Linq.Clauses;
 
 namespace Apollo.Data
 {
@@ -31,8 +32,11 @@ namespace Apollo.Data
 
     public class ChecklistsDataService : BaseDataService, IChecklistsDataService
     {
-        public ChecklistsDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
+        private readonly ITimelineDataService tds;
+
+        public ChecklistsDataService(IConnectionFactory connectionFactory, ITimelineDataService tds) : base(connectionFactory)
         {
+            this.tds = tds;
         }
 
         public async Task<Checklist> UpsertChecklist(Checklist checklist)
@@ -42,7 +46,9 @@ namespace Apollo.Data
             var updateSql = "update checklists set name=@name, type=@type, description=@description, " +
                             "updated_at=current_timestamp where id=@id";
             var selectSql = "select * from checklists where id=@id";
-            return await Upsert(instertSql, updateSql, selectSql, checklist);
+            var insert = tds.Callback($"Created Checklist {checklist.name}", Constants.TimelineReferences.Checklist);
+            var update = tds.Callback($"Edited Checklist {checklist.name}", Constants.TimelineReferences.Checklist);
+            return await Upsert(instertSql, updateSql, selectSql, checklist, insert, update);
         }
 
         public async Task<ChecklistItem> UpsertChecklistItem(ChecklistItem item)
@@ -53,7 +59,12 @@ namespace Apollo.Data
             var updateSql = "update checklist_items set name=@name, type=@type, description=@description, " +
                             "updated_at=current_timestamp where id=@id";
             var selectSql = "select * from checklist_items where id=@id";
-            return await Upsert(insertSql, updateSql, selectSql, item);
+
+            var updated = await Upsert(insertSql, updateSql, selectSql, item);
+            var checklist = await GetChecklist(item.checklist_id);
+            await tds.RecordEntry($"Edited Checklist {checklist.name}", Constants.TimelineReferences.Checklist,
+                item.checklist_id);
+            return updated;
         }
 
         public async Task DeleteChecklist(int id)
@@ -84,12 +95,17 @@ namespace Apollo.Data
 
         public async Task<int> UpsertChecklistCompletion(ChecklistCompletion completion)
         {
+            var checklist = await GetChecklist(completion.checklist_id);
+
             if (completion.id == 0)
             {
                 var idResults = await QueryAsync<IdResult>("insert into checklist_completions(checklist_id, notes, created_at, " +
                                            "updated_at) values (@checklist_id, @notes, current_timestamp, " +
                                            "current_timestamp) returning id", completion);
-                return idResults.Single().id;
+                var id = idResults.Single().id;
+                await tds.RecordEntry($"Completed Checklist {checklist.name}",
+                    Constants.TimelineReferences.ChecklistCompletion, id);
+                return id;
             }
 
             await Execute("update checklist_completions set notes=@notes, updated_at=current_timestamp " +
@@ -170,6 +186,12 @@ namespace Apollo.Data
                 new {completed_checklist_id});
         }
 
+        public async Task<Checklist> GetChecklist(int id)
+        {
+            var result = await QueryAsync<Checklist>("select * from checklists where id=@id", new {id});
+            return result.Single();
+        }
+
         public async Task<CompletedChecklist> SaveCompletedChecklist(int checklist_id, string notes, List<ChecklistCompletionItem> items)
         {
             var checklistCompletion = new ChecklistCompletion {checklist_id = checklist_id, notes = notes};
@@ -185,7 +207,7 @@ namespace Apollo.Data
 
             var completedItems = await GetCompletedChecklistItemInfo(id);
 
-            return new CompletedChecklist {Checklist = checklistInfo, Items = completedItems};
+            return new CompletedChecklist {Checklist = checklistInfo, Items = completedItems, id=id};
 
         }
 
@@ -260,6 +282,7 @@ namespace Apollo.Data
 
     public class CompletedChecklist
     {
+        public int id { get; set; }
         public ChecklistCompletion Checklist { get; set; }
         public IReadOnlyList<CompletedChecklistItemInfo> Items { get; set; }
     }

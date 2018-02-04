@@ -17,6 +17,8 @@ namespace Apollo.Data
 
     public class NotebookDataService : BaseDataService, INotebookDataService
     {
+        private readonly ITimelineDataService timelineDataService;
+
         public const string CreateNoteSql = "insert into notes(name,body,created_at,modified_at) values " +
                                             "(@name, @body, current_timestamp, current_timestamp) returning id";
 
@@ -32,8 +34,9 @@ namespace Apollo.Data
 
         public const string DeleteNoteSql = "delete from notes where id=@id";
 
-        public NotebookDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
+        public NotebookDataService(IConnectionFactory connectionFactory, ITimelineDataService timelineDataService) : base(connectionFactory)
         {
+            this.timelineDataService = timelineDataService;
         }
 
         public Task CreateNote(string name, string body)
@@ -54,7 +57,13 @@ namespace Apollo.Data
 
         public async Task<Note> UpsertNote(Note note)
         {
-            return await Upsert(CreateNoteSql, UpdateNoteSql, GetNoteSql, note);
+            var insertCallback =
+                timelineDataService.Callback($"Created Note {note.name}", Constants.TimelineReferences.Note);
+
+            var updateCallback =
+                timelineDataService.Callback($"Edited Note {note.name}", Constants.TimelineReferences.Note);
+
+            return await Upsert(CreateNoteSql, UpdateNoteSql, GetNoteSql, note, insertCallback, updateCallback);
         }
 
         public Task DeleteNote(int id)
