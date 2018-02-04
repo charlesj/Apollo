@@ -9,6 +9,7 @@ import * as noteActions from "./notes/actions";
 import * as metaActions from "./meta/actions";
 import * as metricsActions from "./metrics/actions";
 import * as summaryActions from "./summaries/actions";
+import * as timelineActions from "./timeline/actions";
 import * as userSettingsActions from "./userSettings/actions";
 
 export {
@@ -23,5 +24,6 @@ export {
   metaActions,
   metricsActions,
   summaryActions,
+  timelineActions,
   userSettingsActions
 };

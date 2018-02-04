@@ -5,6 +5,7 @@ import Strategies from "./thinking/ObliqueStrategies";
 import CompleteChecklist from "./checklists/CompleteChecklist";
 import LifeCounter from "./meta/LifeCounter";
 import FeaturedGoal from "./goals/FeaturedGoal";
+import Timeline from "./timeline/Timeline";
 
 function Home(props) {
   return (
@@ -15,6 +16,7 @@ function Home(props) {
       <Summaries />
       <CompleteChecklist />
       <Strategies />
+      <Timeline />
     </div>
   );
 }

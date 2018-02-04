@@ -8,6 +8,7 @@ import * as journalSelectors from "./journal/selectors";
 import * as noteSelectors from "./notes/selectors";
 import * as metaSelectors from "./meta/selectors";
 import * as metricsSelectors from "./metrics/selectors";
+import * as timelineSelectors from "./timeline/selectors";
 import * as userSettingsSelectors from "./userSettings/selectors";
 
 export {
@@ -21,5 +22,6 @@ export {
   noteSelectors,
   metaSelectors,
   metricsSelectors,
+  timelineSelectors,
   userSettingsSelectors
 };
