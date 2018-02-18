@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Apollo.Data
 {
@@ -13,7 +14,7 @@ namespace Apollo.Data
         Task<IReadOnlyList<FeedItem>> CheckItemUrl(string itemLink);
         Task AddItem(int feedId, string title, string url, string body, DateTime publishDate);
         Task<IReadOnlyList<FeedItem>> GetItems(int feedId);
-        Task MarkItemRead(int itemId);
+        Task<FeedItem> MarkItemRead(int itemId);
     }
 
     public class FeedDataService : BaseDataService, IFeedDataService
@@ -22,12 +23,12 @@ namespace Apollo.Data
 
         public const string AddFeedSql = "insert into feeds(name, url, created_at, last_updated_at, last_attempted) " +
                                          "values (@name, @url, current_timestamp, current_timestamp, current_timestamp) " +
-                                         "returning id;";
+                                         "returning id";
 
         public const string GetFeedsSql = "select feeds.*, " +
                                           "(select count(*) from feed_items where " +
                                           "feeds.id=feed_items.feed_id and feed_items.read_at is null) " +
-                                          "as unread_count from feeds order by feeds.name;";
+                                          "as unread_count from feeds order by feeds.name";
 
         public const string UpdateLastAttemptSql = "update feeds set last_attempted=current_timestamp " +
                                                    "where id=@feedId";
@@ -108,9 +109,11 @@ namespace Apollo.Data
             return QueryAsync<FeedItem>(GetFeedUnreadItemsSql, new {feedId});
         }
 
-        public Task MarkItemRead(int feedItemId)
+        public async Task<FeedItem> MarkItemRead(int feedItemId)
         {
-            return Execute(MarkItemReadSql, new {feedItemId});
+            await Execute(MarkItemReadSql, new {feedItemId});
+            var updated = await QueryAsync<FeedItem>("select * from feed_items where id=@feedItemId", new { feedItemId });
+            return updated.Single();
         }
     }
 

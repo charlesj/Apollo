@@ -30,11 +30,13 @@ export function loadItems(feedId) {
 
 export function setCurrentItem(item) {
   return dispatchBasicActions(actions.setCurrentItem, async () => {
+    let wasFirstRead = false
     if (!item.read_at) {
-      await apolloServer.invoke("markItemAsRead", { itemId: item.id });
+      item = await apolloServer.invoke("markItemAsRead", { itemId: item.id });
+      wasFirstRead = true
     }
 
-    return { item };
+    return { item, wasFirstRead };
   });
 }
 

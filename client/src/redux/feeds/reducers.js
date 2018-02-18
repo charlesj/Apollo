@@ -47,11 +47,10 @@ export default handleActions(
     },
 
     [actions.setCurrentItem.complete]: (state, action) => {
-      const { item } = action.payload;
+      const { item, wasFirstRead } = action.payload;
       const newFeeds = { ...state.feeds };
       const newItems = idReducer(state.items, item);
-      if (!item.read_at) {
-        item.read_at = new Date();
+      if (wasFirstRead) {
         newFeeds[item.feed_id].unread_count =
           newFeeds[item.feed_id].unread_count - 1;
       }

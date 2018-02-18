@@ -17,8 +17,8 @@ namespace Apollo.Commands.Feeds
 
         public override async Task<CommandResult> Execute()
         {
-            await dataService.MarkItemRead(itemId);
-            return CommandResult.SuccessfulResult;
+            var updatedItem = await dataService.MarkItemRead(itemId);
+            return CommandResult.CreateSuccessResult(updatedItem);
         }
 
         public override Task<bool> IsValid()
