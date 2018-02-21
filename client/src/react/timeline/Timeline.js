@@ -19,7 +19,7 @@ class Timeline extends Component {
         Timeline
         {entries.map(entry => {
           return (
-            <div>
+            <div key={entry.id}>
               {entry.eventTimeDisplay}: {entry.title}
             </div>
           );
