@@ -2,98 +2,54 @@ import React from "react";
 import { addMetric } from "../../services/metrics-service";
 import { NotifySuccess, NotifyError } from "../../services/notifier";
 
+const metricsToRecord = [
+  { type: 'health', name: 'weight', label: 'Weight (lb)' },
+  { type: 'health', name: 'systolic', label: 'Systolic (upper bp)' },
+  { type: 'health', name: 'diastolic', label: 'Diastolic (lower bp)' },
+  { type: 'health', name: 'temperature', label: 'Temp (F)' },
+  { type: 'health', name: 'heartrate', label: 'Heartrate BPM' },
+  { type: 'health', name: 'bloodOxygen', label: 'Blood Oxygen Percent' },
+  { type: 'health', name: 'sleepTime', label: 'Sleep time (hours)' },
+  { type: 'health', name: 'ketone', label: 'Ketones (mmol/L)' },
+  { type: 'health', name: 'bmi', label: 'BMI' },
+  { type: 'health', name: 'body_fat', label: 'Body Fat %' },
+  { type: 'health', name: 'fat_free_weight', label: 'Fat-free body weight (lb)' },
+  { type: 'health', name: 'body_water', label: 'Body Water' },
+  { type: 'health', name: 'skeletal_muscle', label: 'Skeletal Muscle &' },
+  { type: 'health', name: 'muscle_mass', label: 'Muscle Mass (lb)' },
+  { type: 'health', name: 'bone_mass', label: 'Bone Mass (lb)' },
+  { type: 'health', name: 'protein', label: 'Protein %' },
+  { type: 'health', name: 'bmr', label: 'BMR' },
+  { type: 'health', name: 'metabolic_age', label: 'Metabolic Age' },
+]
+
 class Health extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-
-    this.updateWeight = this.updateWeight.bind(this);
-    this.updateSystolic = this.updateSystolic.bind(this);
-    this.updateDiastolic = this.updateDiastolic.bind(this);
-    this.updateTemperature = this.updateTemperature.bind(this);
-    this.updateHeartrate = this.updateHeartrate.bind(this);
-    this.updateBloodOxygen = this.updateBloodOxygen.bind(this);
-    this.getInitialState = this.getInitialState.bind(this);
-    this.updateSleepTime = this.updateSleepTime.bind(this);
-    this.save = this.save.bind(this);
+    this.state = this.buildInitialState()
   }
 
-  getInitialState() {
-    return {
-      weight: "",
-      systolic: "",
-      diastolic: "",
-      temperature: "",
-      heartrate: "",
-      bloodOxygen: "",
-      sleepTime: ""
-    };
+  buildInitialState() {
+    return metricsToRecord.reduce((acc, i) => {
+      acc[i.name] = ''
+      return acc
+    }, {})
   }
 
-  updateWeight(event) {
-    this.setState({
-      weight: event.target.value
-    });
-  }
-
-  updateSystolic(event) {
-    this.setState({
-      systolic: event.target.value
-    });
-  }
-
-  updateDiastolic(event) {
-    this.setState({
-      diastolic: event.target.value
-    });
-  }
-
-  updateTemperature(event) {
-    this.setState({
-      temperature: event.target.value
-    });
-  }
-
-  updateHeartrate(event) {
-    this.setState({
-      heartrate: event.target.value
-    });
-  }
-
-  updateBloodOxygen(event) {
-    this.setState({
-      bloodOxygen: event.target.value
-    });
-  }
-
-  updateSleepTime(event) {
-    this.setState({
-      sleepTime: event.target.value
-    });
+  handleChange(name, value){
+    this.setState({[name]: value})
   }
 
   save() {
-    var requests = [
-      addMetric("health", "weight", this.state.weight),
-      addMetric("health", "systolic", this.state.systolic),
-      addMetric("health", "diastolic", this.state.diastolic),
-      addMetric("health", "temperature", this.state.temperature),
-      addMetric("health", "heartrate", this.state.heartrate),
-      addMetric("health", "bloodOxygen", this.state.bloodOxygen),
-      addMetric("health", "sleepTime", this.state.sleepTime)
-    ];
+    const metricsWithValues = metricsToRecord.filter(m => this.state[m.name] !== '').map(m => {
+      return {name: m.name, value: this.state[m.name]}
+    })
+
+    const requests = metricsWithValues.map(m => addMetric('health', m.name, m.value))
 
     Promise.all(requests)
       .then(values => {
-        this.setState({
-          weight: "",
-          systolic: "",
-          diastolic: "",
-          temperature: "",
-          heartrate: "",
-          bloodOxygen: "",
-          sleepTime: ""
-        });
+        this.setState(this.buildInitialState());
         NotifySuccess("Health information recorded successfully");
       })
       .catch(reason => {
@@ -106,81 +62,23 @@ class Health extends React.Component {
   render() {
     return (
       <div>
-        {this.state.showSuccess && (
-          <p className="pt-callout pt-intent-success">
-            Successfully submitted healthsheet
-          </p>
-        )}
-        {this.state.showError && (
-          <p className="pt-callout pt-intent-danger">Something went wrong</p>
-        )}
-        <div className="grid-form pt-card">
+        <div>
           <fieldset>
             <legend>Daily Health Sheet</legend>
-            <div data-row-span="4">
-              <div data-field-span="1">
-                <label>Weight (lb) </label>
-                <input
-                  type="text"
-                  onChange={this.updateWeight}
-                  value={this.state.weight}
-                />
-              </div>
-              <div data-field-span="1">
-                <label>Blood Pressure Systolic (top)</label>
-                <input
-                  type="text"
-                  onChange={this.updateSystolic}
-                  value={this.state.systolic}
-                />
-              </div>
-              <div data-field-span="1">
-                <label>Blood Pressure Diastolic (bottom)</label>
-                <input
-                  type="text"
-                  onChange={this.updateDiastolic}
-                  value={this.state.diastolic}
-                />
-              </div>
-              <div data-field-span="1">
-                <label>Temperature (F)</label>
-                <input
-                  type="text"
-                  onChange={this.updateTemperature}
-                  value={this.state.temperature}
-                />
-              </div>
-            </div>
-            <div data-row-span="4">
-              <div data-field-span="1">
-                <label>Heart Rate (bpm)</label>
-                <input
-                  type="text"
-                  onChange={this.updateHeartrate}
-                  value={this.state.heartrate}
-                />
-              </div>
-              <div data-field-span="1">
-                <label>Blood Oxygen</label>
-                <input
-                  type="text"
-                  onChange={this.updateBloodOxygen}
-                  value={this.state.bloodOxygen}
-                />
-              </div>
-              <div data-field-span="2">
-                <label>Sleep Time (hours)</label>
-                <input
-                  type="text"
-                  onChange={this.updateSleepTime}
-                  value={this.state.sleepTime}
-                />
-              </div>
-            </div>
+              { metricsToRecord.map(m => {
+                return (<div key={m.name}>
+                  <label>{m.label}</label>
+                  <input
+                    type="text"
+                    onChange={(e) => this.handleChange(m.name, e.target.value)}
+                    value={this.state[m.name]}
+                  />
+                </div>)
+              })}
           </fieldset>
         </div>
         <div className="buttonSpace">
-          <button onClick={this.save}>Add Health Metrics</button>
+          <button onClick={() => this.save()}>Add Health Metrics</button>
         </div>
       </div>
     );
