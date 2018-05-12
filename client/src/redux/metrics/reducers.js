@@ -5,7 +5,7 @@ import {
   basicLoadCompleteReducer,
   basicStartReducer
 } from "../redux-helpers";
-import actions from "./actions";
+import actions from "./actionCreators";
 
 const initialState = {
   metrics: []
@@ -13,9 +13,15 @@ const initialState = {
 
 export default handleActions(
   {
-    [combineActions(actions.loadMetrics.start)]: basicStartReducer,
+    [combineActions(
+      actions.loadMetrics.start,
+      actions.addMetrics.start,
+    )]: basicStartReducer,
 
-    [combineActions(actions.loadMetrics.fail)]: basicFailReducer,
+    [combineActions(
+      actions.loadMetrics.fail,
+      actions.addMetrics.fail,
+    )]: basicFailReducer,
 
     [actions.loadMetrics.complete]: (state, action) => {
       const { metrics } = action.payload;
@@ -24,7 +30,16 @@ export default handleActions(
         ...basicLoadCompleteReducer(state, action),
         metrics: newMetrics
       };
-    }
+    },
+
+    [actions.addMetrics.complete]: (state, action) => {
+      const metrics = action.payload;
+      const newMetrics = _.unionBy(metrics, state.metrics.metrics, "id");
+      return {
+        ...basicLoadCompleteReducer(state, action),
+        metrics: newMetrics
+      };
+    },
   },
   initialState
 );

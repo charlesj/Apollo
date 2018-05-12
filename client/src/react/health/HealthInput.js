@@ -1,5 +1,6 @@
-import React from "react";
-import { addMetric } from "../../services/metrics-service";
+import React from "react"
+import { connect } from "react-redux"
+import { metricsActions } from '../../redux/actions'
 import { NotifySuccess, NotifyError } from "../../services/notifier";
 import { SaveButton, FlexRow } from '../_controls'
 import './healthinput.css'
@@ -42,23 +43,15 @@ class Health extends React.Component {
     this.setState({[name]: value})
   }
 
-  save() {
+  async save() {
+    const { addMetrics } = this.props
     const metricsWithValues = metricsToRecord.filter(m => this.state[m.name] !== '').map(m => {
-      return {name: m.name, value: this.state[m.name]}
+      return {name: m.name, value: this.state[m.name], category: 'health'}
     })
 
-    const requests = metricsWithValues.map(m => addMetric('health', m.name, m.value))
-
-    Promise.all(requests)
-      .then(values => {
-        this.setState(this.buildInitialState());
-        NotifySuccess("Health information recorded successfully");
-      })
-      .catch(reason => {
-        console.log("at least one metric failes");
-        console.log(reason);
-        NotifyError("Error recording at least some of this information");
-      });
+    await addMetrics(metricsWithValues)
+    NotifySuccess('Health information successfully saved')
+    this.setState(this.buildInitialState())
   }
 
   render() {
@@ -91,4 +84,11 @@ class Health extends React.Component {
   }
 }
 
-export default Health;
+function mapDispatchToProps(dispatch, props){
+  return {
+    addMetrics: (metricInfo) => dispatch(metricsActions.addMetrics(metricInfo))
+  }
+}
+
+
+export default connect(null, mapDispatchToProps)(Health)

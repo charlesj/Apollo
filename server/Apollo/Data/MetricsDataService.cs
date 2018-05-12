@@ -7,14 +7,14 @@ namespace Apollo.Data
 {
     public interface IMetricsDataService
     {
-        Task InsertMetric(string category, string name, decimal value);
+        Task<Metric> InsertMetric(string category, string name, decimal value);
         Task<IReadOnlyList<Metric>> GetMetrics(string category, string name);
     }
 
     public class MetricsDataService : BaseDataService, IMetricsDataService
     {
         public const string InsertSql = "insert into metrics (category, name, value, created_at)" +
-                                        " values (@category, @name, @value, current_timestamp)";
+                                        " values (@category, @name, @value, current_timestamp) returning id";
 
         public const string NameSelectSql = "select * from metrics where name=@name order by id asc";
 
@@ -22,15 +22,18 @@ namespace Apollo.Data
 
         public const string AllSelectSql = "select * from metrics order by id asc";
 
+        public const string SingleSql = "select * from metrics where id=@id";
+
         public const string BothSelectSql = "select * from metrics where name=@name and category=@category order by id asc";
 
         public MetricsDataService(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
         }
 
-        public async Task InsertMetric(string category, string name, decimal value)
+        public async Task<Metric> InsertMetric(string category, string name, decimal value)
         {
-            await Execute(InsertSql, new {category, name, value});
+            var id = await InsertAndReturnId(InsertSql, new {category, name, value});
+            return (await QueryAsync<Metric>(SingleSql, new {id})).Single();
         }
 
         public async Task<IReadOnlyList<Metric>> GetMetrics(string category, string name)

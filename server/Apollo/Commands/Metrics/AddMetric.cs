@@ -27,9 +27,9 @@ namespace Apollo.Commands.Metrics
         public override async Task<CommandResult> Execute()
         {
             Logger.Trace("Began Executing AddMetric");
-            await this.metricsDataService.InsertMetric(category, name, value);
+            var newMetric = await this.metricsDataService.InsertMetric(category, name, value);
             Logger.Trace("Left Data Service");
-            return CommandResult.SuccessfulResult;
+            return CommandResult.CreateSuccessResult(newMetric);
         }
 
         public override Task<bool> IsValid()
