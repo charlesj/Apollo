@@ -1,6 +1,8 @@
 import React from "react";
 import { addMetric } from "../../services/metrics-service";
 import { NotifySuccess, NotifyError } from "../../services/notifier";
+import { SaveButton, FlexRow } from '../_controls'
+import './healthinput.css'
 
 const metricsToRecord = [
   { type: 'health', name: 'weight', label: 'Weight (lb)' },
@@ -15,7 +17,7 @@ const metricsToRecord = [
   { type: 'health', name: 'body_fat', label: 'Body Fat %' },
   { type: 'health', name: 'fat_free_weight', label: 'Fat-free body weight (lb)' },
   { type: 'health', name: 'body_water', label: 'Body Water' },
-  { type: 'health', name: 'skeletal_muscle', label: 'Skeletal Muscle &' },
+  { type: 'health', name: 'skeletal_muscle', label: 'Skeletal Muscle %' },
   { type: 'health', name: 'muscle_mass', label: 'Muscle Mass (lb)' },
   { type: 'health', name: 'bone_mass', label: 'Bone Mass (lb)' },
   { type: 'health', name: 'protein', label: 'Protein %' },
@@ -65,8 +67,9 @@ class Health extends React.Component {
         <div>
           <fieldset>
             <legend>Daily Health Sheet</legend>
+            <FlexRow wrap>
               { metricsToRecord.map(m => {
-                return (<div key={m.name}>
+                return (<div className='metricInput' key={m.name}>
                   <label>{m.label}</label>
                   <input
                     type="text"
@@ -75,10 +78,13 @@ class Health extends React.Component {
                   />
                 </div>)
               })}
+
+            </FlexRow>
+            <SaveButton onClick={() => this.save()} />
           </fieldset>
         </div>
         <div className="buttonSpace">
-          <button onClick={() => this.save()}>Add Health Metrics</button>
+
         </div>
       </div>
     );

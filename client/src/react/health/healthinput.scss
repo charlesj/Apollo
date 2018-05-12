@@ -1,0 +1,22 @@
+@import 'styles/variables.scss';
+
+.metricInput{
+  padding: $spacing;
+  width: '200px';
+}
+
+.metricInput label{
+  display: inline-block;
+  font-weight: bold;
+  font-size: 11px;
+  width: 140px;
+  text-align: right;
+  padding-right: 3px;
+}
+
+.metricInput input{
+  width: 150px;
+  background-color: inherit;
+  border: none;
+  border-bottom: 1px dotted #000;
+}
