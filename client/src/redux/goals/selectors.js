@@ -25,24 +25,28 @@ export function selectFeaturedGoal(state) {
     "asc"
   );
 
+  const metricValues = metrics.map(m => m.value)
   if (metrics.length > 0) {
-    const firstMetric = _.head(metrics);
-    const latestMetric = _.last(metrics);
+    const firstValue = _.head(metrics).value;
+    const latestValue = _.last(metrics).value;
+    const largestValue = _.max(metricValues)
+    const lowestValue = _.min(metricValues)
 
     goal.metrics = metrics;
-    goal.firstValue = firstMetric.value;
-    goal.latestValue = latestMetric.value;
-    goal.targetDiff = Math.round(goal.targetValue - goal.firstValue, -2);
-    goal.actualDiff = Math.round(goal.targetValue - goal.latestValue, -2);
-    goal.completedDiff = Math.round(goal.firstValue - goal.latestValue, -2);
-    if (goal.targetDiff > 0) {
-      goal.percentComplete = Math.round(
-        goal.actualDiff / goal.targetDiff * 100
-      );
-    } else {
-      goal.percentComplete =
-        100 - Math.round(goal.actualDiff / goal.targetDiff * 100);
+    goal.firstValue = firstValue;
+    goal.latestValue = latestValue;
+
+    if(goal.targetValue > firstValue){
+      goal.totalDiff = _.round(goal.targetValue - lowestValue, 2);
+      goal.actualDiff = _.round(goal.targetValue - goal.latestValue, 2);
+      goal.completedDiff = _.round(latestValue - lowestValue, 2);
+    }else {
+      goal.totalDiff = _.round(largestValue - goal.targetValue, 2);
+      goal.actualDiff = _.round(goal.latestValue -goal.targetValue, 2);
+      goal.completedDiff = _.round(largestValue - latestValue, 2);
     }
+    const percent = goal.completedDiff / goal.totalDiff * 100
+    goal.percentComplete = _.round(percent,2)
 
     goal.graphData = metrics.map(m => {
       return {
