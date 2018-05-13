@@ -1,5 +1,6 @@
 import { combineActions, handleActions } from "redux-actions";
 import _ from "lodash";
+import moment from "moment";
 import {
   basicFailReducer,
   basicLoadCompleteReducer,
@@ -11,21 +12,33 @@ const initialState = {
   metrics: []
 };
 
+function normalizeMetrics(metric) {
+  return {
+    ...metric,
+    created_at_moment: moment(metric.created_at),
+    created_day: moment(metric.created_at).startOf("day")
+  };
+}
+
 export default handleActions(
   {
     [combineActions(
       actions.loadMetrics.start,
-      actions.addMetrics.start,
+      actions.addMetrics.start
     )]: basicStartReducer,
 
     [combineActions(
       actions.loadMetrics.fail,
-      actions.addMetrics.fail,
+      actions.addMetrics.fail
     )]: basicFailReducer,
 
     [actions.loadMetrics.complete]: (state, action) => {
       const { metrics } = action.payload;
-      const newMetrics = _.unionBy(metrics, state.metrics.metrics, "id");
+      const newMetrics = _.unionBy(
+        metrics.map(normalizeMetrics),
+        state.metrics.metrics,
+        "id"
+      );
       return {
         ...basicLoadCompleteReducer(state, action),
         metrics: newMetrics
@@ -34,12 +47,16 @@ export default handleActions(
 
     [actions.addMetrics.complete]: (state, action) => {
       const metrics = action.payload;
-      const newMetrics = _.unionBy(metrics, state.metrics.metrics, "id");
+      const newMetrics = _.unionBy(
+        metrics.map(normalizeMetrics),
+        state.metrics.metrics,
+        "id"
+      );
       return {
         ...basicLoadCompleteReducer(state, action),
         metrics: newMetrics
       };
-    },
+    }
   },
   initialState
 );

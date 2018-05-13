@@ -30,15 +30,17 @@ export function loadItems(feedId) {
 
 export function setCurrentItem(item) {
   return dispatchBasicActions(actions.setCurrentItem, async () => {
-    let wasFirstRead = false
-    let updatedItem = {}
+    let wasFirstRead = false;
+    let updatedItem = {};
     if (!item.read_at) {
-      updatedItem = await apolloServer.invoke("markItemAsRead", { itemId: item.id });
-      delete updatedItem.feed_name
-      wasFirstRead = true
+      updatedItem = await apolloServer.invoke("markItemAsRead", {
+        itemId: item.id
+      });
+      delete updatedItem.feed_name;
+      wasFirstRead = true;
     }
 
-    return { item: { ...item, ...updatedItem}, wasFirstRead };
+    return { item: { ...item, ...updatedItem }, wasFirstRead };
   });
 }
 

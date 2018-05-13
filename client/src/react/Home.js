@@ -17,9 +17,8 @@ function Home(props) {
     { link: "https://www.washingtonpost.com/", label: "The Washington Post" },
     { link: "https://www.seattletimes.com/", label: "Seattle Times" },
     { link: "https://www.foreignaffairs.com/", label: "Foreign Affairs" },
-    { link: "https://www.reuters.com/", label: "Reuters Wire" },
-
-  ]
+    { link: "https://www.reuters.com/", label: "Reuters Wire" }
+  ];
   return (
     <div>
       <LifeCounter />
@@ -31,8 +30,12 @@ function Home(props) {
       <Timeline />
       <div>
         <ul>
-          { news.map(n => {
-            return <li key={n.label}><a href={n.link}>{n.label}</a></li>
+          {news.map(n => {
+            return (
+              <li key={n.label}>
+                <a href={n.link}>{n.label}</a>
+              </li>
+            );
           })}
         </ul>
       </div>

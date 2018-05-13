@@ -35,7 +35,10 @@ export function displayItems(state) {
   let previous, next;
   if (current) {
     previous = allItems.filter(
-      item => item.published_at <= current.published_at && item.read_at && item.id !== current.id
+      item =>
+        item.published_at <= current.published_at &&
+        item.read_at &&
+        item.id !== current.id
     );
     if (previous.length > 5) {
       previous = previous.slice(Math.max(previous.length - 5, 1));

@@ -4,7 +4,7 @@ import { basicActions } from "../redux-helpers";
 const actionCreators = createActions({
   metrics: {
     loadMetrics: basicActions(),
-    addMetrics: basicActions(),
+    addMetrics: basicActions()
   }
 });
 
