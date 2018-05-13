@@ -50,11 +50,11 @@ class Feeds extends React.Component {
     const shortcutHandlers = {
       [shortcuts.moveNext]: () => {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-        setCurrentItem(nextItem);
+        nextItem && setCurrentItem(nextItem);
       },
       [shortcuts.movePrevious]: () => {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-        setCurrentItem(previousItem);
+        previousItem && setCurrentItem(previousItem);
       },
       [shortcuts.openLink]: () => this.openItem()
     };
