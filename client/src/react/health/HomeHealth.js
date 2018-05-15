@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "lodash";
 import { connect } from "react-redux";
 import {
   LineChart,
@@ -8,10 +7,12 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
 } from "recharts";
 import { metricsActions } from "../../redux/actions";
 import { metricsSelectors } from "../../redux/selectors";
+import { FlexRow } from "../_controls";
+
+import './homehealth.css'
 
 class HomeHealth extends React.Component {
   componentDidMount() {
@@ -19,29 +20,30 @@ class HomeHealth extends React.Component {
   }
 
   render() {
-    const { weightData } = this.props;
-    const values = weightData.filter(m => m.value).map(m => m.value);
-    const weightMin = values.length > 0 ? _.min(values) - 10 : 0;
-    const weightMax = values.length > 0 ? _.max(values) + 10 : 350;
+    const { charts } = this.props;
 
     return (
-      <div>
-        <LineChart width={600} height={300} data={weightData}>
-          <XAxis dataKey="date" />
-          <YAxis type="number" domain={[weightMin, weightMax]} />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend verticalAlign="bottom" height={36} />
-          <Line type="monotone" dataKey="value" stroke="#1F4B99" />
-        </LineChart>
-      </div>
+      <FlexRow wrap>
+        { charts.map(chart => {
+          return (<div className='chart'>
+            <div className='chartTitle'>{chart.label}</div>
+            <LineChart width={600} height={300} data={chart.chartData}>
+            <XAxis dataKey="date" />
+            <YAxis type="number" domain={[chart.min, chart.max]} />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Line type="monotone" dataKey="value" stroke="#1F4B99"/>
+          </LineChart>
+        </div>)
+        })}
+      </FlexRow>
     );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    weightData: metricsSelectors.weightChartData(state)
+    charts: metricsSelectors.healthCharts(state)
   };
 }
 

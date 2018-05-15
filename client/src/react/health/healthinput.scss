@@ -1,5 +1,9 @@
 @import 'styles/variables.scss';
 
+fieldset {
+    background-color: $white;
+}
+
 .metricInput{
   padding: $spacing;
   width: '200px';

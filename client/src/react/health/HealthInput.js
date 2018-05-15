@@ -1,34 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { metricsActions } from "../../redux/actions";
+import { metricsSelectors } from "../../redux/selectors";
 import { NotifySuccess } from "../../services/notifier";
 import { SaveButton, FlexRow } from "../_controls";
 import "./healthinput.css";
-
-const metricsToRecord = [
-  { type: "health", name: "weight", label: "Weight (lb)" },
-  { type: "health", name: "systolic", label: "Systolic (upper bp)" },
-  { type: "health", name: "diastolic", label: "Diastolic (lower bp)" },
-  { type: "health", name: "temperature", label: "Temp (F)" },
-  { type: "health", name: "heartrate", label: "Heartrate BPM" },
-  { type: "health", name: "bloodOxygen", label: "Blood Oxygen Percent" },
-  { type: "health", name: "sleepTime", label: "Sleep time (hours)" },
-  { type: "health", name: "ketone", label: "Ketones (mmol/L)" },
-  { type: "health", name: "bmi", label: "BMI" },
-  { type: "health", name: "body_fat", label: "Body Fat %" },
-  {
-    type: "health",
-    name: "fat_free_weight",
-    label: "Fat-free body weight (lb)"
-  },
-  { type: "health", name: "body_water", label: "Body Water" },
-  { type: "health", name: "skeletal_muscle", label: "Skeletal Muscle %" },
-  { type: "health", name: "muscle_mass", label: "Muscle Mass (lb)" },
-  { type: "health", name: "bone_mass", label: "Bone Mass (lb)" },
-  { type: "health", name: "protein", label: "Protein %" },
-  { type: "health", name: "bmr", label: "BMR" },
-  { type: "health", name: "metabolic_age", label: "Metabolic Age" }
-];
 
 class Health extends React.Component {
   constructor(props) {
@@ -37,6 +13,7 @@ class Health extends React.Component {
   }
 
   buildInitialState() {
+    const { metricsToRecord } = this.props
     return metricsToRecord.reduce((acc, i) => {
       acc[i.name] = "";
       return acc;
@@ -48,7 +25,7 @@ class Health extends React.Component {
   }
 
   async save() {
-    const { addMetrics } = this.props;
+    const { addMetrics, metricsToRecord } = this.props;
     const metricsWithValues = metricsToRecord
       .filter(m => this.state[m.name] !== "")
       .map(m => {
@@ -61,6 +38,7 @@ class Health extends React.Component {
   }
 
   render() {
+    const { metricsToRecord } = this.props
     return (
       <div>
         <div>
@@ -89,10 +67,16 @@ class Health extends React.Component {
   }
 }
 
+function mapStateToProps(state){
+  return {
+    metricsToRecord: metricsSelectors.healthMetrics(),
+  }
+}
+
 function mapDispatchToProps(dispatch, props) {
   return {
     addMetrics: metricInfo => dispatch(metricsActions.addMetrics(metricInfo))
   };
 }
 
-export default connect(null, mapDispatchToProps)(Health);
+export default connect(mapStateToProps, mapDispatchToProps)(Health);

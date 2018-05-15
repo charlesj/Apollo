@@ -1,0 +1,14 @@
+@import 'styles/variables.scss';
+
+.chart {
+  @include standardBorder();
+  margin: $spacing;
+  padding: $spacing;
+  background-color: $white;
+}
+
+.chartTitle {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
