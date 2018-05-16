@@ -22,7 +22,6 @@ export function addMetrics(metricInfo) {
       const added = await addMetric(metric.category, metric.name, metric.value);
       newMetrics.push(added);
     }
-
     return newMetrics;
   });
 }

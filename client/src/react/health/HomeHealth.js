@@ -25,14 +25,14 @@ class HomeHealth extends React.Component {
     return (
       <FlexRow wrap>
         { charts.map(chart => {
-          return (<div className='chart'>
+          return (<div className='chart' key={chart.name}>
             <div className='chartTitle'>{chart.label}</div>
             <LineChart width={600} height={300} data={chart.chartData}>
             <XAxis dataKey="date" />
             <YAxis type="number" domain={[chart.min, chart.max]} />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
-            <Line type="monotone" dataKey="value" stroke="#1F4B99"/>
+            <Line type="monotone" dataKey="value" stroke="#0375B4"/>
           </LineChart>
         </div>)
         })}

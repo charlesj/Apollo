@@ -40,9 +40,7 @@ class Health extends React.Component {
   render() {
     const { metricsToRecord } = this.props
     return (
-      <div>
-        <div>
-          <fieldset>
+         <fieldset>
             <legend>Daily Health Sheet</legend>
             <FlexRow wrap>
               {metricsToRecord.map(m => {
@@ -60,9 +58,6 @@ class Health extends React.Component {
             </FlexRow>
             <SaveButton onClick={() => this.save()} />
           </fieldset>
-        </div>
-        <div className="buttonSpace" />
-      </div>
     );
   }
 }

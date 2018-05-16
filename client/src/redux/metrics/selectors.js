@@ -17,7 +17,7 @@ const healthMetricsToRecord = [
     name: "fat_free_weight",
     label: "Fat-free body weight (lb)"
   },
-  { type: "health", name: "body_water", label: "Body Water" },
+  { type: "health", name: "body_water", label: "Body Water %" },
   { type: "health", name: "skeletal_muscle", label: "Skeletal Muscle %" },
   { type: "health", name: "muscle_mass", label: "Muscle Mass (lb)" },
   { type: "health", name: "bone_mass", label: "Bone Mass (lb)" },
@@ -68,8 +68,13 @@ export function healthCharts(state){
   return healthMetricsToRecord.map(hm => {
     const chartData = dailyChartData(state, hm.name, moment(startDate), moment(endDate))
     const values = chartData.filter(m => m.value).map(m => m.value)
-    const min = values.length > 0 ? _.min(values) - 10 : 0
-    const max = values.length > 0 ? _.max(values) + 10 : 100
+    const minValue = values.length > 0 ? _.min(values) : 0
+    const maxValue = values.length > 0 ? _.max(values) : 100
+
+    const range = maxValue - minValue
+    const rangePadding = range * 0.01
+    const min = _.floor(minValue - rangePadding)
+    const max = _.ceil(maxValue + rangePadding)
 
     return {
       ...hm,

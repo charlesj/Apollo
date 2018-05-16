@@ -36,7 +36,7 @@ export default handleActions(
       const { metrics } = action.payload;
       const newMetrics = _.unionBy(
         metrics.map(normalizeMetrics),
-        state.metrics.metrics,
+        state.metrics,
         "id"
       );
       return {
@@ -46,10 +46,10 @@ export default handleActions(
     },
 
     [actions.addMetrics.complete]: (state, action) => {
-      const metrics = action.payload;
+      const metrics = action.payload
       const newMetrics = _.unionBy(
         metrics.map(normalizeMetrics),
-        state.metrics.metrics,
+        state.metrics,
         "id"
       );
       return {
