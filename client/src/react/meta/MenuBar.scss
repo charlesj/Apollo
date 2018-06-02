@@ -1,14 +1,16 @@
 @import 'styles/variables.scss';
 
-.menuBar{
+.menuBar {
   background-color: $menuBarBackground;
   margin-bottom: 10px;
   color: #fff;
   padding: 3px;
 }
+
 .menuBar .textButton {
   margin-bottom: 0px;
 }
+
 .menuBar a {
   color: $white;
   text-decoration: none;
@@ -17,4 +19,10 @@
 .applicationInfo {
   text-align: right;
   flex-grow: 1;
+}
+
+.menuLink {
+  padding-left: 5px;
+  border-right: $darkGreen 1px solid;
+  padding-right: 5px;
 }
