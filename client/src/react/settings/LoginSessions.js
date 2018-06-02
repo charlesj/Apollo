@@ -1,55 +1,55 @@
-import React from "react";
-import moment from "moment";
-import apollo from "../../services/apolloServer";
-import { Container, Button } from "../_controls";
+import React from 'react'
+import moment from 'moment'
+import apollo from '../../services/apolloServer'
+import { Container, Button, } from '../_controls'
 
-import "./LoginSessions.css";
+import './LoginSessions.css'
 
 class LoginSessions extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      sessions: []
-    };
+      sessions: [],
+    }
 
-    this.formatDate = this.formatDate.bind(this);
-    this.loadSessions = this.loadSessions.bind(this);
-    this.revokeLoginSession = this.revokeLoginSession.bind(this);
+    this.formatDate = this.formatDate.bind(this)
+    this.loadSessions = this.loadSessions.bind(this)
+    this.revokeLoginSession = this.revokeLoginSession.bind(this)
   }
 
   componentDidMount() {
-    this.loadSessions();
+    this.loadSessions()
   }
 
   loadSessions() {
     this.setState(() => {
       return {
-        entries: []
-      };
-    });
+        entries: [],
+      }
+    })
 
-    apollo.invoke("GetAllActiveLoginSessions", {}).then(data => {
+    apollo.invoke('GetAllActiveLoginSessions', {}).then(data => {
       this.setState(() => {
         return {
-          sessions: data
-        };
-      });
-    });
+          sessions: data,
+        }
+      })
+    })
   }
 
   formatDate(date) {
-    var converted = moment(date);
-    return converted.format("Y-MM-DD HH:mm");
+    var converted = moment(date)
+    return converted.format('Y-MM-DD HH:mm')
   }
 
   revokeLoginSession(token) {
     apollo
-      .invoke("RevokeLoginSession", {
-        tokenToRevoke: token
+      .invoke('RevokeLoginSession', {
+        tokenToRevoke: token,
       })
       .then(() => {
-        this.loadSessions();
-      });
+        this.loadSessions()
+      })
   }
 
   render() {
@@ -68,7 +68,7 @@ class LoginSessions extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.sessions.map(function(session, index) {
+            {this.state.sessions.map(function(session) {
               return (
                 <tr key={session.id}>
                   <td>{session.id}</td>
@@ -93,13 +93,13 @@ class LoginSessions extends React.Component {
                     </Button>
                   </td>
                 </tr>
-              );
+              )
             }, this)}
           </tbody>
         </table>
       </Container>
-    );
+    )
   }
 }
 
-export default LoginSessions;
+export default LoginSessions

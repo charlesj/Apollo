@@ -1,11 +1,11 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
-
-import { SaveButton, CancelButton } from "../_controls";
+import React from 'react'
+import { connect, } from 'react-redux'
+import { Field, reduxForm, } from 'redux-form'
+import PropTypes from 'prop-types'
+import { SaveButton, CancelButton, } from '../_controls'
 
 let NoteForm = props => {
-  const { handleSubmit, onCancel } = props;
+  const { handleSubmit, onCancel, } = props
   return (
     <form className="noteForm" onSubmit={handleSubmit}>
       <div>
@@ -22,20 +22,25 @@ let NoteForm = props => {
       <CancelButton type="button" onClick={onCancel} />
       <SaveButton />
     </form>
-  );
-};
-
-NoteForm = reduxForm({
-  form: "NoteForm",
-  enableReinitialize: true
-})(NoteForm);
-
-function mapStateToProps(state, props) {
-  const { note } = props;
-
-  return {
-    initialValues: note
-  };
+  )
 }
 
-export default connect(mapStateToProps)(NoteForm);
+NoteForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+}
+
+NoteForm = reduxForm({
+  form: 'NoteForm',
+  enableReinitialize: true,
+})(NoteForm)
+
+function mapStateToProps(state, props) {
+  const { note, } = props
+
+  return {
+    initialValues: note,
+  }
+}
+
+export default connect(mapStateToProps)(NoteForm)

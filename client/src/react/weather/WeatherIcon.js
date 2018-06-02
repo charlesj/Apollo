@@ -1,22 +1,20 @@
-import React from "react";
-
-import "../../styles/weather-icons.css";
-import "../../styles/weather-icons-wind.css";
+import React from 'react'
+import PropTypes from 'prop-types'
+import '../../styles/weather-icons.css'
+import '../../styles/weather-icons-wind.css'
 
 class WeatherIcon extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.getClassNames = this.getClassNames.bind(this);
-  }
-
   getClassNames() {
-    return "wi " + this.props.icon;
+    return 'wi ' + this.props.icon
   }
 
   render() {
-    return <i className={this.getClassNames()} />;
+    return <i className={() => this.getClassNames()} />
   }
 }
 
-export default WeatherIcon;
+WeatherIcon.propTypes = {
+  icon: PropTypes.string.isRequired,
+}
+
+export default WeatherIcon

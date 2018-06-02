@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { directions, } from '../../redux/enums'
+import { boardActions, } from '../../redux/actions'
+import { boardSelectors, } from '../../redux/selectors'
+import { FlexRow, AddButton, Page, } from '../_controls'
+import Board from './Board'
 
-import { directions } from "../../redux/enums";
-import { boardActions } from "../../redux/actions";
-import { boardSelectors } from "../../redux/selectors";
-import { FlexRow, AddButton, Page } from "../_controls";
-import Board from "./Board";
-
-import "./Boards.css";
+import './Boards.css'
 
 class Boards extends Component {
   componentDidMount() {
-    this.loadBoards();
+    this.loadBoards()
   }
 
   loadBoards() {
-    const { load } = this.props;
-    load();
+    const { load, } = this.props
+    load()
   }
 
   render() {
@@ -25,14 +25,14 @@ class Boards extends Component {
       moveBoard,
       saveBoard,
       removeBoard,
-      nextListOrder
-    } = this.props;
+      nextListOrder,
+    } = this.props
 
     return (
       <Page>
         <AddButton
           onClick={() =>
-            saveBoard({ title: "new board", list_order: nextListOrder })
+            saveBoard({ title: 'new board', list_order: nextListOrder, })
           }
           noun="Board"
         />
@@ -47,31 +47,40 @@ class Boards extends Component {
                 board={board}
                 key={board.id}
               />
-            );
+            )
           })}
         </FlexRow>
       </Page>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  const boards = boardSelectors.all(state);
-  const nextListOrder = boardSelectors.nextListOrder(state);
-  return {
-    boards,
-    nextListOrder
-  };
+Boards.propTypes = {
+  boards: PropTypes.array.isRequired,
+  nextListOrder: PropTypes.number.isRequired,
+  load: PropTypes.func.isRequired,
+  saveBoard: PropTypes.func.isRequired,
+  removeBoard: PropTypes.func.isRequired,
+  moveBoard: PropTypes.func.isRequired,
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapStateToProps(state) {
+  const boards = boardSelectors.all(state)
+  const nextListOrder = boardSelectors.nextListOrder(state)
+  return {
+    boards,
+    nextListOrder,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
   return {
     load: () => dispatch(boardActions.load()),
     saveBoard: board => dispatch(boardActions.saveBoard(board)),
     removeBoard: board => dispatch(boardActions.removeBoard(board)),
     moveBoard: (direction, boards, index) =>
-      dispatch(boardActions.moveBoard({ direction, boards, index }))
-  };
+      dispatch(boardActions.moveBoard({ direction, boards, index, })),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Boards);
+export default connect(mapStateToProps, mapDispatchToProps)(Boards)

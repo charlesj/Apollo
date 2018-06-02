@@ -1,44 +1,35 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
-import countdown from "countdown";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, } from 'recharts'
+import countdown from 'countdown'
+import PropTypes from 'prop-types'
 
-import { Container, FlexRow, Card } from "../_controls";
-import { metricsActions, goalActions } from "../../redux/actions";
-import { goalSelectors } from "../../redux/selectors";
+import { Container, FlexRow, Card, } from '../_controls'
+import { goalActions, } from '../../redux/actions'
+import { goalSelectors, } from '../../redux/selectors'
 
-import "./FeaturedGoal.css";
-
-let loadedMetrics = "";
+import './FeaturedGoal.css'
 
 const countdownUnits =
   countdown.YEARS |
   countdown.MONTHS |
   countdown.DAYS |
   countdown.HOURS |
-  countdown.MINUTES;
+  countdown.MINUTES
 
 const getDisplay = date => {
-  return countdown(date, null, countdownUnits).toString();
-};
+  return countdown(date, null, countdownUnits).toString()
+}
 
 class FeaturedGoal extends Component {
-  componentWillMount() {
-    this.props.loadGoals();
-  }
-
-  componentWillReceiveProps(props) {
-    const { goal, loadMetrics } = props;
-    if (goal.metricName !== loadedMetrics) {
-      loadMetrics(goal.metricName);
-      loadedMetrics = goal.metricName;
-    }
+  componentDidMount() {
+    this.props.loadGoals()
   }
 
   render() {
-    const { goal } = this.props;
+    const { goal, } = this.props
     if (!goal) {
-      return <div />;
+      return <div />
     }
 
     return (
@@ -57,7 +48,7 @@ class FeaturedGoal extends Component {
               {goal.percentComplete > 0 && (
                 <div
                   className="progressBarProgress"
-                  style={{ width: goal.percentComplete + "%" }}
+                  style={{ width: goal.percentComplete + '%', }}
                 >
                   {goal.percentComplete}%
                 </div>
@@ -65,48 +56,52 @@ class FeaturedGoal extends Component {
               {goal.percentComplete < 0 && (
                 <div
                   className="progressBarNegativeProgress"
-                  style={{ width: goal.percentComplete * -1 + "%" }}
+                  style={{ width: goal.percentComplete * -1 + '%', }}
                 >
                   {goal.percentComplete}%
                 </div>
               )}
             </div>
             <div className="goalCountDown">
-              You've got <strong>{getDisplay(new Date(goal.endDate))}</strong>{" "}
-              to make this happen. Get to work, you lazy bum.
+              <strong>{getDisplay(new Date(goal.endDate))}</strong>{' '}
+              left to make this happen. Get to work, you lazy bum.
             </div>
           </div>
           <div className="chartContainer">
             <LineChart width={600} height={300} data={goal.graphData}>
               <XAxis dataKey="key" />
-              <YAxis domain={[goal.graphMin, goal.graphMax]} />
+              <YAxis domain={[goal.graphMin, goal.graphMax,]} />
               <CartesianGrid strokeDasharray="3 3" />
               <Line type="monotone" dataKey="val" stroke="#0A6640" />
             </LineChart>
           </div>
         </FlexRow>
       </Container>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  const goal = goalSelectors.selectFeaturedGoal(state);
+FeaturedGoal.propTypes = {
+  goal: PropTypes.object,
+  loadGoals: PropTypes.func.isRequired,
+}
 
-  if (goal === null) {
-    return { goal: null };
+FeaturedGoal.defaultProps = {
+  goal: null,
+}
+
+function mapStateToProps(state) {
+  const goal = goalSelectors.selectFeaturedGoal(state)
+
+  return {
+    goal,
   }
-
-  return {
-    goal
-  };
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch) {
   return {
-    loadMetrics: name => dispatch(metricsActions.loadMetrics(null, name)),
-    loadGoals: () => dispatch(goalActions.getGoals())
-  };
+    loadGoals: () => dispatch(goalActions.getGoals()),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeaturedGoal);
+export default connect(mapStateToProps, mapDispatchToProps)(FeaturedGoal)

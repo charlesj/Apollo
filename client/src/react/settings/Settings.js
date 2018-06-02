@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import LoginSessions from "./LoginSessions";
-import ChangePassword from "./ChangePassword";
-import UserSettings from "./UserSettings";
+import React, { Component, } from 'react'
+import LoginSessions from './LoginSessions'
+import ChangePassword from './ChangePassword'
+import UserSettings from './UserSettings'
 
 class Settings extends Component {
   render() {
@@ -11,8 +11,8 @@ class Settings extends Component {
         <ChangePassword />
         <UserSettings />
       </div>
-    );
+    )
   }
 }
 
-export default Settings;
+export default Settings

@@ -1,10 +1,11 @@
-import React from "react";
-import Button from "./Button";
-import FontAwesome from "react-fontawesome";
-import ClassNames from "classnames";
+import React from 'react'
+import Button from './Button'
+import FontAwesome from 'react-fontawesome'
+import ClassNames from 'classnames'
+import PropTypes from 'prop-types'
 
 function EditButton(props) {
-  const { className, small } = props;
+  const { className, small, } = props
   return (
     <Button
       {...props}
@@ -12,16 +13,21 @@ function EditButton(props) {
       className={ClassNames({
         [className]: true,
         editButton: true,
-        smallButton: small
+        smallButton: small,
       })}
       title="edit"
     >
       <span title="edit">
         <FontAwesome name="edit" />
-        {!small && " Edit"}
+        {!small && ' Edit'}
       </span>
     </Button>
-  );
+  )
 }
 
-export default EditButton;
+EditButton.propTypes = {
+  className: PropTypes.string,
+  small: PropTypes.bool,
+}
+
+export default EditButton

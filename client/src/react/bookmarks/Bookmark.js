@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import FontAwesome from "react-fontawesome";
+import React from 'react'
+import PropTypes from 'prop-types'
+import FontAwesome from 'react-fontawesome'
 
-import { TextButton, Tag } from "../_controls";
+import { TextButton, Tag, } from '../_controls'
 
 function Bookmark(props) {
   const {
-    bookmark: { createdAtDisplay, link, title, tags, description },
+    bookmark: { createdAtDisplay, link, title, tags, description, },
     editBookmark,
-    deleteBookmark
-  } = props;
+    deleteBookmark,
+  } = props
   return (
     <div className="bookmark">
       <FontAwesome name="bookmark-o" />
-      {createdAtDisplay}{" "}
+      {createdAtDisplay}{' '}
       <a href={link} target="_blank">
         {title}
       </a>
@@ -21,7 +21,7 @@ function Bookmark(props) {
       <div className="tags">
         {tags &&
           tags.map((t, i) => {
-            return <Tag key={i} name={t} />;
+            return <Tag key={i} name={t} />
           })}
       </div>
       <div className="bookmarkCommands">
@@ -33,11 +33,13 @@ function Bookmark(props) {
         </TextButton>
       </div>
     </div>
-  );
+  )
 }
 
-Bookmark.proptypes = {
-  bookmark: PropTypes.object.isRequired
-};
+Bookmark.propTypes = {
+  bookmark: PropTypes.object.isRequired,
+  editBookmark: PropTypes.func.isRequired,
+  deleteBookmark: PropTypes.func.isRequired,
+}
 
-export default Bookmark;
+export default Bookmark

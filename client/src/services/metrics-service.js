@@ -1,16 +1,16 @@
-import apolloServer from "./apolloServer";
+import apolloServer from './apolloServer'
 
 export const addMetric = function(category, name, value) {
-  return apolloServer.invoke("addMetric", {
+  return apolloServer.invoke('addMetric', {
     category: category,
     name: name,
-    value: value
-  });
-};
+    value: value,
+  })
+}
 
 export const getMetrics = function(category, name) {
-  return apolloServer.invoke("getMetrics", {
+  return apolloServer.invoke('getMetrics', {
     category: category,
-    name: name
-  });
-};
+    name: name,
+  })
+}

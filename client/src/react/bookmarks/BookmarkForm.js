@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { Field, reduxForm } from "redux-form";
-import { CancelButton, SaveButton, Container } from "../_controls";
+import { Field, reduxForm, } from 'redux-form'
+import { CancelButton, SaveButton, Container, } from '../_controls'
 
-import "./BookmarkForm.css";
+import './BookmarkForm.css'
 
 class BookmarkForm extends Component {
   render() {
-    const { handleSubmit, onCancel } = this.props;
+    const { handleSubmit, onCancel, } = this.props
     return (
       <Container className="bookmarkFormContainer" width={400}>
         <form onSubmit={handleSubmit}>
@@ -49,27 +49,27 @@ class BookmarkForm extends Component {
           <SaveButton type="submit" primary />
         </form>
       </Container>
-    );
+    )
   }
 }
 
 BookmarkForm.propTypes = {
   bookmark: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
-};
-
-BookmarkForm = reduxForm({
-  form: "bookmarks",
-  enableReinitialize: true
-})(BookmarkForm);
-
-function mapStateToProps(state, props) {
-  const { bookmark } = props;
-
-  return {
-    initialValues: bookmark
-  };
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps)(BookmarkForm);
+BookmarkForm = reduxForm({ // eslint-disable-line no-class-assign
+  form: 'bookmarks',
+  enableReinitialize: true,
+})(BookmarkForm)
+
+function mapStateToProps(state, props) {
+  const { bookmark, } = props
+
+  return {
+    initialValues: bookmark,
+  }
+}
+
+export default connect(mapStateToProps)(BookmarkForm)

@@ -1,8 +1,9 @@
-import React from "react";
-import FontAwesome from "react-fontawesome";
-import { TextButton } from "../_controls";
+import React from 'react'
+import FontAwesome from 'react-fontawesome'
+import PropTypes from 'prop-types'
+import { TextButton, } from '../_controls'
 
-function BoardMenu({ updateBoardName, moveLeft, moveRight, deleteBoard }) {
+function BoardMenu({ updateBoardName, moveLeft, moveRight, deleteBoard, }) {
   return (
     <div className="boardMenu">
       <TextButton onClick={updateBoardName}>
@@ -18,7 +19,14 @@ function BoardMenu({ updateBoardName, moveLeft, moveRight, deleteBoard }) {
         <FontAwesome name="trash" />
       </TextButton>
     </div>
-  );
+  )
 }
 
-export default BoardMenu;
+BoardMenu.propTypes = {
+  updateBoardName: PropTypes.func.isRequired,
+  moveLeft: PropTypes.func.isRequired,
+  moveRight: PropTypes.func.isRequired,
+  deleteBoard: PropTypes.func.isRequired,
+}
+
+export default BoardMenu

@@ -1,17 +1,17 @@
-import { combineActions, handleActions } from "redux-actions";
+import { combineActions, handleActions, } from 'redux-actions'
 import {
   basicFailReducer,
   basicLoadCompleteReducer,
   basicStartReducer,
-  idReducer
-} from "../redux-helpers";
-import { actions } from "./actions";
+  idReducer,
+} from '../redux-helpers'
+import { actions, } from './actions'
 
 const initialState = {
   jobs: {},
   jobHistories: {},
-  selectedJob: null
-};
+  selectedJob: null,
+}
 
 export default handleActions(
   {
@@ -26,23 +26,23 @@ export default handleActions(
     )]: basicFailReducer,
 
     [actions.load.complete]: (state, action) => {
-      const { jobs } = action.payload;
+      const { jobs, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        jobs: idReducer(state.jobs, jobs)
-      };
+        jobs: idReducer(state.jobs, jobs),
+      }
     },
 
     [actions.selectJob.complete]: (state, action) => {
-      const { jobHistories, job } = action.payload;
+      const { jobHistories, job, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
         selectedJob: job,
-        jobHistories: idReducer(state.jobHistories, jobHistories)
-      };
-    }
+        jobHistories: idReducer(state.jobHistories, jobHistories),
+      }
+    },
   },
   initialState
-);
+)

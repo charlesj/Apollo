@@ -1,6 +1,6 @@
-import { createActions } from "redux-actions";
-import { basicActions, dispatchBasicActions } from "../redux-helpers";
-import apolloServer from "../../services/apolloServer";
+import { createActions, } from 'redux-actions'
+import { basicActions, dispatchBasicActions, } from '../redux-helpers'
+import apolloServer from '../../services/apolloServer'
 
 const actionCreators = createActions({
   feeds: {
@@ -8,49 +8,49 @@ const actionCreators = createActions({
     //addFeed: basicActions(),
     loadItems: basicActions(),
     setCurrentItem: basicActions(),
-    selectFeed: basicActions()
-  }
-});
+    selectFeed: basicActions(),
+  },
+})
 
-export const actions = actionCreators.feeds;
+export const actions = actionCreators.feeds
 
 export function loadList() {
   return dispatchBasicActions(actions.loadList, async () => {
-    const feeds = await apolloServer.invoke("getFeeds", {});
-    return feeds;
-  });
+    const feeds = await apolloServer.invoke('getFeeds', {})
+    return feeds
+  })
 }
 
 export function loadItems(feedId) {
   return dispatchBasicActions(actions.loadItems, async () => {
-    const items = await apolloServer.invoke("getFeedItems", { feedId });
-    return { items };
-  });
+    const items = await apolloServer.invoke('getFeedItems', { feedId, })
+    return { items, }
+  })
 }
 
 export function setCurrentItem(item) {
   return dispatchBasicActions(actions.setCurrentItem, async () => {
-    let wasFirstRead = false;
-    let updatedItem = {};
+    let wasFirstRead = false
+    let updatedItem = {}
     if (!item.read_at) {
-      updatedItem = await apolloServer.invoke("markItemAsRead", {
-        itemId: item.id
-      });
-      delete updatedItem.feed_name;
-      wasFirstRead = true;
+      updatedItem = await apolloServer.invoke('markItemAsRead', {
+        itemId: item.id,
+      })
+      delete updatedItem.feed_name
+      wasFirstRead = true
     }
 
-    return { item: { ...item, ...updatedItem }, wasFirstRead };
-  });
+    return { item: { ...item, ...updatedItem, }, wasFirstRead, }
+  })
 }
 
 export function selectFeed(feed) {
   return dispatchBasicActions(actions.selectFeed, async () => {
-    let items = [];
+    let items = []
     if (feed) {
-      items = await apolloServer.invoke("getFeedItems", { feedId: feed.id });
+      items = await apolloServer.invoke('getFeedItems', { feedId: feed.id, })
     }
 
-    return { feed, items };
-  });
+    return { feed, items, }
+  })
 }

@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { ChecklistItemTypes } from "../../redux/constants";
-import { Field, FieldArray, reduxForm } from "redux-form";
+import { ChecklistItemTypes, } from '../../redux/constants'
+import { Field, FieldArray, reduxForm, } from 'redux-form'
 import {
   CancelButton,
   SaveButton,
@@ -11,10 +11,10 @@ import {
   TextButton,
   FormSelect,
   Container,
-  RemoveButton
-} from "../_controls";
+  RemoveButton,
+} from '../_controls'
 
-function ChecklistItemInput({ fields, meta: { error, submitFailed } }) {
+function ChecklistItemInput({ fields, }) {
   return (
     <div>
       {fields.map((item, index) => {
@@ -50,16 +50,20 @@ function ChecklistItemInput({ fields, meta: { error, submitFailed } }) {
               />
             </div>
           </div>
-        );
+        )
       })}
       <AddButton noun="Item" onClick={() => fields.push()} />
     </div>
-  );
+  )
+}
+
+ChecklistItemInput.propTypes = {
+  fields: PropTypes.array.isRequired,
 }
 
 class ChecklistForm extends Component {
   render() {
-    const { handleSubmit, onCancel, onDelete } = this.props;
+    const { handleSubmit, onCancel, onDelete, } = this.props
     return (
       <Container className="checklistFormContainer" width={400}>
         <form onSubmit={handleSubmit}>
@@ -85,27 +89,28 @@ class ChecklistForm extends Component {
           <SaveButton type="submit" primary />
         </form>
       </Container>
-    );
+    )
   }
 }
 
 ChecklistForm.propTypes = {
   checklist: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
-};
-
-ChecklistForm = reduxForm({
-  form: "checklistForm",
-  enableReinitialize: true
-})(ChecklistForm);
-
-function mapStateToProps(state, props) {
-  const { checklist } = props;
-
-  return {
-    initialValues: checklist
-  };
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps)(ChecklistForm);
+ChecklistForm = reduxForm({ // eslint-disable-line no-class-assign
+  form: 'checklistForm',
+  enableReinitialize: true,
+})(ChecklistForm)
+
+function mapStateToProps(state, props) {
+  const { checklist, } = props
+
+  return {
+    initialValues: checklist,
+  }
+}
+
+export default connect(mapStateToProps)(ChecklistForm)

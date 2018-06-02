@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
-import ClassNames from "classnames";
-
-import { checklistSelectors } from "../../redux/selectors";
-import { checklistActions } from "../../redux/actions";
-import { NotifySuccess } from "../../services/notifier";
+import React from 'react'
+import { connect, } from 'react-redux'
+import ClassNames from 'classnames'
+import PropTypes from 'prop-types'
+import { checklistSelectors, } from '../../redux/selectors'
+import { checklistActions, } from '../../redux/actions'
+import { NotifySuccess, } from '../../services/notifier'
 
 import {
   Container,
@@ -12,60 +12,60 @@ import {
   TextButton,
   CancelButton,
   SaveButton,
-  FlexContainer
-} from "../_controls";
-import "./CompleteChecklists.css";
+  FlexContainer,
+} from '../_controls'
+import './CompleteChecklists.css'
 
 class CompleteChecklist extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       checklistItems: [],
-      notes: ""
-    };
+      notes: '',
+    }
   }
 
   componentDidMount() {
-    this.props.getChecklists();
+    this.props.getChecklists()
   }
 
   handleChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
-    });
+      [e.target.name]: e.target.value,
+    })
   }
 
   toggleChecklistItemComplete(checklist_item_id) {
-    const { checklistItems } = this.state;
-    const updated = { ...checklistItems };
-    const current = checklistItems[checklist_item_id];
-    updated[checklist_item_id] = !current;
-    this.setState({ checklistItems: updated });
+    const { checklistItems, } = this.state
+    const updated = { ...checklistItems, }
+    const current = checklistItems[checklist_item_id]
+    updated[checklist_item_id] = !current
+    this.setState({ checklistItems: updated, })
   }
 
   handleSubmit() {
     const {
       selectedChecklist,
       addCompletedChecklist,
-      selectChecklist
-    } = this.props;
-    const { notes, checklistItems } = this.state;
+      selectChecklist,
+    } = this.props
+    const { notes, checklistItems, } = this.state
     const items = selectedChecklist.items.map(item => {
       return {
         checklist_item_id: item.id,
-        completed: !!checklistItems[item.id] ? 1 : 0
-      };
-    });
-    addCompletedChecklist(selectedChecklist.id, notes, items);
-    selectChecklist(null);
-    NotifySuccess(`Committed ${selectedChecklist.name}`);
-    this.setState({ notes: "", checklistItems: [] });
+        completed: checklistItems[item.id] ? 1 : 0,
+      }
+    })
+    addCompletedChecklist(selectedChecklist.id, notes, items)
+    selectChecklist(null)
+    NotifySuccess(`Committed ${selectedChecklist.name}`)
+    this.setState({ notes: '', checklistItems: [], })
   }
 
   render() {
-    const { checklists, selectedChecklist, selectChecklist } = this.props;
-    const { checklistItems, notes } = this.state;
+    const { checklists, selectedChecklist, selectChecklist, } = this.props
+    const { checklistItems, notes, } = this.state
     return (
       <Container className="completeChecklists" width={400}>
         <FlexRow>
@@ -77,7 +77,7 @@ class CompleteChecklist extends React.Component {
               >
                 {checklist.name}
               </TextButton>
-            );
+            )
           })}
         </FlexRow>
         {selectedChecklist && (
@@ -93,13 +93,13 @@ class CompleteChecklist extends React.Component {
                     key={item.id}
                     className={ClassNames({
                       checklistItem: true,
-                      [`checklistItem-${item.type}`]: true
+                      [`checklistItem-${item.type}`]: true,
                     })}
                   >
                     <div className="checklistItemCheckbox">
                       <input
                         type="checkbox"
-                        name={"item-" + item.id}
+                        name={'item-' + item.id}
                         checked={!!checklistItems[item.id]}
                         onChange={() =>
                           this.toggleChecklistItemComplete(item.id)
@@ -111,7 +111,7 @@ class CompleteChecklist extends React.Component {
                       {item.description}
                     </div>
                   </div>
-                );
+                )
               })}
             </div>
             <div>
@@ -128,18 +128,26 @@ class CompleteChecklist extends React.Component {
           </FlexContainer>
         )}
       </Container>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  return {
-    checklists: checklistSelectors.all(state),
-    selectedChecklist: checklistSelectors.selectedChecklist(state)
-  };
+CompleteChecklist.propTypes = {
+  getChecklists: PropTypes.func.isRequired,
+  selectedChecklist: PropTypes.object,
+  addCompletedChecklist: PropTypes.func.isRequired,
+  checklists: PropTypes.array.isRequired,
+  selectChecklist: PropTypes.func.isRequired,
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapStateToProps(state) {
+  return {
+    checklists: checklistSelectors.all(state),
+    selectedChecklist: checklistSelectors.selectedChecklist(state),
+  }
+}
+
+function mapDispatchToProps(dispatch) {
   return {
     getChecklists: () => dispatch(checklistActions.getChecklists()),
     selectChecklist: checklist =>
@@ -147,8 +155,8 @@ function mapDispatchToProps(dispatch, props) {
     addCompletedChecklist: (checklist_id, notes, items) =>
       dispatch(
         checklistActions.addCompletedChecklist(checklist_id, notes, items)
-      )
-  };
+      ),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompleteChecklist);
+export default connect(mapStateToProps, mapDispatchToProps)(CompleteChecklist)

@@ -1,61 +1,62 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { goalActions } from "../../redux/actions";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { goalActions, } from '../../redux/actions'
 import {
   TextButton,
   AddButton,
   FlexRow,
   Container,
-  FlexContainer
-} from "../_controls";
-import FontAwesome from "react-fontawesome";
-import GoalForm from "./GoalForm";
+  FlexContainer,
+} from '../_controls'
+import FontAwesome from 'react-fontawesome'
+import GoalForm from './GoalForm'
 
-import "./Goals.css";
+import './Goals.css'
 
 class Goals extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      editingGoal: null
-    };
+      editingGoal: null,
+    }
 
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.load();
+    this.props.load()
   }
 
   newGoal() {
     return {
-      slug: "",
-      title: "",
-      description: "",
-      startDate: "",
-      endDate: "",
-      metricName: "",
+      slug: '',
+      title: '',
+      description: '',
+      startDate: '',
+      endDate: '',
+      metricName: '',
       targetValue: 0.0,
       completed: false,
-      featured: false
-    };
+      featured: false,
+    }
   }
 
   onSubmit(goal) {
-    goal.featured = goal.featured === "true";
-    const { upsertGoal } = this.props;
-    upsertGoal(goal);
-    this.setEditingGoal(null);
+    goal.featured = goal.featured === 'true'
+    const { upsertGoal, } = this.props
+    upsertGoal(goal)
+    this.setEditingGoal(null)
   }
 
   setEditingGoal(editingGoal) {
     this.setState({
-      editingGoal
-    });
+      editingGoal,
+    })
   }
 
   render() {
-    const { goals } = this.props;
+    const { goals, } = this.props
 
     return (
       <FlexRow>
@@ -63,7 +64,7 @@ class Goals extends Component {
           <AddButton
             noun="Goal"
             onClick={() => {
-              this.setEditingGoal(this.newGoal());
+              this.setEditingGoal(this.newGoal())
             }}
           />
           <Container width={250}>
@@ -73,13 +74,13 @@ class Goals extends Component {
                   {g.title || g.slug}
                   <TextButton
                     onClick={() => {
-                      this.setEditingGoal(g);
+                      this.setEditingGoal(g)
                     }}
                   >
                     <FontAwesome name="edit" />
                   </TextButton>
                 </div>
-              );
+              )
             })}
           </Container>
         </FlexContainer>
@@ -89,29 +90,35 @@ class Goals extends Component {
               goal={this.state.editingGoal}
               onSubmit={this.onSubmit}
               onCancel={() => {
-                this.setEditingGoal(null);
+                this.setEditingGoal(null)
               }}
             />
           </Container>
         )}
       </FlexRow>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  const { goals } = state.goals;
-
-  return {
-    goals
-  };
+Goals.propTypes = {
+  goals: PropTypes.array.isRequired,
+  upsertGoal: PropTypes.func.isRequired,
+  load: PropTypes.func.isRequired,
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapStateToProps(state) {
+  const { goals, } = state.goals
+
+  return {
+    goals,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
   return {
     upsertGoal: goal => dispatch(goalActions.upsertGoal(goal)),
-    load: () => dispatch(goalActions.getGoals())
-  };
+    load: () => dispatch(goalActions.getGoals()),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Goals);
+export default connect(mapStateToProps, mapDispatchToProps)(Goals)

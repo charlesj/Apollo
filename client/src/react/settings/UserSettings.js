@@ -1,30 +1,31 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { userSettingsActions } from "../../redux/actions";
-import { userSettingsSelectors } from "../../redux/selectors";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { userSettingsActions, } from '../../redux/actions'
+import { userSettingsSelectors, } from '../../redux/selectors'
 import {
   Container,
   AddButton,
   FlexRow,
   EditButton,
-  FlexContainer
-} from "../_controls";
-import UserSettingsForm from "./UserSettingsForm";
+  FlexContainer,
+} from '../_controls'
+import UserSettingsForm from './UserSettingsForm'
 
-import "./UserSettings.css";
+import './UserSettings.css'
 
 class UserSettings extends Component {
   componentDidMount() {
-    this.props.load();
+    this.props.load()
   }
 
   handleSubmit(setting) {
-    this.props.save(setting.name, setting.value);
-    this.props.select(null);
+    this.props.save(setting.name, setting.value)
+    this.props.select(null)
   }
 
   render() {
-    const { settings, selectedSetting, select } = this.props;
+    const { settings, selectedSetting, select, } = this.props
     return (
       <FlexRow>
         <FlexContainer>
@@ -53,7 +54,7 @@ class UserSettings extends Component {
                         <EditButton onClick={() => select(setting)} small />
                       </td>
                     </tr>
-                  );
+                  )
                 })}
               </tbody>
             </table>
@@ -72,23 +73,31 @@ class UserSettings extends Component {
           </FlexContainer>
         )}
       </FlexRow>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  return {
-    settings: userSettingsSelectors.all(state),
-    selectedSetting: userSettingsSelectors.selected(state)
-  };
+UserSettings.propTypes = {
+  save: PropTypes.func.isRequired,
+  load: PropTypes.func.isRequired,
+  select: PropTypes.func.isRequired,
+  settings: PropTypes.array.isRequired,
+  selectedSetting: PropTypes.object,
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapStateToProps(state) {
+  return {
+    settings: userSettingsSelectors.all(state),
+    selectedSetting: userSettingsSelectors.selected(state),
+  }
+}
+
+function mapDispatchToProps(dispatch) {
   return {
     load: () => dispatch(userSettingsActions.load()),
     save: (name, value) => dispatch(userSettingsActions.save(name, value)),
-    select: setting => dispatch(userSettingsActions.actions.select(setting))
-  };
+    select: setting => dispatch(userSettingsActions.actions.select(setting)),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)

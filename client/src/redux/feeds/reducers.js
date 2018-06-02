@@ -1,18 +1,18 @@
-import { combineActions, handleActions } from "redux-actions";
+import { combineActions, handleActions, } from 'redux-actions'
 import {
   basicFailReducer,
   basicLoadCompleteReducer,
   basicStartReducer,
-  idReducer
-} from "../redux-helpers";
-import { actions } from "./actions";
+  idReducer,
+} from '../redux-helpers'
+import { actions, } from './actions'
 
 const initialState = {
   feeds: {},
   items: {},
   currentItem: null,
-  currentFeed: null
-};
+  currentFeed: null,
+}
 
 export default handleActions(
   {
@@ -29,48 +29,48 @@ export default handleActions(
     )]: basicFailReducer,
 
     [actions.loadList.complete]: (state, action) => {
-      const feeds = action.payload;
+      const feeds = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        feeds: idReducer(state.feeds, feeds)
-      };
+        feeds: idReducer(state.feeds, feeds),
+      }
     },
 
     [actions.loadItems.complete]: (state, action) => {
-      const { items } = action.payload;
+      const { items, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        items: idReducer(state.items, items)
-      };
+        items: idReducer(state.items, items),
+      }
     },
 
     [actions.setCurrentItem.complete]: (state, action) => {
-      const { item, wasFirstRead } = action.payload;
-      const newFeeds = { ...state.feeds };
-      const newItems = idReducer(state.items, item);
+      const { item, wasFirstRead, } = action.payload
+      const newFeeds = { ...state.feeds, }
+      const newItems = idReducer(state.items, item)
       if (wasFirstRead) {
         newFeeds[item.feed_id].unread_count =
-          newFeeds[item.feed_id].unread_count - 1;
+          newFeeds[item.feed_id].unread_count - 1
       }
 
       return {
         ...basicLoadCompleteReducer(state, action),
         feeds: newFeeds,
         items: newItems,
-        currentItem: item
-      };
+        currentItem: item,
+      }
     },
 
     [actions.selectFeed.complete]: (state, action) => {
-      const { feed, items } = action.payload;
+      const { feed, items, } = action.payload
       return {
         ...state,
         items: idReducer(state.items, items),
-        currentFeed: feed
-      };
-    }
+        currentFeed: feed,
+      }
+    },
   },
   initialState
-);
+)

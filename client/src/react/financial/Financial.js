@@ -1,42 +1,42 @@
-import React, { Component } from "react";
-import moment from "moment";
-import apolloServer from "../../services/apolloServer";
+import React, { Component, } from 'react'
+import moment from 'moment'
+import apolloServer from '../../services/apolloServer'
 
 class Finance extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      assetPrices: []
-    };
+      assetPrices: [],
+    }
 
-    this.loadAssetPrices = this.loadAssetPrices.bind(this);
+    this.loadAssetPrices = this.loadAssetPrices.bind(this)
   }
 
   componentDidMount() {
-    this.loadAssetPrices();
+    this.loadAssetPrices()
   }
 
   loadAssetPrices() {
-    var assets = ["btc", "eth", "ltc"];
+    var assets = ['btc', 'eth', 'ltc',]
     assets.forEach(a => {
       apolloServer
-        .invoke("getAssetPrice", {
-          symbol: a
+        .invoke('getAssetPrice', {
+          symbol: a,
         })
         .then(price => {
           if (!price) {
-            return;
+            return
           }
-          var currentPrices = this.state.assetPrices;
-          currentPrices.push(price);
+          var currentPrices = this.state.assetPrices
+          currentPrices.push(price)
           currentPrices.sort((a, b) => {
-            return a.symbol > b.symbol;
-          });
+            return a.symbol > b.symbol
+          })
           this.setState({
-            assetPrices: currentPrices
-          });
-        });
-    });
+            assetPrices: currentPrices,
+          })
+        })
+    })
   }
 
   render() {
@@ -44,7 +44,7 @@ class Finance extends Component {
       <div className="summaryContainer">
         Financial
         {this.state.assetPrices.map(ap => {
-          var validAt = moment(ap.valid_at);
+          var validAt = moment(ap.valid_at)
           return (
             <div key={ap.id} className="summary">
               <div className="summaryAmount">${ap.price}</div>
@@ -52,11 +52,11 @@ class Finance extends Component {
                 {ap.symbol.toUpperCase()} ({validAt.calendar()})
               </div>
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   }
 }
 
-export default Finance;
+export default Finance

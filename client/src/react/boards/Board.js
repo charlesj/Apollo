@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
-import { boardActions } from "../../redux/actions";
-import { boardSelectors } from "../../redux/selectors";
-import { TextButton, AddButton } from "../_controls";
-import BoardMenu from "./BoardMenu";
-import BoardItem from "./BoardItem";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { boardActions, } from '../../redux/actions'
+import { boardSelectors, } from '../../redux/selectors'
+import { TextButton, AddButton, } from '../_controls'
+import BoardMenu from './BoardMenu'
+import BoardItem from './BoardItem'
 
 class Board extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      showCompleted: false
-    };
+      showCompleted: false,
+    }
 
-    this.updateBoardName = this.updateBoardName.bind(this);
+    this.updateBoardName = this.updateBoardName.bind(this)
   }
 
   componentDidMount() {
-    const { loadItems, board } = this.props;
-    loadItems(board.id);
+    const { loadItems, board, } = this.props
+    loadItems(board.id)
   }
 
   updateBoardName() {
-    var title = prompt("Enter New Name", "");
-    const { updateBoard, board } = this.props;
-    if (title !== null && title !== "") {
+    var title = prompt('Enter New Name', '')
+    const { updateBoard, board, } = this.props
+    if (title !== null && title !== '') {
       updateBoard({
         ...board,
-        title
-      });
+        title,
+      })
     }
   }
 
@@ -42,9 +42,9 @@ class Board extends Component {
       moveLeft,
       moveRight,
       removeItem,
-      saveItem
-    } = this.props;
-    const { showCompleted } = this.state;
+      saveItem,
+    } = this.props
+    const { showCompleted, } = this.state
     return (
       <div className="board">
         <div className="boardTitle">
@@ -65,7 +65,7 @@ class Board extends Component {
               deleteItem={() => removeItem(item)}
               updateItem={updated => saveItem(updated)}
             />
-          );
+          )
         })}
 
         {showCompleted &&
@@ -77,48 +77,61 @@ class Board extends Component {
                 deleteItem={() => removeItem(item)}
                 updateItem={updated => saveItem(updated)}
               />
-            );
+            )
           })}
         <AddButton
           onClick={() =>
             saveItem({
-              title: "new item",
-              link: "",
-              description: "",
-              board_id: board.id
+              title: 'new item',
+              link: '',
+              description: '',
+              board_id: board.id,
             })
           }
           noun="Item"
         />
 
         <TextButton
-          onClick={() => this.setState({ showCompleted: !showCompleted })}
+          onClick={() => this.setState({ showCompleted: !showCompleted, })}
         >
           Toggle View Completed
         </TextButton>
       </div>
-    );
+    )
   }
+}
+
+Board.propTypes = {
+  incomplete_items: PropTypes.array.isRequired,
+  complete_items: PropTypes.array.isRequired,
+  loadItems: PropTypes.func.isRequired,
+  saveItem: PropTypes.func.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  board: PropTypes.object.isRequired,
+  updateBoard: PropTypes.func.isRequired,
+  removeBoard: PropTypes.func.isRequired,
+  moveLeft: PropTypes.func.isRequired,
+  moveRight: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state, props) {
   const incomplete_items = boardSelectors.incomplete_items(
     state,
     props.board.id
-  );
-  const complete_items = boardSelectors.complete_items(state, props.board.id);
+  )
+  const complete_items = boardSelectors.complete_items(state, props.board.id)
   return {
     incomplete_items,
-    complete_items
-  };
+    complete_items,
+  }
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch) {
   return {
     loadItems: board_id => dispatch(boardActions.loadItems(board_id)),
     saveItem: boardItem => dispatch(boardActions.saveItem(boardItem)),
-    removeItem: boardItem => dispatch(boardActions.removeItem(boardItem))
-  };
+    removeItem: boardItem => dispatch(boardActions.removeItem(boardItem)),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default connect(mapStateToProps, mapDispatchToProps)(Board)

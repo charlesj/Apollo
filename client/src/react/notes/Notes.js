@@ -1,40 +1,41 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { NotifySuccess } from "../../services/notifier";
-import { noteActions } from "../../redux/actions";
-import { noteSelectors } from "../../redux/selectors";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { NotifySuccess, } from '../../services/notifier'
+import { noteActions, } from '../../redux/actions'
+import { noteSelectors, } from '../../redux/selectors'
 
-import { Page, FlexRow, Container, AddButton, SelectList } from "../_controls";
-import NoteForm from "./NoteForm";
+import { Page, FlexRow, Container, AddButton, SelectList, } from '../_controls'
+import NoteForm from './NoteForm'
 
-import "./Notes.css";
+import './Notes.css'
 
 class Notebooks extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      note: null
-    };
+      note: null,
+    }
   }
 
   componentDidMount() {
-    this.props.getNotes();
+    this.props.getNotes()
   }
 
   selectNote(note) {
-    this.setState({ note });
+    this.setState({ note, })
   }
 
   saveNote(note) {
-    const { saveNote } = this.props;
-    saveNote(note);
-    NotifySuccess("Successfully saved note");
+    const { saveNote, } = this.props
+    saveNote(note)
+    NotifySuccess('Successfully saved note')
   }
 
   render() {
-    const { notes } = this.props;
-    const selectedNote = this.state.note;
+    const { notes, } = this.props
+    const selectedNote = this.state.note
     return (
       <Page>
         <div>
@@ -64,21 +65,27 @@ class Notebooks extends Component {
           </div>
         </FlexRow>
       </Page>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  return {
-    notes: noteSelectors.all(state)
-  };
+Notebooks.propTypes = {
+  getNotes: PropTypes.func.isRequired,
+  saveNote: PropTypes.func.isRequired,
+  notes: PropTypes.array.isRequired,
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapStateToProps(state) {
+  return {
+    notes: noteSelectors.all(state),
+  }
+}
+
+function mapDispatchToProps(dispatch) {
   return {
     getNotes: () => dispatch(noteActions.getAll()),
-    saveNote: note => dispatch(noteActions.saveNote(note))
-  };
+    saveNote: note => dispatch(noteActions.saveNote(note)),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notebooks);
+export default connect(mapStateToProps, mapDispatchToProps)(Notebooks)

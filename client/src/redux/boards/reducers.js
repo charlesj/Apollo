@@ -1,16 +1,16 @@
-import { combineActions, handleActions } from "redux-actions";
+import { combineActions, handleActions, } from 'redux-actions'
 import {
   basicFailReducer,
   basicLoadCompleteReducer,
   basicStartReducer,
-  idReducer
-} from "../redux-helpers";
-import actions from "./actions";
+  idReducer,
+} from '../redux-helpers'
+import actions from './actions'
 
 const initialState = {
   boards: {},
-  boardItems: {}
-};
+  boardItems: {},
+}
 
 export default handleActions(
   {
@@ -35,71 +35,71 @@ export default handleActions(
     )]: basicFailReducer,
 
     [actions.load.complete]: (state, action) => {
-      const { boards } = action.payload;
+      const { boards, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        boards: idReducer(state.boards, boards)
-      };
+        boards: idReducer(state.boards, boards),
+      }
     },
 
     [actions.saveBoard.complete]: (state, action) => {
-      const board = action.payload;
+      const board = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        boards: idReducer(state.boards, board)
-      };
+        boards: idReducer(state.boards, board),
+      }
     },
 
     [actions.moveBoard.complete]: (state, action) => {
-      const { boards } = action.payload;
+      const { boards, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        boards: idReducer(state.boards, boards)
-      };
+        boards: idReducer(state.boards, boards),
+      }
     },
 
     [actions.removeBoard.complete]: (state, action) => {
-      const { board } = action.payload;
-      const updated = { ...state.boards };
-      delete updated[board.id];
+      const { board, } = action.payload
+      const updated = { ...state.boards, }
+      delete updated[board.id]
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        boards: updated
-      };
+        boards: updated,
+      }
     },
 
     [actions.loadItems.complete]: (state, action) => {
-      const { items } = action.payload;
+      const { items, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        boardItems: idReducer(state.boardItems, items)
-      };
+        boardItems: idReducer(state.boardItems, items),
+      }
     },
 
     [actions.saveItem.complete]: (state, action) => {
-      const { item } = action.payload;
+      const { item, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        boardItems: idReducer(state.boardItems, item)
-      };
+        boardItems: idReducer(state.boardItems, item),
+      }
     },
 
     [actions.removeItem.complete]: (state, action) => {
-      const { id } = action.payload;
-      const updated = { ...state.boardItems };
-      delete updated[id];
+      const { id, } = action.payload
+      const updated = { ...state.boardItems, }
+      delete updated[id]
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        boardItems: updated
-      };
-    }
+        boardItems: updated,
+      }
+    },
   },
   initialState
-);
+)

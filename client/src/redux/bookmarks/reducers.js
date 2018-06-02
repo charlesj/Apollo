@@ -1,15 +1,15 @@
-import { combineActions, handleActions } from "redux-actions";
+import { combineActions, handleActions, } from 'redux-actions'
 import {
   basicFailReducer,
   basicLoadCompleteReducer,
-  basicStartReducer
-} from "../redux-helpers";
-import actions from "./actions";
+  basicStartReducer,
+} from '../redux-helpers'
+import actions from './actions'
 
 const initialState = {
   bookmarks: {},
-  total: 0
-};
+  total: 0,
+}
 
 export default handleActions(
   {
@@ -26,40 +26,40 @@ export default handleActions(
     )]: basicFailReducer,
 
     [actions.load.complete]: (state, action) => {
-      const { total, bookmarks } = action.payload;
-      const current = { ...state.bookmarks };
+      const { total, bookmarks, } = action.payload
+      const current = { ...state.bookmarks, }
       bookmarks.forEach(bookmark => {
-        current[bookmark.id] = bookmark;
-      });
+        current[bookmark.id] = bookmark
+      })
 
       return {
         ...basicLoadCompleteReducer(state, action),
         bookmarks: current,
-        total
-      };
+        total,
+      }
     },
 
     [actions.save.complete]: (state, action) => {
-      const { bookmark } = action.payload;
-      const current = { ...state.bookmarks };
-      current[bookmark.id] = bookmark;
+      const { bookmark, } = action.payload
+      const current = { ...state.bookmarks, }
+      current[bookmark.id] = bookmark
 
-      return {
-        ...basicLoadCompleteReducer(state, action),
-        bookmarks: current
-      };
-    },
-
-    [actions.remove.complete]: (state, action) => {
-      const { bookmark } = action.payload;
-      const current = { ...state.bookmarks };
-      delete current[bookmark.id];
       return {
         ...basicLoadCompleteReducer(state, action),
         bookmarks: current,
-        total: state.total - 1
-      };
-    }
+      }
+    },
+
+    [actions.remove.complete]: (state, action) => {
+      const { bookmark, } = action.payload
+      const current = { ...state.bookmarks, }
+      delete current[bookmark.id]
+      return {
+        ...basicLoadCompleteReducer(state, action),
+        bookmarks: current,
+        total: state.total - 1,
+      }
+    },
   },
   initialState
-);
+)

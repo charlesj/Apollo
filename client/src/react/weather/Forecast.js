@@ -1,22 +1,23 @@
-import React from "react";
-import moment from "moment";
-import FontAwesome from "react-fontawesome";
-import WeatherIcon from "./WeatherIcon";
-import DarkSkyIconMap from "./DarkSkyIconMapping";
-import PrecipDisplay from "./PrecipDisplay";
-import ForecastDay from "./ForecastDay";
+import React from 'react'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import FontAwesome from 'react-fontawesome'
+import WeatherIcon from './WeatherIcon'
+import DarkSkyIconMap from './DarkSkyIconMapping'
+import PrecipDisplay from './PrecipDisplay'
+import ForecastDay from './ForecastDay'
 
 function Forecast(props) {
   if (!props.data) {
-    return <div>There are no forecasts to display</div>;
+    return <div>There are no forecasts to display</div>
   }
-  var curr = props.data.Forecast.currently;
+  var curr = props.data.Forecast.currently
   return (
     <div>
       <div className="weatherLocation">
         {props.data.Location}
         <div className="weeklySummary">
-          {" "}
+          {' '}
           - {props.data.Forecast.daily.summary}
         </div>
       </div>
@@ -27,7 +28,7 @@ function Forecast(props) {
             <WeatherIcon icon={DarkSkyIconMap[curr.icon]} />
           </div>
           <div>
-            {curr.temperature}℉ (feels: {curr.apparentTemperature} ℉){" "}
+            {curr.temperature}℉ (feels: {curr.apparentTemperature} ℉){' '}
           </div>
           <div className="forecastSummary">{curr.summary} </div>
           <PrecipDisplay
@@ -38,13 +39,13 @@ function Forecast(props) {
         </div>
 
         {props.data.Forecast.daily.data.map((d, i) => {
-          return <ForecastDay key={i} f={d} />;
+          return <ForecastDay key={i} f={d} />
         })}
       </div>
       <div>
         {props.data.Forecast.alerts &&
           props.data.Forecast.alerts.map((a, i) => {
-            var expiresOn = moment.unix(a.expires);
+            var expiresOn = moment.unix(a.expires)
             return (
               <div className="weatherAlerts" key={i}>
                 <FontAwesome name="exclamation-triangle" />
@@ -54,11 +55,19 @@ function Forecast(props) {
                 - expires {expiresOn.calendar()}
                 <div className="alertDescription">{a.description}</div>
               </div>
-            );
+            )
           })}
       </div>
     </div>
-  );
+  )
 }
 
-export default Forecast;
+Forecast.propTypes = {
+  data: PropTypes.object,
+}
+
+Forecast.defaultProps = {
+  data: null,
+}
+
+export default Forecast

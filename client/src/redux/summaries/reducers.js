@@ -1,14 +1,14 @@
-import { combineActions, handleActions } from "redux-actions";
+import { combineActions, handleActions, } from 'redux-actions'
 import {
   basicFailReducer,
   basicLoadCompleteReducer,
-  basicStartReducer
-} from "../redux-helpers";
-import actions from "./actions";
+  basicStartReducer,
+} from '../redux-helpers'
+import actions from './actions'
 
 const initialState = {
-  summaries: []
-};
+  summaries: [],
+}
 
 export default handleActions(
   {
@@ -17,13 +17,13 @@ export default handleActions(
     [combineActions(actions.getSummaries.fail)]: basicFailReducer,
 
     [actions.getSummaries.complete]: (state, action) => {
-      const { summaries } = action.payload;
+      const { summaries, } = action.payload
 
       return {
         ...basicLoadCompleteReducer(state, action),
-        summaries
-      };
-    }
+        summaries,
+      }
+    },
   },
   initialState
-);
+)

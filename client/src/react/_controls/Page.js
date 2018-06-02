@@ -1,9 +1,13 @@
-import React from "react";
-
-import "./Page.css";
+import React from 'react'
+import PropTypes from 'prop-types'
+import './Page.css'
 
 function Page(props) {
-  return <div className="page">{props.children}</div>;
+  return <div className="page">{props.children}</div>
 }
 
-export default Page;
+Page.propTypes = {
+  children: PropTypes.any,
+}
+
+export default Page

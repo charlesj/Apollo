@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import ClassNames from "classnames";
-
-import "./SelectList.css";
+import React, { Component, } from 'react'
+import ClassNames from 'classnames'
+import PropTypes from 'prop-types'
+import './SelectList.css'
 
 class SelectList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      selectedItem: null
-    };
+      selectedItem: null,
+    }
   }
 
   selectItem(item) {
-    this.props.onSelectItem(item);
+    this.props.onSelectItem(item)
     this.setState({
-      selectedItem: item
-    });
+      selectedItem: item,
+    })
   }
 
   render() {
-    const { items, labelField } = this.props;
-    const { selectedItem } = this.state;
+    const { items, labelField, } = this.props
+    const { selectedItem, } = this.state
     return (
       <div className="selectList">
         {items.map(item => {
@@ -28,21 +28,27 @@ class SelectList extends Component {
             <div
               className={ClassNames({
                 selectListItem: true,
-                "selectListItem-selected":
-                  selectedItem && item.id === selectedItem.id
+                'selectListItem-selected':
+                  selectedItem && item.id === selectedItem.id,
               })}
               key={item.id}
               onClick={() => {
-                this.selectItem(item);
+                this.selectItem(item)
               }}
             >
               {item[labelField]}
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   }
 }
 
-export default SelectList;
+SelectList.propTypes = {
+  items: PropTypes.array,
+  labelField: PropTypes.string,
+  onSelectItem: PropTypes.func.isRequired,
+}
+
+export default SelectList

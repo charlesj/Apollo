@@ -1,42 +1,42 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { bookmarkActions, } from '../../redux/actions'
+import { bookmarkSelectors, } from '../../redux/selectors'
+import { NotifySuccess, } from '../../services/notifier'
+import { AddButton, Page, } from '../_controls'
+import BookmarksDisplay from './BookmarksDisplay'
+import BookmarkForm from './BookmarkForm'
 
-import { bookmarkActions } from "../../redux/actions";
-import { bookmarkSelectors } from "../../redux/selectors";
-import { NotifySuccess } from "../../services/notifier";
-import { AddButton, Page } from "../_controls";
-import BookmarksDisplay from "./BookmarksDisplay";
-import BookmarkForm from "./BookmarkForm";
-
-import "./bookmarks.css";
+import './bookmarks.css'
 
 class Bookmarks extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      editingBookmark: null
-    };
+      editingBookmark: null,
+    }
   }
 
   componentDidMount() {
-    const { load, bookmarks } = this.props;
-    load(bookmarks.length);
+    const { load, bookmarks, } = this.props
+    load(bookmarks.length)
   }
 
   saveBookmark(bookmark) {
-    const { save } = this.props;
-    save(bookmark);
-    this.setState({ editingBookmark: null });
-    NotifySuccess("Bookmark Saved");
+    const { save, } = this.props
+    save(bookmark)
+    this.setState({ editingBookmark: null, })
+    NotifySuccess('Bookmark Saved')
   }
 
   editBookmark(bookmark) {
-    this.setState({ editingBookmark: bookmark });
+    this.setState({ editingBookmark: bookmark, })
   }
 
   render() {
-    const { bookmarks, total, load, remove } = this.props;
-    const { editingBookmark } = this.state;
+    const { bookmarks, total, load, remove, } = this.props
+    const { editingBookmark, } = this.state
     return (
       <Page>
         <div>
@@ -59,31 +59,39 @@ class Bookmarks extends React.Component {
           refreshBookmarks={load}
           editBookmark={bookmark => this.editBookmark(bookmark)}
           deleteBookmark={bookmark => {
-            remove(bookmark);
-            NotifySuccess("Bookmark Removed");
+            remove(bookmark)
+            NotifySuccess('Bookmark Removed')
           }}
         />
       </Page>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  const bookmarks = bookmarkSelectors.all(state);
-  const total = state.bookmarks.total;
+Bookmarks.propTypes = {
+  bookmarks: PropTypes.array.isRequired,
+  total: PropTypes.number.isRequired,
+  load: PropTypes.func.isRequired,
+  save: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
+}
+
+function mapStateToProps(state) {
+  const bookmarks = bookmarkSelectors.all(state)
+  const total = state.bookmarks.total
 
   return {
     bookmarks,
-    total
-  };
+    total,
+  }
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch) {
   return {
-    load: start => dispatch(bookmarkActions.load({ start })),
+    load: start => dispatch(bookmarkActions.load({ start, })),
     save: bookmark => dispatch(bookmarkActions.save(bookmark)),
-    remove: bookmark => dispatch(bookmarkActions.remove(bookmark))
-  };
+    remove: bookmark => dispatch(bookmarkActions.remove(bookmark)),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Bookmarks);
+export default connect(mapStateToProps, mapDispatchToProps)(Bookmarks)

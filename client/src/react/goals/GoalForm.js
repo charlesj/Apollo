@@ -1,9 +1,11 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
-import { CancelButton, SaveButton } from "../_controls";
+import React from 'react'
+import { connect, } from 'react-redux'
+import { Field, reduxForm, } from 'redux-form'
+import PropTypes from 'prop-types'
+import { CancelButton, SaveButton, } from '../_controls'
+
 let GoalForm = props => {
-  const { handleSubmit, onCancel } = props;
+  const { handleSubmit, onCancel, } = props
   return (
     <form className="goalEditContainer" onSubmit={handleSubmit}>
       <label>Slug</label>
@@ -71,19 +73,24 @@ let GoalForm = props => {
       <CancelButton type="button" onClick={onCancel} />
       <SaveButton />
     </form>
-  );
-};
-
-GoalForm = reduxForm({
-  form: "GoalForm"
-})(GoalForm);
-
-function mapStateToProps(state, props) {
-  const { goal } = props;
-
-  return {
-    initialValues: goal
-  };
+  )
 }
 
-export default connect(mapStateToProps)(GoalForm);
+GoalForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+}
+
+GoalForm = reduxForm({
+  form: 'GoalForm',
+})(GoalForm)
+
+function mapStateToProps(state, props) {
+  const { goal, } = props
+
+  return {
+    initialValues: goal,
+  }
+}
+
+export default connect(mapStateToProps)(GoalForm)

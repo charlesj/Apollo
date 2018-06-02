@@ -1,4 +1,4 @@
-import Login from "./Login";
-import MenuBar from "./MenuBar";
+import Login from './Login'
+import MenuBar from './MenuBar'
 
-export { Login, MenuBar };
+export { Login, MenuBar, }

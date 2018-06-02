@@ -1,18 +1,18 @@
-import { combineActions, handleActions } from "redux-actions";
+import { combineActions, handleActions, } from 'redux-actions'
 import {
   basicFailReducer,
   basicLoadCompleteReducer,
-  basicStartReducer
-} from "../redux-helpers";
-import actions from "./actions";
-import loginService from "../../services/loginService";
+  basicStartReducer,
+} from '../redux-helpers'
+import actions from './actions'
+import loginService from '../../services/loginService'
 
 const initialState = {
   token: loginService.getToken(),
   notifications: [],
   activeRequests: 0,
-  applicationInfo: {}
-};
+  applicationInfo: {},
+}
 
 export default handleActions(
   {
@@ -29,50 +29,50 @@ export default handleActions(
     )]: basicFailReducer,
 
     [actions.login.complete]: (state, action) => {
-      const { token, loginError } = action.payload;
+      const { token, loginError, } = action.payload
 
       if (token && token.length > 1) {
-        loginService.storeToken(token);
+        loginService.storeToken(token)
       }
 
       return {
         ...basicLoadCompleteReducer(state, action),
         token,
-        loginError
-      };
+        loginError,
+      }
     },
 
     [actions.logout.complete]: (state, action) => {
-      loginService.logout();
+      loginService.logout()
       return {
         ...basicLoadCompleteReducer(state, action),
         token: null,
-        loginError: null
-      };
+        loginError: null,
+      }
     },
 
     [actions.applicationInfo.complete]: (state, action) => {
-      const { applicationInfo } = action.payload;
+      const { applicationInfo, } = action.payload
 
       return {
         ...state,
-        applicationInfo
-      };
+        applicationInfo,
+      }
     },
 
-    [actions.incrementRequests]: (state, action) => {
+    [actions.incrementRequests]: (state) => {
       return {
         ...state,
-        activeRequests: state.activeRequests + 1
-      };
+        activeRequests: state.activeRequests + 1,
+      }
     },
 
-    [actions.decrementRequests]: (state, action) => {
+    [actions.decrementRequests]: (state) => {
       return {
         ...state,
-        activeRequests: state.activeRequests - 1
-      };
-    }
+        activeRequests: state.activeRequests - 1,
+      }
+    },
   },
   initialState
-);
+)

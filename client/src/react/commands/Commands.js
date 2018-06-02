@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import apolloServer from "../../services/apolloServer";
+import React, { Component, } from 'react'
+import PropTypes from 'prop-types'
+import apolloServer from '../../services/apolloServer'
 import {
   Button,
   Container,
   FlexRow,
   SelectList,
-  FlexContainer
-} from "../_controls";
-import CommandResult from "./CommandResult";
+  FlexContainer,
+} from '../_controls'
+import CommandResult from './CommandResult'
 
-import "./Commands.css";
+import './Commands.css'
 
 function CommandInfo(props) {
   return (
@@ -30,12 +31,19 @@ function CommandInfo(props) {
         Execute
       </Button>
     </div>
-  );
+  )
+}
+
+CommandInfo.propTypes = {
+  command: PropTypes.string.isRequired,
+  payload: PropTypes.string.isRequired,
+  updatePayload: PropTypes.func.isRequired,
+  execute: PropTypes.func.isRequired,
 }
 
 class Commands extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       commands: [],
@@ -43,70 +51,70 @@ class Commands extends Component {
       selectedCommand: null,
       results: [],
       payload: null,
-      currentFilter: ""
-    };
+      currentFilter: '',
+    }
 
-    this.execute = this.execute.bind(this);
-    this.filterCommands = this.filterCommands.bind(this);
-    this.selectCommand = this.selectCommand.bind(this);
-    this.updatePayload = this.updatePayload.bind(this);
+    this.execute = this.execute.bind(this)
+    this.filterCommands = this.filterCommands.bind(this)
+    this.selectCommand = this.selectCommand.bind(this)
+    this.updatePayload = this.updatePayload.bind(this)
   }
 
   componentDidMount() {
-    apolloServer.invoke("GetAvailableCommands", {}).then(commands => {
+    apolloServer.invoke('GetAvailableCommands', {}).then(commands => {
       this.setState({
         commands,
-        displayCommands: commands
-      });
-    });
+        displayCommands: commands,
+      })
+    })
   }
 
   selectCommand(commandListItem) {
     apolloServer
-      .invoke("GetExamplePayload", {
-        command: commandListItem.label
+      .invoke('GetExamplePayload', {
+        command: commandListItem.label,
       })
       .then(payload => {
         this.setState({
           selectedCommand: commandListItem.label,
-          payload: JSON.stringify(payload, null, 2)
-        });
-      });
+          payload: JSON.stringify(payload, null, 2),
+        })
+      })
   }
 
   updatePayload(e) {
     this.setState({
-      payload: e.target.value
-    });
+      payload: e.target.value,
+    })
   }
 
   execute(command, params) {
-    const parameters = JSON.parse(params);
+    const parameters = JSON.parse(params)
     apolloServer.invokeFull(command, parameters).then(result => {
       this.setState({
         results: [
-          { command, ...result, parameters, id: this.state.results.length + 1 },
-          ...this.state.results
-        ]
-      });
-    });
+          { command, ...result, parameters, id: this.state.results.length + 1, },
+          ...this.state.results,
+        ],
+      })
+    })
   }
 
   filterCommands(e) {
-    var currentFilter = e.target.value;
+    var currentFilter = e.target.value
     if (currentFilter.length > 0) {
       var displayCommands = this.state.commands.filter(c => {
-        return c.includes(currentFilter);
-      });
+        return c.includes(currentFilter)
+      })
       this.setState({
         displayCommands,
-        currentFilter
-      });
+        currentFilter,
+      })
     } else {
       this.setState({
         displayCommands: this.state.commands,
-        currentFilter
-      });
+        currentFilter,
+      })
     }
   }
 
@@ -114,10 +122,10 @@ class Commands extends Component {
     const commandListing = this.state.displayCommands.map(cmd => {
       return {
         id: cmd,
-        label: cmd
-      };
-    });
-    const { results } = this.state;
+        label: cmd,
+      }
+    })
+    const { results, } = this.state
     return (
       <FlexRow>
         <FlexContainer>
@@ -148,12 +156,12 @@ class Commands extends Component {
             )}
           </Container>
           {results.map((result, i) => {
-            return <CommandResult key={result.id} result={result} index={i} />;
+            return <CommandResult key={result.id} result={result} index={i} />
           })}
         </FlexContainer>
       </FlexRow>
-    );
+    )
   }
 }
 
-export default Commands;
+export default Commands

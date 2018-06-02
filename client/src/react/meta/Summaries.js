@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { summaryActions } from "../../redux/actions";
-import { Card, FlexRow } from "../_controls";
+import React, { Component, } from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { summaryActions, } from '../../redux/actions'
+import { Card, FlexRow, } from '../_controls'
 
 class Summaries extends Component {
-  componentWillMount() {
-    this.props.getSummaries();
+  componentDidMount() {
+    this.props.getSummaries()
   }
 
   render() {
-    const { summaries } = this.props;
+    const { summaries, } = this.props
     return (
       <FlexRow wrap>
         {summaries.map(summary => {
@@ -19,24 +20,29 @@ class Summaries extends Component {
               content={summary.amount}
               key={summary.id}
             />
-          );
+          )
         })}
       </FlexRow>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  const { summaries } = state.summaries;
-  return {
-    summaries
-  };
+Summaries.propTypes = {
+  summaries: PropTypes.array.isRequired,
+  getSummaries: PropTypes.func.isRequired,
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapStateToProps(state) {
+  const { summaries, } = state.summaries
   return {
-    getSummaries: () => dispatch(summaryActions.getSummaries())
-  };
+    summaries,
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Summaries);
+function mapDispatchToProps(dispatch) {
+  return {
+    getSummaries: () => dispatch(summaryActions.getSummaries()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Summaries)

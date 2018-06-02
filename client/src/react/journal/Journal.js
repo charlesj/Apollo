@@ -1,17 +1,17 @@
-import React from "react";
-import { connect } from "react-redux";
-import MarkdownRenderer from "react-markdown-renderer";
+import React from 'react'
+import { connect, } from 'react-redux'
+import MarkdownRenderer from 'react-markdown-renderer'
+import PropTypes from 'prop-types'
+import { journalActions, } from '../../redux/actions'
+import { journalSelectors, } from '../../redux/selectors'
+import { NotifySuccess, } from '../../services/notifier'
+import { Page, LoadMoreButton, Tag, AddButton, } from '../_controls'
+import JournalEntryForm from './JournalEntryForm'
 
-import { journalActions } from "../../redux/actions";
-import { journalSelectors } from "../../redux/selectors";
-import { NotifySuccess } from "../../services/notifier";
-import { Page, LoadMoreButton, Tag, AddButton } from "../_controls";
-import JournalEntryForm from "./JournalEntryForm";
-
-import "./logs.css";
+import './logs.css'
 
 function EntryDisplay(props) {
-  const { entry } = props;
+  const { entry, } = props
   return (
     <div className="note">
       <div className="createdTime">{entry.createdAtDisplay}</div>
@@ -21,60 +21,68 @@ function EntryDisplay(props) {
       <div className="tags">
         {entry.tags &&
           entry.tags.map((t, i) => {
-            return <Tag key={i} name={t} />;
+            return <Tag key={i} name={t} />
           })}
       </div>
     </div>
-  );
+  )
+}
+
+EntryDisplay.propTypes = {
+  entry: PropTypes.object.isRequired,
 }
 
 function EntryListDisplay(props) {
   return (
     <div>
-      {props.entries.map(function(entry, index) {
-        return <EntryDisplay entry={entry} key={entry.id} />;
+      {props.entries.map((entry) => {
+        return <EntryDisplay entry={entry} key={entry.id} />
       })}
     </div>
-  );
+  )
+}
+
+EntryListDisplay.propTypes = {
+  entries: PropTypes.array.isRequired,
 }
 
 class Journal extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { addNote: true };
+    super(props)
+    this.state = { addNote: true, }
   }
   componentDidMount() {
-    const { loadEntries, entries } = this.props;
-    loadEntries(entries.length);
+    const { loadEntries, entries, } = this.props
+    loadEntries(entries.length)
   }
 
   handleNewEntry(formResult) {
-    const { saveEntry } = this.props;
+    const { saveEntry, } = this.props
 
     saveEntry({
       note: formResult.note,
-      tags: formResult.unifiedTags.split(",")
-    });
+      tags: formResult.unifiedTags.split(','),
+    })
 
-    NotifySuccess("Added note");
-    this.setState({ addNote: false });
+    NotifySuccess('Added note')
+    this.setState({ addNote: false, })
   }
 
   render() {
-    const { entries, loadEntries, total } = this.props;
-    const { addNote } = this.state;
+    const { entries, loadEntries, total, } = this.props
+    const { addNote, } = this.state
 
     return (
       <Page>
         {!addNote && (
           <AddButton
-            onClick={() => this.setState({ addNote: !addNote })}
+            onClick={() => this.setState({ addNote: !addNote, })}
             noun="Entry"
           />
         )}
         {addNote && (
           <JournalEntryForm
-            onCancel={() => this.setState({ addNote: !addNote })}
+            onCancel={() => this.setState({ addNote: !addNote, })}
             onSubmit={formResult => this.handleNewEntry(formResult)}
           />
         )}
@@ -84,24 +92,31 @@ class Journal extends React.Component {
         </div>
         <LoadMoreButton onClick={() => loadEntries(entries.length)} />
       </Page>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  const entries = journalSelectors.all(state);
+Journal.propTypes = {
+  entries: PropTypes.array.isRequired,
+  total: PropTypes.number.isRequired,
+  loadEntries: PropTypes.func.isRequired,
+  saveEntry: PropTypes.func.isRequired,
+}
+
+function mapStateToProps(state) {
+  const entries = journalSelectors.all(state)
 
   return {
     entries,
-    total: state.journal.total
-  };
+    total: state.journal.total,
+  }
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch) {
   return {
-    loadEntries: start => dispatch(journalActions.load({ start })),
-    saveEntry: entry => dispatch(journalActions.save(entry))
-  };
+    loadEntries: start => dispatch(journalActions.load({ start, })),
+    saveEntry: entry => dispatch(journalActions.save(entry)),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Journal);
+export default connect(mapStateToProps, mapDispatchToProps)(Journal)

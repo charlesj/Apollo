@@ -1,46 +1,47 @@
-import React from "react";
-import moment from "moment";
-import FontAwesome from "react-fontawesome";
-import apolloServer from "../../services/apolloServer.js";
+import React from 'react'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import FontAwesome from 'react-fontawesome'
+import apolloServer from '../../services/apolloServer.js'
 
 class CompletedChecklistDisplay extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       checklistInfo: null,
-      items: null
-    };
+      items: null,
+    }
   }
 
   componentDidMount() {
-    this.loadInformation(this.props.completionId);
+    this.loadInformation(this.props.completionId)
   }
 
-  componentWillReceiveProps(newProps) {
-    this.loadInformation(newProps.completionId);
+  UNSAFE_componentWillReceiveProps(newProps) {
+    this.loadInformation(newProps.completionId)
   }
 
   loadInformation(completed_checklist_id) {
     apolloServer
-      .invoke("GetChecklistCompletion", {
-        completed_checklist_id
+      .invoke('GetChecklistCompletion', {
+        completed_checklist_id,
       })
       .then(data => {
         this.setState({
           checklistInfo: data.checklistInfo,
-          items: data.items
-        });
-      });
+          items: data.items,
+        })
+      })
   }
 
   render() {
     if (!this.state.checklistInfo) {
       return (
         <div className="checklistCompletionDisplayContainer">loading...</div>
-      );
+      )
     }
 
-    const completed_at = moment(this.state.checklistInfo.completed_at);
+    const completed_at = moment(this.state.checklistInfo.completed_at)
 
     return (
       <div className="checklistCompletionDisplayContainer">
@@ -57,13 +58,17 @@ class CompletedChecklistDisplay extends React.Component {
               {item.completed > 0 && (
                 <FontAwesome name="check-circle-o" className="green" />
               )}
-                {item.name}
+              {item.name}
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   }
 }
 
-export default CompletedChecklistDisplay;
+CompletedChecklistDisplay.propTypes = {
+  completionId: PropTypes.number.isRequired,
+}
+
+export default CompletedChecklistDisplay

@@ -1,25 +1,25 @@
-import React from "react";
-import { connect } from "react-redux";
-
-import { checklistSelectors } from "../../redux/selectors";
-import { checklistActions } from "../../redux/actions";
+import React from 'react'
+import { connect, } from 'react-redux'
+import PropTypes from 'prop-types'
+import { checklistSelectors, } from '../../redux/selectors'
+import { checklistActions, } from '../../redux/actions'
 import {
   Page,
   Container,
   FlexRow,
   FlexContainer,
   SelectList,
-  AddButton
-} from "../_controls";
-import ChecklistForm from "./ChecklistForm";
-import CompleteChecklist from "./CompleteChecklist";
-import ChecklistCompletionLog from "./ChecklistCompletionLog";
+  AddButton,
+} from '../_controls'
+import ChecklistForm from './ChecklistForm'
+import CompleteChecklist from './CompleteChecklist'
+import ChecklistCompletionLog from './ChecklistCompletionLog'
 
-import "./checklists.css";
+import './checklists.css'
 
 class Checklists extends React.Component {
   componentDidMount() {
-    this.props.getChecklists();
+    this.props.getChecklists()
   }
 
   render() {
@@ -28,8 +28,8 @@ class Checklists extends React.Component {
       removeChecklist,
       selectedChecklist,
       selectChecklist,
-      saveChecklist
-    } = this.props;
+      saveChecklist,
+    } = this.props
 
     return (
       <Page>
@@ -37,13 +37,13 @@ class Checklists extends React.Component {
           <FlexContainer>
             <AddButton
               noun="checklist"
-              onClick={() => selectChecklist({ items: [] })}
+              onClick={() => selectChecklist({ items: [], })}
             />
             <Container width={200}>
               <SelectList
                 items={checklists}
                 onSelectItem={checklist => {
-                  selectChecklist(checklist);
+                  selectChecklist(checklist)
                 }}
                 labelField="name"
               />
@@ -68,18 +68,27 @@ class Checklists extends React.Component {
           </FlexContainer>
         </FlexRow>
       </Page>
-    );
+    )
   }
 }
 
-function mapStateToProps(state, props) {
-  return {
-    checklists: checklistSelectors.all(state),
-    selectedChecklist: checklistSelectors.selectedChecklist(state)
-  };
+Checklists.propTypes = {
+  checklists: PropTypes.array,
+  selectedChecklist: PropTypes.object,
+  getChecklists: PropTypes.func.isRequired,
+  selectChecklist: PropTypes.func.isRequired,
+  saveChecklist: PropTypes.func.isRequired,
+  removeChecklist: PropTypes.func.isRequired,
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapStateToProps(state) {
+  return {
+    checklists: checklistSelectors.all(state),
+    selectedChecklist: checklistSelectors.selectedChecklist(state),
+  }
+}
+
+function mapDispatchToProps(dispatch) {
   return {
     getChecklists: () => dispatch(checklistActions.getChecklists()),
     selectChecklist: checklist =>
@@ -87,8 +96,8 @@ function mapDispatchToProps(dispatch, props) {
     saveChecklist: checklist =>
       dispatch(checklistActions.saveChecklist(checklist)),
     removeChecklist: checklist =>
-      dispatch(checklistActions.removeChecklist(checklist))
-  };
+      dispatch(checklistActions.removeChecklist(checklist)),
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Checklists);
+export default connect(mapStateToProps, mapDispatchToProps)(Checklists)

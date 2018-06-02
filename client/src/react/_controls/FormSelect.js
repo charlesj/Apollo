@@ -1,9 +1,9 @@
-import React from "react";
-
-import "./FormSelect.css";
+import React from 'react'
+import PropTypes from 'prop-types'
+import './FormSelect.css'
 
 function FormSelect(props) {
-  const { input, options } = props;
+  const { input, options, } = props
 
   return (
     <select {...input}>
@@ -12,10 +12,15 @@ function FormSelect(props) {
           <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
-        );
+        )
       })}
     </select>
-  );
+  )
 }
 
-export default FormSelect;
+FormSelect.propTypes = {
+  input: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
+}
+
+export default FormSelect
