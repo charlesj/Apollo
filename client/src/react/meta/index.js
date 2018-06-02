@@ -1,4 +1,4 @@
 import Login from "./Login";
-import Terminal from "./Terminal";
+import MenuBar from "./MenuBar";
 
-export { Login, Terminal };
+export { Login, MenuBar };

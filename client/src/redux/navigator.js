@@ -86,6 +86,14 @@ export const RoutesMap = [
     component: Feeds
   },
   {
+    path: "/goals",
+    name: "goals",
+    label: "Goals",
+    icon: "gear",
+    main: true,
+    component: Goals
+  },
+  {
     path: "/commands",
     name: "commands",
     label: "Commands",
@@ -109,14 +117,6 @@ export const RoutesMap = [
     main: true,
     component: Settings
   },
-  {
-    path: "/goals",
-    name: "goals",
-    label: "Goals",
-    icon: "gear",
-    main: true,
-    component: Goals
-  }
 ];
 
 export const MainRoutes = RoutesMap.filter(r => r.main);
