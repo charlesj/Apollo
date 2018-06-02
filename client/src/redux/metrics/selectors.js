@@ -23,7 +23,8 @@ const healthMetricsToRecord = [
   { type: "health", name: "bone_mass", label: "Bone Mass (lb)" },
   { type: "health", name: "protein", label: "Protein %" },
   { type: "health", name: "bmr", label: "BMR" },
-  { type: "health", name: "metabolic_age", label: "Metabolic Age" }
+  { type: "health", name: "metabolic_age", label: "Metabolic Age" },
+  { type: "health", name: "mood", label: "Mood (1 to 5)"},
 ];
 
 export function healthMetrics(){
