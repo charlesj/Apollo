@@ -47,7 +47,7 @@ namespace Apollo.Tests.Commands.Metrics
                     .Setup(m => m.InsertMetric(It.IsAny<string>(),
                                                It.IsAny<string>(),
                                                It.IsAny<decimal>()))
-                    .Returns(Task.FromResult(0));
+                    .Returns(Task.FromResult(new Metric()));
             }
 
             [Fact]

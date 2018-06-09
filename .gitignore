@@ -1,5 +1,6 @@
 # vagrant
 .vagrant
+.vscode
 *.log
 
 # ansible

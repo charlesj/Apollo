@@ -39,6 +39,7 @@ namespace Apollo.ServiceLocator
             container.Register<IChecklistsDataService, ChecklistsDataService>();
             container.Register<IDocumentStoreBoostrapper, DocumentStoreBootstrapper>();
             container.Register<IFeedDataService, FeedDataService>();
+            container.Register<IFinancialAccountDataService, FinancialAccountDataService>();
             container.Register<IFinancialAssetPriceDataService, FinancialAssetPriceDataService>();
             container.Register<IGoalsDataService, GoalsDataService>();
             container.Register<IJournalDataService, JournalDataService>();
