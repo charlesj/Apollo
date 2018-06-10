@@ -6,6 +6,7 @@
     "axios": "^0.17.1",
     "classnames": "^2.2.5",
     "countdown": "^2.6.0",
+    "flexbox-react": "^4.4.0",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "immutable": "^3.8.2",

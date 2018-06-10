@@ -1,62 +1,85 @@
 import React, { Component, } from 'react'
-import moment from 'moment'
-import apolloServer from '../../services/apolloServer'
+import PropTypes from 'prop-types'
+import { connect, } from 'react-redux'
+import {
+  Page,
+  Container,
+  FlexRow,
+  FlexContainer,
+  AddButton,
+} from '../_controls'
+import SelectList from '../_controls/SelectListWithTools'
+import { financialSelectors, } from '../../redux/selectors'
+import { financialActions, } from '../../redux/actions'
+import AccountContainer from './AccountContainer'
+
+import './financial.css'
 
 class Finance extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      assetPrices: [],
-    }
-
-    this.loadAssetPrices = this.loadAssetPrices.bind(this)
-  }
-
   componentDidMount() {
-    this.loadAssetPrices()
-  }
-
-  loadAssetPrices() {
-    var assets = ['btc', 'eth', 'ltc',]
-    assets.forEach(a => {
-      apolloServer
-        .invoke('getAssetPrice', {
-          symbol: a,
-        })
-        .then(price => {
-          if (!price) {
-            return
-          }
-          var currentPrices = this.state.assetPrices
-          currentPrices.push(price)
-          currentPrices.sort((a, b) => {
-            return a.symbol > b.symbol
-          })
-          this.setState({
-            assetPrices: currentPrices,
-          })
-        })
-    })
+    this.props.loadAccounts()
   }
 
   render() {
+    const {
+      accounts,
+      selectAccount,
+      selectedAccount,
+      saveAccount,
+    } = this.props
     return (
-      <div className="summaryContainer">
-        Financial
-        {this.state.assetPrices.map(ap => {
-          var validAt = moment(ap.valid_at)
-          return (
-            <div key={ap.id} className="summary">
-              <div className="summaryAmount">${ap.price}</div>
-              <div className="summaryLabel">
-                {ap.symbol.toUpperCase()} ({validAt.calendar()})
-              </div>
-            </div>
-          )
-        })}
-      </div>
+      <Page>
+        <FlexRow>
+          <FlexContainer>
+            <AddButton
+              noun="account"
+              onClick={() => selectAccount({id: 'new',})}
+            />
+            <Container width={200}>
+              <SelectList
+                items={accounts}
+                onSelectItem={(account) => selectAccount(account)}
+                selectedItem={selectedAccount}
+                labelField="name"
+              />
+            </Container>
+          </FlexContainer>
+          {selectedAccount && (
+            <FlexContainer>
+              <AccountContainer
+                selectedAccount={selectedAccount}
+                saveAccount={saveAccount}
+                selectAccount={() => selectAccount(null)}
+              />
+            </FlexContainer>)}
+          <FlexContainer>graphs</FlexContainer>
+        </FlexRow>
+      </Page>
     )
   }
 }
 
-export default Finance
+Finance.propTypes = {
+  accounts: PropTypes.array.isRequired,
+  selectedAccount: PropTypes.object,
+  loadAccounts: PropTypes.func.isRequired,
+  saveAccount: PropTypes.func.isRequired,
+  selectAccount: PropTypes.func.isRequired,
+}
+
+function mapStateToProps(state){
+  return {
+    accounts: financialSelectors.accounts(state),
+    selectedAccount: financialSelectors.selectedAccount(state),
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    loadAccounts: () => dispatch(financialActions.loadAccounts()),
+    saveAccount: account => dispatch(financialActions.saveAccount(account)),
+    selectAccount: account => dispatch(financialActions.selectAccount(account)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Finance)

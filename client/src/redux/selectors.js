@@ -1,6 +1,7 @@
 import * as boardSelectors from './boards/selectors'
 import * as bookmarkSelectors from './bookmarks/selectors'
 import * as checklistSelectors from './checklists/selectors'
+import * as financialSelectors from './financial/selectors'
 import * as feedsSelectors from './feeds/selectors'
 import * as goalSelectors from './goals/selectors'
 import * as jobSelectors from './jobs/selectors'
@@ -15,6 +16,7 @@ export {
   boardSelectors,
   bookmarkSelectors,
   checklistSelectors,
+  financialSelectors,
   feedsSelectors,
   goalSelectors,
   jobSelectors,

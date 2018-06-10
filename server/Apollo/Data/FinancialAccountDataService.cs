@@ -11,9 +11,6 @@ namespace Apollo.Data
         Task<IReadOnlyList<FinancialAccount>> GetAccounts();
         Task<FinancialAccount> UpsertAccount(FinancialAccount account);
         Task DeleteAccount(int accountId);
-        Task<IReadOnlyList<FinancialTransactionType>> GetTransactionTypes();
-        Task<FinancialTransactionType> UpsertTransactionType(FinancialTransactionType type);
-        Task DeleteTransactionType(int transactionTypeId);
         Task<IReadOnlyList<FinancialTransaction>> GetTransactions(int accountId);
         Task<FinancialTransaction> UpsertTransaction(FinancialTransaction transaction);
         Task DeleteTransaction(int transactionId);
@@ -45,7 +42,7 @@ namespace Apollo.Data
             {
                 await Execute(
                     "update financial_accounts set name=@name, type=@type, description=@description, " +
-                    "modified_at=current_timestamp where id=@id",
+                    "updated_at=current_timestamp where id=@id",
                     account);
             }
 
@@ -61,41 +58,6 @@ namespace Apollo.Data
                 new {id = accountId});
         }
 
-        public Task<IReadOnlyList<FinancialTransactionType>> GetTransactionTypes()
-        {
-            return QueryAsync<FinancialTransactionType>("select * from financial_transaction_types");
-        }
-
-        public async Task<FinancialTransactionType> UpsertTransactionType(FinancialTransactionType type)
-        {
-            var id = type.id;
-            if (id == default(int))
-            {
-                id = await InsertAndReturnId(
-                    "insert into financial_transaction_types(name, description, created_at, modified_at) " +
-                    "values (@name, @description, current_timestamp, current_timestamp) returning id",
-                    type);
-            }
-            else
-            {
-                await Execute(
-                    "update financial_transaction_types set name=@name, description=@description, " +
-                    "modified_at=current_timestamp where id=@id",
-                    type);
-            }
-
-            return (await QueryAsync<FinancialTransactionType>(
-                "select * from financial_transaction_types where id=@id",
-                new {id})
-            ).Single();
-        }
-
-        public async Task DeleteTransactionType(int transactionTypeId)
-        {
-            await Execute("update financial_transaction_types set deleted_at=current_timestamp where id=@id",
-                new {id = transactionTypeId});
-        }
-
         public Task<IReadOnlyList<FinancialTransaction>> GetTransactions(int accountId)
         {
             return QueryAsync<FinancialTransaction>("select * from financial_transactions where account_id=@accountId",
@@ -108,17 +70,17 @@ namespace Apollo.Data
             if (id == default(int))
             {
                 id = await InsertAndReturnId(
-                    "insert into financial_transactions(account_id, transaction_type_id, occurred_at, amount, " +
-                    "name, notes, created_at, modified_at) values (@account_id, @transaction_type_id, " +
+                    "insert into financial_transactions(account_id, tags, occurred_at, amount, " +
+                    "name, notes, created_at, updated_at) values (@account_id, @tags, " +
                     "@occurred_at, @amount, @name, @notes, current_timestamp, current_timestamp) returning id",
                     transaction);
             }
             else
             {
                 await Execute(
-                    "update financial_transaction_types set account_id=@account_id, " +
-                    "transaction_type_id=@transaction_type_id, occurred_at=@occurred_at, amount=@amount, " +
-                    "name=@name, notes=@notes, modified_at=current_timestamp where id=@id",
+                    "update financial_transactions set account_id=@account_id, " +
+                    "tags=@tags, occurred_at=@occurred_at, amount=@amount, " +
+                    "name=@name, notes=@notes, updated_at=current_timestamp where id=@id",
                     transaction);
             }
 
@@ -146,24 +108,14 @@ namespace Apollo.Data
         public DateTime? deleted_at { get; set; }
     }
 
-    public class FinancialTransactionType
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
-        public DateTime? deleted_at { get; set; }
-    }
-
     public class FinancialTransaction
     {
         public int id { get; set; }
         public int account_id { get; set; }
-        public int transaction_type_id { get; set; }
         public DateTime occurred_at { get; set; }
         public Decimal amount { get; set; }
         public string name { get; set; }
+        public string[] tags { get; set; }
         public string notes { get; set; }
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }

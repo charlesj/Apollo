@@ -14,6 +14,7 @@ import SelectList from './SelectList'
 import TextButton from './TextButton'
 import SaveButton from './SaveButton'
 import Tag from './Tag'
+import MoneyDisplay from './MoneyDisplay'
 
 export {
   AddButton,
@@ -32,4 +33,5 @@ export {
   TextButton,
   LoadMoreButton,
   Tag,
+  MoneyDisplay,
 }

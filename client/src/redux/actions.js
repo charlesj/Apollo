@@ -1,6 +1,7 @@
 import * as boardActions from './boards/actions'
 import * as bookmarkActions from './bookmarks/actions'
 import * as checklistActions from './checklists/actions'
+import * as financialActions from './financial/actions'
 import * as feedsActions from './feeds/actions'
 import * as goalActions from './goals/actions'
 import * as jobActions from './jobs/actions'
@@ -16,6 +17,7 @@ export {
   boardActions,
   bookmarkActions,
   checklistActions,
+  financialActions,
   feedsActions,
   goalActions,
   jobActions,

@@ -25,7 +25,7 @@ namespace Apollo.Commands.Financial
         {
             return Task.FromResult(
                 Transaction.account_id != default(int) &&
-                Transaction.transaction_type_id != default(int) &&
+                Transaction.tags.Length > 0 &&
                 Transaction.occurred_at != default(DateTime) &&
                 !string.IsNullOrWhiteSpace(Transaction.name) &&
                 !string.IsNullOrWhiteSpace(Transaction.notes));

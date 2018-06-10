@@ -31,6 +31,7 @@ export function dispatchBasicActions(action, funcMap) {
       }
       return payload
     } catch (err) {
+      console.log('error in action', err)
       dispatch(action.fail(err))
       if (failFunc) {
         failFunc(dispatch, err)

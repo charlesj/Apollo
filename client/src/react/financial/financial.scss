@@ -1,0 +1,7 @@
+@import 'styles/variables.scss';
+
+.financialAccounts{
+  margin: $spacing;
+  padding: $spacing;
+  @include standardBorder();
+}

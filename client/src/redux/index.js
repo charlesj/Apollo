@@ -7,6 +7,7 @@ import createHistory from 'history/createBrowserHistory'
 import boardReducer from './boards/reducers'
 import bookmarksReducer from './bookmarks/reducers'
 import checklistsReducer from './checklists/reducers'
+import financialReducer from './financial/reducers'
 import feedsReducer from './feeds/reducers'
 import goalsReducer from './goals/reducers'
 import jobsReducer from './jobs/reducers'
@@ -37,8 +38,9 @@ const rootReducer = combineReducers({
   boards: boardReducer,
   bookmarks: bookmarksReducer,
   checklists: checklistsReducer,
-  goals: goalsReducer,
+  financial: financialReducer,
   feeds: feedsReducer,
+  goals: goalsReducer,
   jobs: jobsReducer,
   journal: journalReducer,
   notes: noteReducer,
