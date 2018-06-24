@@ -20,6 +20,10 @@ function transactions(state, accountId){
   return keyedIdToArray(state.financial.transactions[accountId] || {})
 }
 
+function balance(state, accountId){
+  return transactions(state, accountId).reduce((acc, curr) => acc + curr.amount, 0)
+}
+
 function selectedTransaction(state, accountId){
   if(state.financial.selectedTransaction[accountId] == null){
     return null
@@ -38,4 +42,5 @@ export {
   selectedAccount,
   transactions,
   selectedTransaction,
+  balance,
 }

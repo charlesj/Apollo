@@ -4,6 +4,7 @@ import { connect, } from 'react-redux'
 import Flexbox from 'flexbox-react'
 import {
   AddButton,
+  MoneyDisplay,
 } from '../_controls'
 import { financialSelectors, } from '../../redux/selectors'
 import { financialActions, } from '../../redux/actions'
@@ -19,6 +20,7 @@ function AccountDisplay (props){
     selectTransaction,
     selectedTransaction,
     saveTransaction,
+    balance,
   } = props
 
   return (<Flexbox flexDirection='column'>
@@ -27,6 +29,10 @@ function AccountDisplay (props){
     </div>
     <Flexbox flexDirection='column' className='lineItems'>
       { transactions.map(t => <TransactionLineItem key={`transaction-${t.id}`} transaction={t} selectTransaction={selectTransaction} />)}
+      <Flexbox flexDirection='row' justifyContent='space-between' className='currentBalance'>
+        <span>Current Balance</span>
+        <strong><MoneyDisplay amount={balance} /></strong>
+      </Flexbox>
     </Flexbox>
     <AddButton noun='Transaction' onClick={() => selectTransaction({id: 'new',})} />
     { selectedTransaction && <TransactionForm
@@ -46,12 +52,14 @@ AccountDisplay.propTypes = {
   saveTransaction: PropTypes.func.isRequired,
   selectTransaction: PropTypes.func.isRequired,
   selectedTransaction: PropTypes.object,
+  balance: PropTypes.number.isRequired,
 }
 
 function mapStateToProps(state, props){
   return {
     transactions: financialSelectors.transactions(state, props.account.id),
     selectedTransaction: financialSelectors.selectedTransaction(state, props.account.id),
+    balance: financialSelectors.balance(state, props.account.id),
   }
 }
 
