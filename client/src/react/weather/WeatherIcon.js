@@ -2,15 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import '../../styles/weather-icons.css'
 import '../../styles/weather-icons-wind.css'
+import ClassNames from 'classnames'
 
-class WeatherIcon extends React.Component {
-  getClassNames() {
-    return 'wi ' + this.props.icon
-  }
-
-  render() {
-    return <i className={() => this.getClassNames()} />
-  }
+function WeatherIcon(props) {
+  return <i className={ClassNames('wi', props.icon)} />
 }
 
 WeatherIcon.propTypes = {
