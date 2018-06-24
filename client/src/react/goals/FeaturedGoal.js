@@ -1,6 +1,6 @@
 import React, { Component, } from 'react'
 import { connect, } from 'react-redux'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,} from 'recharts'
 import countdown from 'countdown'
 import PropTypes from 'prop-types'
 
@@ -72,6 +72,7 @@ class FeaturedGoal extends Component {
               <XAxis dataKey="key" />
               <YAxis domain={[goal.graphMin, goal.graphMax,]} />
               <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
               <Line type="monotone" dataKey="val" stroke="#0A6640" />
             </LineChart>
           </div>
