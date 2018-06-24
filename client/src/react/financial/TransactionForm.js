@@ -26,7 +26,7 @@ function TransactionForm(props) {
           <Field
             name="occurred_at"
             component="input"
-            type="datetime-local"
+            type="date"
             placeholder="Transaction Time"
           />
           <Field
