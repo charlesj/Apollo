@@ -2,7 +2,7 @@
 Description=Apollo Client
 
 [Service]
-ExecStart=/usr/local/bin/serve -s /var/apollo/client
+ExecStart=/usr/bin/serve -s /var/apollo/client
 Restart=always
 RestartSec=10
 
