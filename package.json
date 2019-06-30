@@ -1,0 +1,8 @@
+{
+  "name": "Apollo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:charlesj/Apollo.git",
+  "author": "Josh Charles <josh.charles@gmail.com>",
+  "license": "MIT"
+}
