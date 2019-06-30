@@ -1,0 +1,21 @@
+server:
+  image: node:10.16.0-alpine
+  command: npm start
+  working_dir: /app
+  volumes:
+    - .:/app
+  environment:
+    PORT: 3000
+
+  ports:
+    - "3000:3000"
+  links:
+      - db
+db:
+  image: postgres
+  expose:
+    - 5432
+  environment:
+    POSTGRES_PASSWORD: pass
+    POSTGRES_USER: apollo_pg_user
+    POSTGRES_DB: apollo

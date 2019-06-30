@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`errorForLog converts a nested error 1`] = `
+Array [
+  "name",
+  "message",
+  "stack",
+]
+`;
+
+exports[`errorForLog converts a top level error 1`] = `
+Array [
+  "name",
+  "message",
+  "stack",
+]
+`;
+
+exports[`errorForLog converts an array into an object 1`] = `
+Object {
+  "0": "one",
+  "1": Object {
+    "nested": true,
+  },
+}
+`;
+
+exports[`errorForLog converts an error with an error 1`] = `
+Array [
+  "name",
+  "message",
+  "stack",
+]
+`;
