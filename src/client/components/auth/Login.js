@@ -7,7 +7,7 @@ import ActivityOverlay from '../common/ActivityOverlay'
 
 const Login = ({ }) => {
   const passwordField = useSimpleField('Password')
-  const { tryLogin, isActive } = useLogin()
+  const { tryLogin, isActive, error } = useLogin()
 
   const doLogin = () => tryLogin(passwordField.value)
 
@@ -15,7 +15,13 @@ const Login = ({ }) => {
     <Flex flexFull alignItems='center'>
       <Flex flexDirection='column'>
         <ActivityOverlay isActive={isActive}>
-          <TextField {...passwordField} type='password' onKeyPress={({ key }) => key === 'Enter' && doLogin()} />
+          <TextField
+            {...passwordField}
+            type='password'
+            onKeyPress={({ key }) => key === 'Enter' && doLogin()}
+            error={error}
+            helperText={error}
+          />
           <Button onClick={doLogin} variant='contained' color='primary'>Login</Button>
         </ActivityOverlay>
       </Flex>

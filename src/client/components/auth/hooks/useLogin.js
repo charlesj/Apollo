@@ -21,8 +21,11 @@ export const useLogin = () => {
     if (response.ok) {
       const result = await response.json()
       user.login(result)
+    } else {
+      setIsActive(false)
+      const result = await response.json()
+      setError(result.errorMessage)
     }
-    setIsActive(false)
   }
 
   return {
