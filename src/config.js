@@ -1,7 +1,7 @@
 export const getRootConfig = () => ({
   db: {
-    pgUri: process.env.MONGODB_URI,
-    dbName: process.env.DB_NAME
+    pgHOST: process.env.POSTGRES_HOST || 'postgres',
+    dbName: process.env.DB_NAME || 'apollo'
   },
   server: {
     port: process.env.PORT || 8042

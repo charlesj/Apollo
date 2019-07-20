@@ -1,13 +1,13 @@
 const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
 
 const serverBuildFolder = 'build/server/'
 
 module.exports = {
-  entry: ['@babel/polyfill','./src/server/index.js'],
+  entry: ['./src/server/index.js'],
   plugins: [
-    new CleanWebpackPlugin([serverBuildFolder]),
+    new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: [serverBuildFolder] }),
   ],
   target: 'node',
   externals: [nodeExternals()],
