@@ -36,6 +36,7 @@
     "file-loader": "^4.0.0",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
+    "pg": "^7.11.0",
     "react": "^16.8.6",
     "serialize-error": "^4.1.0",
     "webpack": "^4.35.0",

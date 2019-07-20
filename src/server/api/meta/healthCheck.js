@@ -1,11 +1,10 @@
-import { getConnection } from '../../../data/structure/connection'
-import { ok } from '../../utils/http'
-import { handleError } from '../../handleError'
+import { query } from '../../../database/client'
+import { ok } from '../../http'
 
-export const healthCheck = handleError(async (req, res) => {
-  const connection = await getConnection()
+export const healthCheck = async (req, res) => {
+  const result = await query('select true as result')
   const health = {
-    db: !!connection,
+    db: result[0].result,
   }
   ok(res, health)
-})
+}

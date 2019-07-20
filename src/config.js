@@ -1,9 +1,7 @@
-export const getRootConfig = () => ({
-  db: {
-    pgHOST: process.env.POSTGRES_HOST || 'postgres',
-    dbName: process.env.DB_NAME || 'apollo'
-  },
+require('dotenv').config()
+
+export const config = {
   server: {
     port: process.env.PORT || 8042
   }
-})
+}

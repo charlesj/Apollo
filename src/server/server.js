@@ -1,15 +1,13 @@
 import express from 'express'
 import cors from 'cors'
 import { logger } from '../logging'
-import { getRootConfig } from '../config'
+import { config } from '../config'
 import { getRouter } from './api/router'
 import { clacks, logRequest, removePoweredBy, finalErrorHandler, handleNotFound } from './middleware/'
 // import { initialize } from '../data/structure/connection'
 
 
 export async function runServer() {
-
-  const config = getRootConfig()
 
   //await initialize(config.db.uri, config.db.dbName)
   // logger.info('initialized connection to mongo')

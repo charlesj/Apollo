@@ -1,14 +1,17 @@
 server:
   image: node:10.16.0-alpine
-  command: npm start
+  command: yarn dev:server
   working_dir: /app
   volumes:
     - .:/app
   environment:
-    PORT: 3000
-
+    - PGUSER:apollo_pg_user
+    - PGHOST:db
+    - PGPASSWORD:pass
+    - PGDATABASE:apollo
+    - PGPORT:5432
   ports:
-    - "3000:3000"
+    - "8042:8042"
   links:
       - db
 db:

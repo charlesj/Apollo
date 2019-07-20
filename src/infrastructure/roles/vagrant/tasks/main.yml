@@ -1,6 +1,0 @@
----
-- name: Drop you into /vagrant when ssh'd in
-  lineinfile:
-    line: cd /vagrant
-    path: ~/.profile
-    insertbefore: EOF

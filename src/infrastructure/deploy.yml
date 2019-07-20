@@ -1,9 +1,0 @@
----
-- hosts: all
-  roles:
-    - base
-    - dotnet
-    - node
-    - database
-    - haproxy
-    - publish
