@@ -2,7 +2,7 @@
 /* global window */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import Frame from './Frame'
 import consoleHelpers from './consoleHelpers'
 import { configureBasic, logger } from '../logging'
 
@@ -12,7 +12,7 @@ function main() {
   configureBasic()
   const root = document.createElement('div') // eslint-disable-line no-undef
   document.body.appendChild(root) // eslint-disable-line no-undef
-  ReactDOM.render(<App />, root)
+  ReactDOM.render(<Frame />, root)
   logger.info('app loaded')
 }
 
