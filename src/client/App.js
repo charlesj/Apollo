@@ -1,12 +1,13 @@
 import React from 'react'
 import { useAuthenticatedUser } from './data/auth/useAuthenticatedUser'
+import Login from './components/auth/Login'
 
 const App = () => {
-  const { user, login } = useAuthenticatedUser()
+  const { user } = useAuthenticatedUser()
   if (!user) {
-    return <div>Not Logged In <button onClick={() => login()}>login</button></div>
+    return <Login />
   }
-  console.log('user', user)
+
   return <div>Logged in</div>
 }
 

@@ -14,11 +14,11 @@ export async function runServer() {
 
   const server = express()
 
-  server.use(express.json())
   server.use(cors())
   server.use(logRequest)
   server.use(removePoweredBy)
   server.use(clacks)
+  server.use(express.json())
   server.use('/', getRouter())
   server.use(handleNotFound)
   server.use(finalErrorHandler)

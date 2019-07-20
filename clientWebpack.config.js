@@ -20,7 +20,7 @@ module.exports = {
     new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: [clientBuildFolder] }),
     new HtmlWebpackPlugin({
       title: 'Apollo',
-      //favicon: './src/logo/favicon-v2.ico',
+      favicon: './src/client/public/favicon.ico',
       hash: true,
     }),
     new webpack.DefinePlugin({
