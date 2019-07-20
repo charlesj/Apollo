@@ -1,2 +1,0 @@
-psql -h localhost -U apollo_pg -d apollo_db
-

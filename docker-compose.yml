@@ -1,9 +1,10 @@
 server:
   image: node:10.16.0-alpine
-  command: yarn dev:server
+  command: yarn dc
   working_dir: /app
   volumes:
     - .:/app
+    - /app/node_modules
   environment:
     - PGUSER:apollo_pg_user
     - PGHOST:db

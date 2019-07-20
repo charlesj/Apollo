@@ -6,14 +6,16 @@
   "author": "Josh Charles <josh.charles@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build:server": "webpack --config serverWebpack.config.js --mode production --progress",
     "build:client": "webpack --config clientWebpack.config.js --mode production --progress",
     "build:common": "yarn lint --max-warnings 0 && yarn test",
+    "build:server": "webpack --config serverWebpack.config.js --mode production --progress",
+    "dc": "yarn && yarn dev:server",
     "dev:client": "webpack-dev-server --config clientWebpack.config.js --mode development --open --devtool source-map",
     "dev:server": "nodemon --watch src/ --exec babel-node  -- src/server/index.js",
+    "go": "babel-node ./src/util/harness.js",
     "lint": "eslint ./src --fix",
-    "test": "jest --config ./jest.config.js",
-    "go": "babel-node ./src/util/harness.js"
+    "migrate": "node-pg-migrate",
+    "test": "jest --config ./jest.config.js"
   },
   "dependencies": {
     "@babel/cli": "^7.4.4",
@@ -27,6 +29,7 @@
     "@material-ui/core": "^4.2.1",
     "@material-ui/styles": "^4.2.1",
     "babel-loader": "^8.0.6",
+    "bcryptjs": "^2.4.3",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.3",
@@ -44,6 +47,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "^24.8.0",
     "mui-blox": "^0.3.2",
+    "node-pg-migrate": "^3.21.1",
     "nodemon": "^1.19.1",
     "pg": "^7.11.0",
     "prop-types": "^15.7.2",

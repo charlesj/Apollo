@@ -4,12 +4,12 @@ import { logger } from '../logging'
 import { config } from '../config'
 import { getRouter } from './api/router'
 import { clacks, logRequest, removePoweredBy, finalErrorHandler, handleNotFound } from './middleware/'
-// import { initialize } from '../data/structure/connection'
+import { ensureDefaultData } from '../database/ensureDefaultData'
 
 
 export async function runServer() {
 
-  //await initialize(config.db.uri, config.db.dbName)
+  await ensureDefaultData()
   // logger.info('initialized connection to mongo')
 
   const server = express()
