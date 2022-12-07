@@ -8,7 +8,7 @@
     <PackageReference Include="Marten" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="npgsql" Version="3.2.6" />
     <PackageReference Include="SimpleInjector" Version="4.0.8" />
   </ItemGroup>
